@@ -1,0 +1,26 @@
+🗑️ ARQUIVOS LEGADOS DE SAVE/IMPORT MARCADOS PARA REMOÇÃO
+====================================================================
+
+Data: 5 de março de 2026
+Versão: Limpeza do Sistema Antigo
+
+SISTEMA DE EXPORTAÇÃO (REMOVER):
+- export-system.js (OBSOLETO - v2.0.0)
+- save-system-v3.js (OBSOLETO - v3.0.0)
+
+SISTEMA DE IMPORTAÇÃO (REMOVER):
+- import-system.js (OBSOLETO - v2.0.0)
+- import-system-v3.js (OBSOLETO - v3.0.0)
+
+TESTES E DIAGNÓSTICOS (REMOVER):
+- test-save-import-v3.js
+- diagnostic-save-import.js
+
+REGISTRO DE MANAGERS (REMOVER):
+- manager-registration.js
+
+TOTAL DE ARQUIVOS MARCADOS: 7
+
+NOTA: Estes arquivos foram removidos de index.html e não estão mais carregados.
+O novo sistema será implementado do zero com arquitetura profissional.
+====================================================================
