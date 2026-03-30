@@ -16,6 +16,7 @@
     min-height: 700px;
     width: 100%;
     margin-top: -1rem;
+    flex-wrap: nowrap;
 }
 
 /* ========================================== */
@@ -24,13 +25,15 @@
 
 .atributos-circulo {
     position: relative;
-    width: 600px;
-    height: 600px;
+    width: 100%;
+    max-width: 600px;
+    aspect-ratio: 1;
     background-image: url("https://i.imgur.com/gTtQjXy.png");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    flex: 0 0 auto;
+    flex: 1 1 auto;
+    min-width: 280px;
 }
 
 /* ========================================== */
@@ -39,8 +42,8 @@
 
 .atributo {
     position: absolute;
-    width: 45px;
-    height: 45px;
+    width: 10%;
+    aspect-ratio: 1;
     border-radius: 50%;
     background-image: url('https://i.imgur.com/xCgEvHK.png');
     background-size: cover;
@@ -50,9 +53,8 @@
     font-weight: bold;
     text-align: center;
     line-height: 1.2;
-    padding-top: 5px;
     box-shadow: none;
-    font-size: 1.2rem;
+    font-size: clamp(0.6rem, 2vw, 1.2rem);
     cursor: pointer;
     transition: all 0.2s ease;
     border: none;
@@ -81,7 +83,7 @@
 
 .atributo span {
     display: block;
-    font-size: 0.5rem;
+    font-size: clamp(0.3rem, 1vw, 0.5rem);
     text-transform: uppercase;
     letter-spacing: 0.3px;
     margin-top: -3px;
@@ -92,35 +94,39 @@
 /* ========================================== */
 
 .atributos-circulo.primarios .forca {
-    top: 15.70%;
-    left: 50.1%;
-    transform: translateX(-50%);
+    top: 19.35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .atributos-circulo.primarios .vitalidade {
-    top: 31%;
-    right: 20.4%;
+    top: 34.9%;
+    right: 24%;
+    transform: translate(50%, -50%);
 }
 
 .atributos-circulo.primarios .agilidade {
-    bottom: 29.3%;
-    right: 20.4%;
+    top: 66.5%;
+    right: 24%;
+    transform: translate(50%, -50%);
 }
 
 .atributos-circulo.primarios .inteligencia {
-    bottom: 14.3%;
+    top: 82%;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
 }
 
 .atributos-circulo.primarios .percepcao {
-    bottom: 29.3%;
-    left: 20.3%;
+    top: 66.5%;
+    left: 24%;
+    transform: translate(-50%, -50%);
 }
 
 .atributos-circulo.primarios .sorte {
-    top: 31%;
-    left: 20.3%;
+    top: 34.9%;
+    left: 24%;
+    transform: translate(-50%, -50%);
 }
 
 /* ========================================== */
@@ -128,35 +134,39 @@
 /* ========================================== */
 
 .atributos-circulo.secundarios .prontidao {
-    top: 15.70%;
-    left: 50.1%;
-    transform: translateX(-50%);
+    top: 19.35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .atributos-circulo.secundarios .ataque {
-    top: 31%;
-    right: 20.3%;
+    top: 34.9%;
+    right: 24%;
+    transform: translate(50%, -50%);
 }
 
 .atributos-circulo.secundarios .defesa {
-    bottom: 29.3%;
-    right: 20.3%;
+    top: 66.5%;
+    right: 24%;
+    transform: translate(50%, -50%);
 }
 
 .atributos-circulo.secundarios .reacao {
-    bottom: 14.3%;
+    top: 82%;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
 }
 
 .atributos-circulo.secundarios .precisao {
-    bottom: 29.3%;
-    left: 20.4%;
+    top: 66.5%;
+    left: 24%;
+    transform: translate(-50%, -50%);
 }
 
 .atributos-circulo.secundarios .evasao {
-    top: 31%;
-    left: 20.4%;
+    top: 34.9%;
+    left: 24%;
+    transform: translate(-50%, -50%);
 }
 
 /* ========================================== */
@@ -369,8 +379,8 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 100px;
-    height: 100px;
+    width: 16.7%;
+    aspect-ratio: 1;
     border: none;
     border-radius: 50%;
     background: transparent;
@@ -382,8 +392,7 @@
     transition: all 0.2s ease;
     z-index: 5;
     margin: 0;
-    margin-left: -50px;
-    margin-top: -50px;
+    transform: translate(-50%, -50%);
 }
 
 .atributos-centro-botao img {
@@ -516,21 +525,13 @@
 /* RESPONSIVIDADE */
 /* ========================================== */
 
+/* ========================================== */
+/* RESPONSIVIDADE - Mantém proporções com aspect-ratio */
+/* ========================================== */
+
 @media (max-width: 1400px) {
     .atributos-container {
         gap: 2rem;
-    }
-    
-    .atributos-circulo {
-        width: 380px;
-        height: 380px;
-    }
-    
-    .atributo {
-        width: 58px;
-        height: 58px;
-        padding-top: 10px;
-        font-size: 0.8rem;
     }
 }
 
@@ -538,11 +539,6 @@
     .atributos-container {
         flex-wrap: wrap;
         gap: 2rem;
-    }
-    
-    .atributos-circulo {
-        width: 350px;
-        height: 350px;
     }
     
     .personagem-coluna {
@@ -555,18 +551,6 @@
         flex-direction: column;
         gap: 2rem;
         padding: 1rem;
-    }
-    
-    .atributos-circulo {
-        width: 320px;
-        height: 320px;
-    }
-    
-    .atributo {
-        width: 54px;
-        height: 54px;
-        padding-top: 9px;
-        font-size: 0.75rem;
     }
     
     .personagem-frame {
@@ -587,18 +571,6 @@
     .atributos-container {
         gap: 1.5rem;
         padding: 0.75rem;
-    }
-    
-    .atributos-circulo {
-        width: 280px;
-        height: 280px;
-    }
-    
-    .atributo {
-        width: 48px;
-        height: 48px;
-        padding-top: 8px;
-        font-size: 0.7rem;
     }
     
     .personagem-frame {
