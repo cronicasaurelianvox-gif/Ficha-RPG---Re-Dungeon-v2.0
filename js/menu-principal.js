@@ -270,6 +270,17 @@ class MenuPrincipal {
             return;
         }
 
+        // ✅ NOVO: Handler especial para aptidão
+        if (item.route === 'aptidao') {
+            if (window.aptidoesVisualPopup && typeof window.aptidoesVisualPopup.open === 'function') {
+                window.aptidoesVisualPopup.open();
+                console.log('📖 [MenuPrincipal] Enciclopédia de Aptidões aberta por clique');
+            } else {
+                console.warn('⚠️ AptidoesVisualPopup não disponível');
+            }
+            return;
+        }
+
         // Fazer com que a ação seja executada via routes-vertical
         const button = document.getElementById(`route-${item.route}`);
 

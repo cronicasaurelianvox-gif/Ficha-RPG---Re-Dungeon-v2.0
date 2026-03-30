@@ -167,7 +167,9 @@ class RoutesVertical {
                 this.showTips();
                 break;
             case 'aptidao':
-                this.showAptidoes();
+                // ✅ BLOQUEADO: Não abrir popup automaticamente
+                // O popup deve ser aberto apenas por clique direto do usuário, não por rota
+                console.log('📂 Rota "aptidao" acionada, mas popup NÃO será aberto automaticamente');
                 break;
             case 'itens':
                 this.showItens();
@@ -215,12 +217,13 @@ class RoutesVertical {
 
     /**
      * Mostrar aptidões - Abre popup visual de enciclopédia
+     * ⚠️ APENAS para cliques manuais do botão, não por rota automática
      */
     showAptidoes() {
         // Abrir popup visual isolado
         if (window.aptidoesVisualPopup && typeof window.aptidoesVisualPopup.open === 'function') {
             window.aptidoesVisualPopup.open();
-            console.log('📖 Enciclopédia de Aptidões aberta');
+            console.log('📖 Enciclopédia de Aptidões aberta por CLIQUE DO USUÁRIO');
         } else {
             console.warn('⚠️ AptidoesVisualPopup não disponível');
         }
