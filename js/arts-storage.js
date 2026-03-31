@@ -138,32 +138,6 @@ class StorageManager {
       }
     });
 
-    // Criar um núcleo de exemplo
-    const exampleCore = character.addCore({
-      name: 'Essência Flamejante',
-      concept: 'Manipulação de fogo',
-      visualForm: 'Aura avermelhada',
-      baseBonus: { dano: 5 }
-    });
-
-    // Criar uma art de exemplo
-    const exampleArt = character.addArt({
-      name: 'Bola de Fogo',
-      coreId: exampleCore.id,
-      type: 'ataque',
-      domain: 1,
-      cooldown: 2,
-      duration: '1 turno',
-      range: '10 metros',
-      targets: 'alvo único',
-      cost: 10,
-      description: 'Lança uma esfera de fogo que causa dano ao alvo',
-      effects: {
-        dano: 15,
-        chance_queimadura: 30
-      }
-    });
-
     // Salvar o character padrão
     this.saveCharacter(character);
 
