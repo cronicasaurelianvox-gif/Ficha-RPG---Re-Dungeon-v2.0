@@ -308,7 +308,10 @@ class RulesEngine {
   }
 }
 
-// Exportar
+// 🌍 Exportar para window (global)
+window.RulesEngine = RulesEngine;
+
+// Exportar para Node.js (se aplicável)
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = { RulesEngine };
 }

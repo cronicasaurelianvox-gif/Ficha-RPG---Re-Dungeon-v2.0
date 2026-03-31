@@ -296,6 +296,11 @@ class UIManager {
           <div class="arts-stat-value ${report.blockedArts > 0 ? 'warning' : ''}">
             ${report.blockedArts}
           </div>
+          ${report.blockedArts > 0 ? `
+            <button id="arts-unlock-btn" class="arts-unlock-btn arts-unlock-animated" style="width: 50%; margin-top: 8px; padding: 6px 12px; font-size: 0.85em;" title="Desbloquear automaticamente as arts bloqueadas">
+              🔓 Desbloquear
+            </button>
+          ` : ''}
         </div>
         <div class="arts-stat-card">
           <div class="arts-stat-label">Variações</div>
@@ -337,6 +342,18 @@ class UIManager {
         <span class="arts-stat-bar-text">${report.activeArts}/${report.maxArts} slots</span>
       </div>
     `;
+
+    // Setup do botão se existir
+    if (report.blockedArts > 0 && window.artsUnlockSystem) {
+      setTimeout(() => {
+        const btn = document.getElementById('arts-unlock-btn');
+        if (btn && !btn.hasListener) {
+          btn.addEventListener('click', () => window.artsUnlockSystem.handleUnlock());
+          btn.hasListener = true;
+          console.log('✅ Listener do botão adicionado via updateStats');
+        }
+      }, 0);
+    }
   }
 
   /**

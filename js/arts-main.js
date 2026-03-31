@@ -184,8 +184,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   setTimeout(async () => {
     const container = document.getElementById('rpg-content-habilidades');
     if (container) {
-      window.artsSystem = new ArtsSystemManager();
-      await window.artsSystem.init();
+      window.artsSystemManager = new ArtsSystemManager();
+      window.artsSystem = window.artsSystemManager; // Alias para compatibilidade
+      await window.artsSystemManager.init();
     }
   }, 100);
 });
