@@ -343,7 +343,7 @@ const RACAS_DATABASE = [
     raridade: "raro",
     descricao: "Os Gnomos são uma raça pequena, mas perigosamente inteligente. Diferente da imagem cômica que muitos atribuem a eles, os Gnomos são engenheiros da improbabilidade. Onde outras raças veem limites físicos, eles veem desafios temporários. Baixos, de membros compactos, olhos grandes e atentos, sempre parecem estar calculando algo — mesmo quando dormem. Suas mãos são rápidas demais para o tamanho do corpo, e suas vozes costumam alternar entre empolgação e ironia mordaz.",
     limiteAtributo: 100,
-    imagem: "https://i.imgur.com/eRWvSLL.jpeg",
+    imagem: "https://i.imgur.com/GdcpsPA.png",
     atributos: {
       forca: "2d4+4",
       vitalidade: "3d6+6",
@@ -1290,7 +1290,7 @@ const RACAS_DATABASE = [
     raridade: "epico",
     descricao: "Os Mur’kal são uma raça anfíbia tribal, surgida em costas, pântanos e ruínas submersas. Baixos, de pele escamosa e olhos salientes, emitem sons guturais que soam como grasnados — mas isso é só a camada externa da linguagem. Eles não são burros. São alienígenas ao pensamento terrestre. Cultura e Sociedade A sociedade Mur’kal é baseada em Cardumes-Tribo. Cada grupo é guiado por: um Cantor de Maré (líder espiritual) um Predador Ancião (líder de guerra) Eles acreditam que o mundo terrestre é uma fase temporária do oceano. Tudo, cedo ou tarde, será água novamente. Objetos brilhantes não são tesouros. São iscas sagradas.",
     limiteAtributo: 100,
-    imagem: "https://i.imgur.com/roncFJG.jpeg",
+    imagem: "https://i.imgur.com/FAwwfMj.png",
     atributos: {
       forca: "3d6+6",
       vitalidade: "4d6+8",
@@ -1415,7 +1415,7 @@ const RACAS_DATABASE = [
     raridade: "lendario",
     descricao: "Os Espíritos são entidades formadas a partir de emoções positivas intensas e da convergência de elementos primordiais do mundo. Eles não possuem uma forma fixa: seu corpo se molda conforme o sentimento que os originou e o elemento ao qual estão ligados. Um Espírito de esperança pode parecer luz em movimento; um de serenidade pode assumir a forma de água calma ou vento suave. Diferente das raças físicas, os Espíritos não veem o mundo como território, mas como fluxo. Eles existem enquanto sua emoção-fonte permanece viva e tendem a se transformar quando o ambiente emocional ou elemental ao redor muda, tornando-os seres mutáveis, raros e profundamente simbólicos.",
     limiteAtributo: 150,
-    imagem: "https://i.imgur.com/RxgJ3eL.jpeg",
+    imagem: "https://i.imgur.com/x4UdxoS.png",
     atributos: {
       forca: "3d4+6",
       vitalidade: "4d6+10",
@@ -1542,7 +1542,7 @@ const RACAS_DATABASE = [
     raridade: "lendario",
     descricao: "Os Demonoids são uma raça nativa de Sultran, nascidos da convergência entre energia caótica, desejo, dor e sobrevivência extrema. Diferente de outras raças infernais, os Demonoids evoluem ao abandonar a monstruosidade. Quanto mais humanoide se torna, sua forma mais estável, inteligente e poderosa a criatura se torna. A forma inicial de um Demonoid é bestial, instintiva e grotesca. No entanto, à medida que absorve energia, experiências ou outros seres infernais, sua estrutura se reorganiza, aproximando-se de um corpo humanoide. Esse processo não é apenas físico — é mental e espiritual. Tornar-se “mais humano” significa adquirir consciência, estratégia e controle absoluto do próprio poder. No Inferno, a aparência não engana: quanto mais humano um Demonoid parece, mais perigoso ele é.",
     limiteAtributo: 130,
-    imagem: "https://i.imgur.com/JbRYZZM.jpeg",
+    imagem: "https://i.imgur.com/SASE09K.png",
     atributos: {
       forca: "5d8+14",
       vitalidade: "5d8+12",
@@ -1669,7 +1669,7 @@ const RACAS_DATABASE = [
     raridade: "lendario",
     descricao: "Os Drakhen são uma raça ancestral cuja existência se desenvolve em dois estágios naturais, não por linhagem, mas por acúmulo de era, poder e significado. Todo dragão nasce inferior. Pouquíssimos sobrevivem tempo suficiente para deixar de ser. Não é título. É metamorfose.",
     limiteAtributo: 200,
-    imagem: "https://i.imgur.com/kievK80.jpeg",
+    imagem: "https://i.imgur.com/36eTUCw.png",
     atributos: {
       forca: "6d8+15",
       vitalidade: "6d8+15",
@@ -1796,7 +1796,7 @@ const RACAS_DATABASE = [
     raridade: "mitico",
     descricao: "Os Dracólitos são Espíritos elevados ao mais alto grau de afinidade elemental. Desde o início dos tempos, eles surgem quando um Espírito alcança perfeita ressonância com seu elemento natural, tornando-se não apenas um usuário desse elemento, mas sua encarnação consciente. Cada elemento primordial do mundo possui um único Dracólitos ativo, e sua existência mantém o equilíbrio e a estabilidade daquela força na realidade. Assim como os Espíritos, os dracólitos não possuem uma forma fixa. Sua aparência é fluida e simbólica, moldada pelo elemento que representam e pelo estado do mundo ao seu redor. Um Dracólitos do Fogo pode parecer uma silhueta viva de chamas conscientes; um da Água, uma entidade em constante fluxo; um do Vento, uma presença quase invisível em movimento eterno. Eles não “controlam” o elemento — eles são o elemento, dotado de vontade, memória e propósito. A sucessão dos dracólitos ocorre por meio de um ritual ancestral de transmissão de poder, no qual um Dracólitos veterano treina e prepara seu sucessor por eras, até que a autoridade elemental seja transferida. Caso um Dracólitos seja destruído sem que a sucessão seja concluída, o elemento correspondente entra em desordem, tornando-se instável e afetando profundamente todos os dracólitos irmãos ligados a elementos correlatos.",
     limiteAtributo: 200,
-    imagem: "https://i.imgur.com/YeuIKhi.jpeg",
+    imagem: "https://i.imgur.com/eCiyC7m.png",
     atributos: {
       forca: "4d10+30",
       vitalidade: "4d10+30",
@@ -1939,7 +1939,7 @@ const RACAS_DATABASE = [
     raridade: "mitico",
     descricao: "Os Morvak são entidades nascidas do medo do desconhecido, do terror primordial que surge quando a realidade falha em oferecer respostas. Eles não são criados, invocados ou corrompidos — eles emergem sempre que o mundo encara algo que não consegue compreender.Opostos diretos dos Espíritos e dos Dracolitos, os Morvak não representam emoções positivas nem elementos ordenados. Eles personificam o vazio c dúvida, pânico, presságio e a sensação de que algo está errado antes mesmo de acontecer. Assim como os Espíritos, cada Morvak possui uma aparência única e instável, moldada pelo tipo de medo que o originou. Alguns assumem formas distorcidas e fragmentadas, outros parecem sombras com intenção, reflexos errados da realidade ou figuras quase humanoides que causam desconforto apenas por existirem. Onde um Morvak caminha, o mundo não se rompe — ele hesita.",
     limiteAtributo: 200,
-    imagem: "https://i.imgur.com/XyYWNED.jpeg",
+    imagem: "https://i.imgur.com/ADeZ9Gn.png",
     atributos: {
       forca: "4d6+18",
       vitalidade: "4d10+25",
@@ -2225,7 +2225,7 @@ const RACAS_DATABASE = [
     raridade: "mitico",
     descricao: "Os Ópharos são uma raça pré-doutrinária. Eles não foram criados para servir, proteger ou louvar. Eles existem para observar. Surgiram quando o mundo ainda não tinha linguagem suficiente para explicar o sagrado — então o sagrado precisou aprender a se ver. Fisicamente, lembram anjos apenas no que é superficial: forma humanoide, asas, halos, luz etérea. Mas isso é só o casco compreensível. A verdadeira natureza deles começa quando você presta atenção demais. Suas asas não são apenas penas: são estruturas sensoriais, cheias de olhos que se abrem conforme o nível de consciência do Ópharo em relação ao Divino, ao Caos ou à Verdade Absoluta. Quanto mais ele entende a realidade, mais olhos surgem. Quanto mais olhos, menos humano ele parece.",
     limiteAtributo: 200,
-    imagem: "https://i.imgur.com/rduUonk.jpeg",
+    imagem: "https://i.imgur.com/lOIcKqW.png",
     atributos: {
       forca: "3d6+8",
       vitalidade: "4d6+10",
