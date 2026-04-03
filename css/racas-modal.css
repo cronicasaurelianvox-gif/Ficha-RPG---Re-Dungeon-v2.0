@@ -576,7 +576,7 @@
 
 .raca-imagem {
   width: 100%;
-  height: 280px;
+  height: 370px;
   margin-bottom: 28px;
   border-radius: 10px;
   overflow: hidden;
@@ -1157,7 +1157,7 @@
   }
 
   .raca-imagem {
-    height: 250px;
+    height: 330px;
   }
 
   .raca-nome {
@@ -1207,7 +1207,7 @@
   }
 
   .raca-imagem {
-    height: 200px;
+    height: 264px;
     margin-bottom: 16px;
   }
 

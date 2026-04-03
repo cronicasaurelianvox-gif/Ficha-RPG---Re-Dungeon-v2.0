@@ -11,7 +11,7 @@ const RACAS_DATABASE = [
     raridade: "comum",
     descricao: "Os humanos são a raça mais flexível e diversa entre as civilizações. Eles surgem e prosperam praticamente em qualquer ambiente, espalhando-se por desertos, florestas, montanhas e cidades costeiras sem dificuldade. Sua moral, tradições e ambições mudam drasticamente de região para região, tornando impossível definir um único 'jeito humano' de existir.",
     limiteAtributo: 100,
-    imagem: "https://i.imgur.com/DWMNY36.png",
+    imagem: "https://i.imgur.com/VAOeAcl.png",
     atributos: {
       forca: "4d6+10",
       vitalidade: "4d6+10",
@@ -119,7 +119,7 @@ const RACAS_DATABASE = [
     raridade: "comum",
     descricao: "Animanos são semelhantes aos humanos à primeira vista, mas carregam no corpo marcas vivas de sua ancestralidade animal — caudas que denunciam emoções antes das palavras, orelhas que reagem ao menor som, padrões de pelagem, garras sutis ou olhos que refletem instinto. Essa fusão entre razão humana e herança selvagem dá a eles uma maneira única de perceber o mundo, guiada tanto pela intuição quanto por tradições próprias desenvolvidas ao longo de séculos de isolamento. Seu modo de viver costuma ser moldado pelo ritmo da natureza, e suas técnicas, crenças e costumes nascem dessa conexão profunda com os animais que vieram antes deles, tornando-os uma raça que transita entre o civilizado e o primal sem perder o equilíbrio.",
     limiteAtributo: 100,
-    imagem: "https://i.imgur.com/wK5OePI.jpeg",
+    imagem: "https://i.imgur.com/SEQK76x.png",
     atributos: {
       forca: "5d6+12",
       vitalidade: "5d6+12",
@@ -231,7 +231,7 @@ const RACAS_DATABASE = [
     raridade: "comum",
     descricao: "Os Mestiços são a raça mais imprevisível e diversificada do mundo. Nascidos da união entre sangues distintos, eles não herdam linhagens puras nem características fixas. Cada Mestiço é uma exceção viva, carregando traços físicos, culturais e espirituais fragmentados de suas origens. Por nunca pertencerem inteiramente a um único povo, aprendem desde cedo a sobreviver na intersecção, desenvolvendo uma capacidade rara de adaptação, conflito interno e criatividade extrema.",
     limiteAtributo: 100,
-    imagem: "https://i.imgur.com/99xmS84.jpeg",
+    imagem: "https://i.imgur.com/zgts4NC.png",
     atributos: {
       forca: "4d6+12",
       vitalidade: "4d6+12",
@@ -464,7 +464,7 @@ const RACAS_DATABASE = [
     raridade: "raro",
     descricao: "Anões são seres robustos, persistentes e moldados pela mesma dureza das montanhas que chamam de lar. Baixos e fortes, com músculos compactos e uma resistência lendária, eles prosperam em fortalezas subterrâneas repletas de túneis, forjas e salões ecoando histórias antigas. Sua vida gira em torno da tradição, da honra e do trabalho meticuloso — cada arma, joia ou estrutura criada por um anão carrega séculos de técnica aperfeiçoada.",
     limiteAtributo: 100,
-    imagem: "https://i.imgur.com/GTDmT4Q.jpeg",
+    imagem: "https://i.imgur.com/lQYaH3k.png",
     atributos: {
       forca: "5d8+12",
       vitalidade: "5d8+12",
@@ -575,7 +575,7 @@ const RACAS_DATABASE = [
     raridade: "raro",
     descricao: "Elfos são seres de graça sobrenatural, longos anos e beleza quase etérea, vivendo em harmonia com a magia e com os ritmos antigos do mundo. Seus corpos são esguios, seus movimentos leves e calculados, e seus sentidos aguçados enxergam nuances que outras raças sequer percebem. Costumam habitar florestas profundas, vales ocultos ou enclaves místicos, preservando culturas que atravessam séculos como se fossem estações do ano.",
     limiteAtributo: 100,
-    imagem: "https://i.imgur.com/PYGLDAH.jpeg",
+    imagem: "https://i.imgur.com/MflH60q.png",
     atributos: {
       forca: "3d6+10",
       vitalidade: "3d6+10",
@@ -685,7 +685,7 @@ const RACAS_DATABASE = [
     raridade: "raro",
     descricao: "Os Animalus são seres de aparência nitidamente animalesca, carregando traços físicos completos de suas linhagens — presas, escamas, asas, carapaças, caudas ou guelras. Possuem uma longevidade superior à dos humanos e um intelecto comparável ao dos elfos, embora sejam frequentemente subestimados ou perseguidos devido à sua aparência bestial. Essa hostilidade moldou sua cultura: ao longo das eras, os Animalus desenvolveram técnicas de combate brutais, eficientes e refinadas, tornando-se os mais aptos ao combate marcial direto.",
     limiteAtributo: 100,
-    imagem: "https://i.imgur.com/RoWhJ0N.jpeg",
+    imagem: "https://i.imgur.com/KLIGWgz.png",
     atributos: {
       forca: "5d6+8",
       vitalidade: "5d6+12",
@@ -796,7 +796,7 @@ const RACAS_DATABASE = [
     raridade: "epico",
     descricao: "Os Homúnculos são seres artificiais criados por alquimistas, arcanistas e estudiosos que ousaram imitar o ato primordial da criação. Diferente de construtos comuns, eles não são simples ferramentas: cada Homúnculo nasce a partir de matéria viva, essência mágica e intenção consciente, o que lhes concede vontade própria, memória fragmentada e, em muitos casos, emoções reais. Embora seus corpos sejam moldados em laboratório ou círculos rituais, suas almas não são falsas. Elas surgem incompletas, instáveis ou emprestadas — ecos de algo que poderia ter sido humano, elfo ou algo além. Por isso, Homúnculos vivem em constante busca por identidade, tentando entender se são obra, erro ou evolução. Fisicamente, variam enormemente: alguns são quase indistinguíveis de humanos, outros exibem marcas alquímicas, runas sob a pele, membros artificiais ou olhos que jamais piscam. Eles não envelhecem como raças naturais e raramente adoecem, mas carregam o peso de saber que sua existência foi planejada, não nascida.",
     limiteAtributo: 150,
-    imagem: "https://i.imgur.com/FI4hpyd.jpeg",
+    imagem: "https://i.imgur.com/MIhOTAl.png",
     atributos: {
       forca: "4d6+12",
       vitalidade: "5d6+14",
@@ -923,7 +923,7 @@ const RACAS_DATABASE = [
     raridade: "epico",
     descricao: "Os Lukans são uma raça criados pelos Dracólitos, moldados para servir como guardiões de Sultran, o Inferno, e das fronteiras onde a realidade ameaça ruir. À primeira vista, possuem uma aparência majoritariamente humanoide, marcada por traços infernais: chifres de formas variadas, olhos incandescentes, marcas naturais semelhantes a escamas e uma presença intimidadora que denuncia sua origem. Seus corpos são esculpidos para o conflito, resultado direto de uma criação voltada à guerra e à vigilância eterna. Apesar da estética infernal, a essência dos Lukans vai além da aparência. Em suas veias corre uma linhagem draconica latente, herdada diretamente de seus criadores, manifestando-se como força excepcional, resistência incomum e um potencial de combate. Treinados desde a origem para a batalha absoluta.",
     limiteAtributo: 130,
-    imagem: "https://i.imgur.com/Iyb7kMg.jpeg",
+    imagem: "https://i.imgur.com/RgmZnIM.png",
     atributos: {
       forca: "5d8+12",
       vitalidade: "5d8+12",
@@ -1035,7 +1035,7 @@ const RACAS_DATABASE = [
     raridade: "epico",
     descricao: "As Fadas são seres nascidos da interseção entre o mundo físico e os planos sutis da realidade. Seu corpo não é inteiramente material, nem puramente espiritual, o que as torna profundamente ligadas a forças invisíveis como emoções, desejos, memórias e promessas. Essa natureza liminar faz com que o tempo, a moral e a lógica sejam percebidos por elas de forma diferente das demais raças. Embora geralmente pequenas em estatura, as Fadas jamais devem ser subestimadas. Sua longevidade, astúcia e domínio sobre energias sutis as tornam entidades imprevisíveis, capazes de alterar eventos com gestos mínimos, palavras bem colocadas ou acordos que nunca deveriam ser aceitos. Para uma Fada, poder não se mede em força bruta, mas em influência, significado e consequência.",
     limiteAtributo: 150,
-    imagem: "https://i.imgur.com/01WNadN.jpeg",
+    imagem: "https://i.imgur.com/JGRwGxB.png",
     atributos: {
       forca: "3d4+6",
       vitalidade: "3d4+6",
@@ -1163,7 +1163,7 @@ const RACAS_DATABASE = [
     raridade: "epico",
     descricao: "Os Worgen surgiram na Era das Trevas, um período esquecido em que deuses ainda caminhavam entre mortais e a magia era moldada sem medo das consequências. Temendo entidades antigas que escapavam à compreensão divina, magos humanos realizaram um ritual proibido: fundiram um Espírito Antigo predatório a corpos mortais, criando guardiões capazes de caçar aquilo que nem deuses ousavam enfrentar. O resultado foram humanos alterados, dotados de intelecto e percepção élficos, mas ligados à magia de sangue, pois o pacto original jamais poderia ser sustentado sem um preço. Em suas veias corre um sangue vivo, pulsante, capaz de se fortalecer, reagir e se adaptar ao conflito. As presas não são apenas traços físicos — são condutores do pacto, símbolos de que cada Worgen carrega dentro de si uma fome ancestral. Com o fim da Era das Trevas, os rituais foram selados e os deuses se afastaram. Os Worgen sobreviveram como uma raça amaldiçoada e poderosa, dividida entre controle e instinto, razão e ferocidade. Eles não são bestas, mas jamais deixam o mundo esquecer que foram criados para caçar o impossível.",
     limiteAtributo: 150,
-    imagem: "https://i.imgur.com/x4mekqR.jpeg",
+    imagem: "https://i.imgur.com/IelhWY0.png",
     atributos: {
       forca: "4d6+14",
       vitalidade: "5d6+12",
@@ -1415,7 +1415,7 @@ const RACAS_DATABASE = [
     raridade: "lendario",
     descricao: "Os Espíritos são entidades formadas a partir de emoções positivas intensas e da convergência de elementos primordiais do mundo. Eles não possuem uma forma fixa: seu corpo se molda conforme o sentimento que os originou e o elemento ao qual estão ligados. Um Espírito de esperança pode parecer luz em movimento; um de serenidade pode assumir a forma de água calma ou vento suave. Diferente das raças físicas, os Espíritos não veem o mundo como território, mas como fluxo. Eles existem enquanto sua emoção-fonte permanece viva e tendem a se transformar quando o ambiente emocional ou elemental ao redor muda, tornando-os seres mutáveis, raros e profundamente simbólicos.",
     limiteAtributo: 150,
-    imagem: "https://i.imgur.com/x4UdxoS.png",
+    imagem: "https://i.imgur.com/5FGgXkr.png",
     atributos: {
       forca: "3d4+6",
       vitalidade: "4d6+10",
@@ -1542,7 +1542,7 @@ const RACAS_DATABASE = [
     raridade: "lendario",
     descricao: "Os Demonoids são uma raça nativa de Sultran, nascidos da convergência entre energia caótica, desejo, dor e sobrevivência extrema. Diferente de outras raças infernais, os Demonoids evoluem ao abandonar a monstruosidade. Quanto mais humanoide se torna, sua forma mais estável, inteligente e poderosa a criatura se torna. A forma inicial de um Demonoid é bestial, instintiva e grotesca. No entanto, à medida que absorve energia, experiências ou outros seres infernais, sua estrutura se reorganiza, aproximando-se de um corpo humanoide. Esse processo não é apenas físico — é mental e espiritual. Tornar-se “mais humano” significa adquirir consciência, estratégia e controle absoluto do próprio poder. No Inferno, a aparência não engana: quanto mais humano um Demonoid parece, mais perigoso ele é.",
     limiteAtributo: 130,
-    imagem: "https://i.imgur.com/SASE09K.png",
+    imagem: "https://i.imgur.com/aX1Ifl8.png",
     atributos: {
       forca: "5d8+14",
       vitalidade: "5d8+12",
@@ -2082,7 +2082,7 @@ const RACAS_DATABASE = [
     raridade: "mitico",
     descricao: "Os Celestines são seres alados que não nascem — são consagrados. Cada um deles foi, em vida mortal, responsável por um feito significativo que alterou o curso do mundo de Re’Dungeon. Após a morte, essas almas são elevadas pelos ecos dos deuses antigos e desaparecidos, retornando à existência como Celestines, portadores de um Propósito absoluto. Não possuem uma aparência fixa: sua forma reflete seu propósito, sua história e a lei que passaram a representar. Alguns se assemelham a figuras humanoides aladas, outros a entidades quase abstratas, feitas de luz, símbolos ou conceitos manifestos. Para um Celestine, poder não vem da fé ou da hierarquia, mas da profundidade de seu Propósito — quanto mais fundamental ele é para a ordem do mundo, maior o poder que o Celestine manifesta. Cada Propósito funciona como uma lei viva da realidade. Justiça, Verdade, Vida, Sobrevivência, Esperança ou Domínio não possuem o mesmo peso cósmico, e por isso os Celestines jamais estão no mesmo nível de poder entre si.",
     limiteAtributo: 250,
-    imagem: "https://i.imgur.com/f3Pt2Mp.jpeg",
+    imagem: "https://i.imgur.com/bNMxD9E.png",
     atributos: {
       forca: "3d20+35",
       vitalidade: "3d20+35",
