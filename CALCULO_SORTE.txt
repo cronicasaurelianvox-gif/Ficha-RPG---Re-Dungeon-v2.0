@@ -1,0 +1,294 @@
+═══════════════════════════════════════════════════════════════════════════════
+                        SISTEMA DE SORTE - RE'DUNGEON
+═══════════════════════════════════════════════════════════════════════════════
+
+VISÃO GERAL DO SISTEMA DE SORTE
+─────────────────────────────────────────────────────────────────────────────
+O Sistema de Sorte em Re'Dungeon é baseado em rolagens de dados que geram
+"Fortuna", uma moeda especial que pode ser gasta pelos jogadores durante a
+campanha para influenciar eventos.
+
+
+═══════════════════════════════════════════════════════════════════════════════
+                            COMPONENTES PRINCIPAIS
+═══════════════════════════════════════════════════════════════════════════════
+
+1. SORTE TOTAL (SOR)
+─────────────────────────────────────────────────────────────────────────────
+   • Atributo primário de cada raça
+   • Origem: Rolagem de raça (ex: "5d20", "4d20+20")
+   • Nunca é modificado após a criação (atributo fixo)
+   • Usado como base para todos os cálculos de Sorte
+
+
+2. FORTUNA BASE
+─────────────────────────────────────────────────────────────────────────────
+   Fórmula: Fortuna Base = floor(Sorte Total ÷ 25)
+   
+   Exemplo com Sorte = 100:
+   └─ Fortuna Base = floor(100 ÷ 25) = floor(4) = 4
+   
+   Exemplo com Sorte = 85:
+   └─ Fortuna Base = floor(85 ÷ 25) = floor(3.4) = 3
+   
+   Nota: Fortuna Base não é usada diretamente nas rolagens,
+         mas serve como referência do potencial de sorte do personagem
+
+
+3. BÔNUS BASE (BÔNUS DE SORTE)
+─────────────────────────────────────────────────────────────────────────────
+   Fórmula: Bônus Base = floor(Sorte Total ÷ 25)
+   
+   • É um valor fixo calculado a partir de Sorte Total
+   • É aplicado como bônus em CADA rolagem de Fortuna
+   • NÃO é editável pelo usuário
+   • Exemplo com Sorte = 100:
+     └─ Bônus Base = floor(100 ÷ 25) = 4 (será adicionado a cada rolagem)
+
+
+4. FORTUNA ATUAL
+─────────────────────────────────────────────────────────────────────────────
+   • Moeda que o jogador acumula através de rolagens
+   • Começa em 0 (não em Fortuna Base!)
+   • Aumenta quando o jogador faz uma rolagem de Fortuna
+   • Armazenada no localStorage do navegador
+   • Pode ser gasta durante a campanha
+
+
+═══════════════════════════════════════════════════════════════════════════════
+                         PROCESSO DE ROLAGEM DE FORTUNA
+═══════════════════════════════════════════════════════════════════════════════
+
+Restrições de Rolagem:
+─────────────────────────────────────────────────────────────────────────────
+✓ O jogador pode rolar UMA VEZ POR DIA APENAS
+✓ A disponibilidade é resetada à meia-noite (00:00 local)
+✓ Se Sorte Total = 0, não pode rolar
+✓ Após rolar, a data é registrada no localStorage
+
+
+CAMADA 1: Determinação de Dados
+─────────────────────────────────────────────────────────────────────────────
+Fórmula:
+└─ Dados Base = random(1~6)  [sempre 1 a 6]
+└─ Dados Extras = floor(Sorte Total ÷ 20)
+└─ Total de Dados = Dados Base + Dados Extras
+
+Exemplo com Sorte = 100:
+└─ Dados Base = random(1~6) → Suponha 4
+└─ Dados Extras = floor(100 ÷ 20) = 5
+└─ Total de Dados = 4 + 5 = 9 dados (d6)
+
+Exemplo com Sorte = 85:
+└─ Dados Base = random(1~6) → Suponha 2
+└─ Dados Extras = floor(85 ÷ 20) = 4
+└─ Total de Dados = 2 + 4 = 6 dados (d6)
+
+
+CAMADA 2: Execução da Rolagem
+─────────────────────────────────────────────────────────────────────────────
+Para cada dado calculado em CAMADA 1:
+└─ Rolar um dado de 6 faces (d6): 1~6
+└─ Somar todos os resultados
+
+Fórmula:
+└─ Soma da Rolagem = ∑(d6) para cada dado no Total
+
+Exemplo (continuando do anterior com 9 dados):
+└─ Rolagens: [4, 3, 5, 2, 6, 1, 3, 4, 5]
+└─ Soma da Rolagem = 4 + 3 + 5 + 2 + 6 + 1 + 3 + 4 + 5 = 33
+
+
+CAMADA 3: Aplicação de Bônus
+─────────────────────────────────────────────────────────────────────────────
+Fórmula:
+└─ Bônus de Sorte = floor(Sorte Total ÷ 25)
+└─ Resultado Final = Soma da Rolagem + Bônus de Sorte
+└─ Fortuna Atual = max(0, Resultado Final)
+
+Exemplo (continuando com Sorte = 100):
+└─ Soma da Rolagem = 33
+└─ Bônus de Sorte = floor(100 ÷ 25) = 4
+└─ Resultado Final = 33 + 4 = 37
+└─ 💰 FORTUNA ATUAL = 37
+
+
+═══════════════════════════════════════════════════════════════════════════════
+                            EXEMPLOS PRÁTICOS
+═══════════════════════════════════════════════════════════════════════════════
+
+EXEMPLO 1: Personagem com Sorte = 50
+─────────────────────────────────────────────────────────────────────────────
+Cálculos Iniciais:
+└─ Fortuna Base = floor(50 ÷ 25) = 2
+└─ Bônus Base = floor(50 ÷ 25) = 2
+
+Rolagem:
+└─ Dados Base = 3 (aleatorio)
+└─ Dados Extras = floor(50 ÷ 20) = 2
+└─ Total de Dados = 3 + 2 = 5 dados
+
+Rolagem dos 5d6:
+└─ Resultados: [4, 2, 5, 3, 1]
+└─ Soma = 15
+
+Resultado Final:
+└─ Resultado = 15 + 2 (bônus) = 17
+└─ 💰 Fortuna Atual = 17
+
+
+EXEMPLO 2: Personagem com Sorte = 120
+─────────────────────────────────────────────────────────────────────────────
+Cálculos Iniciais:
+└─ Fortuna Base = floor(120 ÷ 25) = 4
+└─ Bônus Base = floor(120 ÷ 25) = 4
+
+Rolagem:
+└─ Dados Base = 5 (aleatorio)
+└─ Dados Extras = floor(120 ÷ 20) = 6
+└─ Total de Dados = 5 + 6 = 11 dados
+
+Rolagem dos 11d6:
+└─ Resultados: [6, 4, 5, 2, 3, 6, 1, 4, 5, 2, 3]
+└─ Soma = 41
+
+Resultado Final:
+└─ Resultado = 41 + 4 (bônus) = 45
+└─ 💰 Fortuna Atual = 45
+
+
+EXEMPLO 3: Personagem com Sorte = 30 (Baixa Sorte)
+─────────────────────────────────────────────────────────────────────────────
+Cálculos Iniciais:
+└─ Fortuna Base = floor(30 ÷ 25) = 1
+└─ Bônus Base = floor(30 ÷ 25) = 1
+
+Rolagem:
+└─ Dados Base = 2 (aleatorio)
+└─ Dados Extras = floor(30 ÷ 20) = 1
+└─ Total de Dados = 2 + 1 = 3 dados
+
+Rolagem dos 3d6:
+└─ Resultados: [2, 4, 1]
+└─ Soma = 7
+
+Resultado Final:
+└─ Resultado = 7 + 1 (bônus) = 8
+└─ 💰 Fortuna Atual = 8
+
+
+═══════════════════════════════════════════════════════════════════════════════
+                         FATORES DE ESCALA DE SORTE
+═══════════════════════════════════════════════════════════════════════════════
+
+Divisor para Dados Extras: 20
+└─ Cada 20 pontos de Sorte = +1 dado extra na rolagem
+└─ Escala: 0-19 = 0 dados extra, 20-39 = 1 extra, 40-59 = 2 extras, etc.
+
+Divisor para Fortuna Base/Bônus: 25
+└─ Cada 25 pontos de Sorte = +1 Fortuna Base ou +1 Bônus
+└─ Escala: 0-24 = 0, 25-49 = 1, 50-74 = 2, 75-99 = 3, etc.
+
+Tabela de Potencial por Sorte:
+─────────────────────────────────────────────────────────────────────────────
+Sorte Total | Fortuna Base | Bônus Base | Dados Extras Máx | Fortuna Máx Esperada
+─────────────────────────────────────────────────────────────────────────────
+    25      |      1       |     1      |        1         |         7
+    50      |      2       |     2      |        2         |        18
+    75      |      3       |     3      |        3         |        30
+   100      |      4       |     4      |        5         |        44
+   125      |      5       |     5      |        6         |        56
+   150      |      6       |     6      |        7         |        68
+
+
+═══════════════════════════════════════════════════════════════════════════════
+                        ARMAZENAMENTO E SINCRONIZAÇÃO
+═══════════════════════════════════════════════════════════════════════════════
+
+LocalStorage Keys:
+─────────────────────────────────────────────────────────────────────────────
+• redungeon_fortuna_atual
+  └─ Armazena o valor atual de Fortuna
+  └─ Atualizado após cada rolagem
+  └─ Persiste entre sessões do navegador
+
+• redungeon_ultima_rolagem_sorte
+  └─ Armazena a data da última rolagem (YYYY-MM-DD)
+  └─ Usado para verificar se pode rolar hoje
+  └─ Comparado com data atual
+
+
+Sincronização com Ficha:
+─────────────────────────────────────────────────────────────────────────────
+✓ Se Sorte Total muda, Fortuna Base é recalculada
+✓ Se Sorte Total muda, Bônus Base é recalculado
+✓ Fortuna Atual é mantida (não resetada)
+✓ Se Fortuna Atual ficar inválida (negativa), é resetada para Fortuna Base
+
+
+═══════════════════════════════════════════════════════════════════════════════
+                           VALIDAÇÕES E RESTRIÇÕES
+═══════════════════════════════════════════════════════════════════════════════
+
+Antes de Rolar:
+─────────────────────────────────────────────────────────────────────────────
+✗ Se já foi rolado hoje → Rolagem bloqueada
+✗ Se Sorte Total = 0 → Rolagem bloqueada
+✓ Else → Pode rolar
+
+Após Rolar:
+─────────────────────────────────────────────────────────────────────────────
+✓ Marcar como "já rolado hoje"
+✓ Salvar data de hoje
+✓ Salvar novo valor de Fortuna
+✓ Atualizar UI
+✓ Disparar evento 'fortunaRolada' com detalhes completos
+
+Nenhuma Rolagem Pode:
+─────────────────────────────────────────────────────────────────────────────
+✗ Gerar Fortuna negativa (mínimo é 0)
+✗ Ser feita duas vezes no mesmo dia
+✗ Ser feita com Sorte = 0
+
+
+═══════════════════════════════════════════════════════════════════════════════
+                            FÓRMULA RESUMIDA FINAL
+═══════════════════════════════════════════════════════════════════════════════
+
+ROTEIRO COMPLETO DE CÁLCULO:
+
+1. Sorte Total = Valor atributo primário (fixo)
+
+2. Dados Base = random(1~6)
+   Dados Extras = floor(Sorte ÷ 20)
+   Total Dados = Dados Base + Dados Extras
+
+3. Soma Rolagem = ∑(1d6) × Total Dados
+
+4. Bônus Sorte = floor(Sorte ÷ 25)
+
+5. Resultado Final = Soma Rolagem + Bônus Sorte
+
+6. Fortuna Atual = max(0, Resultado Final)
+
+
+FÓRMULA COMPACTA:
+Fortuna Atual = max(0, (random(1~6) + floor(Sorte÷20)) × d6 + floor(Sorte÷25))
+
+
+═══════════════════════════════════════════════════════════════════════════════
+                         NOTAS IMPORTANTES DO SISTEMA
+═══════════════════════════════════════════════════════════════════════════════
+
+✓ Cada rolagem é COMPLETAMENTE aleatória (random seed)
+✓ Não há "garantia de ganho mínimo" por dia
+✓ Bônus Base é aplicado UMA VEZ por rolagem (não por dado)
+✓ Fortuna NUNCA pode ser negativa
+✓ Sorte Total é um atributo que NUNCA muda após criação
+✓ Fortuna Base é apenas informacional (display)
+✓ Bônus Base é automático e não pode ser editado
+✓ Apenas Fortuna Atual é modificável (através de rolagens)
+✓ O sistema valida disponibilidade por data local
+✓ localStorage persiste dados mesmo ao fechar a aba/navegador
+
+═══════════════════════════════════════════════════════════════════════════════
