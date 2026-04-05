@@ -130,30 +130,30 @@ const RACAS_DATABASE = [
     },
     habilidadesBasicas: [
       {
-        nome: "Véu do Encanto",
-        descricao: "O Animanos recebe +2 em ações sociais, manipulação, persuasão ou engano. Uma vez por cena, pode impor hesitação a um alvo consciente, reduzindo sua próxima ação ou atrasando sua reação.",
+        nome: "Instinto Desperto",
+        descricao: "Os Animanos não dependem apenas da lógica. Seu corpo está constantemente sintonizado com as ameaças ao seu redor, reagindo instintivamente antes mesmo da mente compreender o perigo.",
         bonus: [
-          "+2 em ações sociais e persuasão",
-          "Hesitação no alvo (Obstáculo -11)",
-          "Uma vez por cena"
+          "Detecta perigo iminente com mais facilidade (+3 em Percepção)",
+          "Pequeno bônus em esquiva ou reação (+1)",
+          "Em situações de surpresa, chance de agir primeiro"
         ]
       },
       {
-        nome: "Véu da Transição",
-        descricao: "O Animanos pode ignorar obstáculos leves, atravessar espaços estreitos ou alterar brevemente sua posição como se estivesse parcialmente fora do plano físico. Uma vez por cena, pode redefinir seu posicionamento no campo de batalha ou em uma cena narrativa.",
+        nome: "Sentidos Aguçados",
+        descricao: "Seus traços animais amplificam significativamente sua percepção do mundo. Audição e olfato superiores funcionam como uma segunda visão, permitindo navegar em completa escuridão ou detectar presenças invisíveis.",
         bonus: [
-          "Ignora obstáculos leves",
-          "Atravessa espaços estreitos",
-          "Redefinir posicionamento uma vez por cena"
+          "Audição e olfato superiores ao padrão humano (Vantagem sensorial)",
+          "Redução no obstáculo para perceber inimigos ocultos ou mudanças no ambiente",
+          "+3 em rastreamento e localização"
         ]
       },
       {
-        nome: "Véu do Pacto",
-        descricao: "O jogador define um tipo de acordo ou promessa (proteção, segredo, troca, favor). Sempre que um pacto válido estiver ativo, o Animanos recebe +3 nas rolagens relacionadas àquele acordo. Quebrar um pacto gera consequências narrativas sérias.",
+        nome: "Intuição Primal",
+        descricao: "Uma percepção que vai além do visível. Os Animanos conseguem captar as intenções hostis próximas e sentir quando algo está fora do equilíbrio natural, um dom ancestral que os protege de emboscadas.",
         bonus: [
-          "+3 em rolagens relacionadas ao pacto",
-          "Define tipo de acordo pessoalmente",
-          "Consequências narrativas por quebra de pacto"
+          "Capta intenções hostis próximas",
+          "+2 de bônus leve contra emboscadas",
+          "Pode sentir quando algo está fora do equilíbrio natural"
         ]
       }
     ],
