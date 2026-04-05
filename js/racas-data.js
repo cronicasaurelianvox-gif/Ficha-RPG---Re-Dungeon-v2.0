@@ -231,7 +231,7 @@ const RACAS_DATABASE = [
     raridade: "comum",
     descricao: "Os Mestiços são a raça mais imprevisível e diversificada do mundo. Nascidos da união entre sangues distintos, eles não herdam linhagens puras nem características fixas. Cada Mestiço é uma exceção viva, carregando traços físicos, culturais e espirituais fragmentados de suas origens. Por nunca pertencerem inteiramente a um único povo, aprendem desde cedo a sobreviver na intersecção, desenvolvendo uma capacidade rara de adaptação, conflito interno e criatividade extrema.",
     limiteAtributo: 100,
-    imagem: "https://i.imgur.com/iguB9BZ.png",
+    imagem: "https://i.imgur.com/jA2Xvz4.png",
     atributos: {
       forca: "4d6+12",
       vitalidade: "4d6+12",
