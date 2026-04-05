@@ -320,19 +320,19 @@ const RACAS_DATABASE = [
       },
       {
         nome: "Herança Dupla",
-        descricao: "O Mestiço carrega traços de duas origens distintas. Ao criar o personagem, escolha duas raças-base. Sempre que uma habilidade, efeito ou teste racial for aplicado, o Mestiço pode escolher qual herança está ativa naquele momento. Essa escolha pode ser alterada uma vez por batalha.",
+        descricao: "O Mestiço carrega duas raças-base. Em combate ou situações relevantes, pode ativar uma Herança Dominante, recebendo os bônus raciais daquela origem. Uma vez por batalha, ele pode alternar a herança ativa, adaptando-se à situação. No entanto, essa troca causa Instabilidade, aplicando uma penalidade temporária leve (como redução de atributos ou vulnerabilidade momentânea). Apenas uma herança pode estar ativa por vez, e seus efeitos não se acumulam. O Mestiço não é definido por uma única origem — mas pela capacidade de escolher quem precisa ser em cada momento.",
         tipo: "Duradoura",
         alcance: "Pessoal",
-        alvos: "Você",
+        alvos: "Jogador",
         custo: 0,
         recarga: 0,
         duracao: 0,
         dado: "0",
         bonus: [
-          "Escolhe qual herança está ativa",
-          "Flexibilidade em habilidades raciais",
-          "Alterável uma vez por batalha",
-          "Sem acúmulo de bônus simultâneos"
+          "Ativa uma Herança Dominante com seus bônus raciais",
+          "Alterna herança uma vez por batalha",
+          "Troca causa Instabilidade (penalidade leve temporária)",
+          "Apenas uma herança ativa por vez (sem acúmulo)"
         ]
       }
     ]
