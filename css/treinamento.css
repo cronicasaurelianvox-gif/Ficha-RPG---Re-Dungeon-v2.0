@@ -583,6 +583,7 @@
     text-align: right;
 }
 
+/* 🐛 FIX: Melhor destaque para sucesso/falha */
 .resultado-item--destaque {
     background: linear-gradient(135deg, rgba(255, 215, 0, 0.15) 0%, rgba(212, 175, 85, 0.1) 100%);
     border: 2px solid #ffd700;
@@ -593,6 +594,26 @@
     font-size: 1.5rem;
     color: #00ff00;
     text-shadow: 0 0 8px rgba(0, 255, 0, 0.3);
+}
+
+/* 🐛 FIX: Classe para resultado sucesso */
+.resultado-item--sucesso {
+    background: linear-gradient(135deg, rgba(0, 255, 0, 0.1) 0%, rgba(0, 150, 0, 0.05) 100%) !important;
+    border: 2px solid #00ff00 !important;
+}
+
+.resultado-item--sucesso .resultado-valor {
+    color: #00ff00 !important;
+}
+
+/* 🐛 FIX: Classe para resultado falha */
+.resultado-item--falha {
+    background: linear-gradient(135deg, rgba(255, 0, 0, 0.1) 0%, rgba(150, 0, 0, 0.05) 100%) !important;
+    border: 2px solid #ff3333 !important;
+}
+
+.resultado-item--falha .resultado-valor {
+    color: #ff3333 !important;
 }
 
 @media (max-width: 768px) {

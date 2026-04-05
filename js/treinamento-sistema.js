@@ -75,6 +75,7 @@ class TreinamentoManager {
     constructor() {
         this.aptidoesDB = null;
         this.stateListener = null;
+        this.stateWatcherInterval = null;
         this.init();
     }
 
@@ -433,10 +434,15 @@ class TreinamentoManager {
     setupStateWatcher() {
         if (!window.appState) return;
 
+        // 🐛 FIX: Limpar watcher anterior se existir
+        if (this.stateWatcherInterval) {
+            clearInterval(this.stateWatcherInterval);
+        }
+
         let ultimosValores = this.obterValoresAtuaisAtributos();
 
         // Polling a cada 500ms para detectar mudanças
-        setInterval(() => {
+        this.stateWatcherInterval = setInterval(() => {
             const novosValores = this.obterValoresAtuaisAtributos();
 
             // Verificar se houve mudança em algum atributo
@@ -532,9 +538,10 @@ class TreinamentoManager {
             info.classList.add('hidden');
         }
 
-        // Resetar resultado
+        // 🐛 FIX: Resetar resultado e todos os inputs
         document.getElementById('resultado-treino').classList.add('hidden');
         document.getElementById('input-horas').value = 1;
+        document.getElementById('input-bonus-extra').value = 0;
     }
 
     /**
@@ -726,17 +733,22 @@ class TreinamentoManager {
         let xpAtual = dados.xpAtual + xp;
         let nivel = atributoData?.base || 0;  // ✨ SINCRONIZAR: usar base atual
         let xpNecessaria = this.obterXPNecessario(nivel);
+        let houveLevelUp = false;
 
         // Verificar múltiplas subidas de nível
         while (xpAtual >= xpNecessaria) {
             xpAtual -= xpNecessaria;
             nivel += 1;
+            houveLevelUp = true;
 
             // Calcular novo XP necessário BASEADO NO NOVO NÍVEL
             xpNecessaria = this.obterXPNecessario(nivel);
 
             // Atualizar campo base do atributo no state
-            this.incrementarAtributoBase(atributo);
+            if (atributoData) {
+                atributoData.base = nivel;
+                atributoData.total = (atributoData.base || 0) + (atributoData.extra || 0) + (atributoData.bonus || 0);
+            }
 
             // Recalcular obstáculo
             const novoObstaculo = 5 + (Math.floor(nivel / 25) * 2);
@@ -748,25 +760,14 @@ class TreinamentoManager {
         dados.nivel = nivel;  // ✨ Sincronizar nivel local com base
         dados.xpNecessaria = xpNecessaria;  // ✨ Atualizar XP necessário para próximo nível
 
-        console.log(`📊 ${atributo}: Nv. ${nivel} | XP: ${xpAtual}/${xpNecessaria} | Próximo nível: ${xpNecessaria} XP`);
+        console.log(`📊 ${atributo}: Nv. ${nivel} | XP: ${xpAtual}/${xpNecessaria}${houveLevelUp ? ' 🎉 LEVEL UP!' : ''}`);
 
-        window.appState.setState({ treinamento: state.treinamento });
+        // 🐛 FIX: Atualizar ambos state de uma vez
+        window.appState.setState({ 
+            atributos: state.atributos,
+            treinamento: state.treinamento 
+        });
         this.salvarTrainamentoLocalStorage();
-    }
-
-    /**
-     * Incrementa o campo base do atributo
-     */
-    incrementarAtributoBase(atributo) {
-        const state = window.appState.getState();
-        const atributoData = state.atributos?.primarios?.[atributo];
-
-        if (atributoData) {
-            atributoData.base += 1;
-            atributoData.total = (atributoData.base || 0) + (atributoData.extra || 0) + (atributoData.bonus || 0);
-            window.appState.setState({ atributos: state.atributos });
-            console.log(`✅ Atributo ${atributo} incrementado para base: ${atributoData.base}`);
-        }
     }
 
     /**
@@ -799,13 +800,39 @@ class TreinamentoManager {
         const resultadoFinal = d6Base + bonusAptidao + bonusExtraManual + bonusSorte;
         const rolagemStr = rolagens.length > 0 ? rolagens.join(' + ') : '0';
 
+        // 🐛 FIX: Melhor visualização de bônus/penalidade
         let descBonus = '-';
-        if (temPenalidade) descBonus = '❌ Penalidade aplicada';
-        if (temBonus) descBonus = '✅ +20% de bônus';
+        if (temPenalidade) {
+            descBonus = `❌ Penalidade aplicada`;
+        } else if (temBonus) {
+            descBonus = `✅ +20% de bônus`;
+        } else if (resultadoFinal >= obstaculo) {
+            descBonus = `✅ Sucesso!`;
+        }
 
-        // NOVO: Mostrar cálculo completo de 1d6 + bônus (incluindo Sorte)
-        document.getElementById('res-d20').textContent = `1d6: ${d6Base}`;
-        document.getElementById('res-obstaculo').textContent = `${obstaculo} (Apt: +${bonusAptidao} ${bonusExtraManual > 0 ? `| Extra: +${bonusExtraManual}` : ''} ${bonusSorte > 0 ? `| Sorte: +${bonusSorte}` : ''})`;
+        // 🐛 FIX: Mostrar cálculo completo de forma clara
+        let calculoCompleto = `1d6: ${d6Base}`;
+        if (bonusAptidao > 0) calculoCompleto += ` + Apt: +${bonusAptidao}`;
+        if (bonusExtraManual > 0) calculoCompleto += ` + Extra: +${bonusExtraManual}`;
+        if (bonusSorte > 0) calculoCompleto += ` + Sorte: +${bonusSorte}`;
+        calculoCompleto += ` = ${resultadoFinal}`;
+
+        // Determinar cor e ícone de sucesso/falha
+        const sucesso = resultadoFinal >= obstaculo;
+        const iconStatus = sucesso ? '✅' : '❌';
+
+        document.getElementById('res-d20').textContent = calculoCompleto;
+        
+        // 🐛 FIX: Aplicar classe de sucesso/falha no item de obstáculo
+        const resObstaculoItem = document.getElementById('res-obstaculo').parentElement;
+        resObstaculoItem.className = 'resultado-item';
+        if (sucesso) {
+            resObstaculoItem.classList.add('resultado-item--sucesso');
+        } else {
+            resObstaculoItem.classList.add('resultado-item--falha');
+        }
+        document.getElementById('res-obstaculo').textContent = `${obstaculo} (${iconStatus} ${sucesso ? 'Sucesso' : 'Falha'})`;
+        
         document.getElementById('res-dado').textContent = descDado;
         document.getElementById('res-rolagem').textContent = rolagemStr || 'Nenhum';
         document.getElementById('res-bonus').textContent = descBonus;
