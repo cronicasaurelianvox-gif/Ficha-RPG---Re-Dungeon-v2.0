@@ -227,11 +227,11 @@ const RACAS_DATABASE = [
   },
   {
     id: "mestico",
-    nome: "Mestiço",
+    nome: "Mestiços",
     raridade: "comum",
     descricao: "Os Mestiços são a raça mais imprevisível e diversificada do mundo. Nascidos da união entre sangues distintos, eles não herdam linhagens puras nem características fixas. Cada Mestiço é uma exceção viva, carregando traços físicos, culturais e espirituais fragmentados de suas origens. Por nunca pertencerem inteiramente a um único povo, aprendem desde cedo a sobreviver na intersecção, desenvolvendo uma capacidade rara de adaptação, conflito interno e criatividade extrema.",
     limiteAtributo: 100,
-    imagem: "https://i.imgur.com/zgts4NC.png",
+    imagem: "https://i.imgur.com/iguB9BZ.png",
     atributos: {
       forca: "4d6+12",
       vitalidade: "4d6+12",
@@ -242,30 +242,30 @@ const RACAS_DATABASE = [
     },
     habilidadesBasicas: [
       {
-        nome: "Paradigma da Convergência",
-        descricao: "O jogador escolhe duas raças de origem. O Mestiço pode selecionar um benefício menor de cada uma, em vez de escolher um benefício completo de uma única raça. Esses benefícios não podem ser efeitos finais ou habilidades máximas — são ecos, não heranças totais.",
+        nome: "Herança Fragmentada",
+        descricao: "Nenhum Mestiço é completo — e exatamente por isso, nunca é limitado. Ao nascer (ou criar o personagem), recebe traços menores de duas ou mais raças diferentes e pode adaptar parte desses traços conforme a situação. Nunca atinge o potencial máximo de uma raça pura, mas acessa múltiplos caminhos ao mesmo tempo.",
         bonus: [
-          "Escolhe dois benefícios de raças diferentes",
-          "Benefícios menores e ecos das raças",
-          "Maior flexibilidade na construção do personagem"
+          "Recebe traços menores de duas ou mais raças diferentes",
+          "Pode adaptar traços conforme a situação",
+          "Acessa múltiplos caminhos simultaneamente"
         ]
       },
       {
-        nome: "Paradigma da Instabilidade",
-        descricao: "Uma vez por cena, após falhar em uma rolagem, o Mestiço pode reagir ao erro, transformando a falha em sucesso parcial ou adicionando um efeito inesperado (dano reduzido, efeito colateral, mudança de posição, etc.). O resultado nunca é perfeito — mas nunca é inútil.",
+        nome: "Instabilidade Adaptativa",
+        descricao: "O conflito interno gera evolução constante. Após enfrentar um desafio (combate, ambiente ou efeito), ganha resistência progressiva contra aquilo. Pode ajustar sua abordagem rapidamente e quanto mais pressionado, mais eficiente se torna.",
         bonus: [
-          "Transforma falha em sucesso parcial",
-          "Adiciona efeito inesperado",
-          "Uma vez por cena"
+          "Ganha resistência progressiva após desafios",
+          "Pode ajustar abordagem rapidamente",
+          "Quanto mais pressionado, mais eficiente fica"
         ]
       },
       {
-        nome: "Paradigma da Autoafirmação",
-        descricao: "O jogador define uma identidade própria que não pertence a nenhuma das raças de origem (ex: líder errante, mediador, renegado, pioneiro). Sempre que agir diretamente de acordo com essa identidade, recebe +3 nas rolagens relacionadas à ação naquela cena.",
+        nome: "Identidade Fluida",
+        descricao: "Eles não pertencem — então aprendem a caber em qualquer lugar. Facilidade em interações sociais com diferentes culturas e raças, pode imitar comportamentos, sotaques ou posturas com naturalidade. Possui resistência a manipulação, intimidação ou leitura mental leve.",
         bonus: [
-          "+3 em rolagens da identidade própria",
-          "Define identidade única",
-          "Conexão com objetivos pessoais"
+          "Facilidade em interações sociais com diferentes culturas",
+          "Pode imitar comportamentos e sotaques com naturalidade",
+          "Resistência a manipulação, intimidação e leitura mental leve"
         ]
       }
     ],
@@ -919,7 +919,7 @@ const RACAS_DATABASE = [
   },
   {
     id: "lukan",
-    nome: "Lukan",
+    nome: "Lukans",
     raridade: "epico",
     descricao: "Os Lukans são uma raça criados pelos Dracólitos, moldados para servir como guardiões de Sultran, o Inferno, e das fronteiras onde a realidade ameaça ruir. À primeira vista, possuem uma aparência majoritariamente humanoide, marcada por traços infernais: chifres de formas variadas, olhos incandescentes, marcas naturais semelhantes a escamas e uma presença intimidadora que denuncia sua origem. Seus corpos são esculpidos para o conflito, resultado direto de uma criação voltada à guerra e à vigilância eterna. Apesar da estética infernal, a essência dos Lukans vai além da aparência. Em suas veias corre uma linhagem draconica latente, herdada diretamente de seus criadores, manifestando-se como força excepcional, resistência incomum e um potencial de combate. Treinados desde a origem para a batalha absoluta.",
     limiteAtributo: 130,
@@ -934,30 +934,30 @@ const RACAS_DATABASE = [
     },
     habilidadesBasicas: [
       {
-        nome: "Código da Supremacia",
-        descricao: "O Lukan recebe +2 em rolagens de ataque e intimidação. Na primeira rodada de combate, pode impor pressão absoluta a capacidade de reação dos inimigos próximos por 3 turnos.",
+        nome: "Sangue Dracólito Latente",
+        descricao: "A criação dos Lukans não foi apenas infernal — foi celestial. Aumenta força física e resistência naturalmente com +1dn adicional em FOR e VIT. Reduz dano recebido por ataque físico em 10%. Em momentos críticos com HP menor que 30%, o corpo reage com um surto de poder (+3 Evasão).",
         bonus: [
-          "+2 em rolagens de ataque e intimidação",
-          "Pressão absoluta nos inimigos na primeira rodada",
-          "Reduz reação de inimigos próximos por 3 turnos"
+          "+1 dado adicional em Força e Vitalidade",
+          "Reduz dano físico em 10%",
+          "+3 Evasão com HP menor que 30%"
         ]
       },
       {
-        nome: "Código da Resistência",
-        descricao: "O Lukan recebe redução passiva de dano e bônus contra efeitos de empurrão, medo ou quebra de postura. Uma vez por cena, pode permanecer em pé mesmo ao sofrer um golpe que normalmente o derrubaria. Enquanto houver chão sob seus pés, ele não cai.",
+        nome: "Forjados em Sultran",
+        descricao: "Os Lukans não foram feitos para sobreviver — foram feitos para suportar o impossível. Possuem resistência natural a calor extremo, fogo e ambientes hostis com +30% de resistência. Imunidade parcial a dor sem sofrer penalidades leves por dano. Não se abalam facilmente por medo ou pressão (+3 Bônus).",
         bonus: [
-          "Redução passiva de dano físico",
-          "Bônus contra empurrão, medo e quebra de postura",
-          "Permanece em pé uma vez por cena"
+          "+30% de resistência a calor, fogo e ambientes hostis",
+          "Imunidade parcial a dor (sem penalidades leves)",
+          "+3 Bônus contra medo e pressão"
         ]
       },
       {
-        nome: "Código do Despertar Draconico",
-        descricao: "O jogador define um traço draconico latente (fogo, energia, força ancestral, presença aterradora). Uma vez por cena, o Lukan pode despertar esse traço, recebendo bônus significativos em combate por um curto período, com custo físico ou narrativo após o uso.",
+        nome: "Sentinela do Véu Quebrado",
+        descricao: "Criados para vigiar onde a realidade falha. Detectam distorções, presenças sobrenaturais ou ameaças ocultas com facilidade. Recebem bônus contra criaturas extraplanares ou corrompidas e sofrem dificuldade menor de serem surpreendidos.",
         bonus: [
-          "Define traço draconico latente pessoalmente",
-          "Desperta uma vez por cena",
-          "Bônus significativos em combate com custo narrativo"
+          "Detecta distorções e presenças sobrenaturais",
+          "Bônus contra criaturas extraplanares ou corrompidas",
+          "Dificuldade maior de ser surpreendido"
         ]
       }
     ],
