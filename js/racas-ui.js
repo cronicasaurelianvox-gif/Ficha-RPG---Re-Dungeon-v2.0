@@ -236,9 +236,120 @@ class RacasUI {
       return;
     }
 
-    racas.forEach((raca) => {
-      const item = this.criarItemRaca(raca);
-      this.listaRacas.appendChild(item);
+    // Estrutura de pastas (categorias)
+    const pastas = [
+      {
+        nome: "Re'Geron",
+        icon: '📁',
+        aberta: true,
+        racas: racas
+      },
+      {
+        nome: 'The Chaotical Gate',
+        icon: '⚡',
+        aberta: false,
+        racas: []
+      },
+      {
+        nome: 'Wuxia/Xianxia',
+        icon: '🔮',
+        aberta: false,
+        racas: []
+      },
+      {
+        nome: 'One Piece',
+        icon: '🏴‍☠️',
+        aberta: false,
+        racas: []
+      },
+      {
+        nome: 'Bleach',
+        icon: '⚔️',
+        aberta: false,
+        racas: []
+      }
+    ];
+
+    // Renderizar cada pasta
+    pastas.forEach((pasta) => {
+      const pastaElement = this.criarPasta(pasta);
+      this.listaRacas.appendChild(pastaElement);
+    });
+  }
+
+  /**
+   * Cria um elemento de pasta/categoria
+   * @private
+   * @param {Object} pasta - Objeto com dados da pasta
+   * @returns {HTMLElement}
+   */
+  criarPasta(pasta) {
+    const pastaElement = document.createElement('div');
+    pastaElement.className = `rdg-race-folder ${pasta.aberta ? 'rdg-race-folder-opened' : ''}`;
+    pastaElement.dataset.folder = pasta.nome.toLowerCase().replace(/[\/\s]/g, '-');
+
+    // Header da pasta
+    const headerPasta = document.createElement('div');
+    headerPasta.className = 'rdg-race-folder-header';
+    headerPasta.innerHTML = `
+      <span class="rdg-race-folder-icon">${pasta.aberta ? '▼' : '›'}</span>
+      <span class="rdg-race-folder-name">${pasta.icon} ${pasta.nome}</span>
+      <span class="rdg-race-folder-count">${pasta.racas.length}</span>
+    `;
+
+    pastaElement.appendChild(headerPasta);
+
+    // Container das raças dentro da pasta
+    const containerRacas = document.createElement('div');
+    containerRacas.className = `rdg-race-folder-content ${pasta.aberta ? 'rdg-race-folder-content-open' : ''}`;
+
+    if (pasta.racas.length > 0) {
+      pasta.racas.forEach((raca) => {
+        const item = this.criarItemRaca(raca);
+        containerRacas.appendChild(item);
+      });
+    } else {
+      // Mostrar mensagem se pasta vazia
+      const msgVazia = document.createElement('div');
+      msgVazia.className = 'rdg-race-folder-empty';
+      msgVazia.textContent = 'Em breve...';
+      containerRacas.appendChild(msgVazia);
+    }
+
+    pastaElement.appendChild(containerRacas);
+
+    // Adicionar evento para expandir/recolher pasta
+    this.vincularEventosPasta(pastaElement);
+
+    return pastaElement;
+  }
+
+  /**
+   * Vincula eventos à pasta para expandir/recolher
+   * @private
+   * @param {HTMLElement} pasta - Elemento da pasta
+   */
+  vincularEventosPasta(pasta) {
+    const header = pasta.querySelector('.rdg-race-folder-header');
+    const icon = pasta.querySelector('.rdg-race-folder-icon');
+    const content = pasta.querySelector('.rdg-race-folder-content');
+
+    header.addEventListener('click', (e) => {
+      e.stopPropagation();
+      
+      const isOpen = pasta.classList.contains('rdg-race-folder-opened');
+
+      if (isOpen) {
+        // Fechar
+        pasta.classList.remove('rdg-race-folder-opened');
+        content.classList.remove('rdg-race-folder-content-open');
+        icon.textContent = '›';
+      } else {
+        // Abrir
+        pasta.classList.add('rdg-race-folder-opened');
+        content.classList.add('rdg-race-folder-content-open');
+        icon.textContent = '▼';
+      }
     });
   }
 

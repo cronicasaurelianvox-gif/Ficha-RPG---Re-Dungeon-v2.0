@@ -6551,6 +6551,24 @@ const CLASSES_DATABASE = [
           "Bônus de Precisão para aliados"
         ]
       }
+    ],
+    habilidadesExtremas: [
+      {
+        nome: "Sinfonia Celestial",
+        descricao: "A Musa invoca uma sinfonia dos céus que envolve todo o campo de batalha. Todos os inimigos sofrem 12d12 de dano sonoro e ficam Atordoados por 2 turnos. Aliados recebem Regeneração (recuperam 2d10 Energia por turno durante 3 turnos).",
+        tipo: "Imediata",
+        alcance: "12 m",
+        alvos: "AOE",
+        custo: "35 EnR",
+        recarga: "7 T",
+        duracao: "3 T",
+        dado: "12d12",
+        bonus: [
+          "Dano extremo em AOE",
+          "Atordoamento massivo",
+          "Regeneração para aliados"
+        ]
+      }
     ]
   },
   {

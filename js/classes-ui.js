@@ -31,52 +31,69 @@ class ClassesUI {
   init() {
     if (this.inicializado) return;
 
-    // Captura elementos do DOM
-    this.capturarElementos();
+    try {
+      // Captura elementos do DOM
+      this.capturarElementos();
 
-    // Valida se todos os elementos foram encontrados
-    if (!this.validarElementos()) {
-      console.error('ClassesUI: Elementos necessários não encontrados no DOM');
-      return;
-    }
-
-    // ✨ CARREGA CLASSES SALVAS DO LOCALSTORAGE PRIMEIRO
-    const classesSalvas = this.carregarClassesSalvas();
-    if (classesSalvas && classesSalvas.length > 0) {
-      this.classesSelecionadas = [...classesSalvas];
-      this.bloqueioAtivo = true;
-      console.log(`✅ ${classesSalvas.length} classe(s) carregada(s) do localStorage: ${classesSalvas.join(', ')}`);
-    }
-
-    // Renderiza lista inicial de classes
-    this.renderLista();
-
-    // Seleciona primeira classe para exibir detalhes
-    if (classesSalvas && classesSalvas.length > 0) {
-      // Se há classes salvas, renderizar detalhes da primeira
-      this.selecionarClasse(classesSalvas[0]);
-      // ✨ Atualizar visual dos botões APÓS renderizar lista e detalhes
-      this.atualizarBotoesSelecionados();
-      // ✨ Atualizar visual do bloqueio
-      this.aplicarBloqueioVisual();
-    } else {
-      // Seleciona primeira classe como padrão
-      const primeiraClasse = obterTodasAsClasses()[0];
-      if (primeiraClasse) {
-        this.selecionarClasse(primeiraClasse.id);
+      // Valida se todos os elementos foram encontrados
+      if (!this.validarElementos()) {
+        console.error('ClassesUI: Elementos necessários não encontrados no DOM');
+        console.error('[DEBUG] Elementos encontrados:', {
+          modal: !!this.modal,
+          btnFechar: !!this.btnFechar,
+          btnVoltar: !!this.btnVoltar,
+          listaClasses: !!this.listaClasses,
+          painalDetalhes: !!this.painalDetalhes
+        });
+        return;
       }
+
+      // ✨ CARREGA CLASSES SALVAS DO LOCALSTORAGE PRIMEIRO
+      const classesSalvas = this.carregarClassesSalvas();
+      if (classesSalvas && classesSalvas.length > 0) {
+        this.classesSelecionadas = [...classesSalvas];
+        this.bloqueioAtivo = true;
+        console.log(`✅ ${classesSalvas.length} classe(s) carregada(s) do localStorage: ${classesSalvas.join(', ')}`);
+      }
+
+      // Renderiza lista inicial de classes
+      try {
+        this.renderLista();
+        console.log('✅ renderLista() concluída com sucesso');
+      } catch (renderError) {
+        console.error('❌ Erro ao chamar renderLista():', renderError);
+      }
+
+      // Seleciona primeira classe para exibir detalhes
+      if (classesSalvas && classesSalvas.length > 0) {
+        // Se há classes salvas, renderizar detalhes da primeira
+        this.selecionarClasse(classesSalvas[0]);
+        // ✨ Atualizar visual dos botões APÓS renderizar lista e detalhes
+        this.atualizarBotoesSelecionados();
+        // ✨ Atualizar visual do bloqueio
+        this.aplicarBloqueioVisual();
+      } else {
+        // Seleciona primeira classe como padrão
+        const primeiraClasse = obterTodasAsClasses()[0];
+        if (primeiraClasse) {
+          this.selecionarClasse(primeiraClasse.id);
+        }
+      }
+
+      // ✨ Sincronizar campo da ficha com os dados persistidos (com delay para garantir dados carregados)
+      setTimeout(() => {
+        this.sincronizarCampoFicha();
+      }, 50);
+
+      // Vincula eventos
+      this.vincularEventos();
+
+      this.inicializado = true;
+      console.log('✅ ClassesUI: Sistema inicializado com sucesso');
+    } catch (error) {
+      console.error('❌ Erro durante inicialização de ClassesUI:', error);
+      throw error;
     }
-
-    // ✨ Sincronizar campo da ficha com os dados persistidos (com delay para garantir dados carregados)
-    setTimeout(() => {
-      this.sincronizarCampoFicha();
-    }, 50);
-
-    // Vincula eventos
-    this.vincularEventos();
-
-    this.inicializado = true;
-    console.log('ClassesUI: Sistema inicializado com sucesso');
   }
 
   /**
@@ -90,6 +107,15 @@ class ClassesUI {
     this.btnVoltar = document.querySelector('.btn-voltar-classes');
     this.listaClasses = document.querySelector('.classes-lista');
     this.painalDetalhes = document.querySelector('.classe-detalhes');
+    
+    console.log('[DEBUG capturarElementos]', {
+      modal: !!this.modal,
+      btnAbrir: !!this.btnAbrir,
+      btnFechar: !!this.btnFechar,
+      btnVoltar: !!this.btnVoltar,
+      listaClasses: !!this.listaClasses,
+      painalDetalhes: !!this.painalDetalhes
+    });
   }
 
   /**
@@ -100,7 +126,6 @@ class ClassesUI {
   validarElementos() {
     return (
       this.modal &&
-      this.btnAbrir &&
       this.btnFechar &&
       this.btnVoltar &&
       this.listaClasses &&
@@ -282,20 +307,22 @@ class ClassesUI {
     if (!classes) {
       classes = obterTodasAsClasses();
     }
+    console.log(`[DEBUG renderLista] Total de classes a renderizar: ${classes.length}`);
     this.listaClasses.innerHTML = '';
 
     if (classes.length === 0) {
       this.listaClasses.innerHTML = '<div class="sem-resultados">Nenhuma classe encontrada</div>';
+      console.warn('[DEBUG renderLista] Nenhuma classe encontrada!');
       return;
     }
 
-    // Agrupa classes por raridade
+    // Agrupar classes por raridade para a pasta Re'Dungeon
     const agrupadoPorRaridade = {
       comum: [],
       raro: [],
       epico: [],
-      mitico: [],
-      lendario: []
+      lendario: [],
+      mitico: []
     };
 
     classes.forEach((classe) => {
@@ -304,39 +331,185 @@ class ClassesUI {
       }
     });
 
-    // Ordem de exibição das raridades
-    // Comum → Raro → Épico → Lendário → Mítico (Mítico é o máximo)
+    // Criar array de classes ordenadas por raridade
+    const classesOrdenadas = [];
     const ordemRaridades = ['comum', 'raro', 'epico', 'lendario', 'mitico'];
-
-    // Renderiza cada seção de raridade
     ordemRaridades.forEach((raridade) => {
-      const classesDaRaridade = agrupadoPorRaridade[raridade];
-      if (classesDaRaridade.length > 0) {
-        // Cria seção de raridade
-        const secao = document.createElement('div');
-        secao.className = 'classes-secao-raridade';
+      classesOrdenadas.push(...agrupadoPorRaridade[raridade]);
+    });
+    console.log(`[DEBUG renderLista] Classes ordenadas por raridade: ${classesOrdenadas.length}`);
 
-        // Cria cabeçalho da seção
-        const cabecalho = document.createElement('div');
-        cabecalho.className = `classes-secao-cabecalho ${raridade}`;
-        cabecalho.innerHTML = `
-          <span class="classes-secao-titulo">${this.formatarRaridade(raridade)}</span>
-          <span class="classes-secao-contador">(${classesDaRaridade.length})</span>
-        `;
-        secao.appendChild(cabecalho);
+    // Estrutura de pastas (categorias)
+    const pastas = [
+      {
+        nome: "Re'Dungeon",
+        icon: '⚔️',
+        aberta: true,
+        classes: classesOrdenadas,
+        mostrarRaridade: true
+      },
+      {
+        nome: 'The Chaotical Gate',
+        icon: '⚡',
+        aberta: false,
+        classes: [],
+        mostrarRaridade: false
+      },
+      {
+        nome: 'Wuxia/Xianxia',
+        icon: '🔮',
+        aberta: false,
+        classes: [],
+        mostrarRaridade: false
+      },
+      {
+        nome: 'One Piece',
+        icon: '🏴‍☠️',
+        aberta: false,
+        classes: [],
+        mostrarRaridade: false
+      },
+      {
+        nome: 'Bleach',
+        icon: '⚔️',
+        aberta: false,
+        classes: [],
+        mostrarRaridade: false
+      }
+    ];
 
-        // Cria container de itens
-        const containerItens = document.createElement('div');
-        containerItens.className = 'classes-secao-itens';
+    // Renderizar cada pasta
+    pastas.forEach((pasta) => {
+      console.log(`[DEBUG renderLista] Renderizando pasta "${pasta.nome}" com ${pasta.classes.length} classes`);
+      const pastaElement = this.criarPasta(pasta);
+      this.listaClasses.appendChild(pastaElement);
+    });
+    console.log(`[DEBUG renderLista] Renderização concluída. Pastas criadas: ${pastas.length}`);
+  }
 
-        // Adiciona classes da raridade
-        classesDaRaridade.forEach((classe) => {
-          const item = this.criarItemClasse(classe);
-          containerItens.appendChild(item);
+  /**
+   * Cria um elemento de pasta/categoria para classes
+   * @private
+   * @param {Object} pasta - Objeto com dados da pasta
+   * @returns {HTMLElement}
+   */
+  criarPasta(pasta) {
+    console.log(`[DEBUG criarPasta] Criando pasta: ${pasta.nome}, classes: ${pasta.classes.length}, mostrarRaridade: ${pasta.mostrarRaridade}`);
+    
+    const pastaElement = document.createElement('div');
+    pastaElement.className = `rdg-class-folder ${pasta.aberta ? 'rdg-class-folder-opened' : ''}`;
+    pastaElement.dataset.folder = pasta.nome.toLowerCase().replace(/[\/\s]/g, '-');
+
+    // Header da pasta
+    const headerPasta = document.createElement('div');
+    headerPasta.className = 'rdg-class-folder-header';
+    headerPasta.innerHTML = `
+      <span class="rdg-class-folder-icon">${pasta.aberta ? '▼' : '›'}</span>
+      <span class="rdg-class-folder-name">${pasta.icon} ${pasta.nome}</span>
+      <span class="rdg-class-folder-count">${pasta.classes.length}</span>
+    `;
+
+    pastaElement.appendChild(headerPasta);
+
+    // Container das classes dentro da pasta
+    const containerClasses = document.createElement('div');
+    containerClasses.className = `rdg-class-folder-content ${pasta.aberta ? 'rdg-class-folder-content-open' : ''}`;
+
+    if (pasta.classes.length > 0) {
+      if (pasta.mostrarRaridade) {
+        // Agrupar classes por raridade para exibição
+        const agrupadoPorRaridade = {
+          comum: [],
+          raro: [],
+          epico: [],
+          lendario: [],
+          mitico: []
+        };
+
+        pasta.classes.forEach((classe) => {
+          if (agrupadoPorRaridade[classe.raridade]) {
+            agrupadoPorRaridade[classe.raridade].push(classe);
+          }
         });
 
-        secao.appendChild(containerItens);
-        this.listaClasses.appendChild(secao);
+        // Renderizar cada raridade como seção
+        const ordemRaridades = ['comum', 'raro', 'epico', 'lendario', 'mitico'];
+        ordemRaridades.forEach((raridade) => {
+          const classesRaridade = agrupadoPorRaridade[raridade];
+          if (classesRaridade.length > 0) {
+            // Criar cabeçalho da raridade
+            const secaoRaridade = document.createElement('div');
+            secaoRaridade.className = 'rdg-raridade-secao';
+
+            const headerRaridade = document.createElement('div');
+            headerRaridade.className = `rdg-raridade-header ${raridade}`;
+            headerRaridade.innerHTML = `
+              <span>${this.formatarRaridade(raridade)}</span>
+              <span class="rdg-raridade-count">(${classesRaridade.length})</span>
+            `;
+            secaoRaridade.appendChild(headerRaridade);
+
+            // Criar container para classes da raridade
+            const containerRaridade = document.createElement('div');
+            containerRaridade.className = 'rdg-raridade-classes';
+
+            classesRaridade.forEach((classe) => {
+              const item = this.criarItemClasse(classe);
+              containerRaridade.appendChild(item);
+            });
+
+            secaoRaridade.appendChild(containerRaridade);
+            containerClasses.appendChild(secaoRaridade);
+          }
+        });
+      } else {
+        // Sem organização por raridade, só lista as classes
+        pasta.classes.forEach((classe) => {
+          const item = this.criarItemClasse(classe);
+          containerClasses.appendChild(item);
+        });
+      }
+    } else {
+      // Mostrar mensagem se pasta vazia
+      const msgVazia = document.createElement('div');
+      msgVazia.className = 'rdg-class-folder-empty';
+      msgVazia.textContent = 'Em breve...';
+      containerClasses.appendChild(msgVazia);
+    }
+
+    pastaElement.appendChild(containerClasses);
+
+    // Adicionar evento para expandir/recolher pasta
+    this.vincularEventosPasta(pastaElement);
+
+    return pastaElement;
+  }
+
+  /**
+   * Vincula eventos à pasta para expandir/recolher
+   * @private
+   * @param {HTMLElement} pasta - Elemento da pasta
+   */
+  vincularEventosPasta(pasta) {
+    const header = pasta.querySelector('.rdg-class-folder-header');
+    const icon = pasta.querySelector('.rdg-class-folder-icon');
+    const content = pasta.querySelector('.rdg-class-folder-content');
+
+    header.addEventListener('click', (e) => {
+      e.stopPropagation();
+      
+      const isOpen = pasta.classList.contains('rdg-class-folder-opened');
+
+      if (isOpen) {
+        // Fechar
+        pasta.classList.remove('rdg-class-folder-opened');
+        content.classList.remove('rdg-class-folder-content-open');
+        icon.textContent = '›';
+      } else {
+        // Abrir
+        pasta.classList.add('rdg-class-folder-opened');
+        content.classList.add('rdg-class-folder-content-open');
+        icon.textContent = '▼';
       }
     });
   }
@@ -462,6 +635,11 @@ class ClassesUI {
               ✨ Avançadas
             </button>
           ` : ''}
+          ${classe.habilidadesExtremas && classe.habilidadesExtremas.length > 0 ? `
+            <button class="tab-button" data-tab="extremas">
+              ⚡ Extremas
+            </button>
+          ` : ''}
         </div>
 
         <!-- Conteúdo das Abas -->
@@ -472,6 +650,11 @@ class ClassesUI {
           ${classe.habilidadesAvancadas && classe.habilidadesAvancadas.length > 0 ? `
             <div class="habilidades-painel" data-painel="avancadas">
               ${this.renderHabilidades(classe.habilidadesAvancadas || [], classe)}
+            </div>
+          ` : ''}
+          ${classe.habilidadesExtremas && classe.habilidadesExtremas.length > 0 ? `
+            <div class="habilidades-painel" data-painel="extremas">
+              ${this.renderHabilidades(classe.habilidadesExtremas || [], classe)}
             </div>
           ` : ''}
         </div>
@@ -1645,18 +1828,26 @@ class ClassesUI {
  */
 function inicializarClassesUI() {
   if (!window.classesUI) {
-    window.classesUI = new ClassesUI();
-    
-    // Aguardar menu principal estar pronto (para garantir que botão existe)
-    if (document.getElementById('menu-btn-classes')) {
-      window.classesUI.init();
-      console.log('✅ Sistema de classes inicializado globalmente');
-    } else {
-      // Se botão ainda não existe, aguardar um pouco mais
-      setTimeout(() => {
+    try {
+      window.classesUI = new ClassesUI();
+      
+      // Aguardar menu principal estar pronto (para garantir que botão existe)
+      if (document.getElementById('menu-btn-classes')) {
         window.classesUI.init();
-        console.log('✅ Sistema de classes inicializado globalmente (após delay)');
-      }, 100);
+        console.log('✅ Sistema de classes inicializado globalmente');
+      } else {
+        // Se botão ainda não existe, aguardar um pouco mais
+        setTimeout(() => {
+          try {
+            window.classesUI.init();
+            console.log('✅ Sistema de classes inicializado globalmente (após delay)');
+          } catch (error) {
+            console.error('❌ Erro ao inicializar classes após delay:', error);
+          }
+        }, 100);
+      }
+    } catch (error) {
+      console.error('❌ Erro ao criar ClassesUI:', error);
     }
   }
   return window.classesUI;
