@@ -46,6 +46,11 @@
     display: block;
 }
 
+.btn-controle.reputacao-btn img {
+    width: 95px;
+    height: 95px;
+}
+
 /* ========================================== */
 /* BOTÃO ATUALIZAR */
 /* ========================================== */
@@ -83,6 +88,11 @@
         width: 96px;
         height: 96px;
     }
+
+    .btn-controle.reputacao-btn img {
+        width: 90px;
+        height: 90px;
+    }
 }
 
 @media (max-width: 768px) {
@@ -93,6 +103,11 @@
     .btn-controle img {
         width: 80px;
         height: 80px;
+    }
+
+    .btn-controle.reputacao-btn img {
+        width: 85px;
+        height: 85px;
     }
 }
 

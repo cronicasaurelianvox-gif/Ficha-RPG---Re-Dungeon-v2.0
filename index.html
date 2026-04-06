@@ -21,11 +21,13 @@
     <link rel="stylesheet" href="css/status-bars.css">
     <link rel="stylesheet" href="css/status-config-modal.css">
     <link rel="stylesheet" href="css/atributos-config-modal-novo.css">
-    <link rel="stylesheet" href="css/reputacao-modal.css">
+    <!-- ❌ DEPRECATED: CSS antigo de Reputação (substituído por V2) -->
+    <!-- <link rel="stylesheet" href="css/reputacao-modal.css"> -->
+    <!-- 🏆 NOVO: Sistema de Reputação V2 com dual-axis -->
+    <link rel="stylesheet" href="css/reputacao-v2-premium.css">
     <link rel="stylesheet" href="css/controle-ficha-buttons.css">
     <link rel="stylesheet" href="css/personagem-image-modal.css">
-
-
+    <link rel="stylesheet" href="css/game-credits-premium.css">
     <link rel="stylesheet" href="css/popup-info-jogador.css">
     <link rel="stylesheet" href="css/aptidoes.css">
     <link rel="stylesheet" href="css/vantagens-aptidoes.css">
@@ -39,7 +41,7 @@
     <link rel="stylesheet" href="css/modal-armazenamento-layout-cores.css">
     <link rel="stylesheet" href="css/companheiro-modal-imagem-central.css">
     <link rel="stylesheet" href="css/companheiro-modal-item-cores.css">
-    <link rel="stylesheet" href="css/treinamento.css">
+    <link rel="stylesheet" href="css/treinamento-novo.css">
     <link rel="stylesheet" href="css/companheiros.css?v=2">
     <link rel="stylesheet" href="css/companheiros-hud.css">
     <link rel="stylesheet" href="css/companheiros-modal.css">
@@ -328,7 +330,10 @@
                             <button class="atributo percepcao" data-atributo="percepcao" title="Configurar Percepção">15<br><span>PER</span></button>
                             <button class="atributo sorte" data-atributo="sorte" title="Configurar Sorte">14<br><span>SOR</span></button>
                             <button class="atributos-centro-botao primarios-botao" id="atributos-primarios-btn" disabled>
-                                <img src="https://i.imgur.com/xCgEvHK.png" alt="Atributos Primários">
+                                <div class="atributos-total-badge">
+                                    <span class="atributos-total-label">Pontos</span>
+                                    <span class="atributos-total-valor" id="atributos-total-valor">0</span>
+                                </div>
                             </button>
                         </section>
 
@@ -353,7 +358,7 @@
                                     <button id="btn-atualizar-ficha" class="btn-controle atualizar-ficha" title="Atualizar - Reaplica bônus e sincroniza a ficha">
                                         <img src="https://i.imgur.com/eTa8qzY.png" alt="Atualizar">
                                     </button>
-                                    <button id="reputacao-btn" class="reputacao-btn" title="Configurar Reputação">
+                                    <button id="reputacao-btn" class="btn-controle reputacao-btn" title="Configurar Reputação">
                                         <img src="https://i.imgur.com/7T4MFaE.png" alt="Reputação">
                                     </button>
                                     <button id="btn-limpar-ficha" class="btn-controle limpar-ficha" title="Limpar Ficha - Apaga todos os dados">
@@ -372,7 +377,10 @@
                             <button class="atributo precisao" data-atributo="precisao" title="Configurar Precisão">12<br><span>PREC</span></button>
                             <button class="atributo evasao" data-atributo="evasao" title="Configurar Evasão">14<br><span>EVA</span></button>
                             <button class="atributos-centro-botao secundarios-botao" id="atributos-secundarios-btn" disabled>
-                                <img src="https://i.imgur.com/xCgEvHK.png" alt="Atributos Secundários">
+                                <div class="power-combat-badge">
+                                    <span class="power-combat-label">Power Combat</span>
+                                    <span class="power-combat-valor" id="power-combat-valor">0</span>
+                                </div>
                             </button>
                         </section>
                     </div>
@@ -418,19 +426,55 @@
                         </button>
                     </section>
 
-                    <!-- Créditos e Versão -->
-                    <div id="game-credits" class="game-credits">
-                        <p class="credits-title">Criador & Desenvolvedor</p>
-                        <p class="credits-author">Wellington Danilo dos Santos</p>
-                        <a href="em-desenvolvimento.html" class="credits-version-link">Re:Dungeon RPG V2.0 © 2026</a>
-                        
-                        <!-- Discord Link -->
-                        <div class="credits-social">
-                            <a href="https://discord.gg/jS8sfaJf2j" target="_blank" rel="noopener noreferrer" class="discord-link" title="Junte-se ao Discord">
-                                <img src="https://i.imgur.com/MfObQBa.gif" alt="Discord">
-                            </a>
+                    <!-- Créditos e Versão - Premium Footer -->
+                    <footer id="game-credits" class="game-credits">
+                        <div class="credits-container">
+                            <!-- Divisor Superior -->
+                            <div class="credits-divider"></div>
+
+                            <!-- Grid de Conteúdo -->
+                            <div class="credits-grid">
+                                <!-- Seção: Desenvolvedor -->
+                                <div class="credits-section credits-developer">
+                                    <div class="credits-section-icon">👨‍💻</div>
+                                    <div class="credits-section-content">
+                                        <h3 class="credits-section-title">Criador & Desenvolvedor</h3>
+                                        <p class="credits-author">Wellington Danilo dos Santos</p>
+                                    </div>
+                                </div>
+
+                                <!-- Seção: Versão -->
+                                <div class="credits-section credits-version">
+                                    <div class="credits-section-icon">📦</div>
+                                    <div class="credits-section-content">
+                                        <h3 class="credits-section-title">Versão</h3>
+                                        <a href="em-desenvolvimento.html" class="credits-version-link">Re:Dungeon RPG V2.1</a>
+                                        <p class="credits-version-date">© 2026 - Todos os direitos reservados</p>
+                                    </div>
+                                </div>
+
+                                <!-- Seção: Comunidade -->
+                                <div class="credits-section credits-community">
+                                    <div class="credits-section-icon">🎮</div>
+                                    <div class="credits-section-content">
+                                        <h3 class="credits-section-title">Comunidade</h3>
+                                        <a href="https://discord.gg/jS8sfaJf2j" target="_blank" rel="noopener noreferrer" class="discord-link">
+                                            <img src="https://i.imgur.com/MfObQBa.gif" alt="Discord" class="discord-icon">
+                                            Junte-se ao Discord
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Divisor Inferior -->
+                            <div class="credits-divider"></div>
+
+                            <!-- Texto de Rodapé -->
+                            <div class="credits-footer-text">
+                                <p>Sistema de Ficha RPG desenvolvido com paixão por jogadores, para jogadores</p>
+                            </div>
                         </div>
-                    </div>
+                    </footer>
                 </section>
 
                 <!-- Habilidades - Sistema Completo -->
@@ -2582,6 +2626,8 @@
     <script src="js/routes-vertical.js"></script>
     <script src="js/svg-atributos.js"></script>
     <script src="js/atributos.js"></script>
+    <script src="js/atributos-total-contador.js"></script>
+    <script src="js/power-combat-calculator.js"></script>
     <script src="js/status-bars-manager.js"></script>
     <script src="js/status-config-modal.js"></script>
     <script src="js/atributos-config-modal.js"></script>
@@ -2589,9 +2635,16 @@
     <script src="js/atributos-auto-sync.js"></script>
     <!-- ✅ NOVO: Sincronização automática de imagem do personagem -->
     <script src="js/imagem-personagem-sync.js"></script>
-    <script src="js/reputacao-modal.js"></script>
+    <!-- ❌ DEPRECATED: Sistema antigo de Reputação (substituído por V2) -->
+    <!-- <script src="js/reputacao-modal.js"></script> -->
+    <!-- 🏆 NOVO: Sistema de Reputação V2 com dual-axis (fama/temor) -->
+    <script src="js/reputacao-v2.js"></script>
+    <!-- 🏆 OPCIONAL: Testes e exemplos do ReputacaoV2 (remover em produção) -->
+    <!-- <script src="js/reputacao-v2-testes.js"></script> -->
     <script src="js/atualizar-ficha-completa.js"></script>
     <script src="js/controle-ficha-buttons.js"></script>
+    <!-- 🎨 NOVO: Popup visual para atualização da ficha -->
+    <script src="js/atualizar-ficha-popup.js"></script>
     <!-- 🧹 NOVO: Sistema isolado para limpeza de ficha (remove botão de controle-ficha-buttons.js) -->
     <script src="js/limpar-ficha-isolado.js"></script>
     <script src="js/popup-info-jogador.js"></script>

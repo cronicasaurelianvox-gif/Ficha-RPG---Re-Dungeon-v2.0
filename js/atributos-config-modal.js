@@ -608,6 +608,7 @@ class AtributosConfigModal {
      * Salva as mudanças de um atributo
      * ✅ Salva base, extra, bonus no state-manager
      * ✅ Nunca salva total (é derivado)
+     * ✅ OTIMIZADO: Só atualiza o atributo modificado e seus dependentes
      */
     saveAtributoChanges(atributoType, base, extra, bonus) {
         // Validar dados
@@ -662,12 +663,22 @@ class AtributosConfigModal {
                 base, extra, bonus, total
             });
 
-            // ✅ PERSISTIR E RECALCULAR SECUNDÁRIOS
+            // ✅ PERSISTIR
             stateManager.setState(state);
-            // Recalcular todos os secundários que dependem deste primário
+            
+            // ✅ OTIMIZADO: Recalcular apenas os secundários
+            console.log('🔄 Recalculando atributos secundários dependentes...');
             this.calcularAtributosSecundarios();
-            // Sincronizar visual dos secundários
-            this.syncAllAttributesDisplay();
+            
+            // ✅ OTIMIZADO: Atualizar apenas este atributo primário no visual
+            this.updateVisualDisplay(atributoType, base, extra, bonus);
+            
+            // ✅ OTIMIZADO: Atualizar apenas os secundários afetados
+            const secundariosAfetados = ['prontidao', 'ataque', 'defesa', 'reacao', 'precisao', 'evasao'];
+            console.log('🔄 Atualizando visual dos secundários afetados...');
+            secundariosAfetados.forEach(attr => {
+                this.updateVisualDisplay(attr);
+            });
         } else {
             // ✅ Atributo Secundário
             if (!state.atributos.secundarios[atributoType]) {
@@ -719,6 +730,9 @@ class AtributosConfigModal {
 
             // ✅ Persistir mudanças no state-manager
             stateManager.setState(state);
+            
+            // ✅ OTIMIZADO: Atualizar apenas este atributo secundário no visual
+            this.updateVisualDisplay(atributoType);
         }
 
         // ✅ PERSISTIR EM LOCALSTORAGE
@@ -728,9 +742,6 @@ class AtributosConfigModal {
         } else {
             console.warn('⚠️ LocalStorageManager não disponível');
         }
-
-        // ✅ Atualizar visual na aba de atributos
-        this.updateVisualDisplay(atributoType, base, extra, bonus);
 
         // ✅ NOVO: Atualizar a imagem do personagem (sincronizar com mudanças)
         this.atualizarImagemDoPersonagem();
@@ -802,6 +813,7 @@ class AtributosConfigModal {
     /**
      * Atualiza o visual na aba de atributos após salvar
      * ✅ Exibe apenas o TOTAL (nunca exibe base, extra, bonus)
+     * ✅ OTIMIZADO: Só atualiza o DOM se o valor realmente mudou
      */
     updateVisualDisplay(atributoType, base = null, extra = null, bonus = null) {
         const stateManager = window.appState;
@@ -837,22 +849,36 @@ class AtributosConfigModal {
         );
 
         if (atributoElement) {
-            // ✅ Exibir apenas o TOTAL com sua sigla
+            // ✅ OTIMIZAÇÃO: Verificar se o valor realmente mudou antes de atualizar o DOM
+            const textContent = atributoElement.textContent.trim();
             const sigla = this.getNomeSigla(atributoType);
-            atributoElement.innerHTML = `${total}<br><span>${sigla}</span>`;
+            const novoConteudo = `${total}\n${sigla}`.trim();
             
-            console.log(`🎨 Visual atualizado para "${atributoType}": ${total}`);
+            // Se o texto já é o mesmo, não atualizar (evita piscar)
+            if (textContent.replace(/\s+/g, ' ') !== novoConteudo.replace(/\s+/g, ' ')) {
+                atributoElement.innerHTML = `${total}<br><span>${sigla}</span>`;
+                console.log(`🎨 Visual atualizado para "${atributoType}": ${total}`);
+            } else {
+                console.log(`✅ Visual de "${atributoType}" já estava correto: ${total} (sem atualização)`);
+            }
         } else {
             console.warn(`⚠️ Elemento de atributo "${atributoType}" não encontrado na aba`);
         }
     }
 
     /**
+     * Cache para rastrear o último estado sincronizado
+     * Evita atualizações desnecessárias em cascata
+     */
+    _lastSyncState = null;
+
+    /**
      * Sincroniza a aba de atributos com o estado atual
      * ✅ Chamado ao inicializar ou ao carregar a página
      * ✅ Garante que todos os atributos exibem o total correto
+     * ✅ OTIMIZADO: Só sincroniza atributos que realmente mudaram
      */
-    syncAllAttributesDisplay() {
+    syncAllAttributesDisplay(forceFullSync = false) {
         const stateManager = window.appState;
         
         if (!stateManager) {
@@ -864,7 +890,22 @@ class AtributosConfigModal {
         const primarios = ['forca', 'vitalidade', 'agilidade', 'inteligencia', 'percepcao', 'sorte'];
         const secundarios = ['prontidao', 'ataque', 'defesa', 'reacao', 'precisao', 'evasao'];
 
-        // ✅ Sincronizar primários
+        // ✅ Criar um hash do estado atual para comparar com o anterior
+        const currentStateHash = JSON.stringify({
+            primarios: primarios.map(attr => state.atributos?.primarios?.[attr]?.total ?? 0),
+            secundarios: secundarios.map(attr => state.atributos?.secundarios?.[attr]?.total ?? 0)
+        });
+
+        // ✅ Se força sincronização completa, ignorar cache
+        if (!forceFullSync && this._lastSyncState === currentStateHash) {
+            console.log('⏭️ Sincronização saltada - estado não mudou');
+            return;
+        }
+
+        // ✅ RECALCULAR TODOS OS SECUNDÁRIOS (necessário apenas uma vez)
+        this.calcularAtributosSecundarios();
+
+        // ✅ Sincronizar primários (atualizar apenas se mudou)
         primarios.forEach(attr => {
             const attrData = state.atributos?.primarios?.[attr];
             if (attrData) {
@@ -873,26 +914,22 @@ class AtributosConfigModal {
                 const bonus = attrData.bonus ?? 0;
                 this.updateVisualDisplay(attr, base, extra, bonus);
             } else {
-                // Padrão para atributos não salvos
                 this.updateVisualDisplay(attr, 0, 0, 0);
             }
         });
-
-        // ✅ RECALCULAR TODOS OS SECUNDÁRIOS
-        this.calcularAtributosSecundarios();
 
         // ✅ Sincronizar secundários (após recálculo)
         secundarios.forEach(attr => {
             const attrData = state.atributos?.secundarios?.[attr];
             if (attrData) {
-                // Para secundários, apenas passar o tipo - updateVisualDisplay lerá do estado
                 this.updateVisualDisplay(attr);
             } else {
-                // Padrão para atributos não salvos
                 this.updateVisualDisplay(attr);
             }
         });
 
+        // ✅ Atualizar cache de sincronização
+        this._lastSyncState = currentStateHash;
         console.log('✅ Todos os atributos sincronizados com o estado');
     }
 

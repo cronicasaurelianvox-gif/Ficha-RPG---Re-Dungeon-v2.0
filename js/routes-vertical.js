@@ -297,13 +297,37 @@ class RoutesVertical {
             const jogadorInfo = window.stateManager?.getJogadorInfo?.() || {};
             console.log('📦 Jogador info coletado:', jogadorInfo);
 
-            // 4. Coletar dados de reputação
-            const state = window.stateManager?.getState?.() || {};
-            const reputacao = {
-                mundo: state.reputacao?.mundo || 0,
-                regiao: state.reputacao?.regiao || 0
+            // 4. Coletar dados de reputação V2 (novo formato)
+            let reputacao = {
+                mundo: { fama: 0, temor: 0, valor: 0 },
+                regiao: { fama: 0, temor: 0, valor: 0 }
             };
-            console.log('📦 Reputação coletada:', reputacao);
+
+            // Tentar obter dados de reputação V2 primeiro
+            if (window.reputacaoV2 && typeof window.reputacaoV2.dados === 'object') {
+                console.log('✅ Usando ReputacaoV2 (novo formato)');
+                reputacao = window.reputacaoV2.dados;
+            } else if (window.stateManager && typeof window.stateManager.getReputation === 'function') {
+                // Fallback para StateManager
+                console.log('⚠️ Usando StateManager (compatibilidade)');
+                const repState = window.stateManager.getReputation();
+                if (repState && repState.mundo) {
+                    reputacao = {
+                        mundo: repState.mundo,
+                        regiao: repState.regiao
+                    };
+                }
+            } else {
+                // Último fallback: dados simples
+                console.log('⚠️ Usando dados simples de reputação');
+                const state = window.stateManager?.getState?.() || {};
+                reputacao = {
+                    mundo: state.reputation?.mundo || 0,
+                    regiao: state.reputation?.regiao || 0
+                };
+            }
+
+            console.log('📦 Reputação coletada (V2):', reputacao);
 
             // 5. Coletar aptidões do IndexedDB
             let aptidoesData = {
@@ -346,10 +370,14 @@ class RoutesVertical {
                 },
                 reputacao: reputacao,
                 jogadorInfo: jogadorInfo,
-                aptidoes: aptidoesData
+                aptidoes: aptidoesData,
+                timestamp: new Date().toISOString()
             };
 
+            console.log('✅ Estrutura de dados montada para salvar:', dataToSave);
+
             // ⚠️ PERSISTÊNCIA DESABILITADA - Sistema funciona apenas em RAM
+            console.log('💾 Dados prontos para salvar (persistência atualmente desabilitada)');
 
         } catch (error) {
             console.error('❌ ERRO ao salvar personagem:', error);

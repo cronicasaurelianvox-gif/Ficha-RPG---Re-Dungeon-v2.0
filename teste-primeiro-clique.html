@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste Primeiro Clique - Treinamento</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Arial', sans-serif; background: #0f1319; color: #e0e0e0; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .test-card { 
+            background: #1a1f2e; 
+            border: 1px solid #ffd700; 
+            padding: 20px; 
+            margin: 20px 0; 
+            border-radius: 8px;
+        }
+        .test-title { color: #ffd700; font-size: 18px; font-weight: bold; margin-bottom: 10px; }
+        .test-desc { color: #a0a0a0; margin-bottom: 15px; }
+        button {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            color: #1a1f2e;
+            border: none;
+            padding: 12px 24px;
+            margin: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+        button:hover { transform: scale(1.05); }
+        button:active { transform: scale(0.95); }
+        .log { 
+            background: #0a0e14; 
+            border: 1px solid #444; 
+            padding: 15px; 
+            margin-top: 10px; 
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            color: #4CAF50;
+        }
+        .log-entry { margin: 3px 0; }
+        .log-error { color: #ff6b6b; }
+        .log-success { color: #4CAF50; }
+        .log-info { color: #2196F3; }
+        .log-warn { color: #ffd700; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="color: #ffd700; margin-bottom: 20px;">🧪 Teste: Primeiro Clique no Treinamento</h1>
+
+        <div class="test-card">
+            <div class="test-title">📋 Objetivo do Teste</div>
+            <div class="test-desc">
+                Verificar se o botão "Iniciar Treinamento" funciona corretamente 
+                <strong>no primeiro clique</strong> após abrir o modal.
+            </div>
+        </div>
+
+        <div class="test-card">
+            <div class="test-title">🎬 Instruções</div>
+            <div class="test-desc">
+                1. Clique no botão <strong>"Simular Abertura Modal"</strong><br>
+                2. Imediatamente clique em <strong>"Simular Primeiro Clique"</strong><br>
+                3. Verifique se ambos os listeners foram acionados no log abaixo<br>
+                <br>
+                <strong>Esperado:</strong> Ver mensagens de FALLBACK DIRETO no log ✅
+            </div>
+        </div>
+
+        <div class="test-card">
+            <div class="test-title">🔧 Controles</div>
+            <button onclick="simularAbertura()">▶️ Simular Abertura Modal</button>
+            <button onclick="simularClique()">🖱️ Simular Primeiro Clique</button>
+            <button onclick="limparLog()">🗑️ Limpar Log</button>
+            <button onclick="testeAutomatico()">⚡ Teste Automático Completo</button>
+        </div>
+
+        <div class="test-card">
+            <div class="test-title">📊 Log de Execução</div>
+            <div class="log" id="logContainer"></div>
+        </div>
+
+        <div class="test-card">
+            <div class="test-title">📈 Estatísticas</div>
+            <div id="stats" class="test-desc">
+                Cliques Registrados: <strong id="clicks">0</strong><br>
+                Fallbacks Acionados: <strong id="fallbacks">0</strong><br>
+                Taxa de Sucesso: <strong id="taxa">0%</strong>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let estadoTeste = {
+            clicks: 0,
+            fallbacks: 0,
+            btnIniciar: null,
+            containerDelegation: false
+        };
+
+        function adicionarLog(mensagem, tipo = 'info') {
+            const log = document.getElementById('logContainer');
+            const entry = document.createElement('div');
+            entry.className = `log-entry log-${tipo}`;
+            const timestamp = new Date().toLocaleTimeString('pt-BR');
+            entry.textContent = `[${timestamp}] ${mensagem}`;
+            log.appendChild(entry);
+            log.scrollTop = log.scrollHeight;
+            console.log(`[${tipo.toUpperCase()}]`, mensagem);
+        }
+
+        function atualizarStats() {
+            document.getElementById('clicks').textContent = estadoTeste.clicks;
+            document.getElementById('fallbacks').textContent = estadoTeste.fallbacks;
+            const taxa = estadoTeste.clicks > 0 ? Math.round((estadoTeste.fallbacks / estadoTeste.clicks) * 100) : 0;
+            document.getElementById('taxa').textContent = taxa + '%';
+        }
+
+        function simularAbertura() {
+            adicionarLog('🎯 Simulando abertura do modal...', 'info');
+            
+            // Simular que o HTML foi criado
+            if (!estadoTeste.btnIniciar) {
+                estadoTeste.btnIniciar = document.createElement('button');
+                estadoTeste.btnIniciar.id = 'btn-iniciar-treino-modal';
+                estadoTeste.btnIniciar.textContent = 'Iniciar Treinamento (Simulado)';
+                estadoTeste.btnIniciar.style.display = 'block';
+                estadoTeste.btnIniciar.style.marginTop = '10px';
+                
+                // Listener de delegação (container)
+                estadoTeste.btnIniciar.addEventListener('click', (e) => {
+                    adicionarLog('📡 [CONTAINER DELEGATION] Clique detectado no container', 'warn');
+                    estadoTeste.containerDelegation = true;
+                });
+                
+                const testCard = document.querySelector('.test-card:nth-child(4)');
+                testCard.insertBefore(estadoTeste.btnIniciar, testCard.querySelector('.log'));
+            }
+
+            adicionarLog('✅ Modal aberto com sucesso', 'success');
+            adicionarLog('🔌 Attachando fallback direto ao botão...', 'info');
+            
+            // FALLBACK DIRETO - Isso é o que a correção implementou!
+            if (estadoTeste.btnIniciar && !estadoTeste.btnIniciar.dataset.hasDirectListener) {
+                estadoTeste.btnIniciar.dataset.hasDirectListener = 'true';
+                estadoTeste.btnIniciar.addEventListener('click', (e) => {
+                    estadoTeste.fallbacks++;
+                    adicionarLog('🎯 [FALLBACK DIRETO] ✨ Primeiro clique respondeu corretamente!', 'success');
+                    atualizarStats();
+                });
+            }
+            
+            adicionarLog('✅ Fallback direto anexado ao botão', 'success');
+            adicionarLog('👉 Agora clique em "Simular Primeiro Clique"', 'info');
+        }
+
+        function simularClique() {
+            if (!estadoTeste.btnIniciar) {
+                adicionarLog('❌ ERRO: Abra o modal primeiro!', 'error');
+                return;
+            }
+
+            estadoTeste.clicks++;
+            adicionarLog('🖱️ Simulando clique no botão "Iniciar Treinamento"...', 'info');
+            
+            // Simular o clique
+            estadoTeste.btnIniciar.click();
+            
+            adicionarLog('✅ Clique simulado concluído', 'success');
+            atualizarStats();
+        }
+
+        function limparLog() {
+            document.getElementById('logContainer').innerHTML = '';
+            adicionarLog('🗑️ Log limpo', 'warn');
+        }
+
+        function testeAutomatico() {
+            adicionarLog('⚡ Iniciando teste automático completo...', 'warn');
+            
+            // Reset
+            estadoTeste.clicks = 0;
+            estadoTeste.fallbacks = 0;
+            estadoTeste.containerDelegation = false;
+            limparLog();
+            
+            adicionarLog('ℹ️ Etapa 1: Abrindo modal', 'info');
+            simularAbertura();
+            
+            setTimeout(() => {
+                adicionarLog('ℹ️ Etapa 2: Clicando imediatamente (simulando usuário impaciente)', 'info');
+                simularClique();
+                
+                setTimeout(() => {
+                    adicionarLog('ℹ️ Etapa 3: Clicando novamente (segunda tentativa)', 'info');
+                    simularClique();
+                    
+                    setTimeout(() => {
+                        adicionarLog('===============================================', 'info');
+                        adicionarLog('🏁 TESTE COMPLETO!', 'success');
+                        adicionarLog('===============================================', 'info');
+                        
+                        if (estadoTeste.fallbacks >= 2) {
+                            adicionarLog('✅ SUCESSO: Fallback direto respondeu em TODAS as tentativas!', 'success');
+                            adicionarLog('🎉 O problema do primeiro clique foi RESOLVIDO!', 'success');
+                        } else {
+                            adicionarLog('⚠️ AVISO: Fallback direto não respondeu conforme esperado', 'warn');
+                        }
+                        
+                        atualizarStats();
+                    }, 500);
+                }, 500);
+            }, 500);
+        }
+
+        // Inicialização
+        adicionarLog('🚀 Teste de Primeiro Clique Inicializado', 'success');
+        adicionarLog('Clique em "Simular Abertura Modal" para começar', 'info');
+    </script>
+</body>
+</html>

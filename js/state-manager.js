@@ -60,10 +60,18 @@ class StateManager {
 
             // Sistema de Reputação e Influência
             reputation: {
-                // Reputação Global (Mundo)
-                mundo: 0,
-                // Reputação Local (Região)
-                regiao: 0,
+                // Reputação Global (Mundo) - formato novo V2
+                mundo: {
+                    fama: 0,
+                    temor: 0,
+                    valor: 0  // compatibilidade com sistema antigo
+                },
+                // Reputação Local (Região) - formato novo V2
+                regiao: {
+                    fama: 0,
+                    temor: 0,
+                    valor: 0  // compatibilidade com sistema antigo
+                },
                 // Histórico de mudanças (para futuro)
                 history: [],
                 // Timestamp da última mudança
@@ -271,7 +279,10 @@ class StateManager {
      */
     getTotalReputation() {
         const { mundo, regiao } = this.state.reputation;
-        return Math.min(mundo + regiao, 50); // Máximo 50
+        // Com o novo formato V2, usar o valor (máximo entre fama e temor)
+        const mundoValor = mundo.valor || Math.max(mundo.fama || 0, mundo.temor || 0);
+        const regiaoValor = regiao.valor || Math.max(regiao.fama || 0, regiao.temor || 0);
+        return Math.min(mundoValor + regiaoValor, 100); // Máximo 100 agora
     }
 
     /**
@@ -363,13 +374,21 @@ class StateManager {
 
     /**
      * Obtém a reputação atual
-     * @returns {object} { mundo, regiao, total, nivel, descricao }
+     * @returns {object} Reputação no novo formato V2
      */
     getReputation() {
         const level = this.getReputationLevel();
         return {
-            mundo: this.state.reputation.mundo,
-            regiao: this.state.reputation.regiao,
+            mundo: {
+                fama: this.state.reputation.mundo.fama || 0,
+                temor: this.state.reputation.mundo.temor || 0,
+                valor: this.state.reputation.mundo.valor || 0
+            },
+            regiao: {
+                fama: this.state.reputation.regiao.fama || 0,
+                temor: this.state.reputation.regiao.temor || 0,
+                valor: this.state.reputation.regiao.valor || 0
+            },
             total: this.getTotalReputation(),
             nivel: level.nivel,
             descricao: level.descricao
@@ -378,22 +397,61 @@ class StateManager {
 
     /**
      * Define a reputação completamente
-     * @param {object} data - { mundo: number, regiao: number }
+     * @param {object} data - Aceita dois formatos:
+     *   - Antigo: { mundo: number, regiao: number }
+     *   - Novo V2: { mundo: { fama, temor, valor }, regiao: { fama, temor, valor } }
      */
     setReputation(data) {
-        if (typeof data !== 'object' || data === null) return;
+        if (typeof data !== 'object' || data === null) {
+            console.warn('❌ setReputation: dados inválidos', data);
+            return;
+        }
 
-        const mundo = Math.max(0, Math.min(parseInt(data.mundo) || 0, 50));
-        const regiao = Math.max(0, Math.min(parseInt(data.regiao) || 0, 50));
+        console.log('🔵 setReputation() chamado com dados:', data);
+
+        let mundoFama = 0, mundoTemor = 0;
+        let regiaoFama = 0, regiaoTemor = 0;
+
+        // Detectar qual formato está sendo usado
+        if (data.mundo && typeof data.mundo === 'object' && data.mundo.fama !== undefined) {
+            // Formato novo V2: { mundo: { fama, temor, valor }, ... }
+            console.log('📊 Detectado formato V2 (novo) - salvando fama E temor separadamente');
+            mundoFama = Math.max(0, Math.min(parseInt(data.mundo.fama) || 0, 100));
+            mundoTemor = Math.max(0, Math.min(parseInt(data.mundo.temor) || 0, 100));
+            regiaoFama = Math.max(0, Math.min(parseInt(data.regiao.fama) || 0, 100));
+            regiaoTemor = Math.max(0, Math.min(parseInt(data.regiao.temor) || 0, 100));
+        } else {
+            // Formato antigo: { mundo: number, regiao: number }
+            console.log('📊 Detectado formato antigo - convertendo para novo');
+            mundoFama = Math.max(0, Math.min(parseInt(data.mundo) || 0, 100));
+            regiaoFama = Math.max(0, Math.min(parseInt(data.regiao) || 0, 100));
+            mundoTemor = 0;
+            regiaoTemor = 0;
+        }
+
+        console.log('✅ Valores após conversão:', { 
+            mundoFama, mundoTemor, 
+            regiaoFama, regiaoTemor 
+        });
 
         this.setState({
             reputation: {
-                ...this.state.reputation,
-                mundo,
-                regiao,
+                mundo: {
+                    fama: mundoFama,
+                    temor: mundoTemor,
+                    valor: Math.max(mundoFama, mundoTemor)
+                },
+                regiao: {
+                    fama: regiaoFama,
+                    temor: regiaoTemor,
+                    valor: Math.max(regiaoFama, regiaoTemor)
+                },
+                history: this.state.reputation.history || [],
                 lastModified: new Date().toISOString()
             }
         });
+
+        console.log('✅ Estado atualizado. Nova reputação:', this.state.reputation);
     }
 
     /**

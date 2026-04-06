@@ -93,18 +93,20 @@ const AtualizarFichaCompleta = (() => {
           primarios[attr] = { base: 0, extra: 0, bonus: 0, total: 0 };
         }
 
-        // ⚠️ CRUCIAL: APENAS reaplicar o bônus de aptidões
-        // NÃO tocar em base ou extra
+        // ⚠️ CRÍTICO: SUBSTITUIR o campo .bonus com bônus recalculados
+        // NÃO SOMAR! O campo .bonus é APENAS para bônus de aptidões
+        // Precisa ser SUBSTITUÍDO, não ADICIONADO
         const bonusAptidao = bonusAptidoes[attr] || 0;
         const base = primarios[attr].base || 0;
         const extra = primarios[attr].extra || 0;
-        const bonusManual = primarios[attr].bonus || 0;
 
-        // TOTAL = base + extra + bonusManual + bonusAptidoes
-        const total = base + extra + bonusManual + bonusAptidao;
+        // TOTAL = base + extra + bonusAptidoes (NUNCA bonusManual duplicado!)
+        const total = base + extra + bonusAptidao;
 
-        console.log(`    ${attr}: ${base} + ${extra} + ${bonusManual} + ${bonusAptidao}(apt) = ${total}`);
+        console.log(`    ${attr}: ${base} + ${extra} + ${bonusAptidao}(apt) = ${total}`);
 
+        // ✅ SUBSTITUIR o bônus, não somar
+        primarios[attr].bonus = bonusAptidao;
         primarios[attr].total = total;
       });
 

@@ -172,13 +172,37 @@ class SistemaFicha {
 
             console.log('✅ Status coletados:', barras);
 
-            // ═══ REPUTAÇÃO (do ReputacaoModal) ═══
-            const reputacao = window.reputacaoModal?.tempValues || { 
-                mundo: 0, 
-                regiao: 0 
+            // ═══ REPUTAÇÃO V2 (novo formato com fama e temor) ═══
+            let reputacao = { 
+                mundo: { fama: 0, temor: 0, valor: 0 },
+                regiao: { fama: 0, temor: 0, valor: 0 }
             };
 
-            console.log('✅ Reputação coletada:', reputacao);
+            // Tentar obter dados de reputação V2 primeiro (novo formato)
+            if (window.reputacaoV2 && typeof window.reputacaoV2.dados === 'object') {
+                console.log('✅ Coletando ReputacaoV2 (novo formato)');
+                reputacao = window.reputacaoV2.dados;
+            } else if (window.reputacaoModal?.tempValues) {
+                // Fallback para ReputacaoModal (compatibilidade)
+                console.log('⚠️ Coletando ReputacaoModal (compatibilidade)');
+                const modal = window.reputacaoModal.tempValues;
+                reputacao = {
+                    mundo: modal.mundo || 0,
+                    regiao: modal.regiao || 0
+                };
+            } else if (window.stateManager && typeof window.stateManager.getReputation === 'function') {
+                // Fallback para StateManager
+                console.log('⚠️ Coletando StateManager (compatibilidade)');
+                const rep = window.stateManager.getReputation();
+                if (rep && rep.mundo) {
+                    reputacao = {
+                        mundo: rep.mundo,
+                        regiao: rep.regiao
+                    };
+                }
+            }
+
+            console.log('✅ Reputação coletada (V2):', reputacao);
 
             // ═══ DADOS DO PERSONAGEM ═══
             const personagem = {
@@ -1901,19 +1925,44 @@ class SistemaFicha {
                 console.log('✅ Status restaurados completamente (com campos extra e persistência)');
             }
 
-            // ═══ RESTAURAR REPUTAÇÃO (no AppState E no modal) ═══
+            // ═══ RESTAURAR REPUTAÇÃO V2 (no StateManager E no ReputacaoV2) ═══
             if (dados.reputacao) {
-                // Restaurar no AppState (necessário para o modal carregar)
-                if (window.appState && typeof window.appState.setReputation === 'function') {
-                    window.appState.setReputation(dados.reputacao);
-                    console.log('✅ Reputação restaurada no AppState:', dados.reputacao);
+                console.log('📖 Restaurando reputação V2:', dados.reputacao);
+                
+                // Restaurar no StateManager (novo sistema)
+                if (window.stateManager && typeof window.stateManager.setReputation === 'function') {
+                    window.stateManager.setReputation(dados.reputacao);
+                    console.log('✅ Reputação restaurada no StateManager:', dados.reputacao);
                 }
                 
-                // Restaurar no ReputacaoModal
+                // Restaurar no ReputacaoV2 (novo sistema)
+                if (window.reputacaoV2) {
+                    if (typeof dados.reputacao === 'object' && dados.reputacao.mundo) {
+                        // Novo formato V2
+                        if (typeof dados.reputacao.mundo === 'object') {
+                            window.reputacaoV2.dados = {
+                                mundo: dados.reputacao.mundo,
+                                regiao: dados.reputacao.regiao
+                            };
+                            window.reputacaoV2.dadosOrigem = JSON.parse(JSON.stringify(window.reputacaoV2.dados));
+                            console.log('✅ Reputação V2 restaurada (novo formato):', window.reputacaoV2.dados);
+                        } else {
+                            // Formato antigo - converter
+                            window.reputacaoV2.dados = {
+                                mundo: { fama: dados.reputacao.mundo || 0, temor: 0, valor: dados.reputacao.mundo || 0 },
+                                regiao: { fama: dados.reputacao.regiao || 0, temor: 0, valor: dados.reputacao.regiao || 0 }
+                            };
+                            window.reputacaoV2.dadosOrigem = JSON.parse(JSON.stringify(window.reputacaoV2.dados));
+                            console.log('✅ Reputação V2 restaurada (convertido do antigo formato):', window.reputacaoV2.dados);
+                        }
+                    }
+                }
+                
+                // Fallback para ReputacaoModal (compatibilidade)
                 if (window.reputacaoModal) {
                     window.reputacaoModal.tempValues = dados.reputacao;
                     window.reputacaoModal.originalValues = dados.reputacao;
-                    console.log('✅ Reputação restaurada no modal:', dados.reputacao);
+                    console.log('✅ Reputação restaurada no modal (compatibilidade):', dados.reputacao);
                     
                     // Atualizar displays
                     if (typeof window.reputacaoModal.updateInputs === 'function') {

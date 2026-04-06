@@ -70,16 +70,17 @@ class ReputacaoModal {
 
     setupEventListeners() {
         // Botao de abrir (no header do personagem)
-        const btnAbrir = document.querySelector('#reputacao-btn');
-        console.log('🔍 Procurando botao #reputacao-btn:', btnAbrir ? '✓ Encontrado' : '✗ Nao encontrado');
-        
-        if (btnAbrir) {
-            btnAbrir.addEventListener('click', (e) => {
-                e.preventDefault();
-                console.log('🖱️ Clique no botao reputacao detectado');
-                this.open();
-            });
-        }
+        // ⚠️ DESABILITADO: O V2 agora cuida disto
+        // const btnAbrir = document.querySelector('#reputacao-btn');
+        // console.log('🔍 Procurando botao #reputacao-btn:', btnAbrir ? '✓ Encontrado' : '✗ Nao encontrado');
+        // 
+        // if (btnAbrir) {
+        //     btnAbrir.addEventListener('click', (e) => {
+        //         e.preventDefault();
+        //         console.log('🖱️ Clique no botao reputacao detectado');
+        //         this.open();
+        //     });
+        // }
 
         // Botoes do modal
         document.querySelector('#reputacao-close')?.addEventListener('click', () => this.close());

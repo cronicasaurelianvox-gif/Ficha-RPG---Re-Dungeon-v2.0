@@ -26,13 +26,6 @@
     transform: scale(0.95);
 }
 
-.reputacao-btn img {
-    width: 128px;
-    height: 128px;
-    object-fit: contain;
-    display: block;
-}
-
 /* ========================================== */
 /* OVERLAY DO MODAL - Fundo Escuro */
 /* ========================================== */

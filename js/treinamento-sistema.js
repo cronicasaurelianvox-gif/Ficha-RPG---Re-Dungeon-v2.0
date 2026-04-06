@@ -212,69 +212,87 @@ class TreinamentoManager {
                     <!-- Preenchido dinamicamente -->
                 </div>
 
-                <!-- Modal de Treinamento -->
+                <!-- Modal de Treinamento - NOVO VISUAL PREMIUM -->
                 <div id="modal-treino" class="modal-treino hidden">
                     <div class="modal-treino__overlay"></div>
                     <div class="modal-treino__content">
                         <div class="modal-treino__header">
-                            <h3>Treinar Atributo</h3>
+                            <div class="modal-treino__header-content">
+                                <h3>⚔️ Treinar Atributo</h3>
+                                <p>Melhore suas habilidades através do treinamento</p>
+                            </div>
                             <button class="modal-treino__close" id="btn-fechar-modal">&times;</button>
                         </div>
 
-                        <!-- Seção 1: Seleção de Atributo -->
-                        <div class="modal-treino__section">
-                            <label for="select-atributo">Atributo a Treinar</label>
-                            <select id="select-atributo" class="modal-treino__select">
+                        <!-- CARD 1: Seleção de Atributo -->
+                        <div class="treino-card treino-card--selecao">
+                            <div class="treino-card__label">Escolha um Atributo</div>
+                            <select id="select-atributo" class="treino-select">
                                 <option value="">-- Selecione um atributo --</option>
                                 ${ATRIBUTOS_TREINAVEIS.map(attr => 
                                     `<option value="${attr}">${this.nomeAtributo(attr)}</option>`
                                 ).join('')}
                             </select>
+                        </div>
 
-                            <div id="info-atributo" class="modal-treino__info hidden">
-                                <div class="info-item">
-                                    <span class="info-label">Nível Atual:</span>
-                                    <span class="info-value" id="info-nivel">0</span>
+                        <!-- CARD 2: Status do Atributo -->
+                        <div id="info-atributo" class="treino-card treino-card--status hidden">
+                            <div class="treino-card__label">Status do Atributo</div>
+                            <div class="status-grid">
+                                <div class="status-item">
+                                    <span class="status-label">Nível</span>
+                                    <span class="status-valor" id="info-nivel">0</span>
                                 </div>
-                                <div class="info-item">
-                                    <span class="info-label">XP Atual:</span>
-                                    <span class="info-value" id="info-xp-atual">0</span>
+                                <div class="status-item">
+                                    <span class="status-label">Dificuldade</span>
+                                    <span class="status-valor status-obstaculo" id="info-obstaculo">5</span>
                                 </div>
-                                <div class="info-item">
-                                    <span class="info-label">XP Necessária:</span>
-                                    <span class="info-value" id="info-xp-necessaria">10</span>
+                            </div>
+
+                            <!-- Barra de Progresso de XP -->
+                            <div class="xp-progress-section">
+                                <div class="xp-header">
+                                    <span class="xp-label">Progresso de Experiência</span>
+                                    <span class="xp-valores"><span id="info-xp-atual">0</span> / <span id="info-xp-necessaria">10</span></span>
                                 </div>
-                                <div class="info-item">
-                                    <span class="info-label">Obstáculo Atual:</span>
-                                    <span class="info-value" id="info-obstaculo">5</span>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress-bar__fill" id="progress-fill" style="width: 0%"></div>
+                                <div class="xp-progress-bar">
+                                    <div class="xp-progress-fill" id="progress-fill" style="width: 0%"></div>
+                                    <div class="xp-progress-glow"></div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Seção 2: Horas de Treino -->
-                        <div class="modal-treino__section">
-                            <label for="input-horas">Horas de Treinamento</label>
-                            <div class="modal-treino__horas-control">
-                                <button id="btn-menos-horas" class="btn-hora">−</button>
-                                <input type="number" id="input-horas" min="1" max="12" value="1" class="modal-treino__input-horas">
-                                <button id="btn-mais-horas" class="btn-hora">+</button>
+                        <!-- CARD 3: Tempo de Treinamento -->
+                        <div class="treino-card treino-card--tempo">
+                            <div class="treino-card__label">⏱️ Tempo de Treinamento</div>
+                            <p class="treino-card__hint">Quanto tempo você deseja treinar?</p>
+                            <div class="treino-horas-container">
+                                <button id="btn-menos-horas" class="treino-btn-horas treino-btn-horas--menos">−</button>
+                                <div class="treino-horas-display">
+                                    <input type="number" id="input-horas" min="1" max="12" value="1" class="treino-input-horas">
+                                    <span class="treino-horas-label">horas</span>
+                                </div>
+                                <button id="btn-mais-horas" class="treino-btn-horas treino-btn-horas--mais">+</button>
                             </div>
-                            <small>Mínimo: 1 | Máximo: 12 horas</small>
+                            <div class="treino-horas-info">
+                                <small>Mínimo: 1h | Máximo: 12h</small>
+                            </div>
                         </div>
 
-                        <!-- Seção 2.5: Bônus Extra Manual -->
-                        <div class="modal-treino__section modal-treino__section--bonus-extra">
-                            <label for="input-bonus-extra">Bônus Extra Manual (Mestre)</label>
-                            <input type="number" id="input-bonus-extra" min="0" max="20" value="0" class="modal-treino__input-bonus-extra">
-                            <small>Bônus adicional definido pelo mestre (0-20)</small>
+                        <!-- CARD 4: Bônus do Mestre -->
+                        <div class="treino-card treino-card--bonus">
+                            <div class="treino-card__label">🎯 Bônus do Mestre</div>
+                            <p class="treino-card__hint">Modificador adicional aplicado manualmente</p>
+                            <div class="treino-bonus-container">
+                                <input type="number" id="input-bonus-extra" min="0" max="20" value="0" class="treino-input-bonus">
+                                <span class="treino-bonus-range">(0–20)</span>
+                            </div>
                         </div>
 
-                        <!-- Botão Iniciar -->
-                        <button id="btn-iniciar-treino-modal" class="btn-treino-acao btn-iniciar-treino">
-                            ▶️ Iniciar Treinamento
+                        <!-- CARD 5: Botão de Ação -->
+                        <button id="btn-iniciar-treino-modal" class="treino-btn-iniciar">
+                            <span class="treino-btn-icon">▶</span>
+                            <span class="treino-btn-text">Iniciar Treinamento</span>
                         </button>
 
                         <!-- Seção 3: Resultado (oculto inicialmente) -->
@@ -379,51 +397,77 @@ class TreinamentoManager {
      * Configura listeners
      */
     setupListeners() {
+        // DELEGAÇÃO - Usar container de treinamento como root
+        const container = document.getElementById('rpg-content-treinamento');
+        if (!container) {
+            console.error('❌ Container de treinamento não encontrado para listeners');
+            return;
+        }
+
         // Botão principal de treino
-        document.addEventListener('click', (e) => {
+        container.addEventListener('click', (e) => {
+            // Botão principal
             if (e.target.id === 'btn-treinar-atributo') {
+                console.log('🎯 Clique em btn-treinar-atributo');
                 this.abrirModalTreino();
             }
 
+            // Botões de treinar por atributo (do grid)
             if (e.target.classList.contains('btn-treinar-atributo')) {
                 const atributo = e.target.dataset.atributo;
+                console.log('🎯 Clique em btn-treinar-atributo com atributo:', atributo);
                 this.abrirModalTreino(atributo);
             }
 
+            // Fechar modal (X ou overlay)
             if (e.target.id === 'btn-fechar-modal' || e.target.classList.contains('modal-treino__overlay')) {
+                console.log('🎯 Clique em fechar modal');
                 this.fecharModal();
             }
 
+            // Iniciar treino
             if (e.target.id === 'btn-iniciar-treino-modal') {
+                console.log('🎯 Clique em btn-iniciar-treino-modal');
                 this.executarTreino();
             }
 
+            // Fechar resultado
             if (e.target.id === 'btn-fechar-resultado') {
+                console.log('🎯 Clique em btn-fechar-resultado');
                 this.fecharModal();
                 this.renderizarAtributos();
             }
 
+            // Mais horas
             if (e.target.id === 'btn-mais-horas') {
+                console.log('🎯 Clique em btn-mais-horas');
                 this.ajustarHoras(1);
             }
 
+            // Menos horas
             if (e.target.id === 'btn-menos-horas') {
+                console.log('🎯 Clique em btn-menos-horas');
                 this.ajustarHoras(-1);
             }
         });
 
-        // Select de atributo
-        document.addEventListener('change', (e) => {
+        // Mudanças em inputs/selects
+        container.addEventListener('change', (e) => {
+            // Select de atributo
             if (e.target.id === 'select-atributo') {
+                console.log('🎯 Mudança em select-atributo:', e.target.value);
                 this.atualizarInfoAtributo(e.target.value);
             }
 
+            // Input de horas
             if (e.target.id === 'input-horas') {
                 const value = parseInt(e.target.value) || 1;
                 if (value < 1) e.target.value = 1;
                 if (value > 12) e.target.value = 12;
             }
         });
+
+        console.log('✅ Listeners configurados para container');
     }
 
     /**
@@ -531,9 +575,17 @@ class TreinamentoManager {
         const select = document.getElementById('select-atributo');
         const info = document.getElementById('info-atributo');
 
-        if (atributo && ATRIBUTOS_TREINAVEIS.includes(atributo)) {
-            select.value = atributo;
-            this.atualizarInfoAtributo(atributo);
+        // Se nenhum atributo foi passado, selecionar o primeiro por padrão
+        let atributoParaSelecionar = atributo;
+        
+        if (!atributoParaSelecionar || !ATRIBUTOS_TREINAVEIS.includes(atributoParaSelecionar)) {
+            // Auto-selecionar primeiro atributo
+            atributoParaSelecionar = ATRIBUTOS_TREINAVEIS[0];
+        }
+
+        if (atributoParaSelecionar && ATRIBUTOS_TREINAVEIS.includes(atributoParaSelecionar)) {
+            select.value = atributoParaSelecionar;
+            this.atualizarInfoAtributo(atributoParaSelecionar);
         } else {
             info.classList.add('hidden');
         }
@@ -542,6 +594,68 @@ class TreinamentoManager {
         document.getElementById('resultado-treino').classList.add('hidden');
         document.getElementById('input-horas').value = 1;
         document.getElementById('input-bonus-extra').value = 0;
+
+        // 🔧 FALLBACK: Garantir que o botão de iniciar treino funcione mesmo na primeira tentativa
+        // Adiciona um listener DIRETO no botão como fallback para garantir responsividade
+        const btnIniciar = document.getElementById('btn-iniciar-treino-modal');
+        if (btnIniciar && !btnIniciar.dataset.hasDirectListener) {
+            btnIniciar.dataset.hasDirectListener = 'true';
+            btnIniciar.addEventListener('click', (e) => {
+                console.log('🎯 [FALLBACK DIRETO] Clique em btn-iniciar-treino-modal');
+                this.executarTreino();
+            });
+        }
+
+        // 🔧 FALLBACK: Fechar modal também com listener direto
+        const btnFechar = document.getElementById('btn-fechar-modal');
+        if (btnFechar && !btnFechar.dataset.hasDirectListener) {
+            btnFechar.dataset.hasDirectListener = 'true';
+            btnFechar.addEventListener('click', (e) => {
+                console.log('🎯 [FALLBACK DIRETO] Clique em fechar modal');
+                this.fecharModal();
+            });
+        }
+
+        // 🔧 FALLBACK: Ajuste de horas
+        const btnMaisHoras = document.getElementById('btn-mais-horas');
+        if (btnMaisHoras && !btnMaisHoras.dataset.hasDirectListener) {
+            btnMaisHoras.dataset.hasDirectListener = 'true';
+            btnMaisHoras.addEventListener('click', (e) => {
+                console.log('🎯 [FALLBACK DIRETO] Clique em btn-mais-horas');
+                this.ajustarHoras(1);
+            });
+        }
+
+        const btnMenosHoras = document.getElementById('btn-menos-horas');
+        if (btnMenosHoras && !btnMenosHoras.dataset.hasDirectListener) {
+            btnMenosHoras.dataset.hasDirectListener = 'true';
+            btnMenosHoras.addEventListener('click', (e) => {
+                console.log('🎯 [FALLBACK DIRETO] Clique em btn-menos-horas');
+                this.ajustarHoras(-1);
+            });
+        }
+
+        // 🔧 FALLBACK: Select de atributo
+        const selectAtributo = document.getElementById('select-atributo');
+        if (selectAtributo && !selectAtributo.dataset.hasDirectListener) {
+            selectAtributo.dataset.hasDirectListener = 'true';
+            selectAtributo.addEventListener('change', (e) => {
+                console.log('🎯 [FALLBACK DIRETO] Mudança em select-atributo:', e.target.value);
+                this.atualizarInfoAtributo(e.target.value);
+            });
+        }
+
+        // 🔧 FALLBACK: Input de horas
+        const inputHoras = document.getElementById('input-horas');
+        if (inputHoras && !inputHoras.dataset.hasDirectListener) {
+            inputHoras.dataset.hasDirectListener = 'true';
+            inputHoras.addEventListener('change', (e) => {
+                const value = parseInt(e.target.value) || 1;
+                if (value < 1) e.target.value = 1;
+                if (value > 12) e.target.value = 12;
+                console.log('🎯 [FALLBACK DIRETO] Input horas ajustado para:', e.target.value);
+            });
+        }
     }
 
     /**
@@ -585,7 +699,10 @@ class TreinamentoManager {
             document.getElementById('info-obstaculo').textContent = obstaculoCorreto;
 
             const percentual = Math.min((dados.xpAtual / xpNecessariaCorreto) * 100, 100);
-            document.getElementById('progress-fill').style.width = percentual + '%';
+            const progressFill = document.getElementById('xp-progress-fill') || document.getElementById('progress-fill');
+            if (progressFill) {
+                progressFill.style.width = percentual + '%';
+            }
 
             info.classList.remove('hidden');
         }
@@ -616,14 +733,23 @@ class TreinamentoManager {
             return;
         }
 
+        console.log(`🏋️ Iniciando treinamento de ${atributo}...`);
+
         // 1. Rolar 1d6 (nova mecânica)
         const d6Base = this.rolarDado(6);
+        console.log(`1d6: ${d6Base}`);
 
-        // 2. Obter bônus de aptidão
-        const bonusAptidao = await this.obterBonusAptidao(atributo);
+        // 2. Obter bônus de aptidão (com try-catch para evitar travamentos)
+        let bonusAptidao = 0;
+        try {
+            bonusAptidao = await this.obterBonusAptidao(atributo);
+        } catch (e) {
+            console.warn(`⚠️ Erro ao obter bônus de aptidão:`, e);
+            bonusAptidao = 0;
+        }
 
         // 3. Calcular bônus de Sorte: Total Sorte / 25 (arredondado para baixo)
-        const state = window.appState.getState();
+        const state = window.appState?.getState?.() || {};
         const sorteTotalValor = state.atributos?.primarios?.sorte?.total || 0;
         const bonusSorte = Math.floor(sorteTotalValor / 25);
 
@@ -794,51 +920,72 @@ class TreinamentoManager {
      * Exibe o resultado do treinamento com novo sistema (1d6 + bônus)
      */
     exibirResultado(d6Base, bonusAptidao, bonusExtraManual, bonusSorte, obstaculo, descDado, rolagens, temPenalidade, temBonus, xpFinal) {
-        const resultado = document.getElementById('resultado-treino');
-        if (!resultado) return;
+        try {
+            const resultado = document.getElementById('resultado-treino');
+            if (!resultado) {
+                console.error('❌ Elemento resultado-treino não encontrado');
+                return;
+            }
 
-        const resultadoFinal = d6Base + bonusAptidao + bonusExtraManual + bonusSorte;
-        const rolagemStr = rolagens.length > 0 ? rolagens.join(' + ') : '0';
+            const resultadoFinal = d6Base + bonusAptidao + bonusExtraManual + bonusSorte;
+            const rolagemStr = rolagens.length > 0 ? rolagens.join(' + ') : '0';
 
-        // 🐛 FIX: Melhor visualização de bônus/penalidade
-        let descBonus = '-';
-        if (temPenalidade) {
-            descBonus = `❌ Penalidade aplicada`;
-        } else if (temBonus) {
-            descBonus = `✅ +20% de bônus`;
-        } else if (resultadoFinal >= obstaculo) {
-            descBonus = `✅ Sucesso!`;
+            // 🐛 FIX: Melhor visualização de bônus/penalidade
+            let descBonus = '-';
+            if (temPenalidade) {
+                descBonus = `❌ Penalidade aplicada`;
+            } else if (temBonus) {
+                descBonus = `✅ +20% de bônus`;
+            } else if (resultadoFinal >= obstaculo) {
+                descBonus = `✅ Sucesso!`;
+            }
+
+            // 🐛 FIX: Mostrar cálculo completo de forma clara
+            let calculoCompleto = `1d6: ${d6Base}`;
+            if (bonusAptidao > 0) calculoCompleto += ` + Apt: +${bonusAptidao}`;
+            if (bonusExtraManual > 0) calculoCompleto += ` + Extra: +${bonusExtraManual}`;
+            if (bonusSorte > 0) calculoCompleto += ` + Sorte: +${bonusSorte}`;
+            calculoCompleto += ` = ${resultadoFinal}`;
+
+            // Determinar cor e ícone de sucesso/falha
+            const sucesso = resultadoFinal >= obstaculo;
+            const iconStatus = sucesso ? '✅' : '❌';
+
+            // Atualizar elementos com segurança
+            const resD20 = document.getElementById('res-d20');
+            if (resD20) resD20.textContent = calculoCompleto;
+            
+            // 🐛 FIX: Aplicar classe de sucesso/falha no item de obstáculo
+            const resObstaculo = document.getElementById('res-obstaculo');
+            if (resObstaculo) {
+                const resObstaculoItem = resObstaculo.parentElement;
+                resObstaculoItem.className = 'resultado-item';
+                if (sucesso) {
+                    resObstaculoItem.classList.add('resultado-item--sucesso');
+                } else {
+                    resObstaculoItem.classList.add('resultado-item--falha');
+                }
+                resObstaculo.textContent = `${obstaculo} (${iconStatus} ${sucesso ? 'Sucesso' : 'Falha'})`;
+            }
+            
+            const resDado = document.getElementById('res-dado');
+            if (resDado) resDado.textContent = descDado;
+            
+            const resRolagem = document.getElementById('res-rolagem');
+            if (resRolagem) resRolagem.textContent = rolagemStr || 'Nenhum';
+            
+            const resBonus = document.getElementById('res-bonus');
+            if (resBonus) resBonus.textContent = descBonus;
+            
+            const resXP = document.getElementById('res-xp-ganho');
+            if (resXP) resXP.textContent = xpFinal > 0 ? `+${xpFinal} XP` : '0 XP (Falha)';
+
+            resultado.classList.remove('hidden');
+            console.log('✅ Resultado exibido com sucesso');
+        } catch (e) {
+            console.error('❌ Erro ao exibir resultado:', e);
+            alert('Erro ao exibir resultado do treinamento. Veja o console para detalhes.');
         }
-
-        // 🐛 FIX: Mostrar cálculo completo de forma clara
-        let calculoCompleto = `1d6: ${d6Base}`;
-        if (bonusAptidao > 0) calculoCompleto += ` + Apt: +${bonusAptidao}`;
-        if (bonusExtraManual > 0) calculoCompleto += ` + Extra: +${bonusExtraManual}`;
-        if (bonusSorte > 0) calculoCompleto += ` + Sorte: +${bonusSorte}`;
-        calculoCompleto += ` = ${resultadoFinal}`;
-
-        // Determinar cor e ícone de sucesso/falha
-        const sucesso = resultadoFinal >= obstaculo;
-        const iconStatus = sucesso ? '✅' : '❌';
-
-        document.getElementById('res-d20').textContent = calculoCompleto;
-        
-        // 🐛 FIX: Aplicar classe de sucesso/falha no item de obstáculo
-        const resObstaculoItem = document.getElementById('res-obstaculo').parentElement;
-        resObstaculoItem.className = 'resultado-item';
-        if (sucesso) {
-            resObstaculoItem.classList.add('resultado-item--sucesso');
-        } else {
-            resObstaculoItem.classList.add('resultado-item--falha');
-        }
-        document.getElementById('res-obstaculo').textContent = `${obstaculo} (${iconStatus} ${sucesso ? 'Sucesso' : 'Falha'})`;
-        
-        document.getElementById('res-dado').textContent = descDado;
-        document.getElementById('res-rolagem').textContent = rolagemStr || 'Nenhum';
-        document.getElementById('res-bonus').textContent = descBonus;
-        document.getElementById('res-xp-ganho').textContent = xpFinal > 0 ? `+${xpFinal} XP` : '0 XP (Falha)';
-
-        resultado.classList.remove('hidden');
     }
 
     /**
