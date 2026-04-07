@@ -1552,14 +1552,76 @@ class SistemaFicha {
      * Coleta dados do módulo Raça
      */
     coletarRaca() {
-        return {
-            nome: document.getElementById('raca-nome')?.value || '',
-            descricao: document.getElementById('raca-descricao')?.value || '',
-            bonus: document.getElementById('raca-bonus')?.value || '',
-            habilidades: document.getElementById('raca-habilidades')?.value || '',
-            // ✨ NOVO: Salvar ID da raça selecionada para restaurar o select
-            racaSelecionadaId: localStorage.getItem('redungeon_raca_selecionada') || null
-        };
+        try {
+            // Coletar dados básicos
+            const dadosBasicos = {
+                nome: document.getElementById('raca-nome')?.value || '',
+                descricao: document.getElementById('raca-descricao')?.value || '',
+                bonus: document.getElementById('raca-bonus')?.value || '',
+                habilidades: document.getElementById('raca-habilidades')?.value || '',
+                // ✨ NOVO: Salvar ID da raça selecionada para restaurar o select
+                racaSelecionadaId: localStorage.getItem('redungeon_raca_selecionada') || null
+            };
+
+            // 🎯 NOVO: Coletar habilidades raciais ativas e travadas (2 estratégias)
+            let dadosHabilidades = {
+                ativas: [],
+                travadas: [],
+                racaId: null
+            };
+
+            // Estratégia 1: Coletar do selector se disponível
+            if (window.habilidadesBasicasSelector && typeof window.habilidadesBasicasSelector.obterDadosAtuais === 'function') {
+                try {
+                    const dados = window.habilidadesBasicasSelector.obterDadosAtuais();
+                    dadosHabilidades = {
+                        ativas: dados.ativas || [],
+                        travadas: dados.travadas || [],
+                        racaId: dados.racaId || dadosBasicos.racaSelecionadaId || null
+                    };
+                    console.log('✅ Habilidades coletadas do selector:', dadosHabilidades);
+                } catch (e) {
+                    console.warn('⚠️ Erro ao coletar do selector, tentando localStorage:', e);
+                }
+            }
+
+            // Estratégia 2: Se selector não tem dados, tentar localStorage
+            if (!dadosHabilidades.racaId && dadosBasicos.racaSelecionadaId) {
+                try {
+                    const chave = `raca-habilidades-${dadosBasicos.racaSelecionadaId}`;
+                    const dadosSalvos = localStorage.getItem(chave);
+                    if (dadosSalvos) {
+                        const parsed = JSON.parse(dadosSalvos);
+                        dadosHabilidades = {
+                            ativas: parsed.ativas || [],
+                            travadas: parsed.travadas || [],
+                            racaId: dadosBasicos.racaSelecionadaId
+                        };
+                        console.log('✅ Habilidades coletadas do localStorage:', dadosHabilidades);
+                    }
+                } catch (e) {
+                    console.warn('⚠️ Erro ao coletar de localStorage:', e);
+                }
+            }
+
+            dadosBasicos.habilidadesRaciais = dadosHabilidades;
+
+            return dadosBasicos;
+        } catch (erro) {
+            console.error('❌ Erro ao coletar raça:', erro);
+            return {
+                nome: '',
+                descricao: '',
+                bonus: '',
+                habilidades: '',
+                racaSelecionadaId: null,
+                habilidadesRaciais: {
+                    ativas: [],
+                    travadas: [],
+                    racaId: null
+                }
+            };
+        }
     }
 
     /**
@@ -2970,9 +3032,37 @@ class SistemaFicha {
                 console.log(`✅ Companheiro "${companheiro.nome}" (${i + 1}/${companheirosArray.length}) processado`);
             }
             
+            // ✨ NOVO: Filtrar companheiros templates/vazios
+            console.log('🔍 Filtrando companheiros templates/vazios...');
+            const companheirosFiltrados = companheirosProcessados.filter(comp => {
+                // Criterios para REMOVER um companheiro:
+                // 1. Nome vazio ou "Novo Companheiro" (template default)
+                // 2. AND todos os atributos base estão em 0 (não levantou nenhuma stat)
+                // 3. AND nível é 1 e experiencia é 0 (nunca foi usado)
+                
+                const nomeVazio = !comp.nome || comp.nome.trim() === '' || comp.nome === 'Novo Companheiro';
+                const atributosZero = comp.atributos && 
+                    Object.values(comp.atributos).every(attr => attr.base === 0 && attr.extra === 0);
+                const statsDefault = comp.nivel === 1 && comp.experiencia === 0;
+                const tempoEmpty = !comp.raca || comp.raca.trim() === '';
+                
+                const ehTemplate = nomeVazio && atributosZero && statsDefault && tempoEmpty;
+                
+                if (ehTemplate) {
+                    console.log(`⚠️ Removendo companheiro template/vazio (id: ${comp.id})`);
+                    return false; // Remove da lista
+                }
+                
+                return true; // Mantém o companheiro
+            });
+            
+            if (companheirosFiltrados.length < companheirosProcessados.length) {
+                console.log(`📊 Filtrados ${companheirosProcessados.length - companheirosFiltrados.length} companheiros templates`);
+            }
+            
             // ✨ NOVO: Restaurar inventários e artes
             console.log('🏪 Restaurando inventários dos companheiros...');
-            for (const companheiro of companheirosProcessados) {
+            for (const companheiro of companheirosFiltrados) {
                 // Restaurar inventário
                 if (companheiro.inventario) {
                     try {
@@ -2990,13 +3080,13 @@ class SistemaFicha {
             
             // Salvar TODOS no manager
             if (window.companheirosManager) {
-                window.companheirosManager.companheiros = companheirosProcessados;
+                window.companheirosManager.companheiros = companheirosFiltrados;
                 await window.companheirosManager.salvarNoStorage();
-                console.log(`✅ ${companheirosProcessados.length} companheiros salvos no manager`);
+                console.log(`✅ ${companheirosFiltrados.length} companheiros salvos no manager`);
             } else {
                 // Fallback: salvar diretamente em localStorage
-                localStorage.setItem('redungeon_companheiros', JSON.stringify(companheirosProcessados));
-                console.log(`✅ ${companheirosProcessados.length} companheiros salvos em localStorage`);
+                localStorage.setItem('redungeon_companheiros', JSON.stringify(companheirosFiltrados));
+                console.log(`✅ ${companheirosFiltrados.length} companheiros salvos em localStorage`);
             }
             
             // Recarregar UI se estiver aberta
@@ -3505,6 +3595,60 @@ class SistemaFicha {
                 }
             } catch (erro) {
                 console.warn('⚠️ Erro ao restaurar raça:', erro);
+            }
+        }
+
+        // 🎯 NOVO: Restaurar habilidades raciais ativas e travadas
+        if (dados.habilidadesRaciais && dados.habilidadesRaciais.racaId) {
+            try {
+                const chave = `raca-habilidades-${dados.habilidadesRaciais.racaId}`;
+                const estadoHabilidades = {
+                    racaId: dados.habilidadesRaciais.racaId,
+                    ativas: dados.habilidadesRaciais.ativas || [],
+                    travadas: dados.habilidadesRaciais.travadas || [],
+                    timestamp: Date.now()
+                };
+                
+                // Salvar no localStorage para o HabilidadesBasicasSelector carregar
+                localStorage.setItem(chave, JSON.stringify(estadoHabilidades));
+                console.log(`💾 Habilidades raciais salvas em localStorage:`, estadoHabilidades);
+
+                // Se o HabilidadesBasicasSelector está disponível, usar novo método
+                if (window.habilidadesBasicasSelector) {
+                    // Estratégia 1: Se já está inicializado, usar restaurarDeJSON()
+                    if (window.habilidadesBasicasSelector.inicializado) {
+                        const sucesso = window.habilidadesBasicasSelector.restaurarDeJSON(dados.habilidadesRaciais);
+                        if (sucesso) {
+                            window.habilidadesBasicasSelector.reRenderizarControles();
+                            console.log('✅ Habilidades restauradas e re-renderizadas imediatamente');
+                        }
+                    } else {
+                        // Estratégia 2: Aguardar inicialização (com limite de tentativas)
+                        let tentativas = 0;
+                        const maxTentativas = 20; // 2 segundos com 100ms de intervalo
+                        const intervalo = setInterval(() => {
+                            tentativas++;
+                            
+                            if (window.habilidadesBasicasSelector?.inicializado) {
+                                clearInterval(intervalo);
+                                const sucesso = window.habilidadesBasicasSelector.restaurarDeJSON(dados.habilidadesRaciais);
+                                if (sucesso) {
+                                    window.habilidadesBasicasSelector.reRenderizarControles();
+                                    console.log('✅ Habilidades restauradas após inicialização do selector');
+                                }
+                            } else if (tentativas >= maxTentativas) {
+                                clearInterval(intervalo);
+                                console.warn('⚠️ Timeout esperando inicialização do HabilidadesBasicasSelector');
+                                console.log('   Os dados foram salvos em localStorage e serão carregados quando o modal for aberto');
+                            }
+                        }, 100);
+                    }
+                } else {
+                    console.warn('⚠️ HabilidadesBasicasSelector não disponível');
+                    console.log('   Os dados foram salvos em localStorage e serão carregados quando o modal for aberto');
+                }
+            } catch (erro) {
+                console.error('❌ Erro ao restaurar habilidades raciais:', erro);
             }
         }
     }
