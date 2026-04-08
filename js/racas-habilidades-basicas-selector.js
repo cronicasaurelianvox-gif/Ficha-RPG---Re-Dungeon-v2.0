@@ -370,10 +370,9 @@ class HabilidadesBasicasSelector {
 
     try {
       localStorage.setItem(chave, JSON.stringify(estado));
-      console.log(`💾 Estado salvo para ${this.racaAtual}:`, estado);
-      console.log(`   localStorage.getItem('${chave}'):`, localStorage.getItem(chave));
+      console.log(`💾 Estado salvo para ${this.racaAtual}`);
     } catch (e) {
-      console.error('❌ Erro ao salvar estado:', e);
+      console.error('Erro ao salvar estado:', e);
     }
   }
 
@@ -427,65 +426,6 @@ class HabilidadesBasicasSelector {
       limite: this.obterLimiteMaximo(),
       quantidade: this.obterQuantidadeAtiva()
     };
-  }
-
-  /**
-   * Restaura habilidades a partir de dados JSON
-   * Utilizado durante importação de ficha
-   * @param {Object} dadosJSON - Dados com estrutura { ativas, travadas, racaId }
-   */
-  restaurarDeJSON(dadosJSON) {
-    if (!dadosJSON || !dadosJSON.racaId) {
-      console.warn('⚠️ Dados inválidos para restauração');
-      return false;
-    }
-
-    try {
-      const raca = obterRacaPorId(dadosJSON.racaId);
-      if (!raca) {
-        console.warn(`⚠️ Raça ${dadosJSON.racaId} não encontrada`);
-        return false;
-      }
-
-      // Limpar estado anterior
-      this.habilidadesAtivas.clear();
-      this.habilidadesTravadas.clear();
-
-      // Restaurar raça atual
-      this.racaAtual = dadosJSON.racaId;
-
-      // Restaurar habilidades
-      this.habilidadesAtivas = new Set(dadosJSON.ativas || []);
-      this.habilidadesTravadas = new Set(dadosJSON.travadas || []);
-
-      console.log(`✅ Habilidades raciais restauradas para ${dadosJSON.racaId}:`, {
-        ativas: Array.from(this.habilidadesAtivas),
-        travadas: Array.from(this.habilidadesTravadas)
-      });
-
-      return true;
-    } catch (erro) {
-      console.error('❌ Erro ao restaurar habilidades do JSON:', erro);
-      return false;
-    }
-  }
-
-  /**
-   * Re-renderiza os controles com o estado atual
-   * Útil após restauração para atualizar a UI
-   * @public
-   */
-  reRenderizarControles() {
-    if (!this.racaAtual) {
-      console.warn('⚠️ Nenhuma raça ativa para re-renderizar');
-      return;
-    }
-
-    const raca = obterRacaPorId(this.racaAtual);
-    if (raca) {
-      this.renderizarControles(raca);
-      console.log('✅ Controles re-renderizados com sucesso');
-    }
   }
 }
 

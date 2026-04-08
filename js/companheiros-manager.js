@@ -36,37 +36,7 @@ class CompanheirosManager {
     async carregarDoStorage() {
         try {
             const dados = localStorage.getItem(this.storageKey);
-            let companheiros = dados ? JSON.parse(dados) : [];
-            
-            // 🔥 FILTRAR COMPANHEIROS TEMPLATES/VAZIOS
-            const companheirosFiltrados = companheiros.filter(comp => {
-                // Criterios para REMOVER um companheiro template:
-                // 1. Nome vazio ou "Novo Companheiro"
-                // 2. Todos os atributos base estão em 0
-                // 3. Nível 1 e experiência 0 (nunca foi usado)
-                // 4. Sem raça (vazio)
-                
-                const nomeVazio = !comp.nome || comp.nome.trim() === '' || comp.nome === 'Novo Companheiro';
-                const atributosZero = comp.atributos && 
-                    Object.values(comp.atributos).every(attr => attr.base === 0 && attr.extra === 0);
-                const statsDefault = comp.nivel === 1 && comp.experiencia === 0;
-                const tempoEmpty = !comp.raca || comp.raca.trim() === '';
-                
-                const ehTemplate = nomeVazio && atributosZero && statsDefault && tempoEmpty;
-                
-                if (ehTemplate) {
-                    console.log(`⚠️ Removendo companheiro template/vazio (id: ${comp.id}) no carregamento`);
-                    return false;
-                }
-                
-                return true;
-            });
-            
-            if (companheirosFiltrados.length < companheiros.length) {
-                console.log(`🗑️ ${companheiros.length - companheirosFiltrados.length} companheiros templates removidos`);
-            }
-            
-            this.companheiros = companheirosFiltrados;
+            this.companheiros = dados ? JSON.parse(dados) : [];
             
             // 🔥 RESTAURAR IMAGENS DO INDEXEDDB
             console.log(`📥 Carregados ${this.companheiros.length} companheiros do storage`);
