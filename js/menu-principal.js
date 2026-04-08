@@ -222,12 +222,8 @@ class MenuPrincipal {
 
         // Handler especial para raças
         if (item.route === 'racas') {
-            if (window.RDGRaceSelector) {
-                const selector = new window.RDGRaceSelector(obterTodasAsRacas());
-                selector.abrir((racaId, racaNome) => {
-                    console.log(`✅ Raça selecionada: ${racaNome}`);
-                    // Aqui você pode adicionar lógica adicional se necessário
-                });
+            if (window.racasUI && window.racasUI.abrirModal) {
+                window.racasUI.abrirModal();
             } else {
                 console.warn('⚠️ Sistema de raças não inicializado');
             }

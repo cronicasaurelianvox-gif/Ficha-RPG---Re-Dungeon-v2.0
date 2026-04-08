@@ -427,6 +427,44 @@
                     </footer>
                 </section>
 
+                <!-- 🏰 Raças - Sistema Completo -->
+                <section id="rpg-content-racas" class="content-section">
+                    <!-- Modal de Raças da Ficha Principal -->
+                    <div id="modal-racas" class="modal-racas hidden">
+                        <div class="modal-racas-container">
+                            <!-- Header -->
+                            <div class="modal-racas-header">
+                                <h2>Escolher Raça</h2>
+                                <div class="modal-racas-filtros">
+                                    <input type="text" id="filtro-busca-raca" class="filtro-input" placeholder="🔍 Buscar raça...">
+                                    <select id="filtro-raridade" class="filtro-select">
+                                        <option value="">Todas as Raridades</option>
+                                        <option value="comum">Comum</option>
+                                        <option value="raro">Raro</option>
+                                        <option value="epico">Épico</option>
+                                        <option value="mitico">Mítico</option>
+                                        <option value="lendario">Lendário</option>
+                                        <option value="celestial">Celestial</option>
+                                    </select>
+                                </div>
+                                <button class="btn-fechar-racas">✕</button>
+                            </div>
+
+                            <!-- Corpo do Modal -->
+                            <div class="modal-racas-body">
+                                <!-- Lista de Raças (Sidebar) -->
+                                <div class="racas-lista-container">
+                                    <div class="racas-lista"></div>
+                                    <button class="btn-voltar-racas">← Voltar</button>
+                                </div>
+
+                                <!-- Detalhes da Raça -->
+                                <div class="raca-detalhes"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
                 <!-- Habilidades - Sistema Completo -->
                 <section id="rpg-content-habilidades" class="content-section">
                     <!-- Conteúdo gerado dinamicamente pelo sistema de Arts -->
@@ -2746,6 +2784,7 @@
     <script src="js/racas-habilidades-basicas-selector.js?v=2.1"></script>
     <script src="js/racas-testes.js"></script>
     <script src="js/rdg-race-selector.js"></script>
+    <script src="js/racas-ui.js"></script>
 
     <!-- 🎭 SISTEMA DE CLASSES - MODAL PROFISSIONAL -->
     <script src="js/classes-data.js"></script>
