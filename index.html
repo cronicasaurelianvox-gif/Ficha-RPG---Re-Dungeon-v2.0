@@ -58,9 +58,6 @@
     <!-- 🎮 Menu Principal (Novo) -->
     <link rel="stylesheet" href="css/menu-principal.css">
 
-    <!-- ⚔️ SISTEMA DE RAÇAS - MODAL PROFISSIONAL -->
-    <link rel="stylesheet" href="css/racas-modal.css?v=2.1">
-
     <!-- 🎭 SISTEMA DE CLASSES - MODAL PROFISSIONAL -->
     <link rel="stylesheet" href="css/classes-modal.css">
 
@@ -85,58 +82,11 @@
     <!-- 🔄 SISTEMA DE CLONAGEM - CLONAR COMPANHEIRO -->
     <link rel="stylesheet" href="css/clone-comp-sistema.css">
 
+    <!-- 🎯 NOVO SISTEMA DE SELEÇÃO DE RAÇAS - PREMIUM DARK FANTASY -->
+    <link rel="stylesheet" href="css/rdg-race-selector-premium.css">
+
 </head>
 <body>
-    <!-- ⚔️ MODAL DE SELEÇÃO DE RAÇAS -->
-    <div id="modal-racas" class="modal-racas hidden">
-      <div class="modal-racas-container">
-        
-        <!-- Header do Modal -->
-        <header class="modal-racas-header">
-          <h2>Escolher Raça</h2>
-          
-          <!-- Filtros -->
-          <div class="modal-filtros">
-            <!-- Busca por Nome -->
-            <input 
-              type="text" 
-              id="filtro-busca-raca" 
-              class="filtro-busca" 
-              placeholder="🔍 Buscar raça..."
-              autocomplete="off"
-            />
-            
-            <!-- Select de Raridade -->
-            <select id="filtro-raridade" class="filtro-raridade">
-              <option value="">Todas as raridades</option>
-              <option value="comum">Comum</option>
-              <option value="raro">Raro</option>
-              <option value="epico">Épico</option>
-              <option value="lendario">Lendário</option>
-              <option value="mitico">Mítico</option>
-              <option value="celestial">Celestial</option>
-            </select>
-          </div>
-          
-          <div class="modal-racas-header-buttons">
-            <button class="btn-voltar-racas" title="Voltar">↩</button>
-            <button class="btn-fechar-racas" title="Fechar">✘</button>
-          </div>
-        </header>
-
-        <!-- Body do Modal -->
-        <div class="modal-racas-body">
-          
-          <!-- Sidebar com Lista de Raças -->
-          <aside class="racas-lista"></aside>
-
-          <!-- Painel Principal de Detalhes -->
-          <main class="raca-detalhes"></main>
-
-        </div>
-      </div>
-    </div>
-
     <!-- ⚔️ MODAL DE SELEÇÃO DE CLASSES -->
     <div id="modal-classes" class="modal-classes hidden">
       <div class="modal-classes-container">
@@ -2794,8 +2744,9 @@
     <script src="js/racas-data.js"></script>
     <script src="js/racas-imagens.js"></script>
     <script src="js/racas-habilidades-basicas-selector.js?v=2.1"></script>
-    <script src="js/racas-ui.js"></script>
     <script src="js/racas-testes.js"></script>
+    <script src="js/rdg-race-selector.js"></script>
+    <script src="js/racas-ui.js"></script>
 
     <!-- 🎭 SISTEMA DE CLASSES - MODAL PROFISSIONAL -->
     <script src="js/classes-data.js"></script>
