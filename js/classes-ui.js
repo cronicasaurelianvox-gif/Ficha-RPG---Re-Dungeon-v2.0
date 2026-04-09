@@ -1508,6 +1508,11 @@ class ClassesUI {
           habilidade = classe.habilidadesAvancadas.find(h => h.nome === habilidadeNome);
         }
 
+        // Se não encontrar em avançadas, procurar em extremas
+        if (!habilidade && classe.habilidadesExtremas) {
+          habilidade = classe.habilidadesExtremas.find(h => h.nome === habilidadeNome);
+        }
+
         if (!habilidade) {
           console.error(`❌ Habilidade ${habilidadeNome} não encontrada`);
           return;

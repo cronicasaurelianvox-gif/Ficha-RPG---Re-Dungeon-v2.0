@@ -241,7 +241,7 @@ class CompanheirosModalController {
             btnRaca.addEventListener('click', (e) => this.abrirSeletorRaca(e));
         }
 
-        // Botão de ícone de raça (mostrar detalhes da raça escolhida)
+        // Botão de ícone de raça (mostrar detalhes)
         const btnRacaIcon = modal.querySelector('#comp-char-raca-icon-btn');
         if (btnRacaIcon) {
             btnRacaIcon.addEventListener('click', (e) => {
@@ -250,7 +250,7 @@ class CompanheirosModalController {
                 if (racaSelecionada && this.racas.length > 0) {
                     const raca = this.racas.find(r => r.id === racaSelecionada);
                     if (raca) {
-                        this.mostrarDetalhesRacaSelecionada(raca);
+                        this.mostrarDetalhesRaca(raca);
                     }
                 }
             });
@@ -746,33 +746,164 @@ class CompanheirosModalController {
     }
 
     /**
-     * Abrir seletor de raça com novo sistema premium
-     * @deprecated Sistema antigo removido - usar RDGRaceSelector
+     * Abrir seletor de raça
      */
     abrirSeletorRaca(event) {
         event.preventDefault();
         const modal = document.getElementById(this.modalId);
         if (!modal) return;
 
-        // 🆕 Usar novo sistema modular
-        if (window.RDGRaceSelector) {
-            const selector = new window.RDGRaceSelector(this.racas);
-            selector.abrir((racaId, racaNome) => {
-                const raca = this.racas.find(r => r.id === racaId);
-                this._definirRacaSelecionada(racaId, racaNome, raca);
+        // Usar array de raças da classe
+        const racas = this.racas;
+
+        // Criar overlay
+        const overlay = document.createElement('div');
+        overlay.className = 'comp-raca-overlay';
+        
+        // Cabeçalho
+        let html = `
+            <div class="comp-raca-modal">
+                <div class="comp-raca-header">
+                    <h2>Selecione uma Raça</h2>
+                    <button class="comp-raca-fechar">✕</button>
+                </div>
+                <div class="comp-raca-grid">
+        `;
+
+        // Gerar cards das raças
+        racas.forEach(raca => {
+            html += `
+                <div class="comp-raca-card" data-raca-id="${raca.id}" data-raca-nome="${raca.nome}">
+                    <div class="comp-raca-card-imagem">
+                        <img src="${raca.imagem}" alt="${raca.nome}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22250%22%3E%3Crect fill=%22%23333%22 width=%22200%22 height=%22250%22/%3E%3C/svg%3E'">
+                        <span class="comp-raca-raridade">${raca.raridade}</span>
+                    </div>
+                    <div class="comp-raca-card-botoes">
+                        <button class="comp-raca-btn-selecionar" data-raca-id="${raca.id}">✓ Selecionar</button>
+                        <button class="comp-raca-btn-detalhes" data-raca-id="${raca.id}">ℹ Detalhes</button>
+                    </div>
+                    <div class="comp-raca-card-nome">${raca.nome}</div>
+                </div>
+            `;
+        });
+
+        html += `
+                </div>
+            </div>
+        `;
+
+        overlay.innerHTML = html;
+        document.body.appendChild(overlay);
+
+        // Event listeners
+        overlay.querySelector('.comp-raca-fechar').addEventListener('click', () => overlay.remove());
+        
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) overlay.remove();
+        });
+
+        // Botões de selecionar
+        overlay.querySelectorAll('.comp-raca-btn-selecionar').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const racaId = btn.getAttribute('data-raca-id');
+                const raca = racas.find(r => r.id === racaId);
+                if (raca) {
+                    this.selecionarRaca(racaId, raca.nome);
+                    overlay.remove();
+                }
             });
-        } else {
-            console.error('❌ RDGRaceSelector não carregado');
-        }
+        });
+
+        // Botões de detalhes
+        overlay.querySelectorAll('.comp-raca-btn-detalhes').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const racaId = btn.getAttribute('data-raca-id');
+                const raca = racas.find(r => r.id === racaId);
+                if (raca) {
+                    this.mostrarDetalhesRaca(raca);
+                }
+            });
+        });
     }
 
     /**
-     * Definir raça selecionada (método auxiliar para o novo sistema)
+     * Mostrar detalhes da raça
      */
-    _definirRacaSelecionada(racaId, racaNome, racaObj = null) {
+    mostrarDetalhesRaca(raca) {
+        const overlay = document.createElement('div');
+        overlay.className = 'comp-raca-overlay comp-raca-overlay-detalhes';
+        
+        let habilidadesHtml = '';
+        raca.habilidades.forEach((hab, idx) => {
+            habilidadesHtml += `
+                <div class="comp-raca-detalhe-habilidade">
+                    <h4>[${idx + 1}] ${hab.nome}</h4>
+                    <p>${hab.desc}</p>
+                </div>
+            `;
+        });
+
+        let atributosHtml = '';
+        Object.entries(raca.atributos).forEach(([attr, valor]) => {
+            atributosHtml += `<div class="comp-raca-detalhe-attr"><strong>${attr}</strong>: ${valor}</div>`;
+        });
+
+        const html = `
+            <div class="comp-raca-modal comp-raca-modal-detalhes">
+                <div class="comp-raca-detalhe-header">
+                    <h2>${raca.nome}</h2>
+                    <span class="comp-raca-detalhe-raridade">${raca.raridade}</span>
+                    <button class="comp-raca-fechar">✕</button>
+                </div>
+                
+                <div class="comp-raca-detalhe-corpo">
+                    <div class="comp-raca-detalhe-imagem">
+                        <img src="${raca.imagem}" alt="${raca.nome}">
+                    </div>
+                    
+                    <div class="comp-raca-detalhe-conteudo">
+                        <h3>📖 Descrição</h3>
+                        <p>${raca.descricao}</p>
+                        
+                        <h3>💪 Atributos</h3>
+                        <div class="comp-raca-detalhe-atributos">
+                            ${atributosHtml}
+                        </div>
+                        
+                        <h3>🎯 Limite de Atributo: ${raca.limite}</h3>
+                        
+                        <h3>⚡ Habilidades Raciais</h3>
+                        <div class="comp-raca-detalhe-habilidades">
+                            ${habilidadesHtml}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="comp-raca-detalhe-rodape">
+                    <button class="comp-raca-btn-voltar">← Voltar</button>
+                </div>
+            </div>
+        `;
+
+        overlay.innerHTML = html;
+        document.body.appendChild(overlay);
+
+        overlay.querySelector('.comp-raca-fechar').addEventListener('click', () => overlay.remove());
+        overlay.querySelector('.comp-raca-btn-voltar').addEventListener('click', () => overlay.remove());
+        
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) overlay.remove();
+        });
+    }
+
+    /**
+     * Selecionar raça
+     */
+    selecionarRaca(racaId, racaNome) {
         const modal = document.getElementById(this.modalId);
         if (!modal) return;
 
+        // Mapear IDs para display
         const displayNames = {
             'mamiferos': '👤 Mamíferos',
             'batrakos': '🐸 Batrakos',
@@ -793,149 +924,16 @@ class CompanheirosModalController {
             'lithor': '🪨 Lithor'
         };
 
+        // Atualizar botão de raça
         const btnRaca = modal.querySelector('#comp-char-raca-btn');
-        const btnRacaIcon = modal.querySelector('#comp-char-raca-icon-btn');
         const displayRaca = modal.querySelector('#comp-char-raca-display');
         
         if (btnRaca && displayNames[racaId]) {
             btnRaca.setAttribute('data-raca', racaId);
-            if (displayRaca) {
-                displayRaca.textContent = displayNames[racaId];
-            }
-        }
-
-        // Atualizar ícone da raça
-        if (btnRacaIcon && racaObj) {
-            // Se imagem for emoji, use; caso contrário, emoji padrão
-            const emoji = racaObj.imagem && typeof racaObj.imagem === 'string' && 
-                         !racaObj.imagem.startsWith('http') && 
-                         !racaObj.imagem.startsWith('data:') 
-                         ? racaObj.imagem 
-                         : '👤';
-            btnRacaIcon.textContent = emoji;
-            btnRacaIcon.title = `${racaNome} - Clique para ver detalhes`;
+            displayRaca.textContent = displayNames[racaId];
         }
 
         console.log(`✅ Raça selecionada: ${racaNome}`);
-    }
-
-    /**
-     * Mostrar detalhes da raça selecionada em um modal
-     */
-    mostrarDetalhesRacaSelecionada(raca) {
-        if (!raca) return;
-
-        const overlay = document.createElement('div');
-        overlay.className = 'rdg-race-overlay';
-        overlay.style.zIndex = '10001';
-
-        let habilidadesHtml = '';
-        if (raca.habilidades && Array.isArray(raca.habilidades)) {
-            raca.habilidades.forEach((hab, idx) => {
-                habilidadesHtml += `
-                    <div class="rdg-race-details-ability">
-                        <h4>[${idx + 1}] ${hab.nome}</h4>
-                        <p>${hab.desc}</p>
-                    </div>
-                `;
-            });
-        }
-
-        let atributosHtml = '';
-        if (raca.atributos) {
-            Object.entries(raca.atributos).forEach(([attr, valor]) => {
-                atributosHtml += `<div class="rdg-race-details-attr"><strong>${attr}</strong> ${valor}</div>`;
-            });
-        }
-
-        const imagemFallback = 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22280%22 height=%22350%22%3E%3Crect fill=%22%23333%22 width=%22280%22 height=%22350%22/%3E%3C/svg%3E';
-
-        // Verificar se imagem é URL ou emoji
-        const isUrl = typeof raca.imagem === 'string' && (raca.imagem.startsWith('http') || raca.imagem.startsWith('data:'));
-        const imagemSrc = isUrl ? raca.imagem : imagemFallback;
-
-        const detailsContent = `
-            <div class="rdg-race-details-modal">
-                <div class="rdg-race-details-header">
-                    <div>
-                        <h2 class="rdg-race-details-title">${raca.nome}</h2>
-                    </div>
-                    <span class="rdg-race-details-rarity">${raca.raridade || 'Comum'}</span>
-                    <button class="rdg-race-close" title="Fechar">✕</button>
-                </div>
-
-                <div class="rdg-race-details-body">
-                    <div class="rdg-race-details-image">
-                        <img 
-                            src="${imagemSrc}" 
-                            alt="${raca.nome}"
-                            onerror="this.src='${imagemFallback}'"
-                            style="display: ${imagemSrc === imagemFallback ? 'none' : 'block'}"
-                        />
-                    </div>
-
-                    <div class="rdg-race-details-content">
-                        <h3>📖 Descrição</h3>
-                        <p>${raca.descricao || 'Sem descrição disponível.'}</p>
-
-                        ${atributosHtml ? `
-                            <h3>💪 Atributos</h3>
-                            <div class="rdg-race-details-attrs">
-                                ${atributosHtml}
-                            </div>
-                        ` : ''}
-
-                        ${raca.limite ? `<h3>🎯 Limite de Atributo: ${raca.limite}</h3>` : ''}
-
-                        ${habilidadesHtml ? `
-                            <h3>⚡ Habilidades Raciais</h3>
-                            <div class="rdg-race-details-abilities">
-                                ${habilidadesHtml}
-                            </div>
-                        ` : ''}
-                    </div>
-                </div>
-
-                <div class="rdg-race-details-footer">
-                    <button class="rdg-race-btn rdg-race-btn-secondary" data-action="close-details">← Fechar</button>
-                </div>
-            </div>
-        `;
-
-        overlay.innerHTML = detailsContent;
-        document.body.appendChild(overlay);
-
-        // Fechar com botão X
-        const closeBtn = overlay.querySelector('.rdg-race-close');
-        if (closeBtn) {
-            closeBtn.addEventListener('click', () => {
-                overlay.remove();
-            });
-        }
-
-        // Fechar com botão Fechar
-        const closeActionBtn = overlay.querySelector('[data-action="close-details"]');
-        if (closeActionBtn) {
-            closeActionBtn.addEventListener('click', () => {
-                overlay.remove();
-            });
-        }
-
-        // Fechar ao clicar no overlay
-        overlay.addEventListener('click', (e) => {
-            if (e.target === overlay) {
-                overlay.remove();
-            }
-        });
-
-        // ESC para fechar
-        const handleEsc = (e) => {
-            if (e.key === 'Escape' && overlay && overlay.parentNode) {
-                overlay.remove();
-                document.removeEventListener('keydown', handleEsc);
-            }
-        };
-        document.addEventListener('keydown', handleEsc);
     }
 
     /**
