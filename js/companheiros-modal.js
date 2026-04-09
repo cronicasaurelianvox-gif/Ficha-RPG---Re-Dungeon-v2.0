@@ -343,6 +343,7 @@ class CompanheirosModalController {
             {
                 id: 'mamiferos',
                 nome: 'Mamíferos',
+                tipo: "Re'Geron",
                 raridade: '🔵 COMUM',
                 imagem: 'https://i.imgur.com/lFfL0KW.png',
                 descricao: 'Os Sangue-Quente. Adaptação acelerada, energia constante e alta capacidade de aprendizado.',
@@ -364,6 +365,7 @@ class CompanheirosModalController {
             {
                 id: 'batrakos',
                 nome: 'Batrakos',
+                tipo: "Re'Geron",
                 raridade: '🟢 RARO',
                 imagem: 'https://i.imgur.com/653YYqB.png',
                 descricao: 'Os Anfíbios do Abismo. Humanoides esguios, adaptados tanto em terra quanto na água profunda.',
@@ -385,6 +387,7 @@ class CompanheirosModalController {
             {
                 id: 'khrull',
                 nome: 'Khrull',
+                tipo: "Re'Geron",
                 raridade: '🟢 RARO',
                 imagem: 'https://i.imgur.com/uHvvENg.png',
                 descricao: 'Os Insetoides. Seres de colmeia, eficientes e organizados, com exoesqueleto quitinoso.',
@@ -406,6 +409,7 @@ class CompanheirosModalController {
             {
                 id: 'repteis',
                 nome: 'Répteis',
+                tipo: "Re'Geron",
                 raridade: '🟢 RARO',
                 imagem: 'https://i.imgur.com/7PROMpt.png',
                 descricao: 'Os Antigos. Pacientes, pragmáticos e frios no cálculo, conectados ao ambiente.',
@@ -427,6 +431,7 @@ class CompanheirosModalController {
             {
                 id: 'umbros',
                 nome: 'Umbros',
+                tipo: "Re'Geron",
                 raridade: '🟣 ÉPICA',
                 imagem: 'https://i.imgur.com/B6lTMcX.png',
                 descricao: 'Os Ruídos da Realidade. Sobras conceituais, resíduos ontológicos que quebram a lógica.',
@@ -448,6 +453,7 @@ class CompanheirosModalController {
             {
                 id: 'fantasmas',
                 nome: 'Fantasmas',
+                tipo: "Re'Geron",
                 raridade: '🟣 ÉPICA',
                 imagem: 'https://i.imgur.com/aK9UcVI.png',
                 descricao: 'Os Ecos que Recusam o Fim. Consciências presas por trauma, promessa ou ódio.',
@@ -469,6 +475,7 @@ class CompanheirosModalController {
             {
                 id: 'espirito',
                 nome: 'Espírito',
+                tipo: "Re'Geron",
                 raridade: '🟠 LENDÁRIO',
                 imagem: 'https://i.imgur.com/6zAbgHP.png',
                 descricao: 'Os Formados da Harmonia. Emoções positivas intensas moldadas em forma elemental.',
@@ -490,6 +497,7 @@ class CompanheirosModalController {
             {
                 id: 'drakhen',
                 nome: 'Drakhen',
+                tipo: "Re'Geron",
                 raridade: '🟠 LENDÁRIO',
                 imagem: 'https://i.imgur.com/tfFHpEZ.png',
                 descricao: 'Os Ancestrais. Raça que evolui em dois estágios através de eras e poder.',
@@ -511,6 +519,7 @@ class CompanheirosModalController {
             {
                 id: 'morvak',
                 nome: 'Morvak',
+                tipo: "Re'Geron",
                 raridade: '🔴 MÍTICA',
                 imagem: 'https://i.imgur.com/TEDrmlw.png',
                 descricao: 'Os Nascidos do Medo. Entidades do terror primordial e do desconhecido.',
@@ -532,6 +541,7 @@ class CompanheirosModalController {
             {
                 id: 'dracolitos',
                 nome: 'Dracólitos',
+                tipo: "Re'Geron",
                 raridade: '🔴 MÍTICA',
                 imagem: 'https://i.imgur.com/543EZm2.png',
                 descricao: 'Os Encarnados Elementais. Espíritos em perfeita ressonância elemental.',
@@ -553,6 +563,7 @@ class CompanheirosModalController {
             {
                 id: 'celestine',
                 nome: 'Celestine',
+                tipo: "Re'Geron",
                 raridade: '🔴 MÍTICA',
                 imagem: 'https://i.imgur.com/F99CkI4.png',
                 descricao: 'Os Consagrados. Almas elevadas pelos deuses antigos, portadores de Propósito.',
@@ -574,6 +585,7 @@ class CompanheirosModalController {
             {
                 id: 'opharos',
                 nome: 'Opharos',
+                tipo: "Re'Geron",
                 raridade: '🔴 MÍTICA',
                 imagem: 'https://i.imgur.com/4egj34P.png',
                 descricao: 'Os Observadores Pré-Doutrinários. Existem para observar a realidade sagrada.',
@@ -595,6 +607,7 @@ class CompanheirosModalController {
             {
                 id: 'demonoid',
                 nome: 'Demonoid',
+                tipo: "Re'Geron",
                 raridade: '🟠 LENDÁRIO',
                 imagem: 'https://i.imgur.com/CqWi4r9.png',
                 descricao: 'Os Demonoids são uma raça nativa de Sultran, nascidos da convergência entre energia caótica, desejo, dor e sobrevivência extrema. Diferente de outras raças infernais, os Demonoids evoluem ao abandonar a monstruosidade. Quanto mais humanoide se torna, sua forma mais estável, inteligente e poderosa a criatura se torna.\n\nA forma inicial de um Demonoid é bestial, instintiva e grotesca. No entanto, à medida que absorve energia, experiências ou outros seres infernais, sua estrutura se reorganiza, aproximando-se de um corpo humanoide. Esse processo não é apenas físico — é mental e espiritual. Tornar-se "mais humano" significa adquirir consciência, estratégia e controle absoluto do próprio poder.\n\nNo Inferno, a aparência não engana: quanto mais humano um Demonoid parece, mais perigoso ele é.',
@@ -625,6 +638,7 @@ class CompanheirosModalController {
             {
                 id: 'felaryn',
                 nome: 'Felaryn (Felinos)',
+                tipo: "Re'Geron",
                 raridade: '🔵 COMUM',
                 imagem: 'https://i.imgur.com/3fxrfD0.png',
                 descricao: 'Os Felinos são predadores naturais que existem em inúmeras formas e tamanhos pelo mundo. De pequenos caçadores silenciosos das florestas até gigantes majestosos das planícies ou montanhas, todos compartilham o mesmo conjunto de instintos refinados que os tornam alguns dos caçadores mais eficientes da natureza.\n\nSeus corpos são construídos para velocidade, precisão e silêncio. Patas macias permitem movimentação quase inaudível, músculos flexíveis garantem saltos poderosos, e seus olhos adaptados à baixa luz permitem enxergar com clareza durante a noite ou em ambientes sombrios.\n\nEmbora sejam criaturas animais, muitos Felinos demonstram inteligência instintiva impressionante, aprendendo rapidamente padrões de caça, rotas de território e comportamento de presas. Alguns indivíduos mais antigos ou tocados pela magia do mundo podem desenvolver habilidades extraordinárias, tornando-se verdadeiras lendas entre as feras.',
@@ -655,6 +669,7 @@ class CompanheirosModalController {
             {
                 id: 'necrofago',
                 nome: 'Necrófago (Morto Vivo)',
+                tipo: "Re'Geron",
                 raridade: '🟢 RARO',
                 imagem: 'https://i.imgur.com/KuHj0g6.png',
                 descricao: 'Necrófagos são seres que atravessaram a fronteira da morte e retornaram ao mundo material. Diferente de cadáveres animados sem mente, eles preservam consciência, memória ou ao menos fragmentos de quem foram em vida. Sua existência é sustentada por energia necromântica, maldições antigas ou uma vontade de existir tão intensa que se recusa a desaparecer.\n\nFisicamente, os Necrófagos variam bastante. Alguns mantêm aparência quase intacta, apenas com pele pálida e olhos opacos, enquanto outros exibem sinais claros de decomposição, ossos aparentes ou marcas de rituais que os trouxeram de volta. O tempo afeta seus corpos de forma diferente das raças vivas: eles não envelhecem da mesma forma, mas também nunca estão completamente livres da deterioração.\n\nEntre os mortos-vivos conscientes, os Necrófagos são considerados o primeiro estágio de uma existência além da morte. Com o passar dos anos, energia suficiente ou rituais específicos podem transformá-los em entidades mais poderosas como Wights, Vampiros, Dullahans ou até mesmo Liches.',
@@ -685,6 +700,7 @@ class CompanheirosModalController {
             {
                 id: 'mythar',
                 nome: 'Mythar (Bestas Fantásticas)',
+                tipo: "Re'Geron",
                 raridade: '🟣 ÉPICA',
                 imagem: 'https://i.imgur.com/qZUJGy2.png',
                 descricao: 'Os Mythar são criaturas nascidas da própria essência da magia que permeia o mundo. Diferente de animais comuns, sua existência está profundamente ligada às forças sobrenaturais da natureza e às correntes arcanas que moldam a realidade.\n\nEssas criaturas podem assumir inúmeras formas: algumas possuem asas gigantescas, outras combinam partes de diferentes animais, enquanto certas linhagens manifestam habilidades mágicas naturais desde o nascimento.\n\nGrifos dominam os céus, quimeras caminham como monstros híbridos de pura força, mantícoras espalham terror pelas planícies, e basiliscos carregam poderes capazes de petrificar seus inimigos. Apesar das diferenças físicas, todos pertencem à mesma categoria fundamental de seres mágicos vivos.\n\nA presença de um Mythar costuma alterar o ambiente ao seu redor. Florestas podem se tornar mais densas, ventos mais fortes, ou a própria terra reagir à energia que essas criaturas carregam.',
@@ -715,6 +731,7 @@ class CompanheirosModalController {
             {
                 id: 'lithor',
                 nome: 'Lithor (Golem)',
+                tipo: "Re'Geron",
                 raridade: '🟢 RARO',
                 imagem: 'https://i.imgur.com/67FAioa.png',
                 descricao: 'Os Lithor são entidades vivas formadas a partir da própria matéria do mundo. Diferente de construtos artificiais, eles nascem quando energia primordial se acumula por eras dentro de montanhas, cavernas profundas ou veios minerais extremamente antigos.\n\nSeus corpos são compostos por rocha viva, cristais naturais ou ligas minerais raras. Alguns possuem aparência humanoide, enquanto outros lembram estátuas vivas esculpidas pelo tempo. Seus movimentos são pesados, porém firmes, e cada passo parece ecoar a força das profundezas da terra.\n\nA mente de um Lithor costuma ser paciente e lenta, refletindo a própria natureza da pedra. Eles não são impulsivos e raramente agem sem ponderar. Para muitos povos, Lithor são vistos como guardiões naturais de cavernas, montanhas e territórios ancestrais.\n\nCom o passar de séculos, alguns Lithor evoluem para formas ainda mais poderosas, incorporando metais raros, cristais mágicos ou magma vivo em sua estrutura.',
@@ -755,25 +772,35 @@ class CompanheirosModalController {
 
         // Usar array de raças da classe
         const racas = this.racas;
+        
+        // Tipos disponíveis
+        const tipos = ["Re'Geron", "The Chaotical Gate", "Wuxia/Xianxia", "One Piece", "Bleach"];
+        let tipoSelecionado = "Re'Geron"; // Padrão
 
         // Criar overlay
         const overlay = document.createElement('div');
         overlay.className = 'comp-raca-overlay';
         
-        // Cabeçalho
-        let html = `
-            <div class="comp-raca-modal">
-                <div class="comp-raca-header">
-                    <h2>Selecione uma Raça</h2>
-                    <button class="comp-raca-fechar">✕</button>
-                </div>
-                <div class="comp-raca-grid">
-        `;
-
-        // Gerar cards das raças
-        racas.forEach(raca => {
-            html += `
-                <div class="comp-raca-card" data-raca-id="${raca.id}" data-raca-nome="${raca.nome}">
+        // Função para renderizar cards
+        const renderizarCards = (tipoFiltro) => {
+            const gridContainer = overlay.querySelector('.comp-raca-grid');
+            if (!gridContainer) return;
+            
+            const racasFiltradas = racas.filter(r => (r.tipo || "Re'Geron") === tipoFiltro);
+            
+            gridContainer.innerHTML = '';
+            
+            if (racasFiltradas.length === 0) {
+                gridContainer.innerHTML = '<p class="comp-raca-sem-resultados">Nenhuma raça disponível para este tipo</p>';
+                return;
+            }
+            
+            racasFiltradas.forEach(raca => {
+                const card = document.createElement('div');
+                card.className = 'comp-raca-card';
+                card.setAttribute('data-raca-id', raca.id);
+                card.setAttribute('data-raca-nome', raca.nome);
+                card.innerHTML = `
                     <div class="comp-raca-card-imagem">
                         <img src="${raca.imagem}" alt="${raca.nome}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22250%22%3E%3Crect fill=%22%23333%22 width=%22200%22 height=%22250%22/%3E%3C/svg%3E'">
                         <span class="comp-raca-raridade">${raca.raridade}</span>
@@ -783,45 +810,85 @@ class CompanheirosModalController {
                         <button class="comp-raca-btn-detalhes" data-raca-id="${raca.id}">ℹ Detalhes</button>
                     </div>
                     <div class="comp-raca-card-nome">${raca.nome}</div>
+                `;
+                
+                // Eventos para os botões
+                card.querySelector('.comp-raca-btn-selecionar').addEventListener('click', (e) => {
+                    const racaId = e.currentTarget.getAttribute('data-raca-id');
+                    const racaSelecionada = racas.find(r => r.id === racaId);
+                    if (racaSelecionada) {
+                        this.selecionarRaca(racaId, racaSelecionada.nome);
+                        overlay.remove();
+                    }
+                });
+                
+                card.querySelector('.comp-raca-btn-detalhes').addEventListener('click', (e) => {
+                    const racaId = e.currentTarget.getAttribute('data-raca-id');
+                    const racaSelecionada = racas.find(r => r.id === racaId);
+                    if (racaSelecionada) {
+                        this.mostrarDetalhesRaca(racaSelecionada);
+                    }
+                });
+                
+                gridContainer.appendChild(card);
+            });
+        };
+        
+        // HTML inicial com filtro de tipos
+        let html = `
+            <div class="comp-raca-modal">
+                <div class="comp-raca-header">
+                    <h2>Selecione uma Raça</h2>
+                    <button class="comp-raca-fechar">✕</button>
                 </div>
-            `;
+                
+                <!-- Filtro de Tipos -->
+                <div class="comp-raca-filtro-tipos">
+                    <label class="comp-raca-filtro-label">Filtrar por Tipo:</label>
+                    <div class="comp-raca-filtro-botoes">
+        `;
+        
+        tipos.forEach(tipo => {
+            const isActive = tipo === tipoSelecionado ? 'active' : '';
+            html += `<button class="comp-raca-filtro-btn ${isActive}" data-tipo="${tipo}">${tipo}</button>`;
         });
-
+        
         html += `
+                    </div>
+                </div>
+                
+                <div class="comp-raca-grid">
                 </div>
             </div>
         `;
 
         overlay.innerHTML = html;
         document.body.appendChild(overlay);
+        
+        // Renderizar cards iniciais
+        renderizarCards(tipoSelecionado);
 
-        // Event listeners
+        // Event listener para fechar
         overlay.querySelector('.comp-raca-fechar').addEventListener('click', () => overlay.remove());
         
         overlay.addEventListener('click', (e) => {
             if (e.target === overlay) overlay.remove();
         });
-
-        // Botões de selecionar
-        overlay.querySelectorAll('.comp-raca-btn-selecionar').forEach(btn => {
+        
+        // Event listeners para filtros de tipo
+        overlay.querySelectorAll('.comp-raca-filtro-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
-                const racaId = btn.getAttribute('data-raca-id');
-                const raca = racas.find(r => r.id === racaId);
-                if (raca) {
-                    this.selecionarRaca(racaId, raca.nome);
-                    overlay.remove();
-                }
-            });
-        });
-
-        // Botões de detalhes
-        overlay.querySelectorAll('.comp-raca-btn-detalhes').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const racaId = btn.getAttribute('data-raca-id');
-                const raca = racas.find(r => r.id === racaId);
-                if (raca) {
-                    this.mostrarDetalhesRaca(raca);
-                }
+                const tipo = e.currentTarget.getAttribute('data-tipo');
+                tipoSelecionado = tipo;
+                
+                // Atualizar botões ativos
+                overlay.querySelectorAll('.comp-raca-filtro-btn').forEach(b => {
+                    b.classList.remove('active');
+                });
+                e.currentTarget.classList.add('active');
+                
+                // Renderizar cards do novo tipo
+                renderizarCards(tipo);
             });
         });
     }

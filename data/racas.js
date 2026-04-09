@@ -7,6 +7,7 @@ const RACAS_SISTEMA = {
   humano: {
     id: 'humano',
     nome: 'Humano',
+    tipo: "Re'Geron",
     descricao: 'Versáteis e adaptáveis, os humanos se destacam pela capacidade de aprendizado rápido e flexibilidade',
     bonus: {
       forca: 0,
@@ -26,6 +27,7 @@ const RACAS_SISTEMA = {
   elfo: {
     id: 'elfo',
     nome: 'Elfo',
+    tipo: "Re'Geron",
     descricao: 'Elegantes e mágicos, os elfos possuem afinidade natural com a magia e visão aguçada',
     bonus: {
       forca: -1,
@@ -45,6 +47,7 @@ const RACAS_SISTEMA = {
   anao: {
     id: 'anao',
     nome: 'Anão',
+    tipo: "Re'Geron",
     descricao: 'Fortes e resistentes, os anões são mestres da forja e resistem bem a magia',
     bonus: {
       forca: 2,
@@ -64,6 +67,7 @@ const RACAS_SISTEMA = {
   orc: {
     id: 'orc',
     nome: 'Orc',
+    tipo: "Re'Geron",
     descricao: 'Selvagens e poderosos, os orcs são guerreiros natos com força bruta incomparável',
     bonus: {
       forca: 3,
@@ -83,6 +87,7 @@ const RACAS_SISTEMA = {
   goblin: {
     id: 'goblin',
     nome: 'Goblin',
+    tipo: "Re'Geron",
     descricao: 'Pequenos mas astutos, os goblins são ágeis e engenhosos em combate',
     bonus: {
       forca: -1,
@@ -102,6 +107,7 @@ const RACAS_SISTEMA = {
   tiefling: {
     id: 'tiefling',
     nome: 'Tiefling',
+    tipo: "Re'Geron",
     descricao: 'Descendentes de seres infernais, possuem afinidade com magia sombria',
     bonus: {
       forca: 0,
@@ -121,6 +127,7 @@ const RACAS_SISTEMA = {
   draconico: {
     id: 'draconico',
     nome: 'Dracônico',
+    tipo: "Re'Geron",
     descricao: 'Herdeiros do poder dos dragões, combinam força e magia em harmonia',
     bonus: {
       forca: 1,
@@ -140,6 +147,7 @@ const RACAS_SISTEMA = {
   felinido: {
     id: 'felinido',
     nome: 'Felinído',
+    tipo: "Re'Geron",
     descricao: 'Felinos humanoides, ágeis e predadores por natureza',
     bonus: {
       forca: 1,
@@ -159,6 +167,7 @@ const RACAS_SISTEMA = {
   naga: {
     id: 'naga',
     nome: 'Naga',
+    tipo: "Re'Geron",
     descricao: 'Seres serpentinos com domínio sobre a água e magia natural',
     bonus: {
       forca: 0,
