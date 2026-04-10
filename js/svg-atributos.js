@@ -136,7 +136,19 @@ class SVGAtributosManager {
      * Sincroniza com estado global
      */
     sincronizarEstado() {
-        if (window.appState) {
+        if (window.appState && typeof window.appState.setState === 'function') {
+            // 🔥 FIX CRÍTICO: Usar setState() em vez de atribuição direta
+            // Isso garante que o deepMerge preserve outros campos do atributos
+            // e que auto-sync funcione corretamente
+            window.appState.setState({
+                atributos: {
+                    primarios: { ...this.atributosPrimarios },
+                    secundarios: { ...this.atributosSecundarios }
+                }
+            });
+        } else if (window.appState) {
+            // Fallback para atribuição direta se setState não existir (compatibilidade)
+            console.warn('⚠️ [SvgAtributos] setState não disponível, usando atribuição direta');
             window.appState.atributos = {
                 primarios: { ...this.atributosPrimarios },
                 secundarios: { ...this.atributosSecundarios }

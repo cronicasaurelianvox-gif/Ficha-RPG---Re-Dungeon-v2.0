@@ -142,7 +142,11 @@ class AtributosManager {
      */
     init() {
         // 🔒 BLOQUEIO ISOLADO: Não carregar dados se o botão "Limpar Ficha" foi clicado
-        if (sessionStorage.getItem('LIMPEZA_FICHA_ATIVA')) {
+        // ⚠️ MAS: Permitir se for uma importação em andamento
+        const limpezaAtiva = sessionStorage.getItem('LIMPEZA_FICHA_ATIVA');
+        const importacaoAtiva = sessionStorage.getItem('IMPORTACAO_FICHA_ATIVA');
+        
+        if (limpezaAtiva && !importacaoAtiva) {
             console.log('🔒 [AtributosManager] Carregamento bloqueado - Limpeza em progresso');
             return;
         }
@@ -346,6 +350,16 @@ class AtributosManager {
      * Renderiza os atributos primários na tela
      */
     renderizarAtributos() {
+        // 🔒 BLOQUEIO ISOLADO: Não renderizar se a limpeza está em progresso
+        // ⚠️ MAS: Permitir se for uma importação em andamento
+        const limpezaAtiva = sessionStorage.getItem('LIMPEZA_FICHA_ATIVA');
+        const importacaoAtiva = sessionStorage.getItem('IMPORTACAO_FICHA_ATIVA');
+        
+        if (limpezaAtiva && !importacaoAtiva) {
+            console.log('🔒 [AtributosManager.renderizarAtributos()] Renderização bloqueada - Limpeza em progresso');
+            return;
+        }
+
         const stateManager = window.appState;
         if (!stateManager) {
             console.warn('⚠️ StateManager não disponível para renderização');
@@ -406,6 +420,16 @@ class AtributosManager {
      * Renderiza as informações do personagem
      */
     renderizarPersonagem() {
+        // 🔒 BLOQUEIO ISOLADO: Não renderizar se a limpeza está em progresso
+        // ⚠️ MAS: Permitir se for uma importação em andamento
+        const limpezaAtiva = sessionStorage.getItem('LIMPEZA_FICHA_ATIVA');
+        const importacaoAtiva = sessionStorage.getItem('IMPORTACAO_FICHA_ATIVA');
+        
+        if (limpezaAtiva && !importacaoAtiva) {
+            console.log('🔒 [AtributosManager.renderizarPersonagem()] Renderização bloqueada - Limpeza em progresso');
+            return;
+        }
+
         const { nome, titulo, classe, raca } = this.personagemData;
 
         console.log('🎨 renderizarPersonagem() - Atualizando visual com:', { nome, titulo, classe, raca });
@@ -848,11 +872,56 @@ class AtributosManager {
      * @param {object} novosDados - Objeto com dados a atualizar
      */
     atualizarPersonagem(novosDados) {
-        this.personagemData = { ...this.personagemData, ...novosDados };
+        // 🔧 IMPORTANTE: Usar deep merge para preservar dados não presentes no JSON
+        // Caso contrário, atributos ausentes no JSON são perdidos!
+        this.personagemData = this.deepMerge(this.personagemData, novosDados);
         this.renderizarPersonagem();
         this.renderizarAtributos();
         
         console.log('👤 Personagem atualizado');
+    }
+
+    /**
+     * Faz merge profundo entre objetos
+     * Preserva dados do objeto original que não estão presentes no novo
+     * 
+     * @param {Object} target - Objeto base (dados atuais)
+     * @param {Object} source - Objeto com dados a mesclar
+     * @returns {Object} Objeto mesclado
+     */
+    deepMerge(target, source) {
+        if (!source || typeof source !== 'object') {
+            return target;
+        }
+
+        const resultado = { ...target };
+
+        for (const chave in source) {
+            if (source.hasOwnProperty(chave)) {
+                const valorAtual = resultado[chave];
+                const valorNovo = source[chave];
+
+                // Se ambos são objetos (não array), fazer merge recursivo
+                if (
+                    valorNovo !== null &&
+                    typeof valorNovo === 'object' &&
+                    !Array.isArray(valorNovo) &&
+                    valorAtual !== null &&
+                    typeof valorAtual === 'object' &&
+                    !Array.isArray(valorAtual)
+                ) {
+                    resultado[chave] = this.deepMerge(valorAtual, valorNovo);
+                } else {
+                    // Se o novo valor existe e é diferente, usar novo
+                    // Caso contrário, manter o atual
+                    if (valorNovo !== undefined && valorNovo !== null) {
+                        resultado[chave] = valorNovo;
+                    }
+                }
+            }
+        }
+
+        return resultado;
     }
 
     /**
