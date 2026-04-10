@@ -1843,6 +1843,23 @@ class SistemaFicha {
                 
                 this.mostrarMensagem('✅ Ficha importada com sucesso! Recarregando...', 'sucesso');
                 
+                // 🔍 VERIFICAÇÃO FINAL ANTES DO RELOAD - CHECAR O QUE REALMENTE FOI SALVO
+                console.log('\n' + '='.repeat(80));
+                console.log('🔍 VERIFICAÇÃO FINAL - ANTES DO RELOAD');
+                console.log('='.repeat(80));
+                const verificacaoFinal = window.localStorageManager?.loadAtributos();
+                console.log('📊 Atributos no localStorage ANTES do reload:', verificacaoFinal);
+                if (verificacaoFinal?.primarios) {
+                    console.log('   ✅ Primários:', Object.keys(verificacaoFinal.primarios));
+                    Object.entries(verificacaoFinal.primarios).forEach(([k, v]) => {
+                        console.log(`      - ${k}: total=${v.total}`);
+                    });
+                }
+                if (verificacaoFinal?.secundarios) {
+                    console.log('   ✅ Secundários:', Object.keys(verificacaoFinal.secundarios));
+                }
+                console.log('='.repeat(80) + '\n');
+                
                 // 🎨 Atualizar card de status IMEDIATAMENTE após importação
                 console.log('🎨 Renderizando card de status com valores importados...');
                 if (window.statusBarsManager && typeof window.statusBarsManager.render === 'function') {

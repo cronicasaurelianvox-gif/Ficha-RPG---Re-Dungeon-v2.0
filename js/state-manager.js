@@ -674,13 +674,28 @@ class StateManager {
         }
 
         try {
-            console.log('📂 [StateManager] Carregando dados do localStorage...');
+            console.log('\n' + '='.repeat(80));
+            console.log('📂 [StateManager] INICIANDO CARREGAMENTO DE localStorage');
+            console.log('='.repeat(80));
 
             // ✅ 1. Carregar atributos
             const atributos = window.localStorageManager.loadAtributos();
+            console.log('🔍 Atributos carregados do localStorage:', atributos);
             if (atributos) {
+                if (atributos.primarios) {
+                    console.log('   ✅ Primários encontrados:', Object.keys(atributos.primarios));
+                } else {
+                    console.warn('   ⚠️ SEM PRIMÁRIOS em atributos carregados!');
+                }
+                if (atributos.secundarios) {
+                    console.log('   ✅ Secundários encontrados:', Object.keys(atributos.secundarios));
+                } else {
+                    console.warn('   ⚠️ SEM SECUNDÁRIOS em atributos carregados!');
+                }
                 this.setState({ atributos });
-                console.log('✅ Atributos carregados');
+                console.log('✅ setState() chamado com atributos');
+            } else {
+                console.warn('❌ CRÍTICO: localStorage.loadAtributos() retornou NULL/UNDEFINED!');
             }
 
             // ✅ 2. Carregar status (HP, Energia, Fadiga)
