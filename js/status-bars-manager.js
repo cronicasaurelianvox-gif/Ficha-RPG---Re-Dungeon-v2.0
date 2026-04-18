@@ -149,16 +149,6 @@ const StatusBarsManager = {
      * Método principal para atualizar toda a interface visual
      */
     render() {
-        // 🔒 BLOQUEIO ISOLADO: Não renderizar se a limpeza está em progresso
-        // ⚠️ MAS: Permitir se for uma importação em andamento
-        const limpezaAtiva = sessionStorage.getItem('LIMPEZA_FICHA_ATIVA');
-        const importacaoAtiva = sessionStorage.getItem('IMPORTACAO_FICHA_ATIVA');
-        
-        if (limpezaAtiva && !importacaoAtiva) {
-            console.log('🔒 [StatusBarsManager.render()] Renderização bloqueada - Limpeza em progresso');
-            return;
-        }
-
         console.log('\n🎨 === StatusBarsManager.render() iniciado ===');
         this.updateBar('hp');
         this.updateBar('energy');

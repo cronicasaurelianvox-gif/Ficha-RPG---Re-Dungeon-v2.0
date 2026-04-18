@@ -159,8 +159,15 @@ const CLASSES_SISTEMA = {
   cavaleiro: {
     id: 'cavaleiro',
     nome: 'Cavaleiro',
-    descricao: 'Nobre protetor, defende aliados com honra e coragem',
+    descricao: 'O Cavaleiro não é meramente um soldado, mas o pilar sobre o qual repousam os restos da civilização. Enquanto outros buscam a glória no ouro ou na magia, ele busca a imortalidade através do sacrifício. Nascido do rigor das ordens militares e batizado no sangue da linhagem feudal, este guerreiro é forjado sob o fogo de um juramento inquebrável: um pacto que vincula sua vida ao destino do reino.\n\nSua jornada é um rastro de suor e disciplina que começa na alvorada da juventude. Como escudeiro, aprendeu que o peso da placa de aço é menor que o peso da honra; como homem, dominou a linguagem da guerra. No lombo de seu corcel, ele é o trovão que anuncia a justiça, uma força da natureza que transforma o pavor em esperança com um único brado.\n\nEm combate, o Cavaleiro é a tempestade contida. Ele não apenas empunha a espada, ele é a barreira. Enquanto o mundo desmorona ao seu redor, ele permanece imóvel, absorvendo o ódio dos inimigos para que os seus não sofram. Sua presença é um farol de virtude marcial: uma silhueta prateada que desafia o caos, provando que, enquanto houver um Cavaleiro de pé, a escuridão jamais triunfará sobre a ordem.',
     atributosPrimarios: ['Força', 'Vitalidade'],
+    atributosRolagem: {
+      forca: '2d10+6',
+      vitalidade: '2d12+4',
+      agilidade: '2d8+6',
+      percepcao: '2d6+4',
+      inteligencia: '1d4+6'
+    },
     habilidadesBase: [
       'Guarda Protetora',
       'Carga Montada',
@@ -171,7 +178,9 @@ const CLASSES_SISTEMA = {
       defesa: 3,
       magia: -1
     },
-    imagem: '🛡️',
+    raridade: 'Raro',
+    imagem: 'https://i.imgur.com/llliatr.png',
+    emoji: '🛡️',
     cor: '#696969'
   }
 };

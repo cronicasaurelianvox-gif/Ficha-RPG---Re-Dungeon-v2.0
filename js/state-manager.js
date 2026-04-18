@@ -129,48 +129,6 @@ class StateManager {
     }
 
     /**
-     * Faz merge profundo entre objetos (deep merge)
-     * Preserva dados do objeto atual que não estão presentes no novo
-     * 
-     * @param {Object} target - Objeto base (estado atual)
-     * @param {Object} source - Objeto com dados a mesclar (atualizações)
-     * @returns {Object} Objeto mesclado
-     */
-    deepMerge(target, source) {
-        if (!source || typeof source !== 'object') {
-            return target;
-        }
-
-        const resultado = { ...target };
-
-        for (const chave in source) {
-            if (source.hasOwnProperty(chave)) {
-                const valorAtual = resultado[chave];
-                const valorNovo = source[chave];
-
-                // Se ambos são objetos (não array), fazer merge recursivo
-                if (
-                    valorNovo !== null &&
-                    typeof valorNovo === 'object' &&
-                    !Array.isArray(valorNovo) &&
-                    valorAtual !== null &&
-                    typeof valorAtual === 'object' &&
-                    !Array.isArray(valorAtual)
-                ) {
-                    resultado[chave] = this.deepMerge(valorAtual, valorNovo);
-                } else {
-                    // Se o novo valor existe, usar novo; caso contrário, manter o atual
-                    if (valorNovo !== undefined && valorNovo !== null) {
-                        resultado[chave] = valorNovo;
-                    }
-                }
-            }
-        }
-
-        return resultado;
-    }
-
-    /**
      * Obtém o valor de uma chave no estado
      * @param {string} key - Chave do estado
      * @returns {*} Valor da chave
@@ -193,16 +151,13 @@ class StateManager {
             return;
         }
 
-        // Atualizar estado com deep merge para preservar dados aninhados
+        // Atualizar estado
         const stateAnterior = JSON.stringify(this.state);
-        this.state = this.deepMerge(this.state, updates);
+        this.state = { ...this.state, ...updates };
         const stateNovo = JSON.stringify(this.state);
 
         // Se o estado mudou, salvar em localStorage
-        // 🔒 MAS: Não salvar se importação está em progresso!
-        const estaImportando = window.isImportandoFicha || sessionStorage.getItem('IMPORTACAO_FICHA_ATIVA');
-        
-        if (stateAnterior !== stateNovo && !estaImportando) {
+        if (stateAnterior !== stateNovo) {
             // Salvar automaticamente cada tipo de dado
             if (updates.atributos && window.localStorageManager) {
                 window.localStorageManager.saveAtributos(this.state.atributos);
@@ -222,8 +177,6 @@ class StateManager {
             if (updates.activeVerticalRoute && window.localStorageManager) {
                 window.localStorageManager.saveRotaVertical(this.state.activeVerticalRoute);
             }
-        } else if (estaImportando && updates.atributos) {
-            console.log('🔒 [StateManager] Auto-save bloqueado durante importação');
         }
 
         // ⚠️ NEUTRALIZADO: Não notificar listeners
@@ -674,28 +627,13 @@ class StateManager {
         }
 
         try {
-            console.log('\n' + '='.repeat(80));
-            console.log('📂 [StateManager] INICIANDO CARREGAMENTO DE localStorage');
-            console.log('='.repeat(80));
+            console.log('📂 [StateManager] Carregando dados do localStorage...');
 
             // ✅ 1. Carregar atributos
             const atributos = window.localStorageManager.loadAtributos();
-            console.log('🔍 Atributos carregados do localStorage:', atributos);
             if (atributos) {
-                if (atributos.primarios) {
-                    console.log('   ✅ Primários encontrados:', Object.keys(atributos.primarios));
-                } else {
-                    console.warn('   ⚠️ SEM PRIMÁRIOS em atributos carregados!');
-                }
-                if (atributos.secundarios) {
-                    console.log('   ✅ Secundários encontrados:', Object.keys(atributos.secundarios));
-                } else {
-                    console.warn('   ⚠️ SEM SECUNDÁRIOS em atributos carregados!');
-                }
                 this.setState({ atributos });
-                console.log('✅ setState() chamado com atributos');
-            } else {
-                console.warn('❌ CRÍTICO: localStorage.loadAtributos() retornou NULL/UNDEFINED!');
+                console.log('✅ Atributos carregados');
             }
 
             // ✅ 2. Carregar status (HP, Energia, Fadiga)

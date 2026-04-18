@@ -957,6 +957,154 @@ const CLASSES_DATABASE = [
     habilidadesAvancadas: []
   },
   {
+    id: "cavaleiro",
+    nome: "Cavaleiro",
+    raridade: "raro",
+    descricao: "O Cavaleiro não é meramente um soldado, mas o pilar sobre o qual repousam os restos da civilização. Enquanto outros buscam a glória no ouro ou na magia, ele busca a imortalidade através do sacrifício. Nascido do rigor das ordens militares e batizado no sangue da linhagem feudal, este guerreiro é forjado sob o fogo de um juramento inquebrável: um pacto que vincula sua vida ao destino do reino.\n\nSua jornada é um rastro de suor e disciplina que começa na alvorada da juventude. Como escudeiro, aprendeu que o peso da placa de aço é menor que o peso da honra; como homem, dominou a linguagem da guerra. No lombo de seu corcel, ele é o trovão que anuncia a justiça, uma força da natureza que transforma o pavor em esperança com um único brado.\n\nEm combate, o Cavaleiro é a tempestade contida. Ele não apenas empunha a espada, ele é a barreira. Enquanto o mundo desmorona ao seu redor, ele permanece imóvel, absorvendo o ódio dos inimigos para que os seus não sofram. Sua presença é um farol de virtude marcial: uma silhueta prateada que desafia o caos, provando que, enquanto houver um Cavaleiro de pé, a escuridão jamais triunfará sobre a ordem.",
+    limiteAtributo: 110,
+    imagem: "https://i.imgur.com/llliatr.png",
+    funcoes: ["Tank", "Off-Tank"],
+    atributos: {
+      forca: "2d10+6",
+      vitalidade: "2d12+4",
+      agilidade: "2d8+6",
+      inteligencia: "1d4+6",
+      percepcao: "2d6+4",
+      sorte: "0"
+    },
+    habilidadesBasicas: [
+      {
+        nome: "Guarda Protetora",
+        descricao: "O Cavaleiro assume uma postura defensiva, protegendo um aliado adjacente. Durante 2 turnos, 30% do dano recebido pelo aliado é redirecionado para o Cavaleiro. O Cavaleiro recebe +1 em testes de resistência contra efeitos que afetariam o aliado protegido. Se o dano redirecionado exceder 50 pontos por turno, o Cavaleiro gera 1 acúmulo de Honra.",
+        tipo: "Duradoura",
+        alcance: "Adjacente",
+        alvos: "1 Aliado",
+        custo: "12 FaD",
+        recarga: "3",
+        duracao: "2 T",
+        dado: "N/A",
+        bonus: [
+          "Protege aliado adjacente",
+          "Redireciona 30% do dano",
+          "Gera acúmulo de Honra"
+        ]
+      },
+      {
+        nome: "Carga Montada",
+        descricao: "O Cavaleiro avança rapidamente no lombo de seu corcel, movimentando-se até 8 metros em linha reta e causando 4d10+12 de dano físico ao primeiro inimigo atingido. O alvo é derrubado se falhar em um teste de Força. Se consumir 1 acúmulo de Honra, o Cavaleiro causa +2d8 adicional e todos os inimigos em um raio de 2 metros do alvo sofrem 50% do dano da carga.",
+        tipo: "Imediata",
+        alcance: "8 metros",
+        alvos: "1 Inimigo (Dano em Área)",
+        custo: "15 FaD",
+        recarga: "4",
+        duracao: "0 T",
+        dado: "4d10+12",
+        bonus: [
+          "Movimento + Dano",
+          "Derruba alvo",
+          "Dano em área ao consumir Honra"
+        ]
+      },
+      {
+        nome: "Escudo Unido",
+        descricao: "O Cavaleiro cria uma formação defensiva com aliados próximos, aumentando a defesa de todos em +2 por cada aliado adjacente (máx. +6). Enquanto esta habilidade estiver ativa, os aliados ganham resistência contra efeitos de separação (como empurrões). Se 2 ou mais aliados forem protegidos, todos os acúmulos de Honra do Cavaleiro são aumentados em 50%.",
+        tipo: "Sustentada",
+        alcance: "10 metros",
+        alvos: "Próprio + Aliados",
+        custo: "8 FaD",
+        recarga: "3",
+        duracao: "0 T",
+        dado: "N/A",
+        bonus: [
+          "Aumenta defesa com aliados",
+          "Resistência contra separação",
+          "Aumenta Honra com múltiplos aliados"
+        ]
+      },
+      {
+        nome: "Juramento Inquebrantável",
+        descricao: "O Cavaleiro invoca seu juramento sagrado, ganhando +1 em testes de resistência contra efeitos de medo e controle mental. Durante 3 turnos, o Cavaleiro não pode ser derrubado e recebe aumento de defesa (Condição). Sempre que o Cavaleiro ou um aliado que ele está protegendo for atingido enquanto esta habilidade estiver ativa, gera 1 acúmulo de Honra.",
+        tipo: "Duradoura",
+        alcance: "Pessoal",
+        alvos: "Próprio",
+        custo: "20 FaD",
+        recarga: "5",
+        duracao: "3 T",
+        dado: "N/A",
+        bonus: [
+          "Resistência contra medo e controle",
+          "Imunidade a derrubar",
+          "Gera Honra ao sofrer/proteger dano"
+        ]
+      },
+      {
+        nome: "Lâmina da Virtude",
+        descricao: "O Cavaleiro desfere um golpe imbuído de honra que causa 5d8+150% de dano físico. Para cada acúmulo de Honra consumido (máx. 3), o dano é aumentado em 50% e o alvo sofre -1 em ataques por 1 turno. Se consumir 3 acúmulos de Honra, o ataque também aplica Sangramento.",
+        tipo: "Imediata",
+        alcance: "Corpo a corpo",
+        alvos: "1 Inimigo",
+        custo: "18 FaD",
+        recarga: "3",
+        duracao: "0 T",
+        dado: "5d8+150%",
+        bonus: [
+          "Dano escalável com Honra",
+          "Reduz ataque inimigo",
+          "Aplica Sangramento com máximo Honra"
+        ]
+      },
+      {
+        nome: "Escudo Refletor",
+        descricao: "O Cavaleiro aumenta sua defesa em +3 e redireciona 25% do dano recebido como dano físico refletido ao atacante. Se o Cavaleiro estiver sob Juramento Inquebrantável, o dano refletido aumenta para 40%. Quando o dano refletido exceder 30 pontos em um ataque, o Cavaleiro gera 1 acúmulo de Honra.",
+        tipo: "Sustentada",
+        alcance: "Pessoal",
+        alvos: "Próprio",
+        custo: "10 FaD",
+        recarga: "2",
+        duracao: "0 T",
+        dado: "N/A",
+        bonus: [
+          "Aumenta defesa",
+          "Reflete dano",
+          "Gera Honra ao refletir dano"
+        ]
+      },
+      {
+        nome: "Resolução do Sacrifício",
+        descricao: "O Cavaleiro se posiciona entre seus aliados e o perigo. Durante 2 turnos, todos os danos dirigidos a aliados dentro de 5 metros são absorvidos pelo Cavaleiro em sua totalidade. O Cavaleiro não pode se mover durante este efeito, mas recebe +2 em testes de resistência. Se o Cavaleiro absorver dano suficiente para exceder 100 pontos por turno, o próximo Carga Montada tem sua recarga reduzida em 1 turno.",
+        tipo: "Duradoura",
+        alcance: "5 metros",
+        alvos: "Próprio + Aliados",
+        custo: "25 FaD",
+        recarga: "6",
+        duracao: "2 T",
+        dado: "N/A",
+        bonus: [
+          "Absorve todo dano de aliados",
+          "Imobilidade consciente",
+          "Reduz recarga de Carga Montada"
+        ]
+      },
+      {
+        nome: "Corte Final: Espada da Justiça",
+        descricao: "O Cavaleiro realiza um ataque final devastador que causa 6d12+250% de dano físico. Se o alvo estiver sob efeitos de redução de defesa ou sangramento, o dano é aumentado em 75%. Se consumir todos os acúmulos de Honra (máx. 3), o ataque também causa um acerto crítico garantido e restaura 30% do dano causado como Vitalidade.",
+        tipo: "Imediata",
+        alcance: "Corpo a corpo",
+        alvos: "1 Inimigo",
+        custo: "22 FaD",
+        recarga: "5",
+        duracao: "0 T",
+        dado: "6d12+250%",
+        bonus: [
+          "Dano devastador",
+          "Dano aumentado em alvo debilitado",
+          "Crítico garantido ao consumir máximo Honra"
+        ]
+      }
+    ],
+    habilidadesAvancadas: []
+  },
+  {
     id: "paladino",
     nome: "Paladino",
     raridade: "epico",

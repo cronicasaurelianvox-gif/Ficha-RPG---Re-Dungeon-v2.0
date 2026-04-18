@@ -1767,8 +1767,12 @@ class SistemaFicha {
                 console.log('✅ Ficha importada com sucesso!');
                 
                 // 💾 SALVAR IMEDIATAMENTE NO LOCALSTORAGE
-                // ⚠️ IMPORTANTE: MANTER O FLAG ATIVO ATÉ O FINAL!
-                // Removemos só DEPOIS de salvar TUDO e renderizar
+                // Antes de tudo, desbloquear salvamentos
+                window.isImportandoFicha = false;
+                sessionStorage.removeItem('IMPORTACAO_FICHA_ATIVA');
+                console.log('🔓 [Importação] Flags removidas - salvamentos desbloqueados');
+                
+                // Forçar salvamento de todos os dados
                 console.log('💾 Salvando dados importados no localStorage...');
                 
                 // 1. Salvar AppState
@@ -1785,47 +1789,12 @@ class SistemaFicha {
                 // 2. Salvar dados críticos individuais
                 if (window.localStorageManager) {
                     try {
-                        // 🔥 FIX CRÍTICO: Salvar o state MERGED (não o dados original)
-                        // IMPORTANTE: Chamar getState() APÓS setState() para pegar o estado merged
-                        let atributosParaSalvar = dados.atributos;
-                        
-                        // Se appState existe, pegar atributos dele (que foram mergeados)
-                        if (window.appState && typeof window.appState.getState === 'function') {
-                            const mergedState = window.appState.getState();
-                            if (mergedState?.atributos) {
-                                atributosParaSalvar = mergedState.atributos;
-                            }
-                        }
-                        
-                        console.log('💾 === SALVANDO ATRIBUTOS IMPORTADOS ===');
-                        console.log('📦 Estrutura de atributos:', Object.keys(atributosParaSalvar || {}));
-                        if (atributosParaSalvar?.primarios) {
-                            console.log('   ✅ Primários encontrados:', Object.keys(atributosParaSalvar.primarios));
-                            console.log('      Valores:', atributosParaSalvar.primarios);
-                        } else {
-                            console.warn('   ❌ SEM PRIMÁRIOS!');
-                        }
-                        if (atributosParaSalvar?.secundarios) {
-                            console.log('   ✅ Secundários encontrados:', Object.keys(atributosParaSalvar.secundarios));
-                            console.log('      Valores:', atributosParaSalvar.secundarios);
-                        } else {
-                            console.warn('   ❌ SEM SECUNDÁRIOS!');
-                        }
-                        
-                        window.localStorageManager.save('atributos', atributosParaSalvar);
-                        
-                        // VERIFICAÇÃO: Ler logo após salvar para confirmar
-                        const verificacao = window.localStorageManager.loadAtributos();
-                        console.log('🔍 VERIFICAÇÃO - Atributos salvos e carregados:', verificacao);
-                        if (!verificacao?.primarios || !verificacao?.secundarios) {
-                            console.error('🚨 ALERTA: Dados salvos não contêm primários ou secundários!');
-                        }
-                        
-                        window.localStorageManager.save('status', dados.atributos?.barras);
-                        window.localStorageManager.save('inventario', dados.inventario);
+                        window.localStorageManager.save('redungeon_ficha_atributos', dados.atributos);
+                        window.localStorageManager.save('redungeon_ficha_status', dados.atributos?.barras);
+                        window.localStorageManager.save('redungeon_ficha_inventario', dados.inventario);
                         window.localStorageManager.save('redungeon_companheiros', dados.companheiro);
-                        window.localStorageManager.save('cultivacao', dados.cultivo);
-                        console.log('✅ Todos os dados salvos no localStorage (com merged state)');
+                        window.localStorageManager.save('redungeon_ficha_cultivacao', dados.cultivo);
+                        console.log('✅ Todos os dados salvos no localStorage');
                     } catch (e) {
                         console.warn('⚠️ Erro ao salvar dados:', e);
                     }
@@ -1843,23 +1812,6 @@ class SistemaFicha {
                 
                 this.mostrarMensagem('✅ Ficha importada com sucesso! Recarregando...', 'sucesso');
                 
-                // 🔍 VERIFICAÇÃO FINAL ANTES DO RELOAD - CHECAR O QUE REALMENTE FOI SALVO
-                console.log('\n' + '='.repeat(80));
-                console.log('🔍 VERIFICAÇÃO FINAL - ANTES DO RELOAD');
-                console.log('='.repeat(80));
-                const verificacaoFinal = window.localStorageManager?.loadAtributos();
-                console.log('📊 Atributos no localStorage ANTES do reload:', verificacaoFinal);
-                if (verificacaoFinal?.primarios) {
-                    console.log('   ✅ Primários:', Object.keys(verificacaoFinal.primarios));
-                    Object.entries(verificacaoFinal.primarios).forEach(([k, v]) => {
-                        console.log(`      - ${k}: total=${v.total}`);
-                    });
-                }
-                if (verificacaoFinal?.secundarios) {
-                    console.log('   ✅ Secundários:', Object.keys(verificacaoFinal.secundarios));
-                }
-                console.log('='.repeat(80) + '\n');
-                
                 // 🎨 Atualizar card de status IMEDIATAMENTE após importação
                 console.log('🎨 Renderizando card de status com valores importados...');
                 if (window.statusBarsManager && typeof window.statusBarsManager.render === 'function') {
@@ -1873,12 +1825,6 @@ class SistemaFicha {
                 // Todos os dados já estão salvos no localStorage
                 // Aumentar timeout para garantir que imagens são salvas em IndexedDB
                 setTimeout(() => {
-                    // 🔓 AGORA sim, remover os flags IMEDIATAMENTE ANTES DO RELOAD
-                    // Isso garante que nenhum auto-sync interfira mais
-                    window.isImportandoFicha = false;
-                    sessionStorage.removeItem('IMPORTACAO_FICHA_ATIVA');
-                    console.log('🔓 [Importação] Flags removidas - pronto para reload');
-                    
                     console.log('⟳ Recarregando página para atualizar interface...');
                     location.reload();
                 }, 1500);
@@ -1956,47 +1902,25 @@ class SistemaFicha {
             console.log('🔄 Iniciando restauração de atributos...', dados);
 
             // ═══ RESTAURAR NO APPSTATE ═══
-            // ⚠️ IMPORTANTE: Pegar ESTADO COMPLETO ANTES DE MODIFICAR
-            // Isso garante que o deep merge preserve tudo que não está sendo atualizado
-            let state = window.appState?.getState();
-            if (!state || typeof state !== 'object') {
-                console.warn('⚠️ AppState vazio ou inválido, criando estrutura mínima');
-                state = { atributos: {} };
-            }
-            
-            // Garantir que atributos existe
-            if (!state.atributos || typeof state.atributos !== 'object') {
-                state.atributos = {};
-            }
+            const state = window.appState?.getState() || {};
+            state.atributos = state.atributos || {};
 
             // ═══ RESTAURAR PRIMÁRIOS (no AppState) ═══
             if (dados.primarios) {
-                // Garantir que primarios existe
-                if (!state.atributos.primarios || typeof state.atributos.primarios !== 'object') {
-                    state.atributos.primarios = {};
-                }
-                // Usar merge profundo para preservar dados não presentes
-                state.atributos.primarios = { ...state.atributos.primarios, ...dados.primarios };
+                state.atributos.primarios = dados.primarios;
                 console.log('✅ Primários restaurados no AppState');
             }
 
             // ═══ RESTAURAR SECUNDÁRIOS (no AppState) ═══
             if (dados.secundarios) {
-                // Garantir que secundarios existe
-                if (!state.atributos.secundarios || typeof state.atributos.secundarios !== 'object') {
-                    state.atributos.secundarios = {};
-                }
-                // Usar merge profundo para preservar dados não presentes
-                state.atributos.secundarios = { ...state.atributos.secundarios, ...dados.secundarios };
+                state.atributos.secundarios = dados.secundarios;
                 console.log('✅ Secundários restaurados no AppState');
             }
 
             // Atualizar AppState
             if (window.appState) {
                 window.appState.setState(state);
-                console.log('✅ AppState atualizado com setState()');
-            } else {
-                console.error('❌ CRÍTICO: window.appState NÃO DISPONÍVEL! Dados não foram salvos no AppState!');
+                console.log('✅ AppState atualizado');
             }
 
             // ═══ RESTAURAR STATUS (no StatusConfigModal) ═══
@@ -2212,7 +2136,7 @@ class SistemaFicha {
                 // ✅ Salvar status atualizado em localStorage
                 try {
                     if (window.localStorageManager && window.statusConfigModal.state?.tempValues) {
-                        window.localStorageManager.save('status', window.statusConfigModal.state.tempValues);
+                        window.localStorageManager.save('redungeon_ficha_status', window.statusConfigModal.state.tempValues);
                         console.log('💾 Status (com bonus/extra) salvo em localStorage');
                     }
                 } catch (e) {

@@ -52,20 +52,6 @@ class InventarioManager {
      * Se não existir, cria estrutura padrão
      */
     loadInventario() {
-        // 🔒 BLOQUEIO ISOLADO: Não carregar dados APENAS se o botão "Limpar Ficha" foi clicado
-        // ⚠️ MAS: Permitir se for uma importação em andamento
-        const limpezaAtiva = sessionStorage.getItem('LIMPEZA_FICHA_ATIVA');
-        const importacaoAtiva = sessionStorage.getItem('IMPORTACAO_FICHA_ATIVA');
-        
-        if (limpezaAtiva && !importacaoAtiva) {
-            console.log('🔒 [InventarioManager] Carregamento bloqueado - Limpeza em progresso');
-            this.inventario = {
-                itens: [],
-                armazenamentos: []
-            };
-            return;
-        }
-
         try {
             if (!this.localStorageManager) {
                 console.warn('⚠️  LocalStorageManager não disponível');

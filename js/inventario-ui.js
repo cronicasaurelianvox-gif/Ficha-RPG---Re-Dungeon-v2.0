@@ -321,16 +321,6 @@ class InventarioUI {
      * Renderiza toda a interface
      */
     async render() {
-        // 🔒 BLOQUEIO ISOLADO: Não renderizar se a limpeza está em progresso
-        // ⚠️ MAS: Permitir se for uma importação em andamento
-        const limpezaAtiva = sessionStorage.getItem('LIMPEZA_FICHA_ATIVA');
-        const importacaoAtiva = sessionStorage.getItem('IMPORTACAO_FICHA_ATIVA');
-        
-        if (limpezaAtiva && !importacaoAtiva) {
-            console.log('🔒 [InventarioUI.render()] Renderização bloqueada - Limpeza em progresso');
-            return;
-        }
-
         console.log('🎨 Renderizando inventário...');
         
         // 🎨 PRÉ-CARREGAR IMAGENS DO INDEXEDDB ANTES DE RENDERIZAR

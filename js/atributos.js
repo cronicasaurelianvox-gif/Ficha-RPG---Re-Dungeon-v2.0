@@ -872,56 +872,11 @@ class AtributosManager {
      * @param {object} novosDados - Objeto com dados a atualizar
      */
     atualizarPersonagem(novosDados) {
-        // 🔧 IMPORTANTE: Usar deep merge para preservar dados não presentes no JSON
-        // Caso contrário, atributos ausentes no JSON são perdidos!
-        this.personagemData = this.deepMerge(this.personagemData, novosDados);
+        this.personagemData = { ...this.personagemData, ...novosDados };
         this.renderizarPersonagem();
         this.renderizarAtributos();
         
         console.log('👤 Personagem atualizado');
-    }
-
-    /**
-     * Faz merge profundo entre objetos
-     * Preserva dados do objeto original que não estão presentes no novo
-     * 
-     * @param {Object} target - Objeto base (dados atuais)
-     * @param {Object} source - Objeto com dados a mesclar
-     * @returns {Object} Objeto mesclado
-     */
-    deepMerge(target, source) {
-        if (!source || typeof source !== 'object') {
-            return target;
-        }
-
-        const resultado = { ...target };
-
-        for (const chave in source) {
-            if (source.hasOwnProperty(chave)) {
-                const valorAtual = resultado[chave];
-                const valorNovo = source[chave];
-
-                // Se ambos são objetos (não array), fazer merge recursivo
-                if (
-                    valorNovo !== null &&
-                    typeof valorNovo === 'object' &&
-                    !Array.isArray(valorNovo) &&
-                    valorAtual !== null &&
-                    typeof valorAtual === 'object' &&
-                    !Array.isArray(valorAtual)
-                ) {
-                    resultado[chave] = this.deepMerge(valorAtual, valorNovo);
-                } else {
-                    // Se o novo valor existe e é diferente, usar novo
-                    // Caso contrário, manter o atual
-                    if (valorNovo !== undefined && valorNovo !== null) {
-                        resultado[chave] = valorNovo;
-                    }
-                }
-            }
-        }
-
-        return resultado;
     }
 
     /**

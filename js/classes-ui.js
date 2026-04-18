@@ -48,22 +48,12 @@ class ClassesUI {
         return;
       }
 
-      // 🔒 BLOQUEIO ISOLADO: Não carregar classes se o botão "Limpar Ficha" foi clicado
-      // ⚠️ MAS: Permitir se for uma importação em andamento
-      const limpezaAtiva = sessionStorage.getItem('LIMPEZA_FICHA_ATIVA');
-      const importacaoAtiva = sessionStorage.getItem('IMPORTACAO_FICHA_ATIVA');
-      
-      let classesSalvas = [];
-      if (!limpezaAtiva || importacaoAtiva) {
-        // ✨ CARREGA CLASSES SALVAS DO LOCALSTORAGE PRIMEIRO
-        classesSalvas = this.carregarClassesSalvas();
-        if (classesSalvas && classesSalvas.length > 0) {
-          this.classesSelecionadas = [...classesSalvas];
-          this.bloqueioAtivo = true;
-          console.log(`✅ ${classesSalvas.length} classe(s) carregada(s) do localStorage: ${classesSalvas.join(', ')}`);
-        }
-      } else {
-        console.log('🔒 [ClassesUI] Carregamento de classes bloqueado - Limpeza em progresso');
+      // ✨ CARREGA CLASSES SALVAS DO LOCALSTORAGE PRIMEIRO
+      const classesSalvas = this.carregarClassesSalvas();
+      if (classesSalvas && classesSalvas.length > 0) {
+        this.classesSelecionadas = [...classesSalvas];
+        this.bloqueioAtivo = true;
+        console.log(`✅ ${classesSalvas.length} classe(s) carregada(s) do localStorage: ${classesSalvas.join(', ')}`);
       }
 
       // Renderiza lista inicial de classes
