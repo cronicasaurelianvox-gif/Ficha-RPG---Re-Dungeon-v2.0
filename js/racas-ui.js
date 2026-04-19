@@ -242,33 +242,38 @@ class RacasUI {
         nome: "Re'Geron",
         icon: '📁',
         aberta: true,
-        racas: racas
+        tipo: "Re'Geron"
       },
       {
         nome: 'The Chaotical Gate',
         icon: '⚡',
         aberta: false,
-        racas: []
+        tipo: 'The Chaotical Gate'
       },
       {
         nome: 'Wuxia/Xianxia',
         icon: '🔮',
         aberta: false,
-        racas: []
+        tipo: 'Wuxia/Xianxia'
       },
       {
         nome: 'One Piece',
         icon: '🏴‍☠️',
         aberta: false,
-        racas: []
+        tipo: 'One Piece'
       },
       {
         nome: 'Bleach',
         icon: '⚔️',
         aberta: false,
-        racas: []
+        tipo: 'Bleach'
       }
     ];
+
+    // Filtrar raças por tipo e atribuir às pastas
+    pastas.forEach((pasta) => {
+      pasta.racas = racas.filter(raca => raca.tipo === pasta.tipo);
+    });
 
     // Renderizar cada pasta
     pastas.forEach((pasta) => {

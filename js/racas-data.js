@@ -8,6 +8,7 @@ const RACAS_DATABASE = [
   {
     id: "humano",
     nome: "Humano",
+    tipo: "Re'Geron",
     raridade: "comum",
     descricao: "Os humanos são a raça mais flexível e diversa entre as civilizações. Eles surgem e prosperam praticamente em qualquer ambiente, espalhando-se por desertos, florestas, montanhas e cidades costeiras sem dificuldade. Sua moral, tradições e ambições mudam drasticamente de região para região, tornando impossível definir um único 'jeito humano' de existir.",
     limiteAtributo: 100,
@@ -116,6 +117,7 @@ const RACAS_DATABASE = [
   {
     id: "animanos",
     nome: "Animanos",
+    tipo: "Re'Geron",
     raridade: "comum",
     descricao: "Animanos são semelhantes aos humanos à primeira vista, mas carregam no corpo marcas vivas de sua ancestralidade animal — caudas que denunciam emoções antes das palavras, orelhas que reagem ao menor som, padrões de pelagem, garras sutis ou olhos que refletem instinto. Essa fusão entre razão humana e herança selvagem dá a eles uma maneira única de perceber o mundo, guiada tanto pela intuição quanto por tradições próprias desenvolvidas ao longo de séculos de isolamento. Seu modo de viver costuma ser moldado pelo ritmo da natureza, e suas técnicas, crenças e costumes nascem dessa conexão profunda com os animais que vieram antes deles, tornando-os uma raça que transita entre o civilizado e o primal sem perder o equilíbrio.",
     limiteAtributo: 100,
@@ -228,6 +230,7 @@ const RACAS_DATABASE = [
   {
     id: "mestico",
     nome: "Mestiços",
+    tipo: "Re'Geron",
     raridade: "comum",
     descricao: "Os Mestiços são a raça mais imprevisível e diversificada do mundo. Nascidos da união entre sangues distintos, eles não herdam linhagens puras nem características fixas. Cada Mestiço é uma exceção viva, carregando traços físicos, culturais e espirituais fragmentados de suas origens. Por nunca pertencerem inteiramente a um único povo, aprendem desde cedo a sobreviver na intersecção, desenvolvendo uma capacidade rara de adaptação, conflito interno e criatividade extrema.",
     limiteAtributo: 100,
@@ -340,6 +343,7 @@ const RACAS_DATABASE = [
   {
     id: "gnomo",
     nome: "Gnomo",
+    tipo: "Re'Geron",
     raridade: "raro",
     descricao: "Os Gnomos são uma raça pequena, mas perigosamente inteligente. Diferente da imagem cômica que muitos atribuem a eles, os Gnomos são engenheiros da improbabilidade. Onde outras raças veem limites físicos, eles veem desafios temporários. Baixos, de membros compactos, olhos grandes e atentos, sempre parecem estar calculando algo — mesmo quando dormem. Suas mãos são rápidas demais para o tamanho do corpo, e suas vozes costumam alternar entre empolgação e ironia mordaz.",
     limiteAtributo: 100,
@@ -461,6 +465,7 @@ const RACAS_DATABASE = [
   {
     id: "anao",
     nome: "Anão",
+    tipo: "Re'Geron",
     raridade: "raro",
     descricao: "Anões são seres robustos, persistentes e moldados pela mesma dureza das montanhas que chamam de lar. Baixos e fortes, com músculos compactos e uma resistência lendária, eles prosperam em fortalezas subterrâneas repletas de túneis, forjas e salões ecoando histórias antigas. Sua vida gira em torno da tradição, da honra e do trabalho meticuloso — cada arma, joia ou estrutura criada por um anão carrega séculos de técnica aperfeiçoada.",
     limiteAtributo: 100,
@@ -572,6 +577,7 @@ const RACAS_DATABASE = [
   {
     id: "elfo",
     nome: "Elfo",
+    tipo: "Re'Geron",
     raridade: "raro",
     descricao: "Elfos são seres de graça sobrenatural, longos anos e beleza quase etérea, vivendo em harmonia com a magia e com os ritmos antigos do mundo. Seus corpos são esguios, seus movimentos leves e calculados, e seus sentidos aguçados enxergam nuances que outras raças sequer percebem. Costumam habitar florestas profundas, vales ocultos ou enclaves místicos, preservando culturas que atravessam séculos como se fossem estações do ano.",
     limiteAtributo: 100,
@@ -682,6 +688,7 @@ const RACAS_DATABASE = [
   {
     id: "animalus",
     nome: "Animalus",
+    tipo: "Re'Geron",
     raridade: "raro",
     descricao: "Os Animalus são seres de aparência nitidamente animalesca, carregando traços físicos completos de suas linhagens — presas, escamas, asas, carapaças, caudas ou guelras. Possuem uma longevidade superior à dos humanos e um intelecto comparável ao dos elfos, embora sejam frequentemente subestimados ou perseguidos devido à sua aparência bestial. Essa hostilidade moldou sua cultura: ao longo das eras, os Animalus desenvolveram técnicas de combate brutais, eficientes e refinadas, tornando-se os mais aptos ao combate marcial direto.",
     limiteAtributo: 100,
@@ -793,6 +800,7 @@ const RACAS_DATABASE = [
   {
     id: "homunculo",
     nome: "Homúnculo",
+    tipo: "Re'Geron",
     raridade: "epico",
     descricao: "Os Homúnculos são seres artificiais criados por alquimistas, arcanistas e estudiosos que ousaram imitar o ato primordial da criação. Diferente de construtos comuns, eles não são simples ferramentas: cada Homúnculo nasce a partir de matéria viva, essência mágica e intenção consciente, o que lhes concede vontade própria, memória fragmentada e, em muitos casos, emoções reais. Embora seus corpos sejam moldados em laboratório ou círculos rituais, suas almas não são falsas. Elas surgem incompletas, instáveis ou emprestadas — ecos de algo que poderia ter sido humano, elfo ou algo além. Por isso, Homúnculos vivem em constante busca por identidade, tentando entender se são obra, erro ou evolução. Fisicamente, variam enormemente: alguns são quase indistinguíveis de humanos, outros exibem marcas alquímicas, runas sob a pele, membros artificiais ou olhos que jamais piscam. Eles não envelhecem como raças naturais e raramente adoecem, mas carregam o peso de saber que sua existência foi planejada, não nascida.",
     limiteAtributo: 150,
@@ -920,6 +928,7 @@ const RACAS_DATABASE = [
   {
     id: "lukan",
     nome: "Lukans",
+    tipo: "Re'Geron",
     raridade: "epico",
     descricao: "Os Lukans são uma raça criados pelos Dracólitos, moldados para servir como guardiões de Sultran, o Inferno, e das fronteiras onde a realidade ameaça ruir. À primeira vista, possuem uma aparência majoritariamente humanoide, marcada por traços infernais: chifres de formas variadas, olhos incandescentes, marcas naturais semelhantes a escamas e uma presença intimidadora que denuncia sua origem. Seus corpos são esculpidos para o conflito, resultado direto de uma criação voltada à guerra e à vigilância eterna. Apesar da estética infernal, a essência dos Lukans vai além da aparência. Em suas veias corre uma linhagem draconica latente, herdada diretamente de seus criadores, manifestando-se como força excepcional, resistência incomum e um potencial de combate. Treinados desde a origem para a batalha absoluta.",
     limiteAtributo: 130,
@@ -1032,6 +1041,7 @@ const RACAS_DATABASE = [
   {
     id: "fada",
     nome: "Fada",
+    tipo: "Re'Geron",
     raridade: "epico",
     descricao: "As Fadas são seres nascidos da interseção entre o mundo físico e os planos sutis da realidade. Seu corpo não é inteiramente material, nem puramente espiritual, o que as torna profundamente ligadas a forças invisíveis como emoções, desejos, memórias e promessas. Essa natureza liminar faz com que o tempo, a moral e a lógica sejam percebidos por elas de forma diferente das demais raças. Embora geralmente pequenas em estatura, as Fadas jamais devem ser subestimadas. Sua longevidade, astúcia e domínio sobre energias sutis as tornam entidades imprevisíveis, capazes de alterar eventos com gestos mínimos, palavras bem colocadas ou acordos que nunca deveriam ser aceitos. Para uma Fada, poder não se mede em força bruta, mas em influência, significado e consequência.",
     limiteAtributo: 150,
@@ -1160,6 +1170,7 @@ const RACAS_DATABASE = [
   {
     id: "worgen",
     nome: "Worgen",
+    tipo: "Re'Geron",
     raridade: "epico",
     descricao: "Os Worgen surgiram na Era das Trevas, um período esquecido em que deuses ainda caminhavam entre mortais e a magia era moldada sem medo das consequências. Temendo entidades antigas que escapavam à compreensão divina, magos humanos realizaram um ritual proibido: fundiram um Espírito Antigo predatório a corpos mortais, criando guardiões capazes de caçar aquilo que nem deuses ousavam enfrentar. O resultado foram humanos alterados, dotados de intelecto e percepção élficos, mas ligados à magia de sangue, pois o pacto original jamais poderia ser sustentado sem um preço. Em suas veias corre um sangue vivo, pulsante, capaz de se fortalecer, reagir e se adaptar ao conflito. As presas não são apenas traços físicos — são condutores do pacto, símbolos de que cada Worgen carrega dentro de si uma fome ancestral. Com o fim da Era das Trevas, os rituais foram selados e os deuses se afastaram. Os Worgen sobreviveram como uma raça amaldiçoada e poderosa, dividida entre controle e instinto, razão e ferocidade. Eles não são bestas, mas jamais deixam o mundo esquecer que foram criados para caçar o impossível.",
     limiteAtributo: 150,
@@ -1287,6 +1298,7 @@ const RACAS_DATABASE = [
   {
     id: "murkal",
     nome: "Mur'kal",
+    tipo: "Re'Geron",
     raridade: "epico",
     descricao: "Os Mur’kal são uma raça anfíbia tribal, surgida em costas, pântanos e ruínas submersas. Baixos, de pele escamosa e olhos salientes, emitem sons guturais que soam como grasnados — mas isso é só a camada externa da linguagem. Eles não são burros. São alienígenas ao pensamento terrestre. Cultura e Sociedade A sociedade Mur’kal é baseada em Cardumes-Tribo. Cada grupo é guiado por: um Cantor de Maré (líder espiritual) um Predador Ancião (líder de guerra) Eles acreditam que o mundo terrestre é uma fase temporária do oceano. Tudo, cedo ou tarde, será água novamente. Objetos brilhantes não são tesouros. São iscas sagradas.",
     limiteAtributo: 100,
@@ -1412,6 +1424,7 @@ const RACAS_DATABASE = [
   {
     id: "espirito",
     nome: "Espírito",
+    tipo: "Re'Geron",
     raridade: "lendario",
     descricao: "Os Espíritos são entidades formadas a partir de emoções positivas intensas e da convergência de elementos primordiais do mundo. Eles não possuem uma forma fixa: seu corpo se molda conforme o sentimento que os originou e o elemento ao qual estão ligados. Um Espírito de esperança pode parecer luz em movimento; um de serenidade pode assumir a forma de água calma ou vento suave. Diferente das raças físicas, os Espíritos não veem o mundo como território, mas como fluxo. Eles existem enquanto sua emoção-fonte permanece viva e tendem a se transformar quando o ambiente emocional ou elemental ao redor muda, tornando-os seres mutáveis, raros e profundamente simbólicos.",
     limiteAtributo: 150,
@@ -1539,6 +1552,7 @@ const RACAS_DATABASE = [
   {
     id: "demonoid",
     nome: "Demonoid",
+    tipo: "Re'Geron",
     raridade: "lendario",
     descricao: "Os Demonoids são uma raça nativa de Sultran, nascidos da convergência entre energia caótica, desejo, dor e sobrevivência extrema. Diferente de outras raças infernais, os Demonoids evoluem ao abandonar a monstruosidade. Quanto mais humanoide se torna, sua forma mais estável, inteligente e poderosa a criatura se torna. A forma inicial de um Demonoid é bestial, instintiva e grotesca. No entanto, à medida que absorve energia, experiências ou outros seres infernais, sua estrutura se reorganiza, aproximando-se de um corpo humanoide. Esse processo não é apenas físico — é mental e espiritual. Tornar-se “mais humano” significa adquirir consciência, estratégia e controle absoluto do próprio poder. No Inferno, a aparência não engana: quanto mais humano um Demonoid parece, mais perigoso ele é.",
     limiteAtributo: 130,
@@ -1666,6 +1680,7 @@ const RACAS_DATABASE = [
   {
     id: "drakhen",
     nome: "Drakhen",
+    tipo: "Re'Geron",
     raridade: "lendario",
     descricao: "Os Drakhen são uma raça ancestral cuja existência se desenvolve em dois estágios naturais, não por linhagem, mas por acúmulo de era, poder e significado. Todo dragão nasce inferior. Pouquíssimos sobrevivem tempo suficiente para deixar de ser. Não é título. É metamorfose.",
     limiteAtributo: 200,
@@ -1793,6 +1808,7 @@ const RACAS_DATABASE = [
   {
     id: "dracolito",
     nome: "Dracólito",
+    tipo: "Re'Geron",
     raridade: "mitico",
     descricao: "Os Dracólitos são Espíritos elevados ao mais alto grau de afinidade elemental. Desde o início dos tempos, eles surgem quando um Espírito alcança perfeita ressonância com seu elemento natural, tornando-se não apenas um usuário desse elemento, mas sua encarnação consciente. Cada elemento primordial do mundo possui um único Dracólitos ativo, e sua existência mantém o equilíbrio e a estabilidade daquela força na realidade. Assim como os Espíritos, os dracólitos não possuem uma forma fixa. Sua aparência é fluida e simbólica, moldada pelo elemento que representam e pelo estado do mundo ao seu redor. Um Dracólitos do Fogo pode parecer uma silhueta viva de chamas conscientes; um da Água, uma entidade em constante fluxo; um do Vento, uma presença quase invisível em movimento eterno. Eles não “controlam” o elemento — eles são o elemento, dotado de vontade, memória e propósito. A sucessão dos dracólitos ocorre por meio de um ritual ancestral de transmissão de poder, no qual um Dracólitos veterano treina e prepara seu sucessor por eras, até que a autoridade elemental seja transferida. Caso um Dracólitos seja destruído sem que a sucessão seja concluída, o elemento correspondente entra em desordem, tornando-se instável e afetando profundamente todos os dracólitos irmãos ligados a elementos correlatos.",
     limiteAtributo: 200,
@@ -1936,6 +1952,7 @@ const RACAS_DATABASE = [
   {
     id: "morvak",
     nome: "Morvak",
+    tipo: "Re'Geron",
     raridade: "mitico",
     descricao: "Os Morvak são entidades nascidas do medo do desconhecido, do terror primordial que surge quando a realidade falha em oferecer respostas. Eles não são criados, invocados ou corrompidos — eles emergem sempre que o mundo encara algo que não consegue compreender.Opostos diretos dos Espíritos e dos Dracolitos, os Morvak não representam emoções positivas nem elementos ordenados. Eles personificam o vazio c dúvida, pânico, presságio e a sensação de que algo está errado antes mesmo de acontecer. Assim como os Espíritos, cada Morvak possui uma aparência única e instável, moldada pelo tipo de medo que o originou. Alguns assumem formas distorcidas e fragmentadas, outros parecem sombras com intenção, reflexos errados da realidade ou figuras quase humanoides que causam desconforto apenas por existirem. Onde um Morvak caminha, o mundo não se rompe — ele hesita.",
     limiteAtributo: 200,
@@ -2079,6 +2096,7 @@ const RACAS_DATABASE = [
   {
     id: "celestine",
     nome: "Celestine",
+    tipo: "Re'Geron",
     raridade: "mitico",
     descricao: "Os Celestines são seres alados que não nascem — são consagrados. Cada um deles foi, em vida mortal, responsável por um feito significativo que alterou o curso do mundo de Re’Dungeon. Após a morte, essas almas são elevadas pelos ecos dos deuses antigos e desaparecidos, retornando à existência como Celestines, portadores de um Propósito absoluto. Não possuem uma aparência fixa: sua forma reflete seu propósito, sua história e a lei que passaram a representar. Alguns se assemelham a figuras humanoides aladas, outros a entidades quase abstratas, feitas de luz, símbolos ou conceitos manifestos. Para um Celestine, poder não vem da fé ou da hierarquia, mas da profundidade de seu Propósito — quanto mais fundamental ele é para a ordem do mundo, maior o poder que o Celestine manifesta. Cada Propósito funciona como uma lei viva da realidade. Justiça, Verdade, Vida, Sobrevivência, Esperança ou Domínio não possuem o mesmo peso cósmico, e por isso os Celestines jamais estão no mesmo nível de poder entre si.",
     limiteAtributo: 250,
@@ -2222,6 +2240,7 @@ const RACAS_DATABASE = [
   {
     id: "opharos",
     nome: "Opharos",
+    tipo: "Re'Geron",
     raridade: "mitico",
     descricao: "Os Ópharos são uma raça pré-doutrinária. Eles não foram criados para servir, proteger ou louvar. Eles existem para observar. Surgiram quando o mundo ainda não tinha linguagem suficiente para explicar o sagrado — então o sagrado precisou aprender a se ver. Fisicamente, lembram anjos apenas no que é superficial: forma humanoide, asas, halos, luz etérea. Mas isso é só o casco compreensível. A verdadeira natureza deles começa quando você presta atenção demais. Suas asas não são apenas penas: são estruturas sensoriais, cheias de olhos que se abrem conforme o nível de consciência do Ópharo em relação ao Divino, ao Caos ou à Verdade Absoluta. Quanto mais ele entende a realidade, mais olhos surgem. Quanto mais olhos, menos humano ele parece.",
     limiteAtributo: 200,
@@ -2361,7 +2380,327 @@ const RACAS_DATABASE = [
         ]
       }
     ]
-  }
+  },
+  {
+    id: "periferia",
+    nome: "Periferia",
+    tipo: "The Chaotical Gate",
+    raridade: "comum",
+    descricao: "Você veio de um lugar onde sobreviver já era aprendizado. Cresceu cercado por improviso, pressão, barulho e realidade dura. Aprendeu cedo a ler o ambiente, perceber risco e agir antes que o problema cresça.",
+    imagem: "https://i.imgur.com/AuiuCYe.png",
+    limiteAtributo: 150,
+    atributos: {
+      forca: "4d6+10",
+      vitalidade: "4d6+10",
+      agilidade: "5d6+10",
+      inteligencia: "4d6+10",
+      percepcao: "5d6+12",
+      sorte: "5d20"
+    },
+    habilidadesBasicas: [
+      {
+        nome: "Leitura de Ambiente",
+        descricao: "Você está acostumado a notar movimentações estranhas e intenções ocultas.",
+        bonus: ["Uma vez por cena: +3 em rolagem de Percepção, Agilidade ou Inteligência ao identificar perigo, emboscada, fuga ou comportamento suspeito"]
+      },
+      {
+        nome: "Contato nas Ruas",
+        descricao: "Você conhece alguém que consegue favores menores ou informações rápidas.",
+        bonus: ["Uma vez por sessão: pode declarar um contato útil ligado ao submundo, bairro, comércio informal ou redes locais"]
+      },
+      {
+        nome: "Jogo de Cintura",
+        descricao: "Você sabe lidar com situações improvisadas.",
+        bonus: ["Quando não tiver a aptidão ideal, reduz o obstáculo em -2"]
+      },
+      {
+        nome: "Anonimato",
+        descricao: "Ninguém espera muito de você no início — o que pode ser bom… ou ruim.",
+        bonus: ["Dificuldade em ser levado a sério inicialmente (-2 em testes sociais formais), mas pode passar despercebido com facilidade (+2 em furtividade social)"]
+      }
+    ],
+    habilidadesAvancadas: []
+  },
+  {
+    id: "estrangeiro",
+    nome: "Estrangeiro",
+    tipo: "The Chaotical Gate",
+    raridade: "comum",
+    descricao: "Você não nasceu aqui. Cada rua, cada costume e cada expressão já foi um mistério. Enquanto outros vivem no automático, você observa. Entre dois mundos, você aprendeu a enxergar o que ninguém percebe.",
+    imagem: "https://i.imgur.com/LJCkS4v.png",
+    limiteAtributo: 150,
+    atributos: {
+      forca: "4d6+10",
+      vitalidade: "4d6+10",
+      agilidade: "4d6+10",
+      inteligencia: "5d6+10",
+      percepcao: "5d6+12",
+      sorte: "5d20"
+    },
+    habilidadesBasicas: [
+      {
+        nome: "Visão de Fora",
+        descricao: "Você enxerga padrões e falhas que os locais ignoram.",
+        bonus: ["Uma vez por cena: pode perguntar ao mestre 'O que está estranho aqui?' Recebe uma pista verdadeira + +3 na próxima ação relacionada"]
+      },
+      {
+        nome: "Adaptabilidade Cultural",
+        descricao: "Você aprendeu a se ajustar rapidamente a novos ambientes.",
+        bonus: ["Recebe +2 em testes sociais ou de percepção ao lidar com culturas diferentes, costumes desconhecidos ou situações fora do padrão"]
+      },
+      {
+        nome: "Bagagem de Mundo",
+        descricao: "Você traz conhecimentos que outros não têm.",
+        bonus: ["Uma vez por cena: pode declarar que conhece um idioma, um costume ou uma informação cultural relevante. Ganha vantagem narrativa na cena"]
+      },
+      {
+        nome: "Olhar Deslocado",
+        descricao: "Você percebe incoerências com facilidade.",
+        bonus: ["Recebe +2 em testes para detectar mentiras, padrões estranhos ou inconsistências"]
+      }
+    ],
+    habilidadesAvancadas: []
+  },
+  {
+    id: "familiaConservadora",
+    nome: "Família Conservadora",
+    tipo: "The Chaotical Gate",
+    raridade: "comum",
+    descricao: "Você cresceu em um ambiente de regras claras, valores rígidos e expectativas altas. Sua criação te deu estrutura, disciplina e princípios… mas também limitou sua liberdade.",
+    imagem: "https://i.imgur.com/l7JMuCZ.png",
+    limiteAtributo: 150,
+    atributos: {
+      forca: "4d6+10",
+      vitalidade: "5d6+10",
+      agilidade: "4d6+10",
+      inteligencia: "5d6+10",
+      percepcao: "5d6+10",
+      sorte: "5d20"
+    },
+    habilidadesBasicas: [
+      {
+        nome: "Disciplina Familiar",
+        descricao: "Você foi criado com regras e constância.",
+        bonus: ["Recebe +2 em testes de Vontade. Não sofre penalidades por distrações leves ou pressão emocional básica"]
+      },
+      {
+        nome: "Boa Educação",
+        descricao: "Você sabe se portar e falar da forma 'certa'.",
+        bonus: ["Recebe +2 em testes sociais formais (conversas sérias, autoridades, ambientes institucionais). Dificilmente causa má impressão inicial"]
+      },
+      {
+        nome: "Pensamento Estruturado",
+        descricao: "Você foi ensinado a pensar antes de agir.",
+        bonus: ["Uma vez por cena: pode receber +3 em uma rolagem de Inteligência ou Percepção ao analisar, planejar ou tomar decisões importantes"]
+      },
+      {
+        nome: "Valores Inabaláveis",
+        descricao: "Você tem princípios fortes que guiam suas ações.",
+        bonus: ["Recebe +2 para resistir manipulação, intimidação ou pressão social. Dificilmente muda de opinião sob influência externa"]
+      }
+    ],
+    habilidadesAvancadas: []
+  },
+  {
+    id: "nobre",
+    nome: "Nobre",
+    tipo: "The Chaotical Gate",
+    raridade: "comum",
+    descricao: "Você nasceu cercado por poder, influência e expectativas. Aprendeu desde cedo que o mundo não funciona apenas com força… mas com conexões, palavras certas e decisões bem calculadas. Onde outros pedem, você negocia.",
+    imagem: "https://i.imgur.com/CtigCiF.png",
+    limiteAtributo: 150,
+    atributos: {
+      forca: "5d6+10",
+      vitalidade: "4d6+10",
+      agilidade: "4d6+10",
+      inteligencia: "5d6+12",
+      percepcao: "4d6+10",
+      sorte: "5d20"
+    },
+    habilidadesBasicas: [
+      {
+        nome: "Etiqueta Impecável",
+        descricao: "Você sabe exatamente como se portar em qualquer ambiente formal.",
+        bonus: ["Recebe +2 em testes sociais formais (negociação, diplomacia, influência em ambientes de elite)"]
+      },
+      {
+        nome: "Mente Estratégica",
+        descricao: "Você está acostumado a pensar antes de agir.",
+        bonus: ["Uma vez por cena: pode receber +3 em uma rolagem de Inteligência ou Percepção ao analisar situações, planejar ou antecipar movimentos"]
+      },
+      {
+        nome: "Influência Familiar",
+        descricao: "Sua família abre portas — mesmo que isso tenha um preço.",
+        bonus: ["Uma vez por sessão: pode conseguir acesso a locais restritos, garantir encontro com alguém importante ou obter apoio indireto. Sucesso automático em situações plausíveis"]
+      },
+      {
+        nome: "Autoridade Natural",
+        descricao: "Sua presença impõe respeito imediato.",
+        bonus: ["Em primeiro contato com NPCs de menor status, recebe +2 em testes sociais e dificilmente é ignorado"]
+      }
+    ],
+    habilidadesAvancadas: []
+  },
+  {
+    id: "estudante",
+    nome: "Estudante",
+    tipo: "The Chaotical Gate",
+    raridade: "comum",
+    descricao: "Você cresceu dentro da rotina comum: escola, responsabilidades, sonhos e incertezas. Aprendeu a equilibrar pressão, prazos e relações sociais enquanto tentava entender seu lugar no mundo. Você desenvolveu a capacidade de aprender rápido e se adaptar sempre.",
+    imagem: "https://i.imgur.com/Fs7sD1u.png",
+    limiteAtributo: 150,
+    atributos: {
+      forca: "4d6+10",
+      vitalidade: "4d6+10",
+      agilidade: "4d6+10",
+      inteligencia: "5d6+12",
+      percepcao: "5d6+10",
+      sorte: "5d20"
+    },
+    habilidadesBasicas: [
+      {
+        nome: "Aprendizado Rápido",
+        descricao: "Você está acostumado a absorver informações sob pressão e aplicar na prática rapidamente.",
+        bonus: ["Uma vez por cena: pode receber +3 em uma rolagem de Inteligência, Percepção ou Conhecimento ao estudar, analisar, resolver problemas ou entender situações novas"]
+      },
+      {
+        nome: "Vida Cotidiana",
+        descricao: "Você sabe lidar com tarefas comuns, burocracias e ambientes sociais básicos sem dificuldade.",
+        bonus: ["Sempre que estiver lidando com situações do dia a dia (transporte, compras, documentos, interações simples), recebe vantagem narrativa ou bônus leve a critério do mestre"]
+      },
+      {
+        nome: "Improviso",
+        descricao: "Mesmo sem preparo ideal, você dá um jeito.",
+        bonus: ["Uma vez por cena: pode refazer uma rolagem (exceto combate direto pesado), mantendo o melhor resultado"]
+      },
+      {
+        nome: "Resiliência Acadêmica",
+        descricao: "Você está acostumado a lidar com pressão constante, prazos e cansaço mental.",
+        bonus: ["Sempre que falhar em uma rolagem de Inteligência, Percepção ou Conhecimento: pode receber +2 imediato para transformar a falha em sucesso parcial (com consequência leve definida pelo mestre)"]
+      }
+    ],
+    habilidadesAvancadas: []
+  },
+  {
+      id: "sobrevivente",
+      nome: "Sobrevivente",
+      tipo: "The Chaotical Gate",
+      raridade: "raro",
+      descricao: "Você passou por algo que deveria ter te quebrado… mas não quebrou. Dor, perda, medo — tudo virou aprendizado. Hoje, seu corpo reata antes da mente, e seu instinto grita quando o perigo se aproxima.",
+      imagem: "https://i.imgur.com/ypdRDVt.png",
+      limiteAtributo: 150,
+      atributos: {
+        forca: "5d6+10",
+        vitalidade: "5d6+12",
+        agilidade: "4d6+10",
+        inteligencia: "4d6+10",
+        percepcao: "4d6+10",
+        sorte: "5d20"
+      },
+      habilidadesBasicas: [
+        {
+          nome: "Casca Grossa",
+          descricao: "Você já passou por coisa pior.",
+          bonus: ["Recebe +2 de Defesa ou +2 em testes para resistir dor, medo ou exaustão"]
+        },
+        {
+          nome: "Sobrevivência Prática",
+          descricao: "Você sabe se virar mesmo sem recursos.",
+          bonus: ["Em situações de escassez, recebe +2 em testes gerais relacionados à sobrevivência, rastreamento, improviso ou resistência"]
+        },
+        {
+          nome: "Instinto de Sobrevivência",
+          descricao: "Seu corpo reage antes mesmo de você entender o que está acontecendo.",
+          bonus: ["Uma vez por cena: reduzir dano drasticamente, agir antes do impacto ou detectar ameaça. Recebe +3 em uma rolagem defensiva"]
+        },
+        {
+          nome: "Sangue Frio",
+          descricao: "Quando tudo desmorona, você se mantém firme.",
+          bonus: ["Recebe +2 em testes de Vontade e Percepção em perigo extremo, pressão intensa ou risco de morte. Não sofre penalidades por medo ou pânico"]
+        }
+      ],
+      habilidadesAvancadas: []
+    },
+    {
+      id: "popstar",
+      nome: "PopStar",
+      tipo: "The Chaotical Gate",
+      raridade: "raro",
+      descricao: "Você viveu sob luzes, câmeras e julgamentos constantes. Aprendeu a controlar sua imagem, influenciar pessoas e dominar ambientes sociais… mas nunca teve o luxo de desaparecer.",
+      imagem: "https://i.imgur.com/C7BisWM.png",
+      limiteAtributo: 150,
+      atributos: {
+        forca: "4d6+10",
+        vitalidade: "4d6+10",
+        agilidade: "5d6+10",
+        inteligencia: "5d6+10",
+        percepcao: "5d6+10",
+        sorte: "5d20"
+      },
+      habilidadesBasicas: [
+        {
+          nome: "Presença Dominante",
+          descricao: "Você sabe como prender atenção e controlar o foco das pessoas.",
+          bonus: ["Uma vez por cena, pode receber +3 em uma rolagem social (Persuasão, Manipulação, Performance ou Intimidação leve)"]
+        },
+        {
+          nome: "Centro das Atenções",
+          descricao: "Você pode transformar qualquer situação em um palco.",
+          bonus: ["Uma vez por cena: atrair atenção de múltiplos alvos, distrair inimigos. Inimigos recebem -2 para resistir à distração, aliados recebem +2 em ações coordenadas"]
+        },
+        {
+          nome: "Fama",
+          descricao: "Seu rosto ou nome abre portas… ou cria problemas.",
+          bonus: ["Pode conseguir acesso facilitado a locais, pessoas ou eventos. Pode pedir favores simples baseados em reconhecimento"]
+        },
+        {
+          nome: "Leitura de Público",
+          descricao: "Você entende reações antes mesmo delas acontecerem.",
+          bonus: ["Recebe +2 em Percepção em interações sociais. Identifica emoções dominantes de grupos sem rolagem"]
+        }
+      ],
+      habilidadesAvancadas: []
+    },
+    {
+      id: "membroCla",
+      nome: "Membro de Clã",
+      tipo: "The Chaotical Gate",
+      raridade: "raro",
+      descricao: "Você nasceu dentro de uma tradição antiga. Disciplina, respeito e treinamento fizeram parte da sua vida desde cedo. Cada movimento seu carrega técnica, cada decisão carrega propósito.",
+      imagem: "https://i.imgur.com/jiGSd0q.png",
+      limiteAtributo: 150,
+      atributos: {
+        forca: "4d6+10",
+        vitalidade: "5d6+10",
+        agilidade: "5d6+12",
+        inteligencia: "4d6+10",
+        percepcao: "4d6+10",
+        sorte: "5d20"
+      },
+      habilidadesBasicas: [
+        {
+          nome: "Treinamento Marcial",
+          descricao: "Seu corpo foi treinado para eficiência máxima.",
+          bonus: ["Recebe +2 em ataques corpo a corpo"]
+        },
+        {
+          nome: "Controle Interno",
+          descricao: "Você domina sua respiração, foco e emoções.",
+          bonus: ["Recebe +2 em testes de Vontade e Percepção. Não sofre penalidades por pressão leve ou distrações"]
+        },
+        {
+          nome: "Golpe Preciso",
+          descricao: "Você atinge pontos vitais com precisão.",
+          bonus: ["Uma vez por sessão: ao acertar um ataque, causa +3 dados de dano ou ignora defesa leve"]
+        },
+        {
+          nome: "Leitura de Movimento",
+          descricao: "Você antecipa ações pelo corpo do inimigo.",
+          bonus: ["Recebe +2 em testes se sua reação for positiva. Identifica ataques previsíveis com mais facilidade"]
+        }
+      ],
+      habilidadesAvancadas: []
+    },  
 ];
 
 /**
