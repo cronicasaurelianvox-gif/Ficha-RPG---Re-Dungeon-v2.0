@@ -90,15 +90,15 @@ class CompanheiroArtsModalManager {
             cancelBtn.addEventListener('click', () => this.closeModal());
         }
 
-        // Overlay (clique fora fecha)
-        const overlay = document.getElementById(this.modalId);
-        if (overlay) {
-            overlay.addEventListener('click', (e) => {
-                if (e.target === overlay) {
+        // ✅ NOVO: Listener para tecla ESC - fecha o modal aberto
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const overlay = document.getElementById(this.modalId);
+                if (overlay && overlay.style.display === 'flex') {
                     this.closeModal();
                 }
-            });
-        }
+            }
+        });
 
         // ⚠️ NÃO adicionar listener ao botão confirmar aqui!
         // Cada modal (criar, editar, visualizar) vai configurar seu próprio listener

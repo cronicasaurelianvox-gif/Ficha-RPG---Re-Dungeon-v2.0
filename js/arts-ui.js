@@ -706,17 +706,28 @@ class UIManager {
     // Adicionar listener ao container
     this.container.addEventListener('click', this.clickListener);
 
-    // Modal close
-    const overlay = document.getElementById('arts-modal-overlay');
+    // Modal close - APENAS botão X e Cancelar (sem overlay click)
     const closeBtn = document.getElementById('arts-modal-close');
     const cancelBtn = document.getElementById('arts-modal-cancel');
 
-    [closeBtn, cancelBtn, overlay].forEach(el => {
-      el?.addEventListener('click', (e) => {
-        if (e.target === overlay || e.target === closeBtn || e.target === cancelBtn) {
+    closeBtn?.addEventListener('click', (e) => {
+      e.preventDefault();
+      this.closeModal();
+    });
+
+    cancelBtn?.addEventListener('click', (e) => {
+      e.preventDefault();
+      this.closeModal();
+    });
+
+    // Listener para tecla ESC - fecha o modal aberto
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const overlay = document.getElementById('arts-modal-overlay');
+        if (overlay && overlay.style.display === 'flex') {
           this.closeModal();
         }
-      });
+      }
     });
 
     // Filter listeners
