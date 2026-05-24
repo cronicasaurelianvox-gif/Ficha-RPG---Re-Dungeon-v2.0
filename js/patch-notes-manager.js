@@ -88,6 +88,7 @@ class PatchNotesManager {
                     <li>🎯 <strong>Campos de Entrada:</strong> Agora aceitam valores textuais como "1d6+5", "3 FaD" e expressões personalizadas</li>
                     <li>📊 <strong>Exibição de Cards:</strong> Removidos sufixos " MP" e " turnos" para melhor flexibilidade de valores</li>
                     <li>🛡️ <strong>Validação:</strong> Sistema agora suporta valores numéricos E textuais sem rejeitar</li>
+                    <li>🚪 <strong>Modais de Habilidades:</strong> Agora só fecham via botão X, Cancelar ou ESC (clique fora não fecha mais)</li>
                 </ul>
             </div>
 
