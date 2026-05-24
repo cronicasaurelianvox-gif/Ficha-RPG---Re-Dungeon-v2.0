@@ -2636,6 +2636,8 @@
     <!-- ✅ PERSISTÊNCIA - DEPOIS DO GLOBAL STATE -->
     <script src="js/localstorage-manager.js"></script>    
     <script src="js/state-manager.js"></script>
+    <!-- 📝 NOVO: Sistema de Patch Notes -->
+    <script src="js/patch-notes-manager.js"></script>
     <script src="js/aptidoes-calculator.js"></script>
     <script src="js/vantagens-aptidoes-system.js"></script>
     <script src="js/bonus-opcional-companheiro.js"></script>
@@ -2921,6 +2923,33 @@
                 <button class="clone-comp-btn-cancelar" type="button">Cancelar</button>
                 <button id="clone-comp-confirm" class="btn-companheiro-acao btn-adicionar" type="button" disabled>
                     Clonar Companheiro
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ✨ MODAL: PATCH NOTES -->
+    <div id="modalPatchNotes" class="modal-overlay" style="display: none;">
+        <div class="modal-overlay__backdrop"></div>
+        <div class="modal-content modal-content--medium" style="max-width: 600px; max-height: 80vh; overflow-y: auto;">
+            <div class="modal-header">
+                <h2 class="modal-title">📝 Patch Notes - Atualizações</h2>
+                <button class="modal-close-btn" id="btn-fechar-patch-notes">✕</button>
+            </div>
+            <div class="modal-body" style="padding: 24px;">
+                <!-- Conteúdo dos Patch Notes será inserido aqui dinamicamente -->
+                <div id="patch-notes-content">
+                    <!-- Placeholder enquanto carrega -->
+                    <div style="text-align: center; color: #888;">Carregando patch notes...</div>
+                </div>
+            </div>
+            <div class="modal-footer" style="padding: 16px 24px; display: flex; gap: 8px; justify-content: space-between; align-items: center;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <input type="checkbox" id="chk-nao-mostrar-patch-notes" style="cursor: pointer; width: 18px; height: 18px;">
+                    <label for="chk-nao-mostrar-patch-notes" style="cursor: pointer; margin: 0; font-size: 0.95em;">Não mostrar novamente</label>
+                </div>
+                <button id="btn-fechar-patch-notes-confirm" class="btn-acao btn-primario" style="background: #d4af37; color: #000; padding: 10px 24px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">
+                    Fechar
                 </button>
             </div>
         </div>
