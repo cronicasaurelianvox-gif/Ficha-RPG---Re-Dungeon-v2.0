@@ -37,7 +37,10 @@ class LocalStorageManager {
             personagemImagem: 'personagem_imagem',
             
             // Rota Vertical Selecionada
-            rotaVertical: 'rota_vertical'
+            rotaVertical: 'rota_vertical',
+            
+            // Veias Astrais
+            veiasAstrais: 'veias_astrais'
         };
         
         console.log('✅ LocalStorageManager inicializado');
@@ -604,6 +607,62 @@ class LocalStorageManager {
         } catch (e) {
             console.warn('⚠️ Erro ao carregar imagem de variação:', e.message);
             return defaultValue;
+        }
+    }
+
+    /**
+     * VEIAS ASTRAIS - Salvar estado dos nós
+     * @param {Array} nodes - Array de nós com seus estados
+     */
+    saveVeiasAstrais(nodes) {
+        try {
+            const chave = this.getKey(this.keys.veiasAstrais);
+            const nodesData = nodes.map(node => ({
+                id: node.id,
+                state: node.state,
+                level: node.level,
+                treeId: node.treeId
+            }));
+            localStorage.setItem(chave, JSON.stringify(nodesData));
+            console.log('💾 ✅ Veias Astrais salvas:', nodesData.length, 'nós');
+        } catch (e) {
+            console.warn('⚠️ Erro ao salvar Veias Astrais:', e.message);
+        }
+    }
+
+    /**
+     * VEIAS ASTRAIS - Carregar estado dos nós
+     * @returns {Array|null} Array de dados de nós ou null
+     */
+    loadVeiasAstrais() {
+        try {
+            const chave = this.getKey(this.keys.veiasAstrais);
+            const jsonData = localStorage.getItem(chave);
+            
+            if (!jsonData) {
+                console.log('ℹ️ Nenhum dado de Veias Astrais encontrado');
+                return null;
+            }
+            
+            const nodesData = JSON.parse(jsonData);
+            console.log('📥 ✅ Veias Astrais carregadas:', nodesData.length, 'nós');
+            return nodesData;
+        } catch (e) {
+            console.warn('⚠️ Erro ao carregar Veias Astrais:', e.message);
+            return null;
+        }
+    }
+
+    /**
+     * VEIAS ASTRAIS - Limpar dados
+     */
+    clearVeiasAstrais() {
+        try {
+            const chave = this.getKey(this.keys.veiasAstrais);
+            localStorage.removeItem(chave);
+            console.log('🗑️ ✅ Veias Astrais limpas');
+        } catch (e) {
+            console.warn('⚠️ Erro ao limpar Veias Astrais:', e.message);
         }
     }
 }

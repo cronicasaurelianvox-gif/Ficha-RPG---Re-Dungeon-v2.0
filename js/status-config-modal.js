@@ -295,6 +295,54 @@ const StatusConfigModal = {
             this.syncStatusFieldsToLocalStorage();
         });
 
+        // ⭐ BLUR listener - Garante que valores sejam salvos quando sai do input
+        document.getElementById('status-config-current')?.addEventListener('blur', () => {
+            const currentInput = document.getElementById('status-config-current');
+            if (this.state.activeStatus && currentInput) {
+                const currentValue = parseInt(currentInput.value) || 0;
+                // Garantir que está em tempValues
+                if (this.state.tempValues[this.state.activeStatus]) {
+                    this.state.tempValues[this.state.activeStatus].current = currentValue;
+                    console.log(`💾 BLUR: ATUAL salvo em tempValues para ${this.state.activeStatus}: ${currentValue}`);
+                }
+            }
+        });
+
+        document.getElementById('status-config-extra')?.addEventListener('blur', () => {
+            const extraInput = document.getElementById('status-config-extra');
+            if (this.state.activeStatus && extraInput) {
+                const extraValue = parseInt(extraInput.value) || 0;
+                // Garantir que está em tempValues
+                if (this.state.tempValues[this.state.activeStatus]) {
+                    this.state.tempValues[this.state.activeStatus].extra = extraValue;
+                    console.log(`💾 BLUR: EXTRA salvo em tempValues para ${this.state.activeStatus}: ${extraValue}`);
+                }
+            }
+        });
+
+        // ⭐ ENTER dispara SALVAR - usando event delegation global
+        const self = this;
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.keyCode === 13) {
+                const overlay = document.getElementById('status-config-overlay');
+                
+                // Verifica se o modal está aberto E o foco está em um input do modal
+                if (overlay && overlay.classList.contains('active')) {
+                    const focusedElement = document.activeElement;
+                    
+                    // Se o elemento com foco é o input current ou extra
+                    if (focusedElement && (
+                        focusedElement.id === 'status-config-current' || 
+                        focusedElement.id === 'status-config-extra'
+                    )) {
+                        e.preventDefault();
+                        console.log('⚡ ENTER em input de status → Disparando SALVAR');
+                        self.saveChanges();
+                    }
+                }
+            }
+        }, false);
+
         // Registrar botões de configuração em cada barra
         this.registerBarConfigButtons();
 
@@ -515,15 +563,11 @@ const StatusConfigModal = {
     loadStatusData(statusType) {
         console.log(`\n📂 === loadStatusData(${statusType}) iniciado ===`);
         
-        // ⭐ FIX: Se tempValues já tem dados (após importação), use isso em vez de StatusBarsManager
-        let statusData;
-        if (this.state.tempValues[statusType] && this.state.tempValues[statusType].current > 0) {
-            console.log(`  ✓ Usando dados de tempValues (já importados)`);
-            statusData = this.state.tempValues[statusType];
-        } else {
-            const sbmState = window.StatusBarsManager?.getState() || {};
-            statusData = sbmState[statusType] || { current: 0, base: 0, extra: 0, bonus: 0, max: 0 };
-        }
+        // ⭐ SEMPRE carregar do StatusBarsManager (fonte de verdade dos valores salvos)
+        const sbmState = window.StatusBarsManager?.getState() || {};
+        const statusData = sbmState[statusType] || { current: 0, base: 0, extra: 0, bonus: 0, max: 0 };
+        
+        console.log(`  ✓ Valores carregados do StatusBarsManager:`, statusData);
 
         // Carregar valores salvos
         let current = statusData.current || 0;
@@ -653,38 +697,42 @@ const StatusConfigModal = {
         console.log(`  💾 ║ SALVANDO VALORES DO STATUS: ${currentStatus.toUpperCase()}`);
         console.log(`  💾 ║════════════════════════════════════════════`);
 
-        // Coletar valores ATUAIS dos inputs
+        // ⭐ IMPORTANTE: SEMPRE pegar do input, não do tempValues
+        // Isso garante que valores digitados mas não salvos sejam capturados
         const currentInput = document.getElementById('status-config-current');
         const baseInput = document.getElementById('status-config-base');
         const extraInput = document.getElementById('status-config-extra');
         const bonusValueElement = document.getElementById('status-config-bonus-value');
         
-        const current = currentInput ? (parseInt(currentInput.value) || 0) : (this.state.tempValues[currentStatus].current || 0);
-        const base = baseInput ? (parseInt(baseInput.value) || 0) : (this.state.tempValues[currentStatus].base || 0);
-        const extra = extraInput ? (parseInt(extraInput.value) || 0) : (this.state.tempValues[currentStatus].extra || 0);
-        const bonus = bonusValueElement ? (parseInt(bonusValueElement.textContent) || 0) : (this.state.tempValues[currentStatus].bonus || 0);
+        // Coletar valores dos inputs ATUAIS (com fallback para tempValues se não existirem inputs)
+        const current = currentInput ? parseInt(currentInput.value) || 0 : this.state.tempValues[currentStatus].current || 0;
+        const base = baseInput ? parseInt(baseInput.value) || 0 : this.state.tempValues[currentStatus].base || 0;
+        const extra = extraInput ? parseInt(extraInput.value) || 0 : this.state.tempValues[currentStatus].extra || 0;
+        const bonus = bonusValueElement ? parseInt(bonusValueElement.textContent) || 0 : this.state.tempValues[currentStatus].bonus || 0;
 
-        console.log(`  💾 ║ ANTES DA PRESERVAÇÃO:`);
-        console.log(`  💾 ║   current: ${this.state.tempValues[currentStatus].current}`);
-        console.log(`  💾 ║   base:    ${this.state.tempValues[currentStatus].base}`);
-        console.log(`  💾 ║   extra:   ${this.state.tempValues[currentStatus].extra}`);
-        console.log(`  💾 ║   bonus:   ${this.state.tempValues[currentStatus].bonus}`);
+        console.log(`  💾 ║ VALORES CAPTURADOS DOS INPUTS:`);
+        console.log(`  💾 ║   current: ${current}`);
+        console.log(`  💾 ║   base:    ${base}`);
+        console.log(`  💾 ║   extra:   ${extra}`);
+        console.log(`  💾 ║   bonus:   ${bonus}`);
 
-        // Atualizar tempValues com os valores dos inputs
+        // ⭐ CRUCIAL: Atualizar tempValues com os valores DOS INPUTS
+        // Isso garante que qualquer edição feita no input seja salva antes de trocar de aba
         if (this.state.tempValues[currentStatus]) {
             this.state.tempValues[currentStatus].current = current;
             this.state.tempValues[currentStatus].base = base;
             this.state.tempValues[currentStatus].extra = extra;
             this.state.tempValues[currentStatus].bonus = bonus;
             
-            // Recalcular máximo se algum valor mudou
+            // ✅ Recalcular máximo se algum valor mudou
             this.updateMaxValue();
             
-            console.log(`  💾 ║ DEPOIS DA PRESERVAÇÃO:`);
+            console.log(`  💾 ║ VALORES ATUALIZADOS EM tempValues:`);
             console.log(`  💾 ║   ✅ current: ${this.state.tempValues[currentStatus].current}`);
             console.log(`  💾 ║   ✅ base:    ${this.state.tempValues[currentStatus].base}`);
             console.log(`  💾 ║   ✅ extra:   ${this.state.tempValues[currentStatus].extra}`);
             console.log(`  💾 ║   ✅ bonus:   ${this.state.tempValues[currentStatus].bonus}`);
+            console.log(`  💾 ╚════════════════════════════════════════════\n`);
             console.log(`  💾 ║   ✅ maximum: ${this.state.tempValues[currentStatus].maximum}`);
         }
 

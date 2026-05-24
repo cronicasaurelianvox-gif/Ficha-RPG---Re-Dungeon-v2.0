@@ -8,6 +8,8 @@ class PowerCombatCalculator {
     constructor() {
         this.pcElement = document.getElementById('power-combat-valor');
         this.ultimoPC = 0;
+        this.valorPC = 0; // Armazenar o valor calculado para acesso externo
+        this.onChangeCallback = null; // Callback para notificar mudanças
         this.init();
     }
 
@@ -81,11 +83,32 @@ class PowerCombatCalculator {
         // Atualizar apenas se houver mudança
         if (pc !== this.ultimoPC) {
             this.ultimoPC = pc;
+            this.valorPC = pc; // Armazenar o valor para acesso externo
             this.pcElement.textContent = pc;
             
             console.log(`⚔️ Power Combat (Poder): ${pc}`);
             console.log(`   Ataque: ${ataque} | Defesa: ${defesa}`);
             console.log(`   Força: ${forca} | Vitalidade: ${vitalidade} | Agilidade: ${agilidade}`);
+            
+            // 🔔 Notificar listeners sobre a mudança
+            this.notifyChange(pc);
+        }
+    }
+
+    /**
+     * Registrar callback para ser chamado quando Power Combat muda
+     */
+    onChange(callback) {
+        this.onChangeCallback = callback;
+        console.log('🔔 Callback de Power Combat registrado');
+    }
+
+    /**
+     * Notificar listeners sobre mudança
+     */
+    notifyChange(novoValor) {
+        if (typeof this.onChangeCallback === 'function') {
+            this.onChangeCallback(novoValor);
         }
     }
 }

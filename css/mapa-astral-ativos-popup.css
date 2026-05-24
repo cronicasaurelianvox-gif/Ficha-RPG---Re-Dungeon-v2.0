@@ -1,0 +1,713 @@
+/* =========================================================================
+   POPUP PREMIUM - ATIVOS DO MAPA ASTRAL
+   Design Celestial Premium MMORPG AAA
+   ========================================================================= */
+
+:root {
+    --astral-gold: #d4af37;
+    --astral-gold-light: #ffc107;
+    --astral-blue: #4a9eff;
+    --astral-blue-dark: #1e3a8a;
+    --astral-blue-darker: #0a1a2e;
+    --astral-purple: #9d4edd;
+    --astral-text-primary: #e2e8f0;
+    --astral-text-secondary: #a8b8c8;
+    --astral-bg-dark: #0a0e1a;
+    --astral-bg-darker: #050609;
+    --astral-border: rgba(212, 175, 55, 0.3);
+    --astral-border-bright: rgba(212, 175, 55, 0.6);
+}
+
+/* =========================================================================
+   OVERLAY - Fundo escurecido
+   ========================================================================= */
+
+.mapa-astral-ativos-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0);
+    backdrop-filter: blur(0px);
+    z-index: 998;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.mapa-astral-ativos-overlay.active {
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(14px);
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* =========================================================================
+   MODAL PRINCIPAL
+   ========================================================================= */
+
+.mapa-astral-ativos-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 1200px;
+    height: 750px;
+    max-width: 96vw;
+    max-height: 90vh;
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 999;
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    background: linear-gradient(135deg, rgba(10, 14, 26, 0.95) 0%, rgba(30, 58, 138, 0.3) 100%);
+    border: 2px solid var(--astral-border-bright);
+    border-radius: 20px;
+    box-shadow: 
+        0 0 60px rgba(74, 158, 255, 0.3),
+        0 0 100px rgba(212, 175, 55, 0.15),
+        inset 0 0 40px rgba(74, 158, 255, 0.1);
+    backdrop-filter: blur(20px);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.mapa-astral-ativos-modal.active {
+    opacity: 1;
+    pointer-events: all;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* Fundo decorativo do modal */
+.mapa-astral-ativos-modal::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(74, 158, 255, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 50%, rgba(157, 78, 221, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Cantos decorativos - Top Left */
+.mapa-astral-ativos-modal::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 80px;
+    height: 80px;
+    border-top: 3px solid var(--astral-gold);
+    border-left: 3px solid var(--astral-gold);
+    border-radius: 20px 0 0 0;
+    z-index: 10;
+}
+
+/* =========================================================================
+   CONTAINER DE CONTEÚDO
+   ========================================================================= */
+
+.mapa-astral-ativos-content {
+    position: relative;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* Customização da scrollbar */
+.mapa-astral-ativos-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.mapa-astral-ativos-content::-webkit-scrollbar-track {
+    background: rgba(74, 158, 255, 0.1);
+}
+
+.mapa-astral-ativos-content::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--astral-gold), var(--astral-blue));
+    border-radius: 4px;
+}
+
+.mapa-astral-ativos-content::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, var(--astral-gold-light), var(--astral-blue));
+}
+
+/* =========================================================================
+   HEADER / CABEÇALHO
+   ========================================================================= */
+
+.mapa-astral-ativos-header {
+    position: relative;
+    padding: 18px 30px;
+    text-align: center;
+    border-bottom: 2px solid var(--astral-border-bright);
+    background: linear-gradient(180deg, rgba(10, 14, 26, 0.8) 0%, rgba(10, 14, 26, 0.4) 100%);
+    flex-shrink: 0;
+}
+
+/* Título principal */
+.mapa-astral-ativos-title {
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--astral-gold);
+    text-shadow: 
+        0 0 20px rgba(212, 175, 55, 0.6),
+        0 2px 10px rgba(0, 0, 0, 0.8);
+    letter-spacing: 3px;
+    margin: 0 0 4px 0;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Subtítulo */
+.mapa-astral-ativos-subtitle {
+    font-size: 12px;
+    color: var(--astral-text-secondary);
+    letter-spacing: 1px;
+    margin: 0;
+    font-style: italic;
+}
+
+/* Botão fechar */
+.mapa-astral-ativos-close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.1));
+    border: 2px solid var(--astral-gold);
+    color: var(--astral-gold);
+    font-size: 28px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1001;
+    font-weight: bold;
+    pointer-events: auto;
+    padding: 0;
+    flex-shrink: 0;
+}
+
+.mapa-astral-ativos-close:hover {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.4), rgba(212, 175, 55, 0.3));
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.6);
+    transform: rotate(90deg);
+}
+
+.mapa-astral-ativos-close:active {
+    transform: rotate(90deg) scale(0.95);
+}
+
+/* =========================================================================
+   CORPO DO MODAL
+   ========================================================================= */
+
+.mapa-astral-ativos-body {
+    flex: 1;
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: auto;
+    min-height: 0;
+}
+
+/* =========================================================================
+   SEÇÃO DE ATRIBUTOS PRINCIPAIS
+   ========================================================================= */
+
+.mapa-astral-ativos-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.mapa-astral-ativos-section-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--astral-gold);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+    margin: 0;
+    padding-bottom: 6px;
+    border-bottom: 2px solid rgba(212, 175, 55, 0.3);
+}
+
+/* Grid de atributos principais */
+.mapa-astral-ativos-grid-main {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+/* Card individual de atributo */
+.mapa-astral-ativos-card {
+    position: relative;
+    background: linear-gradient(135deg, rgba(30, 58, 138, 0.3) 0%, rgba(74, 158, 255, 0.1) 100%);
+    border: 2px solid rgba(212, 175, 55, 0.3);
+    border-radius: 12px;
+    padding: 10px 8px;
+    text-align: center;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    overflow: hidden;
+    cursor: pointer;
+    min-height: auto;
+}
+
+.mapa-astral-ativos-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.mapa-astral-ativos-card:hover {
+    border-color: var(--astral-gold);
+    background: linear-gradient(135deg, rgba(30, 58, 138, 0.6) 0%, rgba(74, 158, 255, 0.3) 100%);
+    box-shadow: 
+        0 0 30px rgba(74, 158, 255, 0.4),
+        0 0 60px rgba(212, 175, 55, 0.2),
+        inset 0 0 20px rgba(212, 175, 55, 0.1);
+    transform: translateY(-5px);
+}
+
+.mapa-astral-ativos-card::before {
+    opacity: 1;
+}
+
+/* Ícone do atributo */
+.mapa-astral-ativos-icon {
+    font-size: 22px;
+    margin-bottom: 3px;
+    display: block;
+    filter: drop-shadow(0 0 8px rgba(74, 158, 255, 0.4));
+}
+
+/* Cores específicas para cada atributo */
+.mapa-astral-ativos-card.forca .mapa-astral-ativos-icon {
+    filter: drop-shadow(0 0 12px rgba(255, 77, 77, 0.6));
+}
+
+.mapa-astral-ativos-card.vitalidade .mapa-astral-ativos-icon {
+    filter: drop-shadow(0 0 12px rgba(76, 175, 80, 0.6));
+}
+
+.mapa-astral-ativos-card.agilidade .mapa-astral-ativos-icon {
+    filter: drop-shadow(0 0 12px rgba(255, 193, 7, 0.6));
+}
+
+.mapa-astral-ativos-card.inteligencia .mapa-astral-ativos-icon {
+    filter: drop-shadow(0 0 12px rgba(74, 158, 255, 0.6));
+}
+
+.mapa-astral-ativos-card.percepcao .mapa-astral-ativos-icon {
+    filter: drop-shadow(0 0 12px rgba(157, 78, 221, 0.6));
+}
+
+.mapa-astral-ativos-card.sorte .mapa-astral-ativos-icon {
+    filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.6));
+}
+
+/* Nome do atributo */
+.mapa-astral-ativos-card-title {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--astral-text-primary);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin: 0 0 2px 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Valor do atributo */
+.mapa-astral-ativos-card-value {
+    font-size: 20px;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--astral-gold), var(--astral-gold-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 2px 0;
+    text-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+}
+
+/* Descrição */
+.mapa-astral-ativos-card-desc {
+    font-size: 9px;
+    color: var(--astral-text-secondary);
+    margin: 2px 0 0 0;
+    line-height: 1.1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+
+/* =========================================================================
+   GRID DE ATRIBUTOS SECUNDÁRIOS
+   ========================================================================= */
+
+.mapa-astral-ativos-grid-secondary {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.mapa-astral-ativos-card-secondary {
+    background: linear-gradient(135deg, rgba(30, 58, 138, 0.2) 0%, rgba(74, 158, 255, 0.05) 100%);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 10px;
+    padding: 8px 6px;
+    text-align: center;
+    transition: all 0.3s ease;
+    min-height: auto;
+}
+
+.mapa-astral-ativos-card-secondary:hover {
+    border-color: rgba(212, 175, 55, 0.5);
+    background: linear-gradient(135deg, rgba(30, 58, 138, 0.4) 0%, rgba(74, 158, 255, 0.2) 100%);
+    box-shadow: 0 0 20px rgba(74, 158, 255, 0.3);
+    transform: translateY(-3px);
+}
+
+.mapa-astral-ativos-card-secondary .mapa-astral-ativos-icon {
+    font-size: 18px;
+    margin-bottom: 2px;
+}
+
+.mapa-astral-ativos-card-secondary .mapa-astral-ativos-card-title {
+    font-size: 9px;
+    margin-bottom: 1px;
+}
+
+.mapa-astral-ativos-card-secondary .mapa-astral-ativos-card-value {
+    font-size: 16px;
+    margin: 1px 0;
+}
+
+.mapa-astral-ativos-card-secondary .mapa-astral-ativos-card-desc {
+    font-size: 8px;
+}
+
+/* =========================================================================
+   SEÇÃO DE RECURSOS
+   ========================================================================= */
+
+.mapa-astral-ativos-resources {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding-top: 8px;
+    border-top: 2px solid rgba(212, 175, 55, 0.3);
+    flex-shrink: 0;
+}
+
+.mapa-astral-ativos-resource {
+    background: linear-gradient(135deg, rgba(74, 158, 255, 0.15) 0%, rgba(212, 175, 55, 0.05) 100%);
+    border: 2px solid rgba(212, 175, 55, 0.4);
+    border-radius: 12px;
+    padding: 14px;
+    text-align: center;
+    transition: all 0.3s ease;
+    min-height: auto;
+}
+
+.mapa-astral-ativos-resource:hover {
+    background: linear-gradient(135deg, rgba(74, 158, 255, 0.3) 0%, rgba(212, 175, 55, 0.15) 100%);
+    box-shadow: 0 0 40px rgba(74, 158, 255, 0.3);
+    border-color: var(--astral-gold);
+    transform: scale(1.05);
+}
+
+.mapa-astral-ativos-resource .mapa-astral-ativos-icon {
+    font-size: 32px;
+    margin-bottom: 6px;
+}
+
+.mapa-astral-ativos-resource .mapa-astral-ativos-card-title {
+    font-size: 12px;
+    margin-bottom: 4px;
+}
+
+.mapa-astral-ativos-resource .mapa-astral-ativos-card-value {
+    font-size: 28px;
+    margin: 6px 0;
+}
+
+/* Cores específicas de recurso */
+.mapa-astral-ativos-resource.vida {
+    border-color: rgba(255, 77, 77, 0.5);
+    background: linear-gradient(135deg, rgba(255, 77, 77, 0.1) 0%, rgba(255, 77, 77, 0.02) 100%);
+}
+
+.mapa-astral-ativos-resource.vida:hover {
+    border-color: #ff4d4d;
+    background: linear-gradient(135deg, rgba(255, 77, 77, 0.25) 0%, rgba(255, 77, 77, 0.1) 100%);
+    box-shadow: 0 0 40px rgba(255, 77, 77, 0.3);
+}
+
+.mapa-astral-ativos-resource.mana {
+    border-color: rgba(74, 158, 255, 0.5);
+    background: linear-gradient(135deg, rgba(74, 158, 255, 0.1) 0%, rgba(74, 158, 255, 0.02) 100%);
+}
+
+.mapa-astral-ativos-resource.mana:hover {
+    border-color: var(--astral-blue);
+    background: linear-gradient(135deg, rgba(74, 158, 255, 0.25) 0%, rgba(74, 158, 255, 0.1) 100%);
+    box-shadow: 0 0 40px rgba(74, 158, 255, 0.3);
+}
+
+.mapa-astral-ativos-resource.energia {
+    border-color: rgba(74, 158, 255, 0.5);
+    background: linear-gradient(135deg, rgba(74, 158, 255, 0.1) 0%, rgba(74, 158, 255, 0.02) 100%);
+}
+
+.mapa-astral-ativos-resource.energia:hover {
+    border-color: var(--astral-blue);
+    background: linear-gradient(135deg, rgba(74, 158, 255, 0.25) 0%, rgba(74, 158, 255, 0.1) 100%);
+    box-shadow: 0 0 40px rgba(74, 158, 255, 0.3);
+}
+
+.mapa-astral-ativos-resource.fadiga {
+    border-color: rgba(255, 193, 7, 0.5);
+    background: linear-gradient(135deg, rgba(255, 193, 7, 0.1) 0%, rgba(255, 193, 7, 0.02) 100%);
+}
+
+.mapa-astral-ativos-resource.fadiga:hover {
+    border-color: #ffc107;
+    background: linear-gradient(135deg, rgba(255, 193, 7, 0.25) 0%, rgba(255, 193, 7, 0.1) 100%);
+    box-shadow: 0 0 40px rgba(255, 193, 7, 0.3);
+}
+
+/* =========================================================================
+   FOOTER / RODAPÉ
+   ========================================================================= */
+
+.mapa-astral-ativos-footer {
+    padding: 12px 20px;
+    border-top: 2px solid var(--astral-border-bright);
+    background: linear-gradient(180deg, rgba(10, 14, 26, 0.4) 0%, rgba(10, 14, 26, 0.8) 100%);
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.mapa-astral-ativos-footer-text {
+    font-size: 11px;
+    color: var(--astral-text-secondary);
+    line-height: 1.3;
+    margin: 0;
+    font-style: italic;
+    letter-spacing: 0.5px;
+}
+
+/* =========================================================================
+   CANTOS DECORATIVOS (Pseudo-elementos)
+   ========================================================================= */
+
+.mapa-astral-ativos-modal .mapa-astral-corner-tr {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 80px;
+    height: 80px;
+    border-top: 3px solid var(--astral-gold);
+    border-right: 3px solid var(--astral-gold);
+    border-radius: 0 20px 0 0;
+    z-index: 10;
+}
+
+.mapa-astral-ativos-modal .mapa-astral-corner-bl {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 80px;
+    height: 80px;
+    border-bottom: 3px solid var(--astral-gold);
+    border-left: 3px solid var(--astral-gold);
+    border-radius: 0 0 0 20px;
+    z-index: 10;
+}
+
+.mapa-astral-ativos-modal .mapa-astral-corner-br {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 80px;
+    height: 80px;
+    border-bottom: 3px solid var(--astral-gold);
+    border-right: 3px solid var(--astral-gold);
+    border-radius: 0 0 20px 0;
+    z-index: 10;
+}
+
+/* =========================================================================
+   ANIMAÇÕES
+   ========================================================================= */
+
+@keyframes popupFadeIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@keyframes popupFadeOut {
+    from {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+}
+
+@keyframes glowPulse {
+    0%, 100% {
+        box-shadow: 
+            0 0 60px rgba(74, 158, 255, 0.3),
+            0 0 100px rgba(212, 175, 55, 0.15),
+            inset 0 0 40px rgba(74, 158, 255, 0.1);
+    }
+    50% {
+        box-shadow: 
+            0 0 80px rgba(74, 158, 255, 0.5),
+            0 0 120px rgba(212, 175, 55, 0.25),
+            inset 0 0 60px rgba(74, 158, 255, 0.2);
+    }
+}
+
+.mapa-astral-ativos-modal.active {
+    animation: glowPulse 4s ease-in-out infinite;
+}
+
+/* =========================================================================
+   RESPONSIVIDADE
+   ========================================================================= */
+
+/* Tablets e telas menores */
+@media (max-width: 1200px) {
+    .mapa-astral-ativos-modal {
+        width: 92vw;
+    }
+
+    .mapa-astral-ativos-grid-main {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+
+    .mapa-astral-ativos-grid-secondary {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+
+    .mapa-astral-ativos-body {
+        padding: 10px 12px;
+    }
+
+    .mapa-astral-ativos-header {
+        padding: 12px 18px;
+    }
+
+    .mapa-astral-ativos-title {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .mapa-astral-ativos-modal {
+        width: 95vw;
+        max-height: 95vh;
+    }
+
+    .mapa-astral-ativos-grid-main {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .mapa-astral-ativos-grid-secondary {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .mapa-astral-ativos-resources {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .mapa-astral-ativos-body {
+        padding: 8px 10px;
+        gap: 6px;
+    }
+
+    .mapa-astral-ativos-header {
+        padding: 10px 15px;
+    }
+
+    .mapa-astral-ativos-footer {
+        padding: 6px 12px;
+    }
+
+    .mapa-astral-ativos-title {
+        font-size: 18px;
+    }
+
+    .mapa-astral-ativos-close {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+        top: 12px;
+        right: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .mapa-astral-ativos-grid-main {
+        grid-template-columns: 1fr;
+    }
+
+    .mapa-astral-ativos-grid-secondary {
+        grid-template-columns: 1fr;
+    }
+
+    .mapa-astral-ativos-card {
+        padding: 15px;
+    }
+
+    .mapa-astral-ativos-title {
+        font-size: 18px;
+        letter-spacing: 1px;
+    }
+
+    .mapa-astral-ativos-subtitle {
+        font-size: 12px;
+    }
+
+    .mapa-astral-ativos-card-value {
+        font-size: 28px;
+    }
+
+    .mapa-astral-ativos-card-title {
+        font-size: 12px;
+    }
+}

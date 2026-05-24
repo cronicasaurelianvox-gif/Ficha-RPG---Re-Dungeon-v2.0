@@ -706,7 +706,7 @@ class CompanheiroArtsRenderer {
           justify-content: center;
         ">
           <div style="color: #9b59b6; font-size: 0.7em; font-weight: bold; text-transform: uppercase; margin-bottom: 4px;">Custo</div>
-          <div style="color: #9b59b6; font-weight: bold;">${art.cost || 0} MP</div>
+          <div style="color: #9b59b6; font-weight: bold;">${art.cost || '0'}</div>
         </div>
         <!-- DANO -->
         <div style="

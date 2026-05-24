@@ -551,8 +551,8 @@ class UIManager {
 
         <div class="arts-art-details">
           <div class="arts-detail-row">
-            <span><strong>Custo:</strong> ${art.cost} PM</span>
-            <span><strong>Cooldown:</strong> ${art.cooldown} turnos</span>
+            <span><strong>Custo:</strong> ${art.cost || '0'}</span>
+            <span><strong>Recarga:</strong> ${art.reload || '0'}</span>
             <span><strong>Duração:</strong> ${art.duration}</span>
           </div>
           <div class="arts-detail-row">
@@ -1100,11 +1100,11 @@ class UIManager {
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; margin-top: 12px;">
               <div style="background: rgba(216, 180, 254, 0.1); padding: 8px; border-radius: 4px;">
                 <div style="color: #888; font-size: 0.75em; font-weight: bold; text-transform: uppercase; margin-bottom: 4px;">Custo</div>
-                <div style="color: #9b59b6; font-size: 1.2em; font-weight: bold;">${art.cost} MP</div>
+                <div style="color: #9b59b6; font-size: 1.2em; font-weight: bold;">${art.cost || '0'}</div>
               </div>
               <div style="background: rgba(216, 180, 254, 0.1); padding: 8px; border-radius: 4px;">
                 <div style="color: #888; font-size: 0.75em; font-weight: bold; text-transform: uppercase; margin-bottom: 4px;">Recarga</div>
-                <div style="color: #d8b4fe; font-size: 1.2em; font-weight: bold;">${art.reload} turnos</div>
+                <div style="color: #d8b4fe; font-size: 1.2em; font-weight: bold;">${art.reload || '0'}</div>
               </div>
               <div style="background: rgba(216, 180, 254, 0.1); padding: 8px; border-radius: 4px;">
                 <div style="color: #888; font-size: 0.75em; font-weight: bold; text-transform: uppercase; margin-bottom: 4px;">Ação</div>
@@ -1240,11 +1240,11 @@ class UIManager {
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; margin-top: 12px;">
               <div style="background: rgba(216, 180, 254, 0.1); padding: 8px; border-radius: 4px;">
                 <div style="color: #888; font-size: 0.75em; font-weight: bold; text-transform: uppercase; margin-bottom: 4px;">Custo</div>
-                <div style="color: #9b59b6; font-size: 1.2em; font-weight: bold;">${variation.cost || '0'} MP</div>
+                <div style="color: #9b59b6; font-size: 1.2em; font-weight: bold;">${variation.cost || '0'}</div>
               </div>
               <div style="background: rgba(216, 180, 254, 0.1); padding: 8px; border-radius: 4px;">
                 <div style="color: #888; font-size: 0.75em; font-weight: bold; text-transform: uppercase; margin-bottom: 4px;">Recarga</div>
-                <div style="color: #d8b4fe; font-size: 1.2em; font-weight: bold;">${variation.reload || '0'} turnos</div>
+                <div style="color: #d8b4fe; font-size: 1.2em; font-weight: bold;">${variation.reload || '0'}</div>
               </div>
               <div style="background: rgba(216, 180, 254, 0.1); padding: 8px; border-radius: 4px;">
                 <div style="color: #888; font-size: 0.75em; font-weight: bold; text-transform: uppercase; margin-bottom: 4px;">Ação</div>
@@ -1439,7 +1439,7 @@ class UIManager {
             </div>
             <div class="arts-form-group">
               <label>💎 Custo (PM)</label>
-              <input type="number" id="form-var-cost" min="0" value="${variation.cost || 0}">
+              <input type="text" id="form-var-cost" placeholder="Ex: 10, 1d6+5" value="${variation.cost || 0}">
             </div>
           </div>
           <div class="arts-form-row">
@@ -1449,7 +1449,7 @@ class UIManager {
             </div>
             <div class="arts-form-group">
               <label>🔄 Recarga (turnos)</label>
-              <input type="number" id="form-var-reload" min="0" value="${variation.reload || 0}">
+              <input type="text" id="form-var-reload" placeholder="Ex: 3, 2d4" value="${variation.reload || 0}">
             </div>
           </div>
         </div>
@@ -1547,8 +1547,8 @@ class UIManager {
       const type = document.getElementById('form-var-type').value;
       const action = document.getElementById('form-var-action').value;
       const domain = parseInt(document.getElementById('form-var-domain').value);
-      const cost = parseInt(document.getElementById('form-var-cost').value) || 0;
-      const reload = parseInt(document.getElementById('form-var-reload').value) || 0;
+      const cost = document.getElementById('form-var-cost').value.trim() || 0;
+      const reload = document.getElementById('form-var-reload').value.trim() || 0;
       const damage = document.getElementById('form-var-damage').value.trim();
       const duration = document.getElementById('form-var-duration').value.trim();
       const range = document.getElementById('form-var-range').value.trim();
@@ -2265,7 +2265,7 @@ class UIManager {
             </div>
             <div class="arts-form-group">
               <label>💎 Custo (PM)</label>
-              <input type="number" id="form-art-cost" min="0" value="10">
+              <input type="text" id="form-art-cost" placeholder="Ex: 10, 1d6+5" value="10">
             </div>
           </div>
           <div class="arts-form-row">
@@ -2275,7 +2275,7 @@ class UIManager {
             </div>
             <div class="arts-form-group">
               <label>🔄 Recarga (turnos)</label>
-              <input type="number" id="form-art-reload" min="0" value="0">
+              <input type="text" id="form-art-reload" placeholder="Ex: 3, 2d4" value="0">
             </div>
           </div>
         </div>
@@ -2383,8 +2383,8 @@ class UIManager {
       const type = document.getElementById('form-art-type').value;
       const action = document.getElementById('form-art-action').value;
       const domain = parseInt(document.getElementById('form-art-domain').value);
-      const cost = parseInt(document.getElementById('form-art-cost').value) || 0;
-      const reload = parseInt(document.getElementById('form-art-reload').value) || 0;
+      const cost = document.getElementById('form-art-cost').value.trim() || 0;
+      const reload = document.getElementById('form-art-reload').value.trim() || 0;
       const damage = document.getElementById('form-art-damage').value.trim();
       const duration = document.getElementById('form-art-duration').value.trim();
       const range = document.getElementById('form-art-range').value.trim();
@@ -2563,7 +2563,7 @@ class UIManager {
             </div>
             <div class="arts-form-group">
               <label>💎 Custo (PM) *</label>
-              <input type="number" id="form-art-cost" required min="0" value="${art.cost}">
+              <input type="text" id="form-art-cost" required placeholder="Ex: 10, 1d6+5" value="${art.cost}">
             </div>
           </div>
           <div class="arts-form-row">
@@ -2573,7 +2573,7 @@ class UIManager {
             </div>
             <div class="arts-form-group">
               <label>🔄 Recarga (turnos)</label>
-              <input type="number" id="form-art-reload" min="0" value="${art.reload || 0}">
+              <input type="text" id="form-art-reload" placeholder="Ex: 3, 2d4" value="${art.reload || 0}">
             </div>
           </div>
         </div>
@@ -2671,8 +2671,8 @@ class UIManager {
       const type = document.getElementById('form-art-type').value;
       const action = document.getElementById('form-art-action').value;
       const domain = parseInt(document.getElementById('form-art-domain').value);
-      const cost = parseInt(document.getElementById('form-art-cost').value) || 0;
-      const reload = parseInt(document.getElementById('form-art-reload').value) || 0;
+      const cost = document.getElementById('form-art-cost').value.trim() || 0;
+      const reload = document.getElementById('form-art-reload').value.trim() || 0;
       const damage = document.getElementById('form-art-damage').value.trim();
       const duration = document.getElementById('form-art-duration').value.trim();
       const range = document.getElementById('form-art-range').value.trim();
@@ -2892,7 +2892,7 @@ class UIManager {
             </div>
             <div class="arts-form-group">
               <label>💎 Custo (PM)</label>
-              <input type="number" id="form-var-new-cost" min="0" value="0">
+              <input type="text" id="form-var-new-cost" placeholder="Ex: 10, 1d6+5" value="0">
             </div>
           </div>
           <div class="arts-form-row">
@@ -2902,7 +2902,7 @@ class UIManager {
             </div>
             <div class="arts-form-group">
               <label>🔄 Recarga (turnos)</label>
-              <input type="number" id="form-var-new-reload" min="0" value="0">
+              <input type="text" id="form-var-new-reload" placeholder="Ex: 3, 2d4" value="0">
             </div>
           </div>
         </div>
@@ -3062,8 +3062,8 @@ class UIManager {
       const type = document.getElementById('form-var-new-type').value;
       const action = document.getElementById('form-var-new-action').value;
       const domain = parseInt(document.getElementById('form-var-new-domain').value);
-      const cost = parseInt(document.getElementById('form-var-new-cost').value) || 0;
-      const reload = parseInt(document.getElementById('form-var-new-reload').value) || 0;
+      const cost = document.getElementById('form-var-new-cost').value.trim() || 0;
+      const reload = document.getElementById('form-var-new-reload').value.trim() || 0;
       const damage = document.getElementById('form-var-new-damage').value.trim();
       const duration = document.getElementById('form-var-new-duration').value.trim();
       const range = document.getElementById('form-var-new-range').value.trim();

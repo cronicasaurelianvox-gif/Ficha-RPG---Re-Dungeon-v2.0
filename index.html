@@ -85,6 +85,24 @@
     <!-- 🔄 SISTEMA DE CLONAGEM - CLONAR COMPANHEIRO -->
     <link rel="stylesheet" href="css/clone-comp-sistema.css">
 
+    <!-- ✨ SISTEMA DE VEIAS ASTRAIS - REFATORAÇÃO PROFISSIONAL -->
+    <!-- CSS Base e Layout -->
+    <link rel="stylesheet" href="css/veias-astrais-refactor.css">
+    <!-- CSS Navegação (Drag, Zoom, Pan) -->
+    <link rel="stylesheet" href="css/veias-astrais-navegacao.css">
+    <!-- CSS Nós e Conexões (Legacy) -->
+    <link rel="stylesheet" href="css/veias-astrais-nos.css">
+    <!-- ✨ CSS NÓS ORGÂNICOS - SISTEMA MÁGICO AVANÇADO -->
+    <link rel="stylesheet" href="css/veias-astrais-nodes-organic.css">
+    <!-- ⚡ CSS VEIAS ENERGÉTICAS - FLUXO MÁGICO VIVO -->
+    <link rel="stylesheet" href="css/veias-astrais-energetic-lines.css">
+    <!-- 🎆 CSS LINHAS ATIVAS - ATIVAÇÃO DE VEIAS COM CORES E EFEITOS -->
+    <link rel="stylesheet" href="css/veias-astrais-active-lines.css">
+    <!-- 🌌 CSS FUNDO CÓSMICO PROCEDURAL -->
+    <link rel="stylesheet" href="css/astral-cosmic-background.css">
+    <!-- 💎 CSS POPUP PREMIUM - ATIVOS DO MAPA ASTRAL -->
+    <link rel="stylesheet" href="css/mapa-astral-ativos-popup.css">
+
 </head>
 <body>
     <!-- ⚔️ MODAL DE SELEÇÃO DE RAÇAS -->
@@ -361,6 +379,9 @@
                                     <button id="reputacao-btn" class="btn-controle reputacao-btn" title="Configurar Reputação">
                                         <img src="https://i.imgur.com/7T4MFaE.png" alt="Reputação">
                                     </button>
+                                    <button id="veias-astrais-btn" class="btn-controle veias-astrais-btn" title="Veias Astrais">
+                                        <img src="https://i.imgur.com/AKKNJ0e.png" alt="Veias Astrais">
+                                    </button>
                                     <button id="btn-limpar-ficha" class="btn-controle limpar-ficha" title="Limpar Ficha - Apaga todos os dados">
                                         <img src="https://i.imgur.com/GS68rHh.png" alt="Limpar Ficha">
                                     </button>
@@ -448,7 +469,7 @@
                                     <div class="credits-section-icon">📦</div>
                                     <div class="credits-section-content">
                                         <h3 class="credits-section-title">Versão</h3>
-                                        <a href="em-desenvolvimento.html" class="credits-version-link">Re:Dungeon RPG V2.2</a>
+                                        <a href="em-desenvolvimento.html" class="credits-version-link">Re:Dungeon RPG V2.3 Pre-Release</a>
                                         <p class="credits-version-date">© 2026 - Todos os direitos reservados</p>
                                     </div>
                                 </div>
@@ -2904,6 +2925,299 @@
             </div>
         </div>
     </div>
+
+    <!-- ✨ MODAL: DICA - VEIAS ASTRAIS -->
+    <div id="modalDicaVeiasAstrais" class="modal-overlay" style="display: none;">
+        <div class="modal-overlay__backdrop"></div>
+        <div class="modal-content modal-content--medium" style="max-width: 500px;">
+            <div class="modal-header">
+                <h2 class="modal-title">💡 Dica: Veias Astrais</h2>
+                <button class="modal-close-btn" id="btn-fechar-dica-veias">✕</button>
+            </div>
+            <div class="modal-body" style="padding: 24px; text-align: center;">
+                <div style="font-size: 3em; margin-bottom: 16px;">✨</div>
+                <p style="font-size: 1.1em; margin-bottom: 16px; color: #d4af37;">
+                    <strong>ℹ️ Sistema em Desenvolvimento</strong>
+                </p>
+                <div style="text-align: left; background: rgba(0, 0, 0, 0.3); padding: 16px; border-radius: 8px; margin-bottom: 20px;">
+                    <p style="margin: 0 0 12px 0; line-height: 1.8; color: #e0e0e0;">
+                        O sistema de <strong>Veias Astrais</strong> ainda está em desenvolvimento e pode conter limitações ou funcionalidades incompletas.
+                    </p>
+                    <p style="margin: 0; line-height: 1.8; color: #b0b0b0; font-size: 0.95em;">
+                        Aproveite para explorar e deixe seus feedbacks para melhorias futuras!
+                    </p>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px; justify-content: center; margin-bottom: 16px;">
+                    <input type="checkbox" id="chk-nao-mostrar-dica-veias" style="cursor: pointer; width: 18px; height: 18px;">
+                    <label for="chk-nao-mostrar-dica-veias" style="cursor: pointer; margin: 0;">Não mostrar esta mensagem novamente</label>
+                </div>
+            </div>
+            <div class="modal-footer" style="padding: 16px 24px; display: flex; gap: 8px; justify-content: center;">
+                <button id="btn-entendi-dica-veias" class="btn-acao btn-primario" style="background: #d4af37; color: #000; padding: 10px 24px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">
+                    Entendi, Vamos Lá! 🚀
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ✨ MODAL: VEIAS ASTRAIS -->
+    <!-- 🌌 SISTEMA DE VEIAS ASTRAIS - MODAL NAVEGÁVEL -->
+    <div id="veias-astrais-modal" class="veias-astrais-modal hidden">
+        <!-- Backdrop semi-transparente -->
+        <div class="veias-astrais-backdrop"></div>
+
+        <!-- Contenedor principal da interface -->
+        <div class="veias-astrais-interface">
+            
+            <!-- Painel Lateral Fixo (NÃO se move com o mapa) -->
+            <aside class="veias-astrais-sidebar">
+                <!-- Header -->
+                <header class="sidebar-header">
+                    <h2 class="sidebar-title">✨ Veias Astrais</h2>
+                    <button class="sidebar-close-btn" id="btn-veias-astrais-fechar">✕</button>
+                </header>
+
+                <!-- Recursos e Contadores -->
+                <section class="sidebar-resources">
+                    <div class="resource-card">
+                        <span class="resource-label">⚔️ Power Combat</span>
+                        <div class="resource-display">
+                            <span class="resource-value" id="power-combat-counter">0</span>
+                            <span class="resource-max" id="power-combat-max">/ 0</span>
+                        </div>
+                        <div class="resource-bar">
+                            <div class="resource-fill" id="power-combat-fill"></div>
+                        </div>
+                    </div>
+
+                    <div class="resource-card">
+                        <span class="resource-label">Ressonância Astral</span>
+                        <div class="resource-display">
+                            <span class="resource-value" id="resonance-counter">45</span>
+                            <span class="resource-max">/ 100</span>
+                        </div>
+                        <div class="resource-bar resonance">
+                            <div class="resource-fill" id="resonance-fill"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Categorias de Árvores -->
+                <section class="sidebar-trees">
+                    <h3 class="section-title">🌳 Constelações</h3>
+                    <nav class="trees-list" id="trees-categories">
+                        <!-- Itens dinâmicos -->
+                    </nav>
+                </section>
+
+                <!-- Controles de Navegação -->
+                <section class="sidebar-controls">
+                    <h3 class="section-title">🎮 Navegação</h3>
+                    <div class="controls-group">
+                        <button class="control-btn zoom-in-btn" id="zoom-in-btn" title="Aproximar (+ ou scroll)">
+                            <span>🔍+</span>
+                        </button>
+                        <button class="control-btn zoom-out-btn" id="zoom-out-btn" title="Afastar (- ou scroll)">
+                            <span>🔍−</span>
+                        </button>
+                        <button class="control-btn reset-view-btn" id="reset-view-btn" title="Centralizar no núcleo">
+                            <span>⬆ Centro</span>
+                        </button>
+                        <button class="control-btn ativos-btn premium" id="ativos-btn" title="Ver ativos">
+                            <span>⭐ Ativos</span>
+                        </button>
+                    </div>
+                    
+
+                </section>
+            </aside>
+
+            <!-- Área Central - Mapa Expansivo -->
+            <main class="veias-astrais-main">
+                
+                <!-- Viewport do Mapa (contém scroll + transformações) -->
+                <div class="astral-viewport" id="astral-viewport">
+                    
+                    <!-- Mapa Astral (elemento que se move/escala) -->
+                    <div class="astral-map" id="astral-map">
+                        
+                        <!-- SVG para Conexões entre Nós -->
+                        <svg class="astral-links-canvas" id="astral-links-canvas"></svg>
+                        
+                        <!-- Núcleo Central - Coração do Sistema -->
+                        <div class="astral-core" id="astral-core">
+                            <div class="core-container">
+                                <img src="https://i.imgur.com/8716aJk.png" alt="Esfera Cósmica" class="core-crystal-image">
+                                <div class="core-energy-rings">
+                                    <div class="energy-ring ring-1"></div>
+                                    <div class="energy-ring ring-2"></div>
+                                    <div class="energy-ring ring-3"></div>
+                                </div>
+                                <div class="core-particles" id="core-particles"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Container para Nós (adicionados dinamicamente) -->
+                        <div class="astral-nodes-container" id="astral-nodes-container">
+                            <!-- Runas Centrais -->
+                            <div class="core-runes" id="core-runes">
+                                ◆◇◆
+                            </div>
+                            <!-- Nós serão adicionados dinamicamente -->
+                        </div>
+                    </div>
+
+                    <!-- Indicador de Zoom (canto inferior direito) -->
+                    <div class="zoom-indicator" id="zoom-indicator">100%</div>
+                </div>
+
+                <!-- Painel de Detalhes do Nó (sobreposto, fixo) -->
+                <div class="node-detail-panel hidden" id="node-detail-panel">
+                    <header class="detail-header">
+                        <h3 class="detail-title" id="node-detail-name">—</h3>
+                        <button class="detail-close-btn" id="close-detail-btn">✕</button>
+                    </header>
+
+                    <div class="detail-content">
+                        <section class="detail-section">
+                            <h4>Descrição</h4>
+                            <p id="node-detail-description">—</p>
+                        </section>
+
+                        <section class="detail-section">
+                            <h4>Requisitos</h4>
+                            <ul class="requirements-list" id="node-requirements">
+                                <li>—</li>
+                            </ul>
+                        </section>
+
+                        <section class="detail-section">
+                            <h4>Efeitos</h4>
+                            <ul class="effects-list" id="node-effects">
+                                <li>—</li>
+                            </ul>
+                        </section>
+
+                        <section class="detail-section detail-stats">
+                            <div class="stat-row">
+                                <span class="stat-label">Custo:</span>
+                                <span class="stat-value" id="node-detail-cost">—</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Nível Atual:</span>
+                                <span class="stat-value" id="node-detail-level">—</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Estado:</span>
+                                <span class="stat-value stat-state" id="node-detail-state">—</span> 
+                            </div>
+                        </section>
+
+                        <!-- ✨ NOVO: Motivo do Bloqueio -->
+                        <section class="detail-section detail-block-reason" style="display: none;" id="node-block-reason-section">
+                            <div style="padding: 12px; background: rgba(255, 68, 68, 0.1); border-left: 3px solid #ff4444; border-radius: 4px; font-size: 0.9em; color: #ff6b6b;">
+                                <strong>⚠️ Não pode desbloquear:</strong>
+                                <p id="node-block-reason" style="margin: 4px 0 0 0;"></p>
+                            </div>
+                        </section>
+
+                        <div class="detail-actions">
+                            <button class="action-btn unlock-btn" id="unlock-node-btn">
+                                Desbloquear
+                            </button>
+                            <button class="action-btn lock-btn" id="lock-node-btn" style="background-color: #8b4545; border-color: #ff6b6b; display: none;">
+                                🔒 Bloquear
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- 🔔 Container de Notificações -->
+                <div id="notification-container" style="position: fixed; top: 20px; right: 20px; z-index: 10000; display: flex; flex-direction: column; gap: 10px;"></div>
+            </main>
+        </div>
+    </div>
+
+    <!-- ✨ SCRIPTS DO SISTEMA DE VEIAS ASTRAIS - REFATORAÇÃO -->
+    <!-- Sistema Principal (Árvores, Nós, Conexões) -->
+    <script src="js/veias-astrais-sistema.js"></script>
+    <!-- Ativação de Linhas (Energia e Cascata) -->
+    <script src="js/veias-astrais-line-activation.js"></script>
+    <!-- Navegação (Drag, Zoom, Pan) -->
+    <script src="js/veias-astrais-navegacao.js"></script>
+    <!-- Modal Handler -->
+    <script src="js/veias-astrais-modal-refator.js"></script>
+    <!-- 🌌 FUNDO CÓSMICO PROCEDURAL -->
+    <script src="js/astral-cosmic-background.js"></script>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════ -->
+    <!-- 💎 POPUP PREMIUM - ATIVOS DO MAPA ASTRAL (NOVO)                                -->
+    <!-- ═══════════════════════════════════════════════════════════════════════════════ -->
+    
+    <!-- Overlay -->
+    <div class="mapa-astral-ativos-overlay" id="mapa-astral-ativos-overlay"></div>
+    
+    <!-- Modal Principal -->
+    <div class="mapa-astral-ativos-modal" id="mapa-astral-ativos-modal">
+        <!-- Cantos decorativos -->
+        <div class="mapa-astral-corner-tr"></div>
+        <div class="mapa-astral-corner-bl"></div>
+        <div class="mapa-astral-corner-br"></div>
+        
+        <!-- Botão Fechar (Fora do content para evitar overflow) -->
+        <button class="mapa-astral-ativos-close" id="mapa-astral-ativos-close" title="Fechar (ESC)">✕</button>
+        
+        <!-- Conteúdo -->
+        <div class="mapa-astral-ativos-content">
+            
+            <!-- ════════════════════════════════════════════ CABEÇALHO ════════════════════════════════════════════ -->
+            <header class="mapa-astral-ativos-header">
+                <h1 class="mapa-astral-ativos-title">NÓS ATIVOS</h1>
+                <p class="mapa-astral-ativos-subtitle">Resumo dos nós ativos do seu personagem</p>
+            </header>
+            
+            <!-- ════════════════════════════════════════════ CORPO ════════════════════════════════════════════ -->
+            <div class="mapa-astral-ativos-body">
+                
+                <!-- SEÇÃO: ATRIBUTOS PRINCIPAIS -->
+                <section class="mapa-astral-ativos-section">
+                    <h2 class="mapa-astral-ativos-section-title">✦ ATRIBUTOS PRINCIPAIS</h2>
+                    <div class="mapa-astral-ativos-grid-main" id="mapa-astral-ativos-grid-main">
+                        <!-- Preenchido por JavaScript -->
+                    </div>
+                </section>
+                
+                <!-- SEÇÃO: ATRIBUTOS SECUNDÁRIOS -->
+                <section class="mapa-astral-ativos-section">
+                    <h2 class="mapa-astral-ativos-section-title">✦ ATRIBUTOS SECUNDÁRIOS</h2>
+                    <div class="mapa-astral-ativos-grid-secondary" id="mapa-astral-ativos-grid-secondary">
+                        <!-- Preenchido por JavaScript -->
+                    </div>
+                </section>
+                
+                <!-- SEÇÃO: RECURSOS -->
+                <section class="mapa-astral-ativos-section">
+                    <h2 class="mapa-astral-ativos-section-title">✦ STATUS</h2>
+                    <div class="mapa-astral-ativos-resources" id="mapa-astral-ativos-resources">
+                        <!-- Preenchido por JavaScript -->
+                    </div>
+                </section>
+            </div>
+            
+            <!-- ════════════════════════════════════════════ RODAPÉ ════════════════════════════════════════════ -->
+            <footer class="mapa-astral-ativos-footer">
+                <p class="mapa-astral-ativos-footer-text">
+                    ✦ Atributos principais moldam seu potencial.<br>
+                    Atributos secundários definem sua eficiência. ✦
+                </p>
+            </footer>
+        </div>
+    </div>
+    
+    <!-- Script do Popup de Ativos -->
+    <script src="js/mapa-astral-ativos-popup.js"></script>
 
 </body>
 </html>

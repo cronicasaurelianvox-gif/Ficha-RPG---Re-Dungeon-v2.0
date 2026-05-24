@@ -283,6 +283,29 @@ class AtributosConfigModal {
         document.getElementById('atributos-config-base')?.addEventListener('input', () => this.updateTotal());
         document.getElementById('atributos-config-extra')?.addEventListener('input', () => this.updateTotal());
 
+        // ⭐ ENTER dispara SALVAR - usando event delegation global
+        const self = this;
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.keyCode === 13) {
+                const modal = document.getElementById('atributos-config-modal-overlay');
+                
+                // Verifica se o modal está aberto E o foco está em um input do modal
+                if (modal && modal.classList.contains('active') && modal.style.display === 'flex') {
+                    const focusedElement = document.activeElement;
+                    
+                    // Se o elemento com foco é o input base ou extra
+                    if (focusedElement && (
+                        focusedElement.id === 'atributos-config-base' || 
+                        focusedElement.id === 'atributos-config-extra'
+                    )) {
+                        e.preventDefault();
+                        console.log('⚡ ENTER em input de atributo → Disparando SALVAR');
+                        self.saveChanges();
+                    }
+                }
+            }
+        }, false);
+
         // Fechar ao clicar no overlay
         document.getElementById('atributos-config-modal-overlay')?.addEventListener('click', (e) => {
             if (e.target.id === 'atributos-config-modal-overlay') {

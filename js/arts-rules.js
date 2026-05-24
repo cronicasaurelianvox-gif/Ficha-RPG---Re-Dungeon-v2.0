@@ -112,8 +112,8 @@ class RulesEngine {
       errors.push('Domínio inválido (deve ser 1-5)');
     }
 
-    // Validar custo
-    if (art.cost < 0) {
+    // Validar custo (apenas se for número)
+    if (typeof art.cost === 'number' && art.cost < 0) {
       errors.push('Custo não pode ser negativo');
     }
 

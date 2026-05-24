@@ -202,7 +202,7 @@ function getArtCardTemplate(art, core) {
           justify-content: center;
         ">
           <div style="color: #9b59b6; font-size: 0.7em; font-weight: bold; text-transform: uppercase; margin-bottom: 4px;">Custo</div>
-          <div style="color: #9b59b6; font-weight: bold;">${art.cost} MP</div>
+          <div style="color: #9b59b6; font-weight: bold;">${art.cost || '0'}</div>
         </div>
         <!-- DANO -->
         <div style="
@@ -333,8 +333,10 @@ function validateArtData(data) {
   if (!data.name || !data.name.trim()) errors.push('Nome é obrigatório');
   if (!data.artType) errors.push('Tipo de Arte é obrigatório');
   if (!data.action) errors.push('Ação é obrigatória');
-  if (data.cost < 0) errors.push('Custo não pode ser negativo');
-  if (data.damage < 0) errors.push('Dano não pode ser negativo');
+  // Validar custo apenas se for número
+  if (typeof data.cost === 'number' && data.cost < 0) errors.push('Custo não pode ser negativo');
+  // Validar dano apenas se for número
+  if (typeof data.damage === 'number' && data.damage < 0) errors.push('Dano não pode ser negativo');
   
   return { valid: errors.length === 0, errors };
 }
@@ -540,7 +542,7 @@ function getVarianteCardTemplate(variation, art) {
           justify-content: center;
         ">
           <div style="color: #9b59b6; font-size: 0.7em; font-weight: bold; text-transform: uppercase; margin-bottom: 4px;">Custo</div>
-          <div style="color: #9b59b6; font-weight: bold;">${variation.cost || '0'} MP</div>
+          <div style="color: #9b59b6; font-weight: bold;">${variation.cost || '0'}</div>
         </div>
         <!-- DANO -->
         <div style="

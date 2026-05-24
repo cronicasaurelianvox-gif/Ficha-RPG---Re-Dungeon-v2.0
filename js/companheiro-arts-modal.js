@@ -1402,11 +1402,11 @@ class CompanheiroArtsModalManager {
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; margin-top: 12px;">
                             <div style="background: rgba(216, 180, 254, 0.1); padding: 8px; border-radius: 4px;">
                                 <div style="color: #888; font-size: 0.75em; font-weight: bold; text-transform: uppercase; margin-bottom: 4px;">Custo</div>
-                                <div style="color: #9b59b6; font-size: 1.2em; font-weight: bold;">${art.cost || 0} MP</div>
+                                <div style="color: #9b59b6; font-size: 1.2em; font-weight: bold;">${art.cost || '0'}</div>
                             </div>
                             <div style="background: rgba(216, 180, 254, 0.1); padding: 8px; border-radius: 4px;">
                                 <div style="color: #888; font-size: 0.75em; font-weight: bold; text-transform: uppercase; margin-bottom: 4px;">Recarga</div>
-                                <div style="color: #d8b4fe; font-size: 1.2em; font-weight: bold;">${art.reload || 0} turnos</div>
+                                <div style="color: #d8b4fe; font-size: 1.2em; font-weight: bold;">${art.reload || '0'}</div>
                             </div>
                             <div style="background: rgba(216, 180, 254, 0.1); padding: 8px; border-radius: 4px;">
                                 <div style="color: #888; font-size: 0.75em; font-weight: bold; text-transform: uppercase; margin-bottom: 4px;">Ação</div>
@@ -2005,7 +2005,7 @@ class CompanheiroArtsModalManager {
           justify-content: center;
         ">
           <div style="color: #9b59b6; font-size: 0.7em; font-weight: bold; text-transform: uppercase; margin-bottom: 4px;">Custo</div>
-          <div style="color: #9b59b6; font-weight: bold;">${variante.cost || 0} MP</div>
+          <div style="color: #9b59b6; font-weight: bold;">${variante.cost || '0'}</div>
         </div>
         <!-- DANO -->
         <div style="
@@ -2545,7 +2545,7 @@ class CompanheiroArtsModalManager {
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; margin-top: 12px;">
                             <div style="background: rgba(216, 180, 254, 0.1); padding: 8px; border-radius: 4px;">
                                 <div style="color: #888; font-size: 0.75em; font-weight: bold; text-transform: uppercase; margin-bottom: 4px;">Custo</div>
-                                <div style="color: #9b59b6; font-size: 1.2em; font-weight: bold;">${variante.cost || 0} MP</div>
+                                <div style="color: #9b59b6; font-size: 1.2em; font-weight: bold;">${variante.cost || '0'}</div>
                             </div>
                             <div style="background: rgba(216, 180, 254, 0.1); padding: 8px; border-radius: 4px;">
                                 <div style="color: #888; font-size: 0.75em; font-weight: bold; text-transform: uppercase; margin-bottom: 4px;">Recarga</div>
