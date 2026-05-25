@@ -177,6 +177,9 @@ class AstralCosmicBackground {
         console.log('🌌 Inicializando AstralCosmicBackground...');
         
         // Verificar se astral-viewport já existe, senão esperar
+        let attempts = 0;
+        const maxAttempts = 100; // ~10 segundos (100 * 100ms)
+        
         const checkViewport = () => {
             try {
                 const viewport = document.getElementById('astral-viewport');
@@ -190,9 +193,14 @@ class AstralCosmicBackground {
                     console.log(`🎬 Iniciando animação...`);
                     this.animate();
                 } else {
-                    console.log('⏳ astral-viewport ainda não existe, aguardando...');
-                    // Retry após 100ms se viewport ainda não existe
-                    setTimeout(checkViewport, 100);
+                    attempts++;
+                    if (attempts < maxAttempts) {
+                        console.log(`⏳ astral-viewport ainda não existe, tentativa ${attempts}/${maxAttempts}...`);
+                        // Retry após 100ms se viewport ainda não existe
+                        setTimeout(checkViewport, 100);
+                    } else {
+                        console.error('❌ astral-viewport nunca foi encontrado após tentativas');
+                    }
                 }
             } catch (error) {
                 console.error('❌ Erro durante inicialização:', error);
@@ -206,10 +214,19 @@ class AstralCosmicBackground {
         try {
             const wrapper = document.createElement('div');
             wrapper.className = 'astral-cosmic-background';
+            // ✅ CRÍTICO: Garantir visibilidade imediata
+            wrapper.style.visibility = 'visible';
+            wrapper.style.opacity = '1';
+            wrapper.style.display = 'block';
 
             this.canvas = document.createElement('canvas');
             this.canvas.className = 'astral-cosmic-canvas';
             this.canvas.id = 'astral-cosmic-canvas-element';
+            // ✅ CRÍTICO: Garantir visibilidade do canvas
+            this.canvas.style.visibility = 'visible';
+            this.canvas.style.opacity = '1';
+            this.canvas.style.display = 'block';
+            
             this.ctx = this.canvas.getContext('2d', { willReadFrequently: true });
 
             if (!this.ctx) {
@@ -252,6 +269,14 @@ class AstralCosmicBackground {
             // Esta seção força a recalculação de layout
             setTimeout(() => {
                 console.log('🔄 Forçando reflow/repaint do canvas...');
+                
+                // ✅ GARANTIR VISIBILIDADE
+                wrapper.style.visibility = 'visible';
+                wrapper.style.opacity = '1';
+                wrapper.style.display = 'block';
+                this.canvas.style.visibility = 'visible';
+                this.canvas.style.opacity = '1';
+                this.canvas.style.display = 'block';
                 
                 // Force reflow lendo offsetHeight
                 const _ = wrapper.offsetHeight;
@@ -468,10 +493,26 @@ class AstralCosmicBackground {
     }
 
     animate = () => {
+        // ✅ CRÍTICO: Verificar se canvas e context existem
+        if (!this.canvas || !this.ctx) {
+            console.warn('⚠️ Canvas ou context não disponível, reiniciando animação...');
+            this.animationId = requestAnimationFrame(this.animate);
+            return;
+        }
+
         this.time += 1;
         
         if (this.time === 1) {
             console.log('🎬 Primeira frame de animação!');
+            // ✅ Garantir que o canvas está visível
+            if (this.canvas.parentElement) {
+                this.canvas.parentElement.style.visibility = 'visible';
+                this.canvas.parentElement.style.opacity = '1';
+                this.canvas.parentElement.style.display = 'block';
+            }
+            this.canvas.style.visibility = 'visible';
+            this.canvas.style.opacity = '1';
+            this.canvas.style.display = 'block';
         }
         
         const width = this.canvas.width / window.devicePixelRatio;
@@ -529,10 +570,36 @@ class AstralCosmicBackground {
         this.ctx.fillStyle = `rgba(106, 201, 255, ${breathe * 0.1})`;
         this.ctx.fillRect(0, 0, width, height);
 
-        this.animationId = requestAnimationFrame(this.animate);
+        // ✅ CRÍTICO: Usar bind para garantir que 'this' seja preservado
+        this.animationId = requestAnimationFrame(() => this.animate());
     }
 
     setupEventListeners() {
+        // ✅ PROTEÇÃO: Monitorar se o canvas fica escondido
+        const checkCanvasVisibility = () => {
+            if (this.canvas && this.canvas.parentElement) {
+                const wrapper = this.canvas.parentElement;
+                
+                // Forçar propriedades de visibilidade
+                if (wrapper.style.visibility !== 'visible' || wrapper.style.opacity !== '1' || wrapper.style.display === 'none') {
+                    console.warn('⚠️ Canvas wrapper estava escondido, restaurando...');
+                    wrapper.style.visibility = 'visible';
+                    wrapper.style.opacity = '1';
+                    wrapper.style.display = 'block';
+                }
+                
+                if (this.canvas.style.visibility !== 'visible' || this.canvas.style.opacity !== '1' || this.canvas.style.display === 'none') {
+                    console.warn('⚠️ Canvas estava escondido, restaurando...');
+                    this.canvas.style.visibility = 'visible';
+                    this.canvas.style.opacity = '1';
+                    this.canvas.style.display = 'block';
+                }
+            }
+        };
+
+        // Checar a cada 5 segundos
+        setInterval(checkCanvasVisibility, 5000);
+
         document.addEventListener('mousemove', (e) => {
             const viewport = document.getElementById('astral-viewport');
             if (viewport) {
@@ -560,7 +627,13 @@ class AstralCosmicBackground {
                     if (mutation.attributeName === 'class') {
                         const isVisible = !modal.classList.contains('hidden');
                         if (isVisible) {
-                            console.log('🎨 Modal ficou visível! Forçando reflow do canvas...');
+                            console.log('🎨 Modal ficou visível! Forçando inicialização do canvas...');
+                            
+                            // ✅ CRÍTICO: Se a animação ainda não começou, começar agora
+                            if (!this.animationId) {
+                                console.log('▶️ Iniciando animação do canvas (primeira abertura)');
+                                this.animate();
+                            }
                             
                             // Force reflow/repaint
                             if (this.canvas && this.canvas.parentElement) {
@@ -569,7 +642,15 @@ class AstralCosmicBackground {
                                 this.canvas.parentElement.offsetHeight; // Force reflow
                                 this.canvas.parentElement.classList.remove('force-repaint');
                                 
-                                console.log('✅ Canvas renderizado após mostrar modal');
+                                // ✅ Garantir visibilidade
+                                this.canvas.parentElement.style.visibility = 'visible';
+                                this.canvas.parentElement.style.opacity = '1';
+                                this.canvas.parentElement.style.display = 'block';
+                                this.canvas.style.visibility = 'visible';
+                                this.canvas.style.opacity = '1';
+                                this.canvas.style.display = 'block';
+                                
+                                console.log('✅ Canvas renderizado e visível após mostrar modal');
                             }
                         }
                     }
@@ -605,42 +686,57 @@ console.log('🌌 Script astral-cosmic-background.js carregado');
 function initializeCosmicBackground() {
     console.log('🚀 Iniciando background cósmico...');
     
-    // Aguardar o viewport estar disponível E a modal estar visível
-    const checkViewport = setInterval(() => {
-        const viewport = document.getElementById('astral-viewport');
-        const modal = document.getElementById('veias-astrais-modal');
-        
-        if (viewport) {
-            // Verifica se a modal está visível (sem a classe 'hidden')
-            const isModalVisible = modal && !modal.classList.contains('hidden');
-            
-            if (isModalVisible || !modal) {
-                clearInterval(checkViewport);
-                console.log('✅ Viewport encontrado e modal visível!');
-                
-                // Criar e inicializar
-                if (!window.astralCosmicBackground) {
-                    window.astralCosmicBackground = new AstralCosmicBackground();
+    // ✅ CRÍTICO: Criar instance IMEDIATAMENTE, mesmo se modal não estiver visível
+    // A lógica de espera pela modal está dentro da classe
+    if (!window.astralCosmicBackground) {
+        window.astralCosmicBackground = new AstralCosmicBackground(true);
+        console.log('✅ AstralCosmicBackground instância criada');
+    }
+}
+
+// ✅ NOVO: Também vincular ao evento de abertura da modal
+// Isso garante que se o script carregar ANTES da modal ser criada,
+// o canvas será inicializado assim que a modal abrir
+function setupModalListener() {
+    const modal = document.getElementById('veias-astrais-modal');
+    if (modal) {
+        // Observer para detectar quando a modal fica visível
+        const observer = new MutationObserver((mutations) => {
+            for (let mutation of mutations) {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                    const isHidden = modal.classList.contains('hidden');
+                    console.log(`📢 Modal class mudou - hidden: ${isHidden}`);
+                    
+                    if (!isHidden && window.astralCosmicBackground) {
+                        console.log('🎨 Modal ficou visível, forçando inicialização do canvas...');
+                        // Forçar render imediato
+                        window.astralCosmicBackground.resizeCanvas();
+                        window.astralCosmicBackground.generateStars();
+                        window.astralCosmicBackground.generateConstellations();
+                        
+                        if (!window.astralCosmicBackground.animationId) {
+                            console.log('▶️ Iniciando animação do canvas');
+                            window.astralCosmicBackground.animate();
+                        }
+                    }
                 }
             }
-        }
-    }, 50);
-    
-    // Timeout de segurança
-    setTimeout(() => {
-        clearInterval(checkViewport);
-        if (!window.astralCosmicBackground) {
-            console.warn('⚠️ Timeout esperando viewport, inicializando mesmo assim...');
-            window.astralCosmicBackground = new AstralCosmicBackground();
-        }
-    }, 5000);
+        });
+        
+        observer.observe(modal, { attributes: true, attributeFilter: ['class'] });
+        console.log('✅ Modal listener configurado');
+    }
 }
 
 // Iniciar imediatamente
 if (document.readyState === 'loading') {
     console.log('⏳ DOM ainda carregando, aguardando DOMContentLoaded...');
-    document.addEventListener('DOMContentLoaded', initializeCosmicBackground);
+    document.addEventListener('DOMContentLoaded', () => {
+        initializeCosmicBackground();
+        setupModalListener();
+    });
 } else {
     console.log('✅ DOM já carregado, inicializando imediatamente...');
     initializeCosmicBackground();
+    setupModalListener();
 }
