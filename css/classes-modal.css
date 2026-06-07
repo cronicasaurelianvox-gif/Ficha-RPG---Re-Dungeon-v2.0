@@ -847,8 +847,12 @@
   padding: 12px;
   background: rgba(15, 23, 42, 0.6);
   border: 1px solid rgba(100, 116, 139, 0.3);
-  border-radius: 6px;
+  border-radius: 8px;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-height: 200px; /* garante cards com altura uniforme */
 }
 
 #modal-classes .habilidade-header {
@@ -893,11 +897,13 @@
   font-size: 13px;
   color: #cbd5e1;
   margin-bottom: 8px;
-  line-height: 1.5;
+  line-height: 1.45;
   word-break: break-word;
   word-wrap: break-word;
   white-space: normal;
   overflow-wrap: break-word;
+  max-height: 5.2em; /* controla texto muito longo */
+  overflow: hidden;
 }
 
 #modal-classes .habilidade-atributos {
@@ -923,24 +929,28 @@
 }
 
 .habilidade-bonus {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 6px;
+  margin-top: 8px;
 }
 
 .bonus-item {
-  font-size: 12px;
+  font-size: 13px;
   color: #cbd5e1;
-  padding-left: 16px;
-  position: relative;
+  padding: 6px 10px;
+  background: rgba(15, 23, 42, 0.12);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .bonus-item::before {
   content: '✓';
-  position: absolute;
-  left: 0;
   color: #10b981;
-  font-weight: 700;
+  font-weight: 800;
+  flex: 0 0 auto;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════════════════════════ */
@@ -953,8 +963,9 @@
   gap: 8px;
   margin-bottom: 12px;
   padding: 8px;
-  background: rgba(30, 41, 59, 0.3);
+  background: rgba(30, 41, 59, 0.26);
   border-radius: 6px;
+  align-items: center;
 }
 
 #modal-classes .badge-info-classe {
@@ -1325,10 +1336,20 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  margin-top: 12px;
+  padding: 12px 0 0 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  margin-top: auto; /* empurra o rodapé para o fim do card */
   gap: 12px;
+}
+
+/* Força consistência entre tipos de habilidade */
+#modal-classes .habilidade-avancada,
+#modal-classes .habilidade-classe,
+#modal-classes .habilidade-extrema {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-height: 200px;
 }
 
 
