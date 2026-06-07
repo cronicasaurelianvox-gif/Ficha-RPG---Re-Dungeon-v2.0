@@ -10,119 +10,73 @@ const RACAS_DATABASE = [
     nome: "Humano",
     tipo: "Re'Geron",
     raridade: "comum",
-    descricao: "Os humanos são a raça mais flexível e diversa entre as civilizações. Eles surgem e prosperam praticamente em qualquer ambiente, espalhando-se por desertos, florestas, montanhas e cidades costeiras sem dificuldade. Sua moral, tradições e ambições mudam drasticamente de região para região, tornando impossível definir um único 'jeito humano' de existir.",
-    limiteAtributo: 100,
-    imagem: "https://i.imgur.com/VAOeAcl.png",
-    atributos: {
-      forca: "4d6+10",
-      vitalidade: "4d6+10",
-      agilidade: "4d6+10",
-      inteligencia: "5d6+12",
-      percepcao: "4d6+10",
-      sorte: "5d20"
-    },
-    habilidadesBasicas: [
-      {
-        nome: "Adaptabilidade",
-        descricao: "O jogador pode ajustar na sua ficha um atributo chave (exceto sua sorte) antes da campanha iniciar, assim se adaptando como qualquer humano do mundo de Re'Dungeon.",
-        bonus: [
-          "Ajusta um atributo principal antes da campanha",
-          "Maior flexibilidade no build do personagem",
-          "Sem limitações de especialização"
-        ]
-      },
-      {
-        nome: "Versatilidade",
-        descricao: "O jogador pode aprender uma categoria de art que possua no sistema, assim se tornando uma especialização única como se fosse uma classe.",
-        bonus: [
-          "Aprende uma categoria de arte extra",
-          "Combina especialidades de forma única",
-          "Exemplo: Um mago parradeiro"
-        ]
-      },
-      {
-        nome: "Ambição",
-        descricao: "O jogador declara uma ambição que esteja de acordo com seu background. Durante eventos e acontecimentos na campanha que estejam com sua ambição em jogo, o jogador recebe o benefício de incentivo.",
-        bonus: [
-          "Bônus +3 em rolagens relacionadas à ambição",
-          "Incentivo narrativo durante a campanha",
-          "Conexão com objetivos pessoais"
-        ]
-      }
-    ],
     habilidadesAvancadas: [
       {
-        nome: "Vontade Inabalável",
-        descricao: "A força do humano não está no corpo, mas na recusa em desistir. +2 em Testes de Resistência mental e emocional contra medo, intimidação, controle mental ou penalidades emocionais. Uma vez por sessão, ao cair abaixo de 30% dos recursos principais, ignora uma penalidade negativa ativa por 1 turno.",
-        tipo: "Duradoura",
+        nome: "Instinto Feral",
+        descricao: "Quando o instinto assume, o corpo responde antes da mente. Ao ativar esta Art, o Animanos entra em um estado feral, recebendo bônus em Precisão à escolha, +2 em Evasão, ignora penalidades de dor, medo ou intimidação. Ao final do turno, sofre 1 nível leve de exaustão narrativa.",
+        tipo: "Sustentada",
         alcance: "Pessoal",
         alvos: "Você",
-        custo: 0,
-        recarga: 0,
+        custo: 7,
+        recarga: 5,
         duracao: 0,
         dado: "0",
         bonus: [
-          "+2 em Testes de Resistência mental e emocional contra medo, intimidação ou controle mental",
-          "Uma vez por sessão, ao cair abaixo de 30% dos recursos principais, ignora uma penalidade negativa ativa por 1 turno"
+          "+3 em Precisão à escolha",
+          "+2 em Evasão",
+          "Ignora penalidades de dor, medo ou intimidação",
+          "Exaustão narrativa ao final do turno"
         ]
       },
       {
-        nome: "Poder Latente",
-        descricao: "Quando pressionado ao limite, algo desperta. Durante 1 turno, escolhe um atributo principal e recebe +3 temporário nele. Se usado abaixo de 25% de HP, o bônus aumenta para +5. Sofre fadiga narrativa após o efeito (descrita pelo mestre).",
-        tipo: "Duradoura",
-        alcance: "Pessoal",
-        alvos: "Você",
-        custo: 0,
-        recarga: 0,
-        duracao: 1,
-        dado: "0",
-        bonus: [
-          "+3 temporário em um atributo escolhido por 1 turno",
-          "+5 se usado abaixo de 25% de HP",
-          "Sofre fadiga narrativa após o efeito"
-        ]
-      },
-      {
-        nome: "Aprendizado",
-        descricao: "Humanos aprendem observando erros — próprios e alheios. Ao falhar um teste em uma Art, perícia ou ação repetível, recebe +1 na próxima tentativa durante o mesmo combate. O bônus não se acumula, mas pode ser aplicado novamente após outra falha diferente.",
-        tipo: "Duradoura",
-        alcance: "Pessoal",
-        alvos: "Você",
-        custo: 0,
-        recarga: 0,
+        nome: "Olhar do Predador",
+        descricao: "O Animanos fixa o olhar no alvo como uma presa marcada. Até o final do turno: +2 em Testes de Percepção, rastreio e leitura de intenção contra esse alvo. O alvo sofre –3 em Evasão contra o próximo ataque. Se tentar fugir, o Animanos sabe exatamente a direção inicial.",
+        tipo: "Imediata",
+        alcance: "9 m",
+        alvos: "1",
+        custo: 5,
+        recarga: 2,
         duracao: 0,
         dado: "0",
         bonus: [
-          "+1 na próxima tentativa durante o mesmo combate após falha",
-          "Bônus não se acumula, mas pode reaplicar após nova falha diferente"
+          "+2 em Percepção e rastreio contra o alvo",
+          "-3 em Evasão do alvo contra próximo ataque",
+          "Detecção de direção de fuga"
         ]
       },
       {
-        nome: "Adaptação",
-        descricao: "Ao sofrer dano de um tipo específico, o humano ajusta seu corpo e mente. Até o final do próximo turno, recebe redução leve do mesmo tipo de dano ou 2d6 de Defesa contra aquela fonte específica. Não funciona contra o mesmo tipo de dano duas vezes seguidas sem intervalo.",
-        tipo: "Duradoura",
+        nome: "Mutação Primal",
+        descricao: "Características bestiais se intensificam: garras, presas, escamas, pelagem densa ou músculos distendidos. Enquanto ativa: +2 dado adicional de defesa, ataques desarmados causam dano de arma leve (3d8), ganha resistência leve ao último tipo de dano sofrido.",
+        tipo: "Sustentada",
         alcance: "Pessoal",
         alvos: "Você",
-        custo: 0,
-        recarga: 0,
-        duracao: 1,
+        custo: 13,
+        recarga: 3,
+        duracao: 0,
         dado: "0",
         bonus: [
-          "Redução leve do mesmo tipo de dano até o final do próximo turno",
-          "Ou +2d6 de Defesa contra aquela fonte específica",
-          "Não funciona contra o mesmo tipo de dano duas vezes seguidas"
+          "+2 dado adicional de defesa",
+          "Ataques desarmados causam 3d8",
+          "Resistência leve ao último tipo de dano sofrido"
+        ]
+      },
+      {
+        nome: "Frenesi",
+        descricao: "O Animanos converte dor e raiva em violência pura. Se já sofreu dano nesta rodada, o ataque recebe +6 dano adicional. Se estiver abaixo de 50% de HP, recebe +12 dano em vez disso. Após o ataque, sofre –1 dado de Defesa até o início do próximo turno.",
+        tipo: "Sustentada",
+        alcance: "CaC",
+        alvos: "1",
+        custo: 9,
+        recarga: 4,
+        duracao: 0,
+        dado: "0",
+        bonus: [
+          "+6 dano se sofreu dano nesta rodada",
+          "+12 dano se abaixo de 50% de HP",
+          "-1 dado de Defesa após o ataque"
         ]
       }
     ],
-    codigo: "0001"
-  },
-  {
-    id: "animanos",
-    nome: "Animanos",
-    tipo: "Re'Geron",
-    raridade: "comum",
-    descricao: "Animanos são semelhantes aos humanos à primeira vista, mas carregam no corpo marcas vivas de sua ancestralidade animal — caudas que denunciam emoções antes das palavras, orelhas que reagem ao menor som, padrões de pelagem, garras sutis ou olhos que refletem instinto. Essa fusão entre razão humana e herança selvagem dá a eles uma maneira única de perceber o mundo, guiada tanto pela intuição quanto por tradições próprias desenvolvidas ao longo de séculos de isolamento. Seu modo de viver costuma ser moldado pelo ritmo da natureza, e suas técnicas, crenças e costumes nascem dessa conexão profunda com os animais que vieram antes deles, tornando-os uma raça que transita entre o civilizado e o primal sem perder o equilíbrio.",
-    limiteAtributo: 100,
     imagem: "https://i.imgur.com/SEQK76x.png",
     atributos: {
       forca: "5d6+12",
@@ -161,74 +115,7 @@ const RACAS_DATABASE = [
         ]
       }
     ],
-    habilidadesAvancadas: [
-      {
-        nome: "Instinto Feral",
-        descricao: "Quando o instinto assume, o corpo responde antes da mente. Ao ativar esta Art, o Animanos entra em um estado feral, recebendo bônus em Precisão à escolha, +2 em Evasão, ignora penalidades de dor, medo ou intimidação. Ao final do turno, sofre 1 nível leve de exaustão narrativa.",
-        tipo: "Sustentada",
-        alcance: "Pessoal",
-        alvos: "Você",
-        custo: 7,
-        recarga: 5,
-        duracao: 0,
-        dado: "0",
-        bonus: [
-          "+3 em Precisão à escolha",
-          "+2 em Evasão",
-          "Ignora penalidades de dor, medo ou intimidação",
-          "Exaustão narrativa ao final do turno"
-        ]
-      },
-      {
-        nome: "Olhar do Predador",
-        descricao: "O Animanos fixa o olhar no alvo como uma presa marcada. Até o final do turno: +2 em Testes de Percepção, rastreio e leitura de intenção contra esse alvo. O alvo sofre –3 em Evasão contra o próximo ataque. Se tentar fugir, o Animanos sabe exatamente a direção inicial.",
-        tipo: "Imediata",
-        alcance: "9 m",
-        alvos: "1",
-        custo: 5,
-        recarga: 2,
-        duracao: 0,
-        dado: "0",
-        bonus: [
-          "+2 em Percepção e rastreamento contra o alvo",
-          "-3 em Evasão do alvo contra próximo ataque",
-          "Detecção de direção de fuga"
-        ]
-      },
-      {
-        nome: "Mutação Primal",
-        descricao: "Características bestiais se intensificam: garras, presas, escamas, pelagem densa ou músculos distendidos. Enquanto ativa: +2 dado adicional de defesa, ataques desarmados causam dano de arma leve (3d8), ganha resistência leve ao último tipo de dano sofrido.",
-        tipo: "Sustentada",
-        alcance: "Pessoal",
-        alvos: "Você",
-        custo: 13,
-        recarga: 3,
-        duracao: 0,
-        dado: "0",
-        bonus: [
-          "+2 dado adicional de defesa",
-          "Ataques desarmados causam 3d8",
-          "Resistência leve ao último tipo de dano sofrido"
-        ]
-      },
-      {
-        nome: "Frenesi",
-        descricao: "O Animanos converte dor e raiva em violência pura. Se já sofreu dano nesta rodada, o ataque recebe +6 dano adicional. Se estiver abaixo de 50% de HP, recebe +12 dano em vez disso. Após o ataque, sofre –1 dado de Defesa até o início do próximo turno.",
-        tipo: "Sustentada",
-        alcance: "CaC",
-        alvos: "1",
-        custo: 9,
-        recarga: 4,
-        duracao: 0,
-        dado: "0",
-        bonus: [
-          "+6 dano se sofreu dano nesta rodada",
-          "+12 dano se abaixo de 50% de HP",
-          "-1 dado de Defesa após o ataque"
-        ]
-      }
-    ],
-    codigo: "0035"
+    codigo: "0001"
   },
   {
     id: "mestico",
