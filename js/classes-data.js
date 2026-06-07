@@ -8031,10 +8031,10 @@ const CLASSES_DATABASE = [
     limiteAtributo: 110,
     imagem: "https://i.imgur.com/mrqCJL5.png",
     atributos: {
-      forca: "2d8+8",
-      vitalidade: "2d10+6",
-      agilidade: "1d6+2",
-      inteligencia: "1d4+4",
+      forca: "2d10+6",
+      vitalidade: "2d12+4",
+      agilidade: "2d8+6",
+      inteligencia: "1d4+6",
       percepcao: "2d6+4",
       sorte: "0"
     },
@@ -8052,8 +8052,8 @@ const CLASSES_DATABASE = [
     atributos: {
       forca: "2d10+6",
       vitalidade: "2d8+4",
-      agilidade: "2d8+4",
-      inteligencia: "1d4+2",
+      agilidade: "2d10+6",
+      inteligencia: "2d4+2",
       percepcao: "2d6+4",
       sorte: "0"
     },
@@ -8069,9 +8069,9 @@ const CLASSES_DATABASE = [
     limiteAtributo: 110,
     imagem: "https://i.imgur.com/Ieb8ahb.png",
     atributos: {
-      forca: "3d6+8",
-      vitalidade: "3d6+6",
-      agilidade: "4d8+10",
+      forca: "2d4+4",
+      vitalidade: "2d4+6",
+      agilidade: "2d6+10",
       inteligencia: "2d4+4",
       percepcao: "3d6+8",
       sorte: "0"
@@ -8107,11 +8107,49 @@ const CLASSES_DATABASE = [
     limiteAtributo: 110,
     imagem: "https://i.imgur.com/I0LQ6tE.png",
     atributos: {
-      forca: "1d4+4",
-      vitalidade: "1d6+2",
+      forca: "2d8+4",
+      vitalidade: "2d4+2",
       agilidade: "2d6+6",
       inteligencia: "3d10+6",
       percepcao: "3d8+8",
+      sorte: "0"
+    },
+    habilidadesBasicas: [],
+    habilidadesAvancadas: []
+  },
+    {
+    id: "Aurekhan",
+    nome: "Aurekhan",
+    raridade: "raro",
+    descricao: "Aurekhan ou simplesmente Guerreiro Santo são a classe especializada em magias divinas. Diferente do que são os Varakhan, os Aurekhan buscam moldar a Arcana para utilizar o melhor dela as mesclando com uma característica sagrada que nem todos conseguem realmente utiliza-la por completo. Normalmente são caçadores extremamente benevolentes que pensam muito mais no bem maior do que em seus objetivos e ou estar em destaque. Aurekhan muitas vezes são procurados para fazer parte de esquadrões por fornecerem o auxílio que o grupo possa precisar. São os principais dominadores da Arte de Caça da Vida, onde não existem melhores do que eles nesse papel.",
+    colecao: "A Crônica dos Varkhan",
+    limiteAtributo: 110,
+    imagem: "https://i.imgur.com/ToqJnFa.png",
+    atributos: {
+      forca: "2d4+4",
+      vitalidade: "2d6+4",
+      agilidade: "2d8+6",
+      inteligencia: "3d10+6",
+      percepcao: "3d8+8",
+      sorte: "0"
+    },
+    habilidadesBasicas: [],
+    habilidadesAvancadas: []
+  },
+    {
+    id: "Nekrath",
+    nome: "Nekrath",
+    raridade: "epico",
+    descricao: "Nekrath ou os santos caídos, são a última classe mágica de Vareth. Enquanto os Aurekhan se focaram em utilizar a Arcana como algo bom e puro, os Nekrath se focaram em utilizar a Arcana em sua verdadeira essência, uma essência demoníaca e ruim. Os Nekrath tem em posse de si um artefato amaldiçoado que lhes fornece uma ligação demoníaca, um pacto que lhes dê vantagem. Caçadores que escolheram seguir esse caminho, ficam em contato com o que há de pior constantemente. Muitas vezes os Nekrath são atormentados durante a noite por conta desse contato demoníaco, e não é incomum os ver sucumbindo a sua própria Arcana ou ao seu pacto. Mas quando bem treinados, Nekrath são uma verdadeira força de caçada.",
+    colecao: "A Crônica dos Varkhan",
+    limiteAtributo: 110,
+    imagem: "https://i.imgur.com/FSfJ2I0.png",
+    atributos: {
+      forca: "3d6+4",
+      vitalidade: "2d4+8",
+      agilidade: "3d8+10",
+      inteligencia: "3d10+6",
+      percepcao: "3d10+6",
       sorte: "0"
     },
     habilidadesBasicas: [],
