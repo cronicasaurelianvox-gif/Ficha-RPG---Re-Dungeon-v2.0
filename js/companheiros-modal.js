@@ -774,7 +774,7 @@ class CompanheirosModalController {
         const racas = this.racas;
         
         // Tipos disponíveis
-        const tipos = ["Re'Geron", "The Chaotical Gate", "Wuxia/Xianxia", "One Piece", "Bleach"];
+        const tipos = ["Re'Geron", "The Chaotical Gate", "Wuxia/Xianxia", "One Piece", "Bleach", "A Crônica dos Varkhan"];
         let tipoSelecionado = "Re'Geron"; // Padrão
 
         // Criar overlay

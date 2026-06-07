@@ -345,7 +345,7 @@ class ClassesUI {
         nome: "Re'Dungeon",
         icon: '⚔️',
         aberta: true,
-        classes: classesOrdenadas,
+        classes: [],
         mostrarRaridade: true
       },
       {
@@ -375,8 +375,23 @@ class ClassesUI {
         aberta: false,
         classes: [],
         mostrarRaridade: false
+      },
+      {
+        nome: 'A Crônica dos Varkhan',
+        icon: '📜',
+        aberta: false,
+        classes: [],
+        mostrarRaridade: false
       }
     ];
+
+    // Alocar classes nas pastas corretas usando o campo `colecao` (se existir)
+    const pastaMap = new Map(pastas.map(p => [p.nome, p]));
+    classesOrdenadas.forEach((classe) => {
+      const destinoNome = classe.colecao && pastaMap.has(classe.colecao) ? classe.colecao : "Re'Dungeon";
+      const destino = pastaMap.get(destinoNome);
+      destino.classes.push(classe);
+    });
 
     // Renderizar cada pasta
     pastas.forEach((pasta) => {
