@@ -268,12 +268,6 @@ class RacasUI {
         aberta: false,
         tipo: 'Bleach'
       }
-      ,{
-        nome: 'A Crônica dos Varkhan',
-        icon: '📜',
-        aberta: false,
-        tipo: 'A Crônica dos Varkhan'
-      }
     ];
 
     // Filtrar raças por tipo e atribuir às pastas

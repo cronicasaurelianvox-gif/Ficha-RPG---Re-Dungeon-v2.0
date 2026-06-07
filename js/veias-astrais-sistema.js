@@ -934,14 +934,10 @@ class VeiasAstraisSystem {
         const descEl = document.getElementById('node-detail-description');
         if (descEl) descEl.textContent = node.description;
 
-        // Aprimoramento (bonus effect)
-        const enhancementEl = document.getElementById('node-detail-enhancement');
-        if (enhancementEl) {
-            if (node.bonus && node.bonus.effect) {
-                enhancementEl.textContent = node.bonus.effect;
-            } else {
-                enhancementEl.textContent = '—';
-            }
+        // Efeitos
+        const effectsEl = document.getElementById('node-effects');
+        if (effectsEl) {
+            effectsEl.innerHTML = `<li>${node.effect}</li>`;
         }
 
         // Custo

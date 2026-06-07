@@ -75,7 +75,7 @@ class PatchNotesManager {
         const html = `
             <div style="color: #d4af37; margin-bottom: 20px;">
                 <h3 style="margin-top: 0; color: #d4af37;">✨ Versão ${this.currentVersion}</h3>
-                <p style="font-size: 0.9em; color: #888; margin: 0;">6 de Junho de 2026</p>
+                <p style="font-size: 0.9em; color: #888; margin: 0;">24 de Maio de 2026</p>
             </div>
 
             <!-- SEÇÃO: CORREÇÕES -->
@@ -101,7 +101,6 @@ class PatchNotesManager {
                     <li>💡 <strong>Notificação de Veias Astrais:</strong> Sistema de dica ao abrir Veias Astrais (em desenvolvimento)</li>
                     <li>📝 <strong>Patch Notes:</strong> Este modal que você está vendo! Receba atualizações importantes</li>
                     <li>♻️ <strong>Preferências do Usuário:</strong> Opção de não mostrar patch notes novamente (até nova versão)</li>
-                    <li>📚 <strong>Novas Raças e Classes:</strong> Adicionada a coleção <em>A Crônica dos Varkhan</em> com novas classes: Varokh, Thyrkan, Veyrath, Drahkhan e Verakhan</li>
                 </ul>
             </div>
 
@@ -115,7 +114,6 @@ class PatchNotesManager {
                     <li>🎨 Interface mais consistente com validação aprimorada</li>
                     <li>📱 Melhor suporte para diferentes tipos de entrada de dados</li>
                     <li>🔔 Sistema de notificações para novidades da ficha</li>
-                    <li>✨ <strong>Ajuste Visual:</strong> Atualização no visual dos cards de classes/habilidades para maior simetria e legibilidade</li>
                 </ul>
             </div>
 

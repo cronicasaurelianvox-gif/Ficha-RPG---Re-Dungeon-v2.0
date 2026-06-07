@@ -100,6 +100,8 @@
     <link rel="stylesheet" href="css/veias-astrais-active-lines.css">
     <!-- 🌌 CSS FUNDO CÓSMICO PROCEDURAL -->
     <link rel="stylesheet" href="css/astral-cosmic-background.css">
+    <!-- 💎 CSS POPUP PREMIUM - ATIVOS DO MAPA ASTRAL -->
+    <link rel="stylesheet" href="css/mapa-astral-ativos-popup.css">
 
 </head>
 <body>
@@ -3050,6 +3052,9 @@
                         <button class="control-btn reset-view-btn" id="reset-view-btn" title="Centralizar no núcleo">
                             <span>⬆ Centro</span>
                         </button>
+                        <button class="control-btn ativos-btn premium" id="ativos-btn" title="Ver ativos">
+                            <span>⭐ Ativos</span>
+                        </button>
                     </div>
                     
 
@@ -3109,8 +3114,17 @@
                         </section>
 
                         <section class="detail-section">
-                            <h4>Aprimoramento</h4>
-                            <p id="node-detail-enhancement">—</p>
+                            <h4>Requisitos</h4>
+                            <ul class="requirements-list" id="node-requirements">
+                                <li>—</li>
+                            </ul>
+                        </section>
+
+                        <section class="detail-section">
+                            <h4>Efeitos</h4>
+                            <ul class="effects-list" id="node-effects">
+                                <li>—</li>
+                            </ul>
                         </section>
 
                         <section class="detail-section detail-stats">
@@ -3167,7 +3181,72 @@
     <!-- 🌌 FUNDO CÓSMICO PROCEDURAL -->
     <script src="js/astral-cosmic-background.js"></script>
 
-
+    <!-- ═══════════════════════════════════════════════════════════════════════════════ -->
+    <!-- 💎 POPUP PREMIUM - ATIVOS DO MAPA ASTRAL (NOVO)                                -->
+    <!-- ═══════════════════════════════════════════════════════════════════════════════ -->
+    
+    <!-- Overlay -->
+    <div class="mapa-astral-ativos-overlay" id="mapa-astral-ativos-overlay"></div>
+    
+    <!-- Modal Principal -->
+    <div class="mapa-astral-ativos-modal" id="mapa-astral-ativos-modal">
+        <!-- Cantos decorativos -->
+        <div class="mapa-astral-corner-tr"></div>
+        <div class="mapa-astral-corner-bl"></div>
+        <div class="mapa-astral-corner-br"></div>
+        
+        <!-- Botão Fechar (Fora do content para evitar overflow) -->
+        <button class="mapa-astral-ativos-close" id="mapa-astral-ativos-close" title="Fechar (ESC)">✕</button>
+        
+        <!-- Conteúdo -->
+        <div class="mapa-astral-ativos-content">
+            
+            <!-- ════════════════════════════════════════════ CABEÇALHO ════════════════════════════════════════════ -->
+            <header class="mapa-astral-ativos-header">
+                <h1 class="mapa-astral-ativos-title">NÓS ATIVOS</h1>
+                <p class="mapa-astral-ativos-subtitle">Resumo dos nós ativos do seu personagem</p>
+            </header>
+            
+            <!-- ════════════════════════════════════════════ CORPO ════════════════════════════════════════════ -->
+            <div class="mapa-astral-ativos-body">
+                
+                <!-- SEÇÃO: ATRIBUTOS PRINCIPAIS -->
+                <section class="mapa-astral-ativos-section">
+                    <h2 class="mapa-astral-ativos-section-title">✦ ATRIBUTOS PRINCIPAIS</h2>
+                    <div class="mapa-astral-ativos-grid-main" id="mapa-astral-ativos-grid-main">
+                        <!-- Preenchido por JavaScript -->
+                    </div>
+                </section>
+                
+                <!-- SEÇÃO: ATRIBUTOS SECUNDÁRIOS -->
+                <section class="mapa-astral-ativos-section">
+                    <h2 class="mapa-astral-ativos-section-title">✦ ATRIBUTOS SECUNDÁRIOS</h2>
+                    <div class="mapa-astral-ativos-grid-secondary" id="mapa-astral-ativos-grid-secondary">
+                        <!-- Preenchido por JavaScript -->
+                    </div>
+                </section>
+                
+                <!-- SEÇÃO: RECURSOS -->
+                <section class="mapa-astral-ativos-section">
+                    <h2 class="mapa-astral-ativos-section-title">✦ STATUS</h2>
+                    <div class="mapa-astral-ativos-resources" id="mapa-astral-ativos-resources">
+                        <!-- Preenchido por JavaScript -->
+                    </div>
+                </section>
+            </div>
+            
+            <!-- ════════════════════════════════════════════ RODAPÉ ════════════════════════════════════════════ -->
+            <footer class="mapa-astral-ativos-footer">
+                <p class="mapa-astral-ativos-footer-text">
+                    ✦ Atributos principais moldam seu potencial.<br>
+                    Atributos secundários definem sua eficiência. ✦
+                </p>
+            </footer>
+        </div>
+    </div>
+    
+    <!-- Script do Popup de Ativos -->
+    <script src="js/mapa-astral-ativos-popup.js"></script>
 
 </body>
 </html>

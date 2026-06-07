@@ -53,7 +53,7 @@ const RACAS_DATABASE = [
     habilidadesAvancadas: [
       {
         nome: "Vontade Inabalável",
-        descricao: "A força do humano não está no corpo, mas na recusa em desistir. +2 em Testes de Resistência mental e emocional contra medo, intimidação, controle mental ou penalidades emocionais. Uma vez por sessão, ao cair abaixo de 30% dos recursos principais, ignora uma penalidade negativa ativa por 1 turno.",
+        descricao: "A força do humano não está no corpo, mas na recusa em desistir.",
         tipo: "Duradoura",
         alcance: "Pessoal",
         alvos: "Você",
@@ -62,29 +62,13 @@ const RACAS_DATABASE = [
         duracao: 0,
         dado: "0",
         bonus: [
-          "+2 em Testes de Resistência mental e emocional contra medo, intimidação ou controle mental",
+          "+2 em Testes de Resistência mental e emocional contra medo, intimidação, controle mental ou penalidades emocionais",
           "Uma vez por sessão, ao cair abaixo de 30% dos recursos principais, ignora uma penalidade negativa ativa por 1 turno"
         ]
       },
       {
         nome: "Poder Latente",
-        descricao: "Quando pressionado ao limite, algo desperta. Durante 1 turno, escolhe um atributo principal e recebe +3 temporário nele. Se usado abaixo de 25% de HP, o bônus aumenta para +5. Sofre fadiga narrativa após o efeito (descrita pelo mestre).",
-        tipo: "Duradoura",
-        alcance: "Pessoal",
-        alvos: "Você",
-        custo: 0,
-        recarga: 0,
-        duracao: 1,
-        dado: "0",
-        bonus: [
-          "+3 temporário em um atributo escolhido por 1 turno",
-          "+5 se usado abaixo de 25% de HP",
-          "Sofre fadiga narrativa após o efeito"
-        ]
-      },
-      {
-        nome: "Aprendizado",
-        descricao: "Humanos aprendem observando erros — próprios e alheios. Ao falhar um teste em uma Art, perícia ou ação repetível, recebe +1 na próxima tentativa durante o mesmo combate. O bônus não se acumula, mas pode ser aplicado novamente após outra falha diferente.",
+        descricao: "Quando pressionado ao limite, algo desperta.",
         tipo: "Duradoura",
         alcance: "Pessoal",
         alvos: "Você",
@@ -93,28 +77,42 @@ const RACAS_DATABASE = [
         duracao: 0,
         dado: "0",
         bonus: [
-          "+1 na próxima tentativa durante o mesmo combate após falha",
-          "Bônus não se acumula, mas pode reaplicar após nova falha diferente"
+          "Durante 1 turno, escolhe um atributo principal e recebe +3 temporário nele",
+          "Se usado abaixo de 25% de HP, o bônus aumenta para +5",
+          "Sofre fadiga narrativa após o efeito (descrita pelo mestre)"
         ]
       },
       {
-        nome: "Adaptação",
-        descricao: "Ao sofrer dano de um tipo específico, o humano ajusta seu corpo e mente. Até o final do próximo turno, recebe redução leve do mesmo tipo de dano ou 2d6 de Defesa contra aquela fonte específica. Não funciona contra o mesmo tipo de dano duas vezes seguidas sem intervalo.",
+        nome: "Aprendizado",
+        descricao: "Humanos aprendem observando erros — próprios e alheios.",
         tipo: "Duradoura",
         alcance: "Pessoal",
         alvos: "Você",
         custo: 0,
         recarga: 0,
-        duracao: 1,
+        duracao: 0,
         dado: "0",
         bonus: [
-          "Redução leve do mesmo tipo de dano até o final do próximo turno",
-          "Ou +2d6 de Defesa contra aquela fonte específica",
-          "Não funciona contra o mesmo tipo de dano duas vezes seguidas"
+          "Ao falhar um teste em uma Art, perícia ou ação repetível, recebe +1 na próxima tentativa durante o mesmo combate",
+          "O bônus não se acumula, mas pode ser aplicado novamente após outra falha diferente"
+        ]
+      },
+      {
+        nome: "Adaptação",
+        descricao: "Ao sofrer dano de um tipo específico, o humano ajusta seu corpo e mente.",
+        tipo: "Duradoura",
+        alcance: "Pessoal",
+        alvos: "Você",
+        custo: 0,
+        recarga: 0,
+        duracao: 0,
+        dado: "0",
+        bonus: [
+          "Até o final do próximo turno, recebe redução leve do mesmo tipo de dano ou 2d6 de Defesa contra aquela fonte específica",
+          "Não funciona contra o mesmo tipo de dano duas vezes seguidas sem intervalo"
         ]
       }
-    ],
-    codigo: "0001"
+    ]
   },
   {
     id: "animanos",
@@ -190,7 +188,7 @@ const RACAS_DATABASE = [
         duracao: 0,
         dado: "0",
         bonus: [
-          "+2 em Percepção e rastreamento contra o alvo",
+          "+2 em Percepção e rastreio contra o alvo",
           "-3 em Evasão do alvo contra próximo ataque",
           "Detecção de direção de fuga"
         ]
@@ -227,8 +225,7 @@ const RACAS_DATABASE = [
           "-1 dado de Defesa após o ataque"
         ]
       }
-    ],
-    codigo: "0035"
+    ]
   },
   {
     id: "mestico",
@@ -341,8 +338,7 @@ const RACAS_DATABASE = [
           "Apenas uma herança ativa por vez (sem acúmulo)"
         ]
       }
-    ],
-    codigo: "0002"
+    ]
   },
   {
     id: "gnomo",
@@ -464,8 +460,7 @@ const RACAS_DATABASE = [
           "Consequência colateral inevitável"
         ]
       }
-    ],
-    codigo: "0003"
+    ]
   },
   {
     id: "anao",
@@ -577,8 +572,7 @@ const RACAS_DATABASE = [
           "Sem penalidade de tamanho com armas grandes"
         ]
       }
-    ],
-    codigo: "0004"
+    ]
   },
   {
     id: "elfo",
@@ -689,8 +683,7 @@ const RACAS_DATABASE = [
           "Uma vez por Art"
         ]
       }
-    ],
-    codigo: "0005"
+    ]
   },
   {
     id: "animalus",
@@ -802,8 +795,7 @@ const RACAS_DATABASE = [
           "Obtém informação simples do ambiente"
         ]
       }
-    ],
-    codigo: "0006"
+    ]
   },
   {
     id: "homunculo",
@@ -931,8 +923,7 @@ const RACAS_DATABASE = [
           "Dissipa ao sucesso ou fim da batalha"
         ]
       }
-    ],
-    codigo: "0007"
+    ]
   },
   {
     id: "lukan",
@@ -1045,8 +1036,7 @@ const RACAS_DATABASE = [
           "+1 Tolerância abaixo de 50% HP"
         ]
       }
-    ],
-    codigo: "0008"
+    ]
   },
   {
     id: "fada",
@@ -1175,8 +1165,7 @@ const RACAS_DATABASE = [
           "Deslocamentos aéreos e saltos impossíveis"
         ]
       }
-    ],
-    codigo: "0009"
+    ]
   },
   {
     id: "worgen",
@@ -1304,8 +1293,7 @@ const RACAS_DATABASE = [
           "Sem alimentação aumenta Fome progressivamente"
         ]
       }
-    ],
-    codigo: "0010"
+    ]
   },
   {
     id: "murkal",
@@ -1431,8 +1419,7 @@ const RACAS_DATABASE = [
           "Dano aumentado em ambiente aquático"
         ]
       }
-    ],
-    codigo: "0011"
+    ]
   },
   {
     id: "espirito",
@@ -1560,8 +1547,7 @@ const RACAS_DATABASE = [
           "Escolhe entre dano ou efeito"
         ]
       }
-    ],
-    codigo: "0012"
+    ]
   },
   {
     id: "demonoid",
@@ -1689,8 +1675,7 @@ const RACAS_DATABASE = [
           "Hesitação em criaturas inferiores"
         ]
       }
-    ],
-    codigo: "0013"
+    ]
   },
   {
     id: "drakhen",
@@ -1818,8 +1803,7 @@ const RACAS_DATABASE = [
           "Duração de 3 rodadas"
         ]
       }
-    ],
-    codigo: "0014"
+    ]
   },
   {
     id: "dracolito",
@@ -1963,8 +1947,7 @@ const RACAS_DATABASE = [
           "Efeito coerente com tipo"
         ]
       }
-    ],
-    codigo: "0015"
+    ]
   },
   {
     id: "morvak",
@@ -2108,8 +2091,7 @@ const RACAS_DATABASE = [
           "Presságios e eventos estranhos"
         ]
       }
-    ],
-    codigo: "0016"
+    ]
   },
   {
     id: "celestine",
@@ -2253,8 +2235,7 @@ const RACAS_DATABASE = [
           "Poder divino residual"
         ]
       }
-    ],
-    codigo: "0017"
+    ]
   },
   {
     id: "opharos",
@@ -2398,687 +2379,329 @@ const RACAS_DATABASE = [
           "Compreensão gera poder"
         ]
       }
-    ],
-    codigo: "0018"
+    ]
   },
   {
-    id: "refugiado",
-    nome: "Refugiado",
-    tipo: "A Crônica dos Varkhan",
+    id: "periferia",
+    nome: "Periferia",
+    tipo: "The Chaotical Gate",
     raridade: "comum",
-    descricao: "O Refugiado é o retrato vivo da sobrevivência diante da adversidade. Forçado a abandonar seu lar devido a guerras devastadoras, catástrofes naturais ou perseguições políticas, ele carrega em sua bagagem não apenas pertences materiais escassos, mas o peso da perda e a cicatriz de um passado abruptamente interrompido. Essa vivência traumática molda uma personalidade cautelosa, observadora e extremamente pragmática. Eles não buscam a glória ou o heroísmo cego; seu objetivo principal é garantir que eles e aqueles sob sua responsabilidade vejam o amanhecer do dia seguinte. No grupo de aventureiros, o Refugiado costuma atuar como a voz da razão e da prudência, sendo excelente em prever riscos e encontrar soluções engenhosas com recursos mínimos.",
-    imagem: "https://i.imgur.com/Wg65NTY.png",
+    descricao: "Você veio de um lugar onde sobreviver já era aprendizado. Cresceu cercado por improviso, pressão, barulho e realidade dura. Aprendeu cedo a ler o ambiente, perceber risco e agir antes que o problema cresça.",
+    imagem: "https://i.imgur.com/AuiuCYe.png",
     limiteAtributo: 150,
     atributos: {
-      forca: "3d6+8",
-      vitalidade: "3d6+8",
-      agilidade: "4d6+10",
-      inteligencia: "3d6+6",
-      percepcao: "3d6+6",
-      sorte: "5d20"
-    },
-    habilidadesBasicas: [
-      {
-        nome: "Adaptação",
-        descricao: "A dura jornada de fuga ensinou que a rigidez mental é um caminho rápido para a morte. A flexibilidade é a maior arma do Refugiado. Antes do início da campanha ou de um arco narrativo importante, o jogador pode redistribuir os valores de um de seus atributos para outro de sua escolha, representando a capacidade de se especializar rapidamente.",
-        bonus: [
-          "Redistribui valores de um atributo para outro antes do início da campanha/arco"
-        ]
-      },
-      {
-        nome: "Olhar Atento",
-        descricao: "Acostumado a vigiar constantemente os horizontes em busca de patrulhas inimigas, perigos naturais ou fontes ocultas de água e comida, o Refugiado desenvolveu sentidos extraordinariamente aguçados.",
-        bonus: [
-          "+2 em todos os testes ativos ou passivos de Percepção e Furtividade"
-        ]
-      },
-      {
-        nome: "Resiliência",
-        descricao: "O sofrimento físico e a fadiga mental moldaram um corpo e uma mente difíceis de quebrar. Uma vez por cena, ao sofrer qualquer tipo de dano, o Refugiado pode canalizar sua força de vontade interna para mitigar parte da dor.",
-        bonus: [
-          "Uma vez por cena: reduz o dano recebido em 2d4"
-        ]
-      }
-    ],
-    habilidadesAvancadas: [],
-    codigo: "0019"
-  },
-  {
-    id: "aprendiz",
-    nome: "Aprendiz",
-    tipo: "A Crônica dos Varkhan",
-    raridade: "comum",
-    descricao: "O Aprendiz personifica a promessa do futuro e o início da jornada do herói. Geralmente jovem, ele se dedica ao estudo de um ofício complexo, uma arte refinada ou os mistérios da magia sob a tutela rigorosa de um mentor experiente. Transbordando curiosidade, entusiasmo e uma energia quase inesgotável, o Aprendiz compensa sua óbvia falta de experiência prática com uma dedicação fervorosa e uma mente aberta a novas ideias. Eles costumam ser otimistas e um pouco ingênuos, o que pode colocá-los em situações perigosas, mas sua presença em um grupo traz uma vitalidade renovadora. Em termos de jogo, o Aprendiz é um personagem de alto crescimento, que começa como um assistente versátil e gradualmente se molda em uma força especializada.",
-    imagem: "https://i.imgur.com/mYwq4Ql.png",
-    limiteAtributo: 150,
-    atributos: {
-      forca: "2d6+6",
-      vitalidade: "2d6+6",
-      agilidade: "3d6+8",
+      forca: "4d6+10",
+      vitalidade: "4d6+10",
+      agilidade: "5d6+10",
       inteligencia: "4d6+10",
-      percepcao: "3d6+6",
+      percepcao: "5d6+12",
       sorte: "5d20"
     },
     habilidadesBasicas: [
       {
-        nome: "Curiosidade",
-        descricao: "O desejo insaciável de compreender o funcionamento do mundo faz com que o Aprendiz absorva informações como uma esponja, concedendo proficiência prática em áreas do conhecimento.",
-        bonus: [
-          "+2 em testes de Conhecimento Geral, História, Arcana e testes relacionados ao uso prático de magia"
-        ]
+        nome: "Leitura de Ambiente",
+        descricao: "Você está acostumado a notar movimentações estranhas e intenções ocultas.",
+        bonus: ["Uma vez por cena: +3 em rolagem de Percepção, Agilidade ou Inteligência ao identificar perigo, emboscada, fuga ou comportamento suspeito"]
       },
       {
-        nome: "Treinável",
-        descricao: "Uma mente jovem e maleável possui uma neuroplasticidade fantástica. No início da campanha, o Aprendiz pode escolher e aprender uma Aptidão extra sem gastar pontos de criação, representando o foco recente de seus estudos.",
-        bonus: [
-          "Aprende uma Aptidão extra no início da campanha sem custo"
-        ]
+        nome: "Contato nas Ruas",
+        descricao: "Você conhece alguém que consegue favores menores ou informações rápidas.",
+        bonus: ["Uma vez por sessão: pode declarar um contato útil ligado ao submundo, bairro, comércio informal ou redes locais"]
       },
       {
-        nome: "Energia Juvenil",
-        descricao: "A juventude traz consigo um vigor físico invejável e uma recusa obstinada em aceitar a derrota. Uma vez por cena, após falhar em um teste físico, o Aprendiz pode repetir a rolagem e ficar com o melhor resultado.",
-        bonus: [
-          "Uma vez por cena: repetir uma rolagem de atributo físico, mantendo o melhor resultado"
-        ]
+        nome: "Jogo de Cintura",
+        descricao: "Você sabe lidar com situações improvisadas.",
+        bonus: ["Quando não tiver a aptidão ideal, reduz o obstáculo em -2"]
+      },
+      {
+        nome: "Anonimato",
+        descricao: "Ninguém espera muito de você no início — o que pode ser bom… ou ruim.",
+        bonus: ["Dificuldade em ser levado a sério inicialmente (-2 em testes sociais formais), mas pode passar despercebido com facilidade (+2 em furtividade social)"]
       }
     ],
-    habilidadesAvancadas: [],
-    codigo: "0020"
+    habilidadesAvancadas: []
+  },
+  {
+    id: "estrangeiro",
+    nome: "Estrangeiro",
+    tipo: "The Chaotical Gate",
+    raridade: "comum",
+    descricao: "Você não nasceu aqui. Cada rua, cada costume e cada expressão já foi um mistério. Enquanto outros vivem no automático, você observa. Entre dois mundos, você aprendeu a enxergar o que ninguém percebe.",
+    imagem: "https://i.imgur.com/LJCkS4v.png",
+    limiteAtributo: 150,
+    atributos: {
+      forca: "4d6+10",
+      vitalidade: "4d6+10",
+      agilidade: "4d6+10",
+      inteligencia: "5d6+10",
+      percepcao: "5d6+12",
+      sorte: "5d20"
+    },
+    habilidadesBasicas: [
+      {
+        nome: "Visão de Fora",
+        descricao: "Você enxerga padrões e falhas que os locais ignoram.",
+        bonus: ["Uma vez por cena: pode perguntar ao mestre 'O que está estranho aqui?' Recebe uma pista verdadeira + +3 na próxima ação relacionada"]
+      },
+      {
+        nome: "Adaptabilidade Cultural",
+        descricao: "Você aprendeu a se ajustar rapidamente a novos ambientes.",
+        bonus: ["Recebe +2 em testes sociais ou de percepção ao lidar com culturas diferentes, costumes desconhecidos ou situações fora do padrão"]
+      },
+      {
+        nome: "Bagagem de Mundo",
+        descricao: "Você traz conhecimentos que outros não têm.",
+        bonus: ["Uma vez por cena: pode declarar que conhece um idioma, um costume ou uma informação cultural relevante. Ganha vantagem narrativa na cena"]
+      },
+      {
+        nome: "Olhar Deslocado",
+        descricao: "Você percebe incoerências com facilidade.",
+        bonus: ["Recebe +2 em testes para detectar mentiras, padrões estranhos ou inconsistências"]
+      }
+    ],
+    habilidadesAvancadas: []
+  },
+  {
+    id: "familiaConservadora",
+    nome: "Família Conservadora",
+    tipo: "The Chaotical Gate",
+    raridade: "comum",
+    descricao: "Você cresceu em um ambiente de regras claras, valores rígidos e expectativas altas. Sua criação te deu estrutura, disciplina e princípios… mas também limitou sua liberdade.",
+    imagem: "https://i.imgur.com/l7JMuCZ.png",
+    limiteAtributo: 150,
+    atributos: {
+      forca: "4d6+10",
+      vitalidade: "5d6+10",
+      agilidade: "4d6+10",
+      inteligencia: "5d6+10",
+      percepcao: "5d6+10",
+      sorte: "5d20"
+    },
+    habilidadesBasicas: [
+      {
+        nome: "Disciplina Familiar",
+        descricao: "Você foi criado com regras e constância.",
+        bonus: ["Recebe +2 em testes de Vontade. Não sofre penalidades por distrações leves ou pressão emocional básica"]
+      },
+      {
+        nome: "Boa Educação",
+        descricao: "Você sabe se portar e falar da forma 'certa'.",
+        bonus: ["Recebe +2 em testes sociais formais (conversas sérias, autoridades, ambientes institucionais). Dificilmente causa má impressão inicial"]
+      },
+      {
+        nome: "Pensamento Estruturado",
+        descricao: "Você foi ensinado a pensar antes de agir.",
+        bonus: ["Uma vez por cena: pode receber +3 em uma rolagem de Inteligência ou Percepção ao analisar, planejar ou tomar decisões importantes"]
+      },
+      {
+        nome: "Valores Inabaláveis",
+        descricao: "Você tem princípios fortes que guiam suas ações.",
+        bonus: ["Recebe +2 para resistir manipulação, intimidação ou pressão social. Dificilmente muda de opinião sob influência externa"]
+      }
+    ],
+    habilidadesAvancadas: []
+  },
+  {
+    id: "nobre",
+    nome: "Nobre",
+    tipo: "The Chaotical Gate",
+    raridade: "comum",
+    descricao: "Você nasceu cercado por poder, influência e expectativas. Aprendeu desde cedo que o mundo não funciona apenas com força… mas com conexões, palavras certas e decisões bem calculadas. Onde outros pedem, você negocia.",
+    imagem: "https://i.imgur.com/CtigCiF.png",
+    limiteAtributo: 150,
+    atributos: {
+      forca: "5d6+10",
+      vitalidade: "4d6+10",
+      agilidade: "4d6+10",
+      inteligencia: "5d6+12",
+      percepcao: "4d6+10",
+      sorte: "5d20"
+    },
+    habilidadesBasicas: [
+      {
+        nome: "Etiqueta Impecável",
+        descricao: "Você sabe exatamente como se portar em qualquer ambiente formal.",
+        bonus: ["Recebe +2 em testes sociais formais (negociação, diplomacia, influência em ambientes de elite)"]
+      },
+      {
+        nome: "Mente Estratégica",
+        descricao: "Você está acostumado a pensar antes de agir.",
+        bonus: ["Uma vez por cena: pode receber +3 em uma rolagem de Inteligência ou Percepção ao analisar situações, planejar ou antecipar movimentos"]
+      },
+      {
+        nome: "Influência Familiar",
+        descricao: "Sua família abre portas — mesmo que isso tenha um preço.",
+        bonus: ["Uma vez por sessão: pode conseguir acesso a locais restritos, garantir encontro com alguém importante ou obter apoio indireto. Sucesso automático em situações plausíveis"]
+      },
+      {
+        nome: "Autoridade Natural",
+        descricao: "Sua presença impõe respeito imediato.",
+        bonus: ["Em primeiro contato com NPCs de menor status, recebe +2 em testes sociais e dificilmente é ignorado"]
+      }
+    ],
+    habilidadesAvancadas: []
   },
   {
     id: "estudante",
     nome: "Estudante",
-    tipo: "A Crônica dos Varkhan",
+    tipo: "The Chaotical Gate",
     raridade: "comum",
-    descricao: "O Estudante compartilha a faixa etária e a sede de conhecimento do Aprendiz, mas seu foco é formal, acadêmico e institucional. Criado em grandes bibliotecas, universidades ou academias de prestígio, ele é treinado em metodologias científicas, análise lógica, dedução e catalogação de dados. Costumam ser indivíduos metódicos, organizados e extremamente intelectuais, embora às vezes sofram com uma certa desconexão do mundo prático ou das nuances das ruas. Para o grupo, o Estudante é o decifrador de enigmas, o tradutor de línguas mortas e o estrategista que analisa os padrões de comportamento dos inimigos através de registros históricos.",
-    imagem: "https://i.imgur.com/S1J2wKS.png",
+    descricao: "Você cresceu dentro da rotina comum: escola, responsabilidades, sonhos e incertezas. Aprendeu a equilibrar pressão, prazos e relações sociais enquanto tentava entender seu lugar no mundo. Você desenvolveu a capacidade de aprender rápido e se adaptar sempre.",
+    imagem: "https://i.imgur.com/Fs7sD1u.png",
     limiteAtributo: 150,
     atributos: {
-      forca: "2d6+6",
-      vitalidade: "2d6+6",
-      agilidade: "3d6+8",
-      inteligencia: "4d6+10",
-      percepcao: "3d6+6",
+      forca: "4d6+10",
+      vitalidade: "4d6+10",
+      agilidade: "4d6+10",
+      inteligencia: "5d6+12",
+      percepcao: "5d6+10",
       sorte: "5d20"
     },
     habilidadesBasicas: [
       {
         nome: "Aprendizado Rápido",
-        descricao: "Graças ao domínio de técnicas avançadas de leitura dinâmica, memorização e associação de ideias, o Estudante consegue absorver novos conceitos com extrema eficiência.",
-        bonus: [
-          "+2 em todos os treinamentos de Inteligência"
-        ]
+        descricao: "Você está acostumado a absorver informações sob pressão e aplicar na prática rapidamente.",
+        bonus: ["Uma vez por cena: pode receber +3 em uma rolagem de Inteligência, Percepção ou Conhecimento ao estudar, analisar, resolver problemas ou entender situações novas"]
       },
       {
-        nome: "Curiosidade",
-        descricao: "A mente analítica do Estudante não aceita respostas superficiais e está sempre em busca de conexões ocultas.",
-        bonus: [
-          "+2 em testes de Conhecimento e Percepção"
-        ]
+        nome: "Vida Cotidiana",
+        descricao: "Você sabe lidar com tarefas comuns, burocracias e ambientes sociais básicos sem dificuldade.",
+        bonus: ["Sempre que estiver lidando com situações do dia a dia (transporte, compras, documentos, interações simples), recebe vantagem narrativa ou bônus leve a critério do mestre"]
       },
       {
-        nome: "Adaptável",
-        descricao: "Antes do início da campanha, o Estudante pode trocar os valores de um de seus atributos principais por outro, moldando sua ficha para refletir seu foco de pesquisa atual.",
-        bonus: [
-          "Troca valores de um atributo por outro antes da campanha"
-        ]
+        nome: "Improviso",
+        descricao: "Mesmo sem preparo ideal, você dá um jeito.",
+        bonus: ["Uma vez por cena: pode refazer uma rolagem (exceto combate direto pesado), mantendo o melhor resultado"]
+      },
+      {
+        nome: "Resiliência Acadêmica",
+        descricao: "Você está acostumado a lidar com pressão constante, prazos e cansaço mental.",
+        bonus: ["Sempre que falhar em uma rolagem de Inteligência, Percepção ou Conhecimento: pode receber +2 imediato para transformar a falha em sucesso parcial (com consequência leve definida pelo mestre)"]
       }
     ],
-    habilidadesAvancadas: [],
-    codigo: "0021"
+    habilidadesAvancadas: []
   },
   {
-    id: "periferia",
-    nome: "Periferia",
-    tipo: "A Crônica dos Varkhan",
-    raridade: "comum",
-    descricao: "O arquétipo da Periferia representa aqueles que cresceram nas margens da sociedade — nos becos escuros das metrópoles, nos distritos industriais esquecidos ou nas favelas onde a lei do Estado raramente chega. Criados sob a égide da escassez, eles aprenderam desde cedo que as regras formais da sociedade muitas vezes servem apenas para proteger os privilegiados. Consequentemente, desenvolveram uma astúcia prática invejável, uma profunda desconfiança em relação a figuras de autoridade e uma lealdade inabalável para com o seu próprio grupo.",
-    imagem: "https://i.imgur.com/useLuQO.png",
-    limiteAtributo: 150,
-    atributos: {
-      forca: "3d6+8",
-      vitalidade: "3d6+8",
-      agilidade: "4d6+10",
-      inteligencia: "3d6+6",
-      percepcao: "4d6+10",
-      sorte: "5d20"
+      id: "sobrevivente",
+      nome: "Sobrevivente",
+      tipo: "The Chaotical Gate",
+      raridade: "raro",
+      descricao: "Você passou por algo que deveria ter te quebrado… mas não quebrou. Dor, perda, medo — tudo virou aprendizado. Hoje, seu corpo reata antes da mente, e seu instinto grita quando o perigo se aproxima.",
+      imagem: "https://i.imgur.com/ypdRDVt.png",
+      limiteAtributo: 150,
+      atributos: {
+        forca: "5d6+10",
+        vitalidade: "5d6+12",
+        agilidade: "4d6+10",
+        inteligencia: "4d6+10",
+        percepcao: "4d6+10",
+        sorte: "5d20"
+      },
+      habilidadesBasicas: [
+        {
+          nome: "Casca Grossa",
+          descricao: "Você já passou por coisa pior.",
+          bonus: ["Recebe +2 de Defesa ou +2 em testes para resistir dor, medo ou exaustão"]
+        },
+        {
+          nome: "Sobrevivência Prática",
+          descricao: "Você sabe se virar mesmo sem recursos.",
+          bonus: ["Em situações de escassez, recebe +2 em testes gerais relacionados à sobrevivência, rastreamento, improviso ou resistência"]
+        },
+        {
+          nome: "Instinto de Sobrevivência",
+          descricao: "Seu corpo reage antes mesmo de você entender o que está acontecendo.",
+          bonus: ["Uma vez por cena: reduzir dano drasticamente, agir antes do impacto ou detectar ameaça. Recebe +3 em uma rolagem defensiva"]
+        },
+        {
+          nome: "Sangue Frio",
+          descricao: "Quando tudo desmorona, você se mantém firme.",
+          bonus: ["Recebe +2 em testes de Vontade e Percepção em perigo extremo, pressão intensa ou risco de morte. Não sofre penalidades por medo ou pânico"]
+        }
+      ],
+      habilidadesAvancadas: []
     },
-    habilidadesBasicas: [
-      {
-        nome: "Instinto de Rua",
-        descricao: "A vida nas ruas ensina que um segundo de distração pode ser fatal. O personagem desenvolve um \"sexto sentido\" para ler as intenções das pessoas e antecipar perigos urbanos.",
-        bonus: [
-          "Uma vez por cena: repetir um teste de Percepção falhado"
-        ]
+    {
+      id: "popstar",
+      nome: "PopStar",
+      tipo: "The Chaotical Gate",
+      raridade: "raro",
+      descricao: "Você viveu sob luzes, câmeras e julgamentos constantes. Aprendeu a controlar sua imagem, influenciar pessoas e dominar ambientes sociais… mas nunca teve o luxo de desaparecer.",
+      imagem: "https://i.imgur.com/C7BisWM.png",
+      limiteAtributo: 150,
+      atributos: {
+        forca: "4d6+10",
+        vitalidade: "4d6+10",
+        agilidade: "5d6+10",
+        inteligencia: "5d6+10",
+        percepcao: "5d6+10",
+        sorte: "5d20"
       },
-      {
-        nome: "Corre ou Morre",
-        descricao: "Em situações de perigo extremo, a velocidade e a agilidade física são as únicas garantias de sobrevivência.",
-        bonus: [
-          "+2 em Atletismo, Acrobacia e testes de fuga"
-        ]
-      },
-      {
-        nome: "Família Acima de Tudo",
-        descricao: "Quando o personagem realiza ações de suporte, defesa ou proteção direta a um aliado, ele recebe um bônus em sua rolagem, canalizando sua determinação em manter sua comunidade viva.",
-        bonus: [
-          "+3 em ações de suporte/defesa para proteger aliados"
-        ]
-      }
-    ],
-    habilidadesAvancadas: [],
-    codigo: "0022"
-  },
-  {
-    id: "militar",
-    nome: "Militar",
-    tipo: "A Crônica dos Varkhan",
-    raridade: "raro",
-    descricao: "O Militar é o produto de anos de disciplina rigorosa, treinamento tático exaustivo e, na maioria das vezes, do batismo de fogo no campo de batalha. Seja um soldado de infantaria de um império, um guarda de elite de uma metrópole ou um mercenário calejado, ele compreende perfeitamente a importância da hierarquia, do trabalho em equipe e da execução precisa de ordens.",
-    imagem: "https://i.imgur.com/9gLD8aP.jpeg",
-    limiteAtributo: 150,
-    atributos: {
-      forca: "5d6+14",
-      vitalidade: "5d6+14",
-      agilidade: "3d6+8",
-      inteligencia: "2d6+6",
-      percepcao: "4d6+10",
-      sorte: "5d20"
+      habilidadesBasicas: [
+        {
+          nome: "Presença Dominante",
+          descricao: "Você sabe como prender atenção e controlar o foco das pessoas.",
+          bonus: ["Uma vez por cena, pode receber +3 em uma rolagem social (Persuasão, Manipulação, Performance ou Intimidação leve)"]
+        },
+        {
+          nome: "Centro das Atenções",
+          descricao: "Você pode transformar qualquer situação em um palco.",
+          bonus: ["Uma vez por cena: atrair atenção de múltiplos alvos, distrair inimigos. Inimigos recebem -2 para resistir à distração, aliados recebem +2 em ações coordenadas"]
+        },
+        {
+          nome: "Fama",
+          descricao: "Seu rosto ou nome abre portas… ou cria problemas.",
+          bonus: ["Pode conseguir acesso facilitado a locais, pessoas ou eventos. Pode pedir favores simples baseados em reconhecimento"]
+        },
+        {
+          nome: "Leitura de Público",
+          descricao: "Você entende reações antes mesmo delas acontecerem.",
+          bonus: ["Recebe +2 em Percepção em interações sociais. Identifica emoções dominantes de grupos sem rolagem"]
+        }
+      ],
+      habilidadesAvancadas: []
     },
-    habilidadesBasicas: [
-      {
-        nome: "Disciplina Militar",
-        descricao: "O treinamento psicológico das forças armadas prepara a mente para suportar pressões extremas.",
-        bonus: [
-          "Uma vez por cena: ignorar penalidades mentais ativas"
-        ]
+    {
+      id: "membroCla",
+      nome: "Membro de Clã",
+      tipo: "The Chaotical Gate",
+      raridade: "raro",
+      descricao: "Você nasceu dentro de uma tradição antiga. Disciplina, respeito e treinamento fizeram parte da sua vida desde cedo. Cada movimento seu carrega técnica, cada decisão carrega propósito.",
+      imagem: "https://i.imgur.com/jiGSd0q.png",
+      limiteAtributo: 150,
+      atributos: {
+        forca: "4d6+10",
+        vitalidade: "5d6+10",
+        agilidade: "5d6+12",
+        inteligencia: "4d6+10",
+        percepcao: "4d6+10",
+        sorte: "5d20"
       },
-      {
-        nome: "Treinamento de Combate",
-        descricao: "Especialista no manejo de armas e no aproveitamento de coberturas e ângulos de ataque.",
-        bonus: [
-          "+1 dado extra em testes de ataque ou uso prático de armas físicas"
-        ]
-      },
-      {
-        nome: "Veterano",
-        descricao: "Anos de serviço ativo concedem ao Militar um olho clínico para a guerra.",
-        bonus: [
-          "Bônus narrativo em identificar formações táticas, estimar números e prever estratégias"
-        ]
-      }
-    ],
-    habilidadesAvancadas: [],
-    codigo: "0023"
-  },
-  {
-    id: "atleta",
-    nome: "Atleta",
-    tipo: "A Crônica dos Varkhan",
-    raridade: "raro",
-    descricao: "O Atleta dedicou sua vida à busca da perfeição física, à superação de limites biológicos e à glória da competição. Sejam corredores velocistas, lutadores de arena, ginastas acrobáticos ou nadadores de resistência, eles possuem uma coordenação motora impecável, reflexos rápidos e uma musculatura perfeitamente condicionada. Além do vigor físico, o Atleta carrega uma mentalidade competitiva inabalável; ele vê cada obstáculo, monstro ou desafio como um oponente a ser superado. No grupo de aventureiros, ele se destaca pela mobilidade extraordinária no campo de batalha, sendo capaz de alcançar posições estratégicas e realizar manobras acrobáticas impossíveis para outros personagens.",
-    imagem: "https://i.imgur.com/jPUuvNF.png",
-    limiteAtributo: 150,
-    atributos: {
-      forca: "5d6+12",
-      vitalidade: "5d6+14",
-      agilidade: "5d6+14",
-      inteligencia: "2d6+6",
-      percepcao: "3d6+8",
-      sorte: "5d20"
-    },
-    habilidadesBasicas: [
-      {
-        nome: "Explosão Física",
-        descricao: "Uma reserva de energia explosiva acumulada através de anos de treinos de alta intensidade (HIIT). Uma vez por cena, o Atleta pode ativar esta habilidade para receber um bônus temporário massivo em sua velocidade de movimentação, permitindo-lhe cobrir distâncias duplas, saltar abismos ou alcançar inimigos distantes instantaneamente sem gastar suas ações principais.",
-        bonus: [
-          "Uma vez por cena: dobrar deslocamento/atingir posições distantes",
-          "Permite saltos e manobras sem custo extra"
-        ]
-      },
-      {
-        nome: "Corpo Treinado",
-        descricao: "Um físico moldado pela disciplina biológica e resistência ao ácido lático. O Atleta ignora completamente os efeitos negativos de fadiga leve ou exaustão física básica, permitindo que continue operando em sua performance máxima mesmo sob condições climáticas adversas ou após longos períodos de esforço contínuo que esgotariam personagens comuns.",
-        bonus: [
-          "Ignora efeitos de fadiga leve/exaustão física básica",
-          "Mantém performance máxima sob esforço prolongado"
-        ]
-      },
-      {
-        nome: "Competidor",
-        descricao: "A chama da vitória queima intensamente em seu peito. Sempre que estiver envolvido em uma disputa física direta contra outro personagem (como testes resistidos de Força, Atletismo, Luta Livre, Queda de Braço ou Corridas de velocidade), o Atleta recebe um bônus significativo em suas rolagens para garantir a vitória e demonstrar sua superioridade atlética.",
-        bonus: [
-          "+Bônus significativo em disputas físicas diretas",
-          "Vantagem em testes resistidos físicos específicos"
-        ]
-      }
-    ],
-    habilidadesAvancadas: [],
-    codigo: "0024"
-  },
-  {
-    id: "criminoso",
-    nome: "Criminoso",
-    tipo: "A Crônica dos Varkhan",
-    raridade: "raro",
-    descricao: "O Criminoso opera nas sombras da sociedade, dominando as artes da infiltração, do silêncio e da oportunidade. Seja um ladrão de colarinho branco que frauda contratos, um batedor de carteiras ágil nos mercados ou um contrabandista que conhece todas as rotas secretas, ele compreende as fraquezas do sistema legal e sabe como explorá-las em seu benefício. São indivíduos pragmáticos, perspicazes e extremamente discretos, que preferem resolver problemas com inteligência e sutileza antes que as lâminas precisem ser sacadas. Sua rede de contatos no submundo é uma ferramenta inestimável para obter informações que o dinheiro legal não pode comprar.",
-    imagem: "https://i.imgur.com/gMfesnu.png",
-    limiteAtributo: 150,
-    atributos: {
-      forca: "3d6+8",
-      vitalidade: "3d6+8",
-      agilidade: "6d6+14",
-      inteligencia: "4d6+10",
-      percepcao: "5d6+12",
-      sorte: "5d20"
-    },
-    habilidadesBasicas: [
-      {
-        nome: "Mãos Leves",
-        descricao: "Dedos ágeis, movimentos fluidos e uma capacidade excepcional de desviar a atenção visual alheia. O Criminoso possui extrema facilidade e bônus passivos elevados em testes de Prestidigitação, Furtar Bolsos, Arrombar Fechaduras, Sabotar Armadilhas ou ocultar pequenos objetos (como adagas ou chaves) em seu próprio corpo sem levantar suspeitas.",
-        bonus: [
-          "Bônus elevados em Prestidigitação, Furtar Bolsos e Arrombar",
-          "Facilidade para ocultar pequenos objetos no corpo"
-        ]
-      },
-      {
-        nome: "Fuga Planejada",
-        descricao: "O bom criminoso nunca entra em um recinto sem antes mapear todas as saídas de emergência. Uma vez por sessão de jogo, quando se encontrar cercado fisicamente por inimigos ou guardas, o Criminoso pode ativar esta habilidade para realizar um movimento evasivo espetacular, evitando ser encurralado e reposicionando-se em um local seguro ou rota de fuga.",
-        bonus: [
-          "Uma vez por sessão: movimento evasivo e reposicionamento seguro"
-        ]
-      },
-      {
-        nome: "Contato Sombrio",
-        descricao: "Uma vasta e complexa rede de conexões ilegais construída ao longo de sua carreira. O Criminoso possui acesso direto e facilitado ao submundo, permitindo-lhe obter informações confidenciais sobre alvos, adquirir itens contrabandeados ou venenos proibidos, encontrar rotas de fuga seguras e contratar serviços especializados de outros marginais.",
-        bonus: [
-          "Acesso facilitado a informações e itens contrabandeados",
-          "Permite contratar serviços do submundo ou rotas de fuga"
-        ]
-      }
-    ],
-    habilidadesAvancadas: [],
-    codigo: "0025"
-  },
-  {
-    id: "professor",
-    nome: "Professor",
-    tipo: "A Crônica dos Varkhan",
-    raridade: "raro",
-    descricao: "O Professor representa o ápice do conhecimento acadêmico e da erudição formal. Tendo dedicado décadas de sua vida à pesquisa científica, ao ensino em grandes universidades e à catalogação de saberes esquecidos, ele possui uma mente analítica extraordinária. Embora possa não ter o vigor físico de um guerreiro, o Professor compensa essa fraqueza com uma capacidade incomparável de decifrar línguas antigas, compreender fenômenos físicos e misticismo complexo, e identificar os pontos fracos de qualquer criatura ou estrutura. No grupo, ele atua como o cérebro das operações, o decifrador de mistérios e o conselheiro estratégico.",
-    imagem: "https://i.imgur.com/mZy3HGe.png",
-    limiteAtributo: 150,
-    atributos: {
-      forca: "2d6+6",
-      vitalidade: "2d6+6",
-      agilidade: "2d6+6",
-      inteligencia: "6d6+14",
-      percepcao: "5d6+12",
-      sorte: "4d20+20"
-    },
-    habilidadesBasicas: [
-      {
-        nome: "Enciclopédia Viva",
-        descricao: "Uma mente que funciona como uma biblioteca perfeitamente catalogada. O Professor possui um vasto conhecimento sobre as mais diversas disciplinas. Ele pode realizar testes para se lembrar de fatos históricos, leis da física, folclore místico, fraquezas de monstros ou detalhes geográficos com grande facilidade e precisão, muitas vezes dispensando a necessidade de rolagens para informações comuns.",
-        bonus: [
-          "Bônus elevados em testes de conhecimento e memorização; reduz necessidade de rolagens"
-        ]
-      },
-      {
-        nome: "Didática",
-        descricao: "A arte de transmitir conhecimentos complexos de forma simples e acionável. Ao explicar detalhadamente um plano tático, uma fraqueza de inimigo ou um método de ação para seus aliados, o Professor concede a eles facilidade ou bônus temporários em seus testes relacionados àquela explicação durante a cena seguinte.",
-        bonus: [
-          "Concede bônus temporários a aliados após explicação detalhada (próxima cena)"
-        ]
-      },
-      {
-        nome: "Pesquisa Avançada",
-        descricao: "Métodos eficientes de triagem de dados e análise bibliográfica. Quando o Professor tem acesso a uma biblioteca física, arquivos históricos ou bancos de dados digitais, ele consegue reduzir drasticamente o tempo necessário para encontrar informações cruciais ou desvendar mistérios e criptografias complexas.",
-        bonus: [
-          "Redução de tempo para descobrir informações; bônus em investigações com recursos disponíveis"
-        ]
-      }
-    ],
-    habilidadesAvancadas: [],
-    codigo: "0026"
-  },
-  {
-    id: "sobrevivente",
-    nome: "Sobrevivente",
-    tipo: "A Crônica dos Varkhan",
-    raridade: "raro",
-    descricao: "O Sobrevivente é aquele que encarou os cenários mais hostis do mundo — desertos inclementes, florestas tropicais repletas de predadores, invernos polares ou o isolamento total após um desastre — e conseguiu retornar para contar a história. Ele é pragmático, durão e possui uma \"casca grossa\" moldada por privações severas. Não se importa com luxos, etiquetas sociais ou formalidades; seu único foco é a sobrevivência biológica e a manutenção da integridade da seu grupo. No grupo, ele é o especialista em acampamentos, navegação em terrenos selvagens, primeiros socorros e gerenciamento de recursos escassos.",
-    imagem: "https://i.imgur.com/r8zrIII.jpeg",
-    limiteAtributo: 150,
-    atributos: {
-      forca: "4d6+10",
-      vitalidade: "6d6+14",
-      agilidade: "4d6+10",
-      inteligencia: "3d6+8",
-      percepcao: "5d6+12",
-      sorte: "5d20"
-    },
-    habilidadesBasicas: [
-      {
-        nome: "Instinto de Sobrevivência",
-        descricao: "Um \"sexto sentido\" afiado pelo perigo constante de predadores e armadilhas naturais. Uma vez por cena, o Sobrevivente pode antecipar um desastre iminente (como o acionamento de uma armadilha mecânica, um desmoronamento de rochas ou um ataque surpresa de uma criatura oculta), recebendo uma ação de reação imediata para se proteger ou alertar seus aliados.",
-        bonus: [
-          "Uma vez por cena: reação imediata para evitar desastre iminente"
-        ]
-      },
-      {
-        nome: "Casca Grossa",
-        descricao: "Um corpo e uma mente temperados contra a dor e o desconforto físico. O Sobrevivente reduz significativamente todos os efeitos negativos causados por exaustão física, fome, sede, temperaturas extremas ou toxinas e venenos leves, mantendo-se totalmente funcional em cenários onde outros personagens sucumbiriam à fraqueza.",
-        bonus: [
-          "Redução de efeitos negativos por condições ambientais e exaustão"
-        ]
-      },
-      {
-        nome: "Improvisador",
-        descricao: "A escassez é a mãe de todas as invenções. O Sobrevivente possui a habilidade de criar ferramentas improvisadas, curativos de emergência, armadilhas simples ou abrigos temporários utilizando apenas galhos, pedras, sucatas ou recursos limitados encontrados no ambiente ao seu redor, garantindo a utilidade do grupo mesmo sem equipamentos adequados.",
-        bonus: [
-          "Criação improvisada de ferramentas, curativos e abrigos com recursos limitados"
-        ]
-      }
-    ],
-    habilidadesAvancadas: [],
-    codigo: "0027"
-  },
-  {
-    id: "filho_do_heroi",
-    nome: "Filho do Herói",
-    tipo: "A Crônica dos Varkhan",
-    raridade: "epico",
-    descricao: "O Filho de Herói cresceu sob a sombra de feitos lendários e de expectativas sociais esmagadoras. Ele carrega em suas veias o sangue de um herói do passado e, em seus ombros, a pressão constante de provar que é digno desse legado. Essa herança traz tanto uma determinação de aço quanto um conflito interno constante. Eles são líderes natos, cujos nomes e linhagens podem abrir portas em castelos reais ou, inversamente, atrair a fúria de inimigos jurados de seus pais. No campo de batalha, o Filho de Herói luta com uma bravura contagiante, servindo como o escudo e a espada do grupo, inspirando todos ao seu redor a superarem seus próprios limites.",
-    imagem: "https://i.imgur.com/eTlXVhq.png",
-    limiteAtributo: 150,
-    atributos: {
-      forca: "4d8+14",
-      vitalidade: "5d8+14",
-      agilidade: "5d8+14",
-      inteligencia: "4d6+12",
-      percepcao: "4d6+12",
-      sorte: "4d20+20"
-    },
-    habilidadesBasicas: [
-      {
-        nome: "Hereditariedade Heroica",
-        descricao: "O sangue dos grandes guerreiros e salvadores do mundo corre em suas veias, despertando em momentos de extrema necessidade. Uma vez por cena, o Filho de Herói recebe um bônus extra massivo em qualquer teste relacionado a atos de pura bravura, resistência moral contra a corrupção ou testes de liderança para inspirar seus companheiros.",
-        bonus: [
-          "Uma vez por cena: bônus extra massivo em testes de bravura, resistência moral ou liderança"
-        ]
-      },
-      {
-        nome: "Destemido",
-        descricao: "A linhagem heroica confere uma mente blindada contra o terror. O personagem é parcialmente imune ou ignora penalidades leves e efeitos leves negativos causados por Medo, Pavor, Intimidação ou magias de controle mental que tentem quebrar sua determinação inabalável de combate.",
-        bonus: [
-          "Parcial imunidade/ignora penalidades leves de Medo, Pavor, Intimidação ou magias de controle mental"
-        ]
-      },
-      {
-        nome: "Marca do Legado",
-        descricao: "O próprio destino parece conspirar para manter a linhagem do herói viva. Uma vez por campanha, ao sofrer um ataque que o levaria à morte ou ao sofrer um dano crítico devastador, uma força interior mística se ativa, recuperando instantaneamente uma quantidade significativa de seus pontos de vida (HP), permitindo-lhe continuar lutando.",
-        bonus: [
-          "Uma vez por campanha: ao sofrer ataque letal/critico, recupera quantidade significativa de HP"
-        ]
-      }
-    ],
-    habilidadesAvancadas: [],
-    codigo: "0028"
-  },
-  {
-    id: "genio",
-    nome: "Gênio",
-    tipo: "A Crônica dos Varkhan",
-    raridade: "epico",
-    descricao: "O Gênio possui uma mente que opera em um nível cognitivo e de processamento de dados incompreensível para os mortais comuns. Desde a infância, ele desvenda equações matemáticas impossíveis, cria tecnologias revolucionárias ou decifra fórmulas mágicas ancestrais com a mesma facilidade com que uma criança brinca. Embora possam parecer arrogantes, excêntricos ou emocionalmente distantes devido à velocidade de seus pensamentos, sua capacidade de antecipar cenários e calcular variáveis em tempo real é uma vantagem tática insuperável. No grupo, o Gênio é o arquiteto dos planos mais complexos e o solucionador definitivo de qualquer barreira intelectual ou tecnológica.",
-    imagem: "https://i.imgur.com/bdPe0TI.png",
-    limiteAtributo: 150,
-    atributos: {
-      forca: "2d6+6",
-      vitalidade: "3d6+8",
-      agilidade: "4d6+10",
-      inteligencia: "6d8+14",
-      percepcao: "5d8+14",
-      sorte: "4d20+20"
-    },
-    habilidadesBasicas: [
-      {
-        nome: "Aprendizado Acelerado",
-        descricao: "Uma capacidade cognitiva fora da curva que permite a absorção instantânea de padrões. O Gênio consegue aprender novas fórmulas matemáticas, feitiços místicos ou idiomas inteiros em metade do tempo e com metade dos recursos normalmente exigidos por outros personagens, Recebe +2 Aptidões gratuitas.",
-        bonus: [
-          "Aprende fórmulas/feitiços/idiomas em metade do tempo; +2 Aptidões gratuitas"
-        ]
-      },
-      {
-        nome: "Raciocínio Superior",
-        descricao: "Processamento lógico em tempo real. O Gênio recebe bônus substanciais constantes em todos os testes de Inteligência (INT) que envolvam lógica pura, criptografia, dedução científica, decifração de enigmas antigos ou engenharia reversa de tecnologias desconhecidas.",
-        bonus: [
-          "Bônus substanciais em testes de INT relacionados a lógica, criptografia e engenharia"
-        ]
-      },
-      {
-        nome: "Mente Estratégica",
-        descricao: "O campo de batalha e as interações sociais são vistos pelo Gênio como um tabuleiro de xadrez tridimensional. Uma vez por cena, ele pode analisar o cenário e coordenar as ações de seus aliados, permitindo-lhes reposicionar-se ou reorganizar seus recursos físicos e mágicos de forma taticamente ideal, otimizando a eficiência do grupo.",
-        bonus: [
-          "Uma vez por cena: analisar cenário e coordenar reposicionamento/táticas dos aliados"
-        ]
-      }
-    ],
-    habilidadesAvancadas: [],
-    codigo: "0029"
-  },
-  {
-    id: "herdeiro_de_cla",
-    nome: "Herdeiro de Clã",
-    tipo: "A Crônica dos Varkhan",
-    raridade: "epico",
-    descricao: "O Herdeiro de Clã pertence à alta nobreza, a dinastias mercantis de imensa riqueza ou a clãs de guerreiros tradicionais de prestígio histórico. Criado desde o berço sob a tutela dos melhores mentores, ele foi treinado nas artes da diplomacia, da etiqueta, da estratégia política e em técnicas refinadas de combate. Ele possui uma postura impecável e uma autoridade natural que exige respeito. O Herdeiro de Clã sabe como navegar pelas cortes reais, negociar tratados comerciais e usar o peso de seu nome familiar para obter vantagens que a força bruta jamais conseguiria. No grupo, ele é o diplomata refinado, o financiador de expedições e um combatente de técnica cirúrgica.",
-    imagem: "https://i.imgur.com/MRcO0Tx.png",
-    limiteAtributo: 150,
-    atributos: {
-      forca: "4d6+10",
-      vitalidade: "5d6+12",
-      agilidade: "4d8+14",
-      inteligencia: "4d6+12",
-      percepcao: "5d6+14",
-      sorte: "5d20"
-    },
-    habilidadesBasicas: [
-      {
-        nome: "Prestígio",
-        descricao: "O nome de sua família carrega séculos de história e poder político. O Herdeiro pode influenciar NPCs de alto escalão (nobres, reis, generais ou grandes mercadores) através de testes sociais, usando sua influência familiar para obter favores políticos, informações confidenciais ou livre trânsito em territórios controlados.",
-        bonus: [
-          "Influenciar NPCs de alto escalão; obter favores, informações ou livre trânsito"
-        ]
-      },
-      {
-        nome: "Recursos do Clã",
-        descricao: "Uma linha de crédito e suporte logístico quase ilimitada com a riqueza de sua família. O Herdeiro pode solicitar equipamentos de alta qualidade, financiamento para projetos do grupo, transporte de luxo ou até mesmo o apoio temporário de guardas e especialistas leais ao seu clã durante a campanha.",
-        bonus: [
-          "Solicitar equipamentos, financiamento ou apoio temporário de guardas/especialistas"
-        ]
-      },
-      {
-        nome: "Treinamento Privilegiado",
-        descricao: "A melhor educação marcial e acadêmica que o dinheiro e a tradição podem comprar. O Herdeiro recebe bônus constantes em técnicas de combate específicas (como esgrima ou arquearia fina) ou em um conjunto selecionado de habilidades sociais e acadêmicas ensinadas exclusivamente pelos tutores de sua dinastia.",
-        bonus: [
-          "Bônus em técnicas de combate selecionadas e habilidades sociais/acadêmicas específicas"
-        ]
-      }
-    ],
-    habilidadesAvancadas: [],
-    codigo: "0030"
-  },
-  {
-    id: "crianca_milagrosa",
-    nome: "Criança Milagrosa",
-    tipo: "A Crônica dos Varkhan",
-    raridade: "lendario",
-    descricao: "A Criança Milagrosa é um ser tocado diretamente pelas forças da criação, deuses ou pelo fluxo do próprio universo desde o seu nascimento. Ela exibe um talento místico e uma pureza espiritual tão avassaladores que desafiam qualquer lógica de idade ou experiência. Sua presença é magnética e inspiradora, servindo como um farol de esperança inabalável mesmo nas eras mais sombrias da história. Ela não precisa de anos de estudo acadêmico ou treinamento militar; o poder e o conhecimento fluem através dela de forma natural e intuitiva. No grupo, a Criança Milagrosa é a portadora de milagres, capaz de curar feridas impossíveis, dissipar trevas antigas e elevar a alma de seus aliados a patamares divinos.",
-    imagem: "https://i.imgur.com/kmyh2vh.png",
-    limiteAtributo: 150,
-    atributos: {
-      forca: "4d8+14",
-      vitalidade: "4d8+14",
-      agilidade: "5d8+16",
-      inteligencia: "6d8+16",
-      percepcao: "5d8+16",
-      sorte: "3d20+40"
-    },
-    habilidadesBasicas: [
-      {
-        nome: "Prodígio",
-        descricao: "O talento místico e intelectual flui através dela sem qualquer esforço consciente. A Criança Milagrosa recebe um bônus contínuo, permanente e cumulativo em todos os seus testes de Inteligência (INT) ou no uso de suas habilidades especiais e místicas, refletindo sua conexão direta com a sabedoria cósmica.",
-        bonus: [
-          "Bônus contínuo, permanente e cumulativo em testes de INT e uso de habilidades místicas"
-        ]
-      },
-      {
-        nome: "Energia Juvenil",
-        descricao: "Um vigor espiritual e físico que se recusa a ser contido por limitações biológicas. Uma vez por cena, a Criança Milagrosa pode repetir qualquer teste físico (Força, Vitalidade ou Agilidade) que tenha falhado, canalizando sua determinação pura para reescrever as leis da física ao seu redor.",
-        bonus: [
-          "Uma vez por cena: repetir qualquer teste físico falhado, mantendo o melhor resultado"
-        ]
-      },
-      {
-        nome: "Inspiração",
-        descricao: "A pureza de sua alma e a magnitude de sua aura espiritual elevam o moral de todos ao seu redor. Todos os aliados próximos em sua presença recebem bônus temporários significativos em todos os seus testes e rolagens, sentindo-se revigorados, corajosos e protegidos ao lutarem ao lado da Criança Milagrosa.",
-        bonus: [
-          "Aliados próximos recebem bônus temporários significativos em testes e rolagens"
-        ]
-      }
-    ],
-    habilidadesAvancadas: [],
-    codigo: "0031"
-  },
-  {
-    id: "escolhido",
-    nome: "Escolhido",
-    tipo: "A Crônica dos Varkhan",
-    raridade: "lendario",
-    descricao: "O Escolhido é o protagonista das lendas e profecias antigas. Marcado pelas divindades, pelo destino ou pelas forças fundamentais do universo para cumprir um propósito monumental que alterará o curso da história humana. Ele carrega uma aura inconfundível de autoridade, destino e poder latente. Cada passo que dá parece ser sutilmente guiado por uma força maior, e o próprio tecido da realidade parece se curvar para garantir que ele cumpra sua missão profética. São líderes natos, guerreiros formidáveis e símbolos vivos de mudança, capazes de realizar feitos considerados impossíveis para qualquer outro ser mortal.",
-    imagem: "https://i.imgur.com/WEGH4Sk.png",
-    limiteAtributo: 150,
-    atributos: {
-      forca: "5d8+16",
-      vitalidade: "5d8+16",
-      agilidade: "6d8+16",
-      inteligencia: "5d8+16",
-      percepcao: "5d8+16",
-      sorte: "3d20+40"
-    },
-    habilidadesBasicas: [
-      {
-        nome: "Ascensão Rápida",
-        descricao: "O próprio universo acelera o desenvolvimento de suas capacidades para prepará-lo para seu destino. O Escolhido recebe bônus adicionais constantes e progressivos em qualquer teste relacionado aos seus atributos principais ou no uso de suas técnicas especiais (\"Arts\"), evoluindo a uma velocidade incomparavelmente maior que seus companheiros.",
-        bonus: [
-          "Bônus adicionais constantes e progressivos em testes de atributos principais e uso de Arts"
-        ]
-      },
-      {
-        nome: "Intuição Avançada",
-        descricao: "Sussurros do próprio destino alertam sua mente momentos antes do perigo se materializar. Uma vez por cena, o Escolhido pode prever com precisão absoluta a próxima ação, ataque ou movimento de um inimigo, permitindo que ele ou um aliado se esquivem perfeitamente ou realizem um contra-ataque devastador com vantagem total.",
-        bonus: [
-          "Uma vez por cena: prever ação/ataque do inimigo, permitindo esquiva ou contra-ataque com vantagem"
-        ]
-      },
-      {
-        nome: "Aura de Autoridade",
-        descricao: "Uma presença magnética e imponente que emana de seu próprio ser, exigindo respeito e lealdade de aliados e temor de inimigos. Aliados sob sua liderança direta recebem bônus significativos em testes de combate, resistência mental e testes de liderança, lutando com um fervor e coragem redobrados sob a bandeira do Escolhido.",
-        bonus: [
-          "Aliados sob sua liderança recebem bônus significativos em combate, resistência mental e testes sociais"
-        ]
-      }
-    ],
-    habilidadesAvancadas: [],
-    codigo: "0032"
-  },
-  {
-    id: "humano_perfeito",
-    nome: "Humano Perfeito",
-    tipo: "A Crônica dos Varkhan",
-    raridade: "lendario",
-    descricao: "O Humano Perfeito representa o ápice absoluto da evolução física, mental e espiritual de sua espécie. Ele é a harmonia perfeita encarnada: livre de qualquer falha genética, fraqueza moral ou limitação corporal. Exibe uma simetria física deslumbrante, uma capacidade cognitiva incomparável e atributos físicos que beiram o divino. Ele não é apenas bom em uma área; ele é perfeito em todas. Age com uma calma imperturbável e uma precisão cirúrgica em qualquer situação, seja decifrando uma fórmula científica complexa, negociando a paz entre impérios ou derrotando exércitos inteiros em combate corpo a corpo.",
-    imagem: "https://i.imgur.com/Jrfpi7z.png",
-    limiteAtributo: 150,
-    atributos: {
-      forca: "6d8+16",
-      vitalidade: "6d8+16",
-      agilidade: "6d8+16",
-      inteligencia: "6d8+16",
-      percepcao: "6d8+16",
-      sorte: "4d20+20"
-    },
-    habilidadesBasicas: [
-      {
-        nome: "Potencial Máximo",
-        descricao: "Seus limites biológicos estão situados muito além do que a ciência ou a magia consideram possíveis para os mortais comuns. Uma vez por sessão de jogo, o Humano Perfeito pode aumentar temporariamente qualquer um de seus atributos em um valor extraordinário de +15, permitindo-lhe realizar feitos físicos ou mentais considerados milagres absolutos.",
-        bonus: [
-          "Uma vez por sessão: aumentar temporariamente um atributo em +15"
-        ]
-      },
-      {
-        nome: "Resiliência Absoluta",
-        descricao: "Um corpo e uma mente perfeitamente temperados, capazes de absorver impactos que destruiriam estruturas de aço. Uma vez por cena, ao sofrer um ataque crítico ou uma quantidade de dano que seria fatal para outros personagens, o Humano Perfeito pode mitigar o impacto, reduzindo drasticamente a severidade do ferimento e anulando quaisquer efeitos colaterais negativos.",
-        bonus: [
-          "Uma vez por cena: mitigar dano crítico/fatal e anular efeitos colaterais"
-        ]
-      },
-      {
-        nome: "Percepção Superior",
-        descricao: "Seus sentidos operam em frequências perfeitas, processando microdetalhes do ambiente em tempo real. Uma vez por sessão de jogo, o Humano Perfeito pode detectar automaticamente qualquer armadilha oculta, emboscada inimiga, mentira social ou presença invisível em sua vizinhança imediata, anulando completamente qualquer chance de o grupo ser pego de surpresa.",
-        bonus: [
-          "Uma vez por sessão: detectar armadilhas, emboscadas, mentiras ou presenças invisíveis"
-        ]
-      }
-    ],
-    habilidadesAvancadas: [],
-    codigo: "0033"
-  },
-  {
-    id: "reencarnado",
-    nome: "Reencarnado",
-    tipo: "A Crônica dos Varkhan",
-    raridade: "lendario",
-    descricao: "O Reencarnado é uma alma antiga que retém as memórias, conhecimentos e experiências de suas vidas passadas, tendo despertado neste novo corpo e era. Ele carrega a sabedoria acumulada de séculos, técnicas de combate esquecidas pelo tempo e uma perspectiva profundamente filosófica sobre a vida, a morte e o fluxo da história. Costumam ser indivíduos calmos, enigmáticos e por vezes melancólicos, pois já viram impérios erguerem-se e caírem em pó múltiplas vezes. No entanto, sua experiência prática acumulada em dezenas de existências anteriores faz dele um aliado de valor inestimável, capaz de trazer soluções do passado para os problemas do presente.",
-    imagem: "https://i.imgur.com/ADVh9kV.png",
-    limiteAtributo: 150,
-    atributos: {
-      forca: "5d8+16",
-      vitalidade: "5d8+16",
-      agilidade: "5d8+16",
-      inteligencia: "6d8+16",
-      percepcao: "6d8+16",
-      sorte: "3d20+40"
-    },
-    habilidadesBasicas: [
-      {
-        nome: "Memória de Vidas Anteriores",
-        descricao: "O conhecimento acumulado de eras passadas está codificado em sua alma e pode ser acessado à vontade. O Reencarnado pode escolher e utilizar Aptidões, perícias ou conhecimentos específicos que dominou em suas existências anteriores (ou campanhas passadas), mesmo que seu corpo físico atual ainda não as tenha treinado formalmente.",
-        bonus: [
-          "Pode escolher e utilizar Aptidões/perícias dominadas em vidas anteriores"
-        ]
-      },
-      {
-        nome: "Experiência Suprema",
-        descricao: "A prática perfeita leva à perfeição eterna. Sempre que o Reencarnado realizar um teste de habilidade ou perícia que ele já dominou em alguma de suas vidas passadas, ele recebe bônus substanciais constantes em sua rolagem, executando a ação com uma maestria e fluidez quase mecânicas.",
-        bonus: [
-          "Bônus constantes em testes já dominados em vidas anteriores"
-        ]
-      },
-      {
-        nome: "Renascimento",
-        descricao: "A morte não é o fim, mas apenas uma transição de cenário para uma alma imortal. Uma vez por campanha, caso o Reencarnado sofra uma morte definitiva no campo de batalha, sua alma se recusa a partir para o além ou reencarna de forma milagrosa e acelerada, retornando à vida com metade de seus recursos físicos e de energia restaurados, pronto para continuar sua jornada eterna.",
-        bonus: [
-          "Uma vez por campanha: reanimação/reencarnação com metade dos recursos físicos e energéticos"
-        ]
-      }
-    ],
-    habilidadesAvancadas: [],
-    codigo: "0034"
-  }
-]
+      habilidadesBasicas: [
+        {
+          nome: "Treinamento Marcial",
+          descricao: "Seu corpo foi treinado para eficiência máxima.",
+          bonus: ["Recebe +2 em ataques corpo a corpo"]
+        },
+        {
+          nome: "Controle Interno",
+          descricao: "Você domina sua respiração, foco e emoções.",
+          bonus: ["Recebe +2 em testes de Vontade e Percepção. Não sofre penalidades por pressão leve ou distrações"]
+        },
+        {
+          nome: "Golpe Preciso",
+          descricao: "Você atinge pontos vitais com precisão.",
+          bonus: ["Uma vez por sessão: ao acertar um ataque, causa +3 dados de dano ou ignora defesa leve"]
+        },
+        {
+          nome: "Leitura de Movimento",
+          descricao: "Você antecipa ações pelo corpo do inimigo.",
+          bonus: ["Recebe +2 em testes se sua reação for positiva. Identifica ataques previsíveis com mais facilidade"]
+        }
+      ],
+      habilidadesAvancadas: []
+    },  
+];
 
 /**
  * Obtém uma raça pelo ID

@@ -1,0 +1,310 @@
+╔══════════════════════════════════════════════════════════════════════════════════╗
+║                                                                                  ║
+║                    🌌 SISTEMA DE CULTIVAÇÃO - GUIA VISUAL 🌌                     ║
+║                                                                                  ║
+║                         ReDungeon - Códex Espiritual Vivo                        ║
+║                                                                                  ║
+╚══════════════════════════════════════════════════════════════════════════════════╝
+
+
+📍 LOCALIZAÇÃO DO BOTÃO
+═══════════════════════════════════════════════════════════════════════════════════
+
+                           ┌─────────────────────────────┐
+                           │   Seção de Personagem       │
+                           │                             │
+                           │    [👤 Imagem]              │
+                           │                             │
+                           │  ┌─────────────────────────┐ │
+                           │  │  Botões de Controle:   │ │
+                           │  │  🔄 | 📊 | 🌌 | 🗑️    │ │
+                           │  │                         │ │
+                           │  │ Atualizar | Reputação  │ │
+                           │  │ Cultivo | Limpar       │ │
+                           │  └─────────────────────────┘ │
+                           │                             │
+                           └─────────────────────────────┘
+
+
+🎨 ESTRUTURA DO POPUP
+═══════════════════════════════════════════════════════════════════════════════════
+
+    ┌───────────────────────────────────────────────────────────────┐
+    │ 🌌 Sistema de Cultivação  │  The Elder Gods  │  Rank: 1  │ ✕  │
+    ├───────────────────────────────────────────────────────────────┤
+    │ ⭐ The Elder Gods  │  ❄️ Boreal Line  │  🌿 Legends of Murim   │
+    ├───────────────────────────────────────────────────────────────┤
+    │                                                               │
+    │ 🔴 DANTIAN                                                   │
+    │ ├─ Dantian Inferior: [━━━━━━━━━━━━━━] 0 / 1000             │
+    │ ├─ Dantian Médio:    [━━━━━━━━━━━━━━] 0 / 2000             │
+    │ └─ Dantian Superior: [━━━━━━━━━━━━━━] 0 / 5000             │
+    │                                                               │
+    │ 🌀 MERIDIANOS                                                │
+    │ ├─ Pureza: [━━━━━━━━━━━━━━] 0 / 314 (0%)                   │
+    │                                                               │
+    │ 📜 TÉCNICA DE CULTIVO                                   ▼    │
+    │ ├─ Nome: Técnica do Vácuo                                   │
+    │ ├─ Tipo: Essência Primordial                                │
+    │ ├─ Desc: Uma técnica fundamental                            │
+    │ └─ Afinidade: 0% | Estabilidade: 0%                         │
+    │                                                               │
+    │ 🌊 MAR ESPIRITUAL                                            │
+    │ ├─ Estado: Calmo     │  Tamanho: 0 Li                       │
+    │ └─ Pureza: 0%        │  Estabilidade: 0%                    │
+    │                                                               │
+    │ ────────────────────────────────────────────────────────    │
+    │                                                               │
+    │ [CONTEÚDO ESPECÍFICO DO MUNDO - MUDA COM ABAS]              │
+    │                                                               │
+    └───────────────────────────────────────────────────────────────┘
+
+
+🌍 OS TRÊS MUNDOS
+═══════════════════════════════════════════════════════════════════════════════════
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ ⭐ THE ELDER GODS - Sistema de Ranks (Divindade)                           │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  RANK ATUAL: Corpo Temperado (1/10) | Nível 1/9                           │
+│                                                                             │
+│  Progresso de Nível:                                                        │
+│  XP: [━━━━━━━━━━━━━━━━━━━━━━━━━━━━━] 0 / 100 (0%)                        │
+│                                                                             │
+│  Benefícios:                                                                │
+│  ✦ +3 atributos a cada 3 níveis                                           │
+│  ✦ Limite de atributo: 35                                                 │
+│  ✦ Acesso a técnicas básicas                                              │
+│                                                                             │
+│  ┌──────────────┬────────────────────────┬─────────────┬──────────┐       │
+│  │ RANK | NOME  │ NÍVEIS │ XP NECESSÁRIO │ BENEFÍCIOS  │ PROGRESSO│       │
+│  ├──────────────┼────────────────────────┼─────────────┼──────────┤       │
+│  │  1 │ Corpo T │  9    │ 100           │ +3 attr     │ ✓ Ativo  │       │
+│  │  2 │ Estágio │  9    │ 200           │ +5% XP      │ ◯ ...    │       │
+│  │  3 │ Consol  │  9    │ 300           │ +10% Resi   │ ◯ ...    │       │
+│  └──────────────┴────────────────────────┴─────────────┴──────────┘       │
+│                                                                             │
+│  [✨ Ganhar XP +10] [⚡ Rompimento (Nível 9)]                              │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ ❄️ BOREAL LINE - Sistema de Cristais (Cristalino)                         │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  RANK ATUAL: Cristalização Inicial (1/5)                                  │
+│                                                                             │
+│  ┌──────────────────────┬──────────────────────┬──────────────────────┐   │
+│  │  💎 DANTIAN         │  💎 CORAÇÃO           │  💎 MENTAL          │   │
+│  ├──────────────────────┼──────────────────────┼──────────────────────┤   │
+│  │ Integridade:        │ Integridade:         │ Integridade:        │   │
+│  │ [━━━━━━━━━━] 100%  │ [━━━━━━━] 80%        │ [━━━━━] 60%         │   │
+│  │ Estabilidade:       │ Estabilidade:        │ Estabilidade:       │   │
+│  │ [━━━━━━━━━━] 100%  │ [━━━━━━━━] 90%       │ [━━━━━━] 70%        │   │
+│  │ Pureza:             │ Pureza:              │ Pureza:             │   │
+│  │ [━━━━━━━━━━] 100%  │ [━━━━━━━━] 85%       │ [━━━━━━] 75%        │   │
+│  │ Sincronização:      │ Sincronização:       │ Sincronização:      │   │
+│  │ [━━━━━━━━━━] 100%  │ [━━━━━━━━] 88%       │ [━━━━━] 68%         │   │
+│  │ Estado: ● Perfeito  │ Estado: ● Estável    │ Estado: ● Instável  │   │
+│  └──────────────────────┴──────────────────────┴──────────────────────┘   │
+│                                                                             │
+│  [❄️ Avançar Rank]                                                         │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 🌿 LEGENDS OF MURIM - Sistema de Lótus (Natural)                           │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  RANK ATUAL: Fundação Turva (1/10)                                         │
+│                                                                             │
+│  💎 FRAGMENTOS DE QI                                                        │
+│  ├─ Qi Acumulado: 0                                                        │
+│  ├─ Fragmentos: 0                                                          │
+│  └─ Próxima Formação: 0%                                                   │
+│                                                                             │
+│  🌸 LÓTUS DO CÉU IMORTAL                                                   │
+│  ├─ Estágio: Inicial                                                       │
+│  ├─ Número de Pétalas: 0 / 9                                               │
+│  └─ [Visualmente: ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯] (não visível)                     │
+│                                                                             │
+│  💎 NÚCLEO ESPIRITUAL                                                       │
+│  ├─ Cor: Cinzento                                                          │
+│  └─ Potencial: 50%                                                         │
+│                                                                             │
+│  🌳 CANAIS DO DAO                                                           │
+│  ├─ Quantidade: 0                                                          │
+│  └─ Talento: Normal                                                        │
+│                                                                             │
+│  [✨ Ganhar Qi +10] [🌸 Adicionar Pétala]                                  │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+
+📊 ELEMENTOS UNIVERSAIS
+═══════════════════════════════════════════════════════════════════════════════
+
+🔴 DANTIAN - O Armazém de Energia
+┌─────────────────────────────────┐
+│ Inferior:  [━━━━━━] 0 / 1000    │
+│ Médio:     [━━━━━━] 0 / 2000    │
+│ Superior:  [━━━━━━] 0 / 5000    │
+└─────────────────────────────────┘
+
+🌀 MERIDIANOS - Os Canais de Energia
+┌──────────────────────────────────┐
+│ Pureza:     [━━━━━━] 0 / 314     │
+│ Eficiência: 0%                   │
+└──────────────────────────────────┘
+
+📜 TÉCNICA DE CULTIVO - Pergaminho Espiritual
+┌──────────────────────────────────────┐
+│ 📜 Técnica de Cultivo          ▼     │
+│                                      │
+│ Nome: Técnica do Vácuo               │
+│ Tipo: Essência Primordial            │
+│ Descrição: Uma poderosa técnica...   │
+│ Afinidade: 0%                        │
+│ Estabilidade: 0%                     │
+└──────────────────────────────────────┘
+
+🌊 MAR ESPIRITUAL - Estado Global
+┌───────────────┬───────────────┐
+│ Estado: Calmo │ Tamanho: 0 Li │
+│ Pureza: 0%    │ Estabil: 0%   │
+└───────────────┴───────────────┘
+
+
+⚡ SISTEMA DE RISCO
+═══════════════════════════════════════════════════════════════════════════════
+
+Risco Baixo (0-30%):        Visual Normal
+┌─────────────────────────────────────┐
+│ Sistema de Cultivação               │
+│ [Normal]                            │
+└─────────────────────────────────────┘
+
+Risco Médio (31-60%):       Brilho Amarelo-Laranja
+┌─────────────────────────────────────┐
+│ Sistema de Cultivação  ⚠️            │
+│ [Brilho leve]                       │
+└─────────────────────────────────────┘
+
+Risco Alto (61-100%):       Pulsação Vermelha
+┌═════════════════════════════════════┐ ← Borda Vermelha
+│ ⚠️ Sistema de Cultivação ⚠️          │
+│ [╭╮ ╭╮ Pulsando em Vermelho 📌     │
+└═════════════════════════════════════┘
+
+
+🎮 COMO USAR
+═══════════════════════════════════════════════════════════════════════════════
+
+1️⃣ ABRIR
+   └─ Clique no botão 🌌 (lado do botão de reputação)
+   └─ Popup abrirá com animação suave
+
+2️⃣ EXPLORAR MUNDOS
+   └─ Clique nas abas: ⭐ | ❄️ | 🌿
+   └─ Conteúdo muda instantaneamente
+
+3️⃣ INTERAGIR
+   └─ Use botões de ação de cada mundo
+   └─ Edite técnica de cultivo
+   └─ Veja progresso em tempo real
+
+4️⃣ FECHAR
+   └─ Clique no X no canto superior direito
+   └─ Ou clique no fundo (backdrop)
+   └─ Dados são salvos automaticamente
+
+
+💾 DADOS SALVOS
+═══════════════════════════════════════════════════════════════════════════════
+
+Todos os dados são salvos automaticamente no localStorage:
+✅ Mundo ativo
+✅ Progresso de cada mundo
+✅ Técnica de cultivo
+✅ Estados universais
+✅ Configurações
+
+Verificar no Console:
+> JSON.parse(localStorage.getItem('cultivacao_dados'))
+
+
+🧪 TESTE NO CONSOLE (F12)
+═══════════════════════════════════════════════════════════════════════════════
+
+Demonstração Automática:
+> window.cultivacao.teste.demonstracao_completa()
+
+Testes Individuais:
+> window.cultivacao.teste.testar_elder_gods()
+> window.cultivacao.teste.testar_boreal_line()
+> window.cultivacao.teste.testar_murim()
+> window.cultivacao.teste.testar_universal()
+> window.cultivacao.teste.testar_risco()
+
+Manipular Dados:
+> window.cultivacao.dados.ganhar_xp_elder_gods(50)
+> window.cultivacao.dados.ganhar_fragmentos_murim(100)
+> window.cultivacao.dados.atualizar_meridianos(200)
+> window.cultivacao.ui.abrir()
+
+
+📂 ARQUIVOS DO SISTEMA
+═══════════════════════════════════════════════════════════════════════════════
+
+✅ css/cultivacao-sistema.css       (Estilos - 1600+ linhas)
+✅ js/cultivacao-sistema.js         (Lógica - 800+ linhas)
+✅ js/cultivacao-teste.js           (Testes - 200+ linhas)
+
+📚 Documentação:
+   ✅ docs/CULTIVACAO_DOCUMENTACAO.md    (Técnica - 400+ linhas)
+   ✅ docs/CULTIVACAO_README.md          (Guia - 200+ linhas)
+   ✅ docs/CULTIVACAO_SUMARIO.md         (Resumo)
+   ✅ docs/VALIDACAO_CHECKLIST.md        (Validação)
+   ✅ docs/GUIA_VISUAL.md                (Este arquivo)
+
+
+🌟 CARACTERÍSTICAS
+═══════════════════════════════════════════════════════════════════════════════
+
+✨ Visual
+  ✓ Dark Fantasy elegante
+  ✓ Animações profissionais
+  ✓ Brilhos dinâmicos
+  ✓ Paleta harmoniosa
+
+📐 Design
+  ✓ Modular e escalável
+  ✓ Responsivo (Mobile → Desktop)
+  ✓ Sem dependências
+  ✓ Código limpo
+
+⚙️ Funcional
+  ✓ localStorage persistência
+  ✓ 3 mundos completos
+  ✓ Sistema universal
+  ✓ Sistema de risco
+
+🎯 Qualidade
+  ✓ Profissional
+  ✓ Bem documentado
+  ✓ Totalmente testado
+  ✓ Pronto para produção
+
+
+═════════════════════════════════════════════════════════════════════════════════
+
+                         ✨ VERSÃO 1.0.0 - PRODUÇÃO ✨
+
+                        Status: ✅ COMPLETO E FUNCIONAL
+
+═════════════════════════════════════════════════════════════════════════════════
+
+                          27 de fevereiro de 2026
+
+                        Bem-vindo ao Sistema de Cultivação! 🌌

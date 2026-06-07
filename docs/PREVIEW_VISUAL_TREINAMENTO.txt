@@ -1,0 +1,248 @@
+╔═══════════════════════════════════════════════════════════════════════════╗
+║                    REFATORAÇÃO VISUAL - PREVIEW                           ║
+║              Sistema de Treinamento de Atributos - Layout Novo             ║
+╚═══════════════════════════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────────────┐
+│  ⚔️ TREINAR ATRIBUTO                                    [✕]  │
+│  Melhore suas habilidades através do treinamento            │
+└─────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────┐  ┐
+│ 🎯 ESCOLHA UM ATRIBUTO                                      │  │
+│ ┌───────────────────────────────────────────────────────┐   │  │ CARD 1
+│ │ ▼ Selecione um atributo        [HOVER: Brilho Azul]  │   │  │ Seleção
+│ └───────────────────────────────────────────────────────┘   │  │
+└─────────────────────────────────────────────────────────────┘  ┘
+
+┌─────────────────────────────────────────────────────────────┐  ┐
+│ STATUS DO ATRIBUTO                                          │  │
+│                                                             │  │
+│  ┌────────────────┐  ┌────────────────┐                    │  │
+│  │    NÍVEL       │  │ DIFICULDADE    │                    │  │
+│  │                │  │                │                    │  │
+│  │      15        │  │       5        │  (Cards em Verde)  │  │
+│  └────────────────┘  └────────────────┘                    │  │
+│                                                             │  │ CARD 2
+│ PROGRESSO DE EXPERIÊNCIA                                   │  │ Status
+│ 2 / 45                                                     │  │
+│ ┌───────────────────────────────────────────────────┐     │  │
+│ │████████████████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░│ ✨  │  │
+│ └───────────────────────────────────────────────────┘     │  │
+│ (Barra animada com shimmer effect)                         │  │
+└─────────────────────────────────────────────────────────────┘  ┘
+
+┌─────────────────────────────────────────────────────────────┐  ┐
+│ ⏱️ TEMPO DE TREINAMENTO                                      │  │
+│ Quanto tempo você deseja treinar?                          │  │
+│                                                             │  │
+│          ┌─────┐                                           │  │ CARD 3
+│          │  −  │    │  12  │    │  +  │                   │  │ Tempo
+│          └─────┘    └──────┘    └─────┘                   │  │
+│                        horas                               │  │
+│          (Botões azuis circulares com hover)               │  │
+│          Mín: 1h | Máx: 12h                                │  │
+└─────────────────────────────────────────────────────────────┘  ┘
+
+┌─────────────────────────────────────────────────────────────┐  ┐
+│ 🎯 BÔNUS DO MESTRE                                          │  │
+│ Modificador adicional aplicado manualmente                 │  │
+│                                                             │  │ CARD 4
+│          ┌──────────┐                                       │  │ Bônus
+│          │    5     │  (0–20)                              │  │
+│          └──────────┘                                       │  │
+│          (Roxo com glow ao focar)                           │  │
+└─────────────────────────────────────────────────────────────┘  ┘
+
+┌──────────────────────────────────────────────────────────────┐  ┐
+│  ▶ INICIAR TREINAMENTO                                        │  │
+│  (Gradiente Verde → Dourado, Glow + Hover Effect)             │  │ CARD 5
+│  (Ícone se move ao lado ao fazer hover)                       │  │ Ação
+└──────────────────────────────────────────────────────────────┘  ┘
+
+
+═════════════════════════════════════════════════════════════════
+
+CORES POR CARD:
+───────────────
+
+CARD 1 - SELEÇÃO DE ATRIBUTO
+├─ Fundo:  Dark (#0f1319)
+├─ Borda:  Dourado (#d4af37)
+├─ Input:  Dark com borda dourada
+└─ Hover:  Glow dourado
+
+CARD 2 - STATUS DO ATRIBUTO
+├─ Fundo:  Dark com toque verde
+├─ Items:  Verde #4CAF50
+├─ Números: Verde claro com glow
+├─ Barra:  Gradiente dourado com shimmer
+└─ Hover:  Verde mais intenso
+
+CARD 3 - TEMPO DE TREINAMENTO
+├─ Fundo:  Dark com toque azul
+├─ Botões: Azul #2196F3 circular
+├─ Input:  Azul com tamanho grande
+├─ Label:  Cinza claro
+└─ Hover:  Botões escalam para 110%
+
+CARD 4 - BÔNUS DO MESTRE
+├─ Fundo:  Dark com toque roxo
+├─ Input:  Roxo #9C27B0
+├─ Range:  Cinza (#9CA3AF)
+└─ Hover:  Roxo com brilho
+
+CARD 5 - BOTÃO INICIAR
+├─ Fundo:  Gradiente Verde → Dourado
+├─ Borda:  Verde escuro #2E7D32
+├─ Texto:  Branco UPPERCASE
+├─ Ícone:  Branco animado
+└─ Hover:  Gradiente mais claro + translateY(-3px)
+
+
+═════════════════════════════════════════════════════════════════
+
+EFEITOS E ANIMAÇÕES:
+────────────────────
+
+ENTRADA DO MODAL
+└─ slideDown: -30px → 0px (0.4s cubic-bezier)
+└─ Opacity: 0 → 1 (fade in)
+
+BARRA DE XP
+└─ Shimmer contínuo (2s loop)
+└─ Width animado ao atualizar (0.5s cubic-bezier)
+└─ Glow dinâmico ao lado da barra
+
+CARDS
+└─ Hover: +5% border color + box-shadow intenso
+└─ Shine efeito (left: -100% → 100%)
+└─ Border color transition (0.3s)
+
+BOTÕES
+├─ Hover: translateY(-3px) + scale(1.1)
+├─ Active: translateY(-1px)
+├─ Ícone: translateX(4px) em hover
+└─ Focus: Brilho colorido por card
+
+INPUTS
+└─ Focus: Border color + box-shadow + background ajustado
+└─ Hover: Border mais visível
+└─ Transition: Smooth 0.3s
+
+
+═════════════════════════════════════════════════════════════════
+
+RESPONSIVIDADE:
+───────────────
+
+DESKTOP (> 768px)
+├─ Modal: 620px max-width, 40px padding
+├─ Cards: Padding 24px
+├─ Buttons: Tamanho máximo
+└─ Animações: Full
+
+TABLET (768px)
+├─ Modal: 95% width, 30px padding
+├─ Cards: Padding 20px
+├─ Status Grid: 1 coluna
+└─ Buttons: Proporcionais
+
+MOBILE (< 480px)
+├─ Modal: 98% width, 24px padding
+├─ Cards: Padding 16px
+├─ Inputs: Tamanho reduzido
+├─ Resultado: Flex column
+└─ Font sizes: -0.1rem
+
+
+═════════════════════════════════════════════════════════════════
+
+ESTRUTURA DO NOVO DESIGN:
+─────────────────────────
+
+┌─ Modal Container (position: fixed, z-index: 9999)
+│  ├─ Overlay (backdrop-filter: blur)
+│  └─ Content (gradient dark background, premium border)
+│     ├─ Header
+│     │  ├─ Título + Subtitle
+│     │  └─ Close Button (circular com hover)
+│     │
+│     ├─ Card Seleção
+│     │  └─ Select Premium
+│     │
+│     ├─ Card Status
+│     │  ├─ Status Grid (2 colunas)
+│     │  │  ├─ Nível Item
+│     │  │  └─ Dificuldade Item
+│     │  └─ XP Progress
+│     │     ├─ Header (Label + Valores)
+│     │     └─ Progress Bar (Shimmer)
+│     │
+│     ├─ Card Tempo
+│     │  ├─ Dica
+│     │  ├─ Container Horas
+│     │  │  ├─ Botão − (Azul circular)
+│     │  │  ├─ Input + Label
+│     │  │  └─ Botão + (Azul circular)
+│     │  └─ Info (min/max)
+│     │
+│     ├─ Card Bônus
+│     │  ├─ Dica
+│     │  ├─ Input Bônus (Roxo)
+│     │  └─ Range (0–20)
+│     │
+│     ├─ Button Iniciar (Verde Premium)
+│     │
+│     └─ Resultado (Hidden, aparece após treino)
+│        ├─ Títulos
+│        ├─ Items (com destaque para XP ganho)
+│        └─ Botão Concluir (Dourado)
+│
+└─ Grid de Atributos (Fora do modal, 3 colunas)
+
+
+═════════════════════════════════════════════════════════════════
+
+MELHORIAS IMPLEMENTADAS:
+────────────────────────
+
+✅ VISUAL PREMIUM
+   └─ Glass morphism effects
+   └─ Gradientes sofisticados
+   └─ Sombras com profundidade
+   └─ Borders dinâmicos
+
+✅ HIERARQUIA CLARA
+   └─ Cards bem separados
+   └─ Cores temáticas
+   └─ Tamanhos proporcionais
+   └─ Labels precisos
+
+✅ INTERATIVIDADE
+   └─ Múltiplos hover effects
+   └─ Animações suaves
+   └─ Feedback visual claro
+   └─ Transições elegantes
+
+✅ USABILIDADE
+   └─ Elementos maiores
+   └─ Cliques mais precisos
+   └─ Informações visíveis
+   └─ Controles intuitivos
+
+✅ COMPATIBILIDADE
+   └─ Nenhuma quebra JS
+   └─ Todos IDs mantidos
+   └─ Fallbacks implementados
+   └─ Responsividade total
+
+
+═════════════════════════════════════════════════════════════════
+
+STATUS: ✅ PRONTO PARA PRODUÇÃO
+
+Desenvolvido em: 6 de Abril de 2026
+Compatibilidade: 100% com sistema existente
+Lógica JavaScript: Intacta
+Funcionamento: Testado e validado
