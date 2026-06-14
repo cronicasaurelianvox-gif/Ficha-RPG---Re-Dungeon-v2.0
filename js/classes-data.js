@@ -8017,7 +8017,6 @@ const CLASSES_DATABASE = [
     ],
     habilidadesAvancadas: []
   }
-
   // ============================================
   // A CRÔNICA DOS VARKHAN - NOVAS CLASSES
   // Fonte: Pasta/Tipo: A Cronica dos Varkhan

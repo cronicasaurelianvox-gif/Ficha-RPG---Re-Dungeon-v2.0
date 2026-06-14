@@ -344,6 +344,8 @@ class ClassesUI {
       {
         nome: "Re'Dungeon",
         icon: '⚔️',
+        image: 'https://i.imgur.com/dDoawMK.jpeg',
+        color: '#ef4444',
         aberta: true,
         classes: [],
         mostrarRaridade: true
@@ -351,13 +353,17 @@ class ClassesUI {
       {
         nome: 'The Chaotical Gate',
         icon: '⚡',
+        image: 'https://i.imgur.com/1GTo2G2.png',
+        color: '#f59e0b',
         aberta: false,
         classes: [],
         mostrarRaridade: false
       },
       {
-        nome: 'Wuxia/Xianxia',
+        nome: 'Cultivo',
         icon: '🔮',
+        image: 'https://i.imgur.com/LXn1Jej.png',
+        color: '#3b82f6',
         aberta: false,
         classes: [],
         mostrarRaridade: false
@@ -365,6 +371,8 @@ class ClassesUI {
       {
         nome: 'One Piece',
         icon: '🏴‍☠️',
+        image: 'https://i.imgur.com/vXSjzr6.jpeg',
+        color: '#a78bfa',
         aberta: false,
         classes: [],
         mostrarRaridade: false
@@ -372,6 +380,8 @@ class ClassesUI {
       {
         nome: 'Bleach',
         icon: '⚔️',
+        image: 'https://i.imgur.com/s4CFxTM.png',
+        color: '#10b981',
         aberta: false,
         classes: [],
         mostrarRaridade: false
@@ -379,6 +389,8 @@ class ClassesUI {
       {
         nome: 'A Crônica dos Varkhan',
         icon: '📜',
+        image: 'https://i.imgur.com/ejGrhaP.jpeg',
+        color: '#7c3aed',
         aberta: false,
         classes: [],
         mostrarRaridade: false
@@ -397,6 +409,8 @@ class ClassesUI {
     pastas.forEach((pasta) => {
       console.log(`[DEBUG renderLista] Renderizando pasta "${pasta.nome}" com ${pasta.classes.length} classes`);
       const pastaElement = this.criarPasta(pasta);
+      // definir variavel CSS no elemento da pasta para que filhos herdem a cor (se fornecida)
+      pastaElement.style.setProperty('--folder-color', pasta.color || '#7c6ba8');
       this.listaClasses.appendChild(pastaElement);
     });
     console.log(`[DEBUG renderLista] Renderização concluída. Pastas criadas: ${pastas.length}`);
@@ -418,9 +432,12 @@ class ClassesUI {
     // Header da pasta
     const headerPasta = document.createElement('div');
     headerPasta.className = 'rdg-class-folder-header';
+    // setar variavel de cor no header tambem (para compatibilidade com estilos locais)
+    headerPasta.style.setProperty('--folder-color', pasta.color || '#7c6ba8');
     headerPasta.innerHTML = `
       <span class="rdg-class-folder-icon">${pasta.aberta ? '▼' : '›'}</span>
-      <span class="rdg-class-folder-name">${pasta.icon} ${pasta.nome}</span>
+      <span class="rdg-class-folder-avatar">${pasta.image ? `<img src="${pasta.image}" alt="${pasta.nome}"/>` : pasta.icon}</span>
+      <span class="rdg-class-folder-name">${pasta.nome}</span>
       <span class="rdg-class-folder-count">${pasta.classes.length}</span>
     `;
 

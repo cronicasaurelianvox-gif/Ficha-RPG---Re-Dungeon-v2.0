@@ -241,36 +241,48 @@ class RacasUI {
       {
         nome: "Re'Geron",
         icon: '📁',
+        image: 'https://i.imgur.com/dDoawMK.jpeg',
+        color: '#ef4444',
         aberta: true,
         tipo: "Re'Geron"
       },
       {
         nome: 'The Chaotical Gate',
         icon: '⚡',
+        image: 'https://i.imgur.com/1GTo2G2.png',
+        color: '#f59e0b',
         aberta: false,
         tipo: 'The Chaotical Gate'
       },
       {
-        nome: 'Wuxia/Xianxia',
+        nome: 'Cultivo',
         icon: '🔮',
+        image: 'https://i.imgur.com/LXn1Jej.png',
+        color: '#3b82f6',
         aberta: false,
-        tipo: 'Wuxia/Xianxia'
+        tipo: 'Cultivo'
       },
       {
         nome: 'One Piece',
         icon: '🏴‍☠️',
+        image: 'https://i.imgur.com/vXSjzr6.jpeg',
+        color: '#a78bfa',
         aberta: false,
         tipo: 'One Piece'
       },
       {
         nome: 'Bleach',
         icon: '⚔️',
+        image: 'https://i.imgur.com/s4CFxTM.png',
+        color: '#10b981',
         aberta: false,
         tipo: 'Bleach'
       }
       ,{
         nome: 'A Crônica dos Varkhan',
         icon: '📜',
+        image: 'https://i.imgur.com/ejGrhaP.jpeg',
+        color: '#7c3aed',
         aberta: false,
         tipo: 'A Crônica dos Varkhan'
       }
@@ -284,6 +296,8 @@ class RacasUI {
     // Renderizar cada pasta
     pastas.forEach((pasta) => {
       const pastaElement = this.criarPasta(pasta);
+      // definir variavel CSS no elemento da pasta para que filhos herdem a cor
+      pastaElement.style.setProperty('--folder-color', pasta.color || '#7c6ba8');
       this.listaRacas.appendChild(pastaElement);
     });
   }
@@ -302,9 +316,12 @@ class RacasUI {
     // Header da pasta
     const headerPasta = document.createElement('div');
     headerPasta.className = 'rdg-race-folder-header';
+    // definir variavel CSS de cor por pasta
+    headerPasta.style.setProperty('--folder-color', pasta.color || '#7c6ba8');
     headerPasta.innerHTML = `
       <span class="rdg-race-folder-icon">${pasta.aberta ? '▼' : '›'}</span>
-      <span class="rdg-race-folder-name">${pasta.icon} ${pasta.nome}</span>
+      <span class="rdg-race-folder-avatar">${pasta.image ? `<img src="${pasta.image}" alt="${pasta.nome}"/>` : pasta.icon}</span>
+      <span class="rdg-race-folder-name">${pasta.nome}</span>
       <span class="rdg-race-folder-count">${pasta.racas.length}</span>
     `;
 
@@ -563,7 +580,7 @@ class RacasUI {
       return '<p class="sem-habilidades">Nenhuma habilidade básica disponível</p>';
     }
     
-    return habitliddadesBasicasFiltered
+    const cards = habitliddadesBasicasFiltered
       .map(
         (habilidade) => `
         <div class="habilidade-card">
@@ -585,6 +602,9 @@ class RacasUI {
       `
       )
       .join('');
+
+    // Envolve os cards em um container para permitir controle de grid por painel
+    return `<div class="habilidades-container">${cards}</div>`;
   }
 
   /**
