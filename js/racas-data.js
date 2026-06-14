@@ -2802,10 +2802,10 @@ const RACAS_DATABASE = [
         ]
       },
       {
-        nome: "Marca do Legado",
-        descricao: "O próprio destino parece conspirar para manter a linhagem do herói viva. Uma vez por campanha, ao sofrer um ataque que o levaria à morte ou ao sofrer um dano crítico devastador, uma força interior mística se ativa, recuperando instantaneamente uma quantidade significativa de seus pontos de vida (HP), permitindo-lhe continuar lutando.",
+        nome: "Hereditariedade Heroica",
+        descricao: "O sangue dos grandes guerreiros e salvadores do mundo corre em suas veias, despertando em momentos de extrema necessidade. Uma vez por cena, o Filho de Herói recebe um bônus extra massivo em qualquer teste relacionado a atos de pura bravura, resistência moral contra a corrupção ou testes de liderança para inspirar seus companheiros.",
         bonus: [
-          "Uma vez por campanha: ao sofrer ataque letal/critico, recupera quantidade significativa de HP"
+          "Uma vez por cena: bônus extra massivo em testes de bravura, resistência moral ou liderança"
         ]
       }
     ],
@@ -3026,7 +3026,7 @@ const RACAS_DATABASE = [
     id: "reencarnado",
     nome: "Reencarnado",
     tipo: "A Crônica dos Varkhan",
-    raridade: "lendario",
+    raridade: "mitico",
     descricao: "O Reencarnado é uma alma antiga que retém as memórias, conhecimentos e experiências de suas vidas passadas, tendo despertado neste novo corpo e era. Ele carrega a sabedoria acumulada de séculos, técnicas de combate esquecidas pelo tempo e uma perspectiva profundamente filosófica sobre a vida, a morte e o fluxo da história. Costumam ser indivíduos calmos, enigmáticos e por vezes melancólicos, pois já viram impérios erguerem-se e caírem em pó múltiplas vezes. No entanto, sua experiência prática acumulada em dezenas de existências anteriores faz dele um aliado de valor inestimável, capaz de trazer soluções do passado para os problemas do presente.",
     imagem: "https://i.imgur.com/ADVh9kV.png",
     limiteAtributo: 150,

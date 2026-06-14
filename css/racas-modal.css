@@ -287,7 +287,8 @@
 }
 
 .rdg-race-folder-header:hover {
-  transform: translateY(-4px);
+  /* remover deslocamento para manter o card estático */
+  transform: none;
   box-shadow: 0 12px 30px rgba(6,8,14,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
   border-color: rgba(255,255,255,0.06);
 }
@@ -381,10 +382,22 @@
 /* thin vertical accent on each item inside the folder */
 .rdg-race-folder .raca-item {
   position: relative;
-  padding-left: 14px;
+  padding: 12px 16px;
+  margin: 6px 16px;
+  background: rgba(61, 69, 87, 0.3);
+  border: 1px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  border-left: 3px solid transparent;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
 }
 
 .rdg-race-folder .raca-item::before {
+  z-index: 0;
   content: '';
   position: absolute;
   left: 0;
@@ -393,6 +406,12 @@
   width: 4px;
   border-radius: 4px;
   background: var(--folder-color, rgba(124,107,168,0.9));
+}
+
+/* garantir conteúdo acima do acento de cor */
+.raca-item > * {
+  position: relative;
+  z-index: 1;
 }
 
 .rdg-race-folder-content {
@@ -451,6 +470,8 @@
    ═══════════════════════════════════════════════════════════════════════════════════════════════ */
 
 .raca-item {
+  position: relative;
+  overflow: hidden;
   padding: 12px 16px;
   margin: 6px 16px;
   background: rgba(61, 69, 87, 0.3);
@@ -474,7 +495,7 @@
 .raca-item:hover {
   background: rgba(61, 69, 87, 0.6);
   border-color: var(--raca-accent);
-  transform: translateX(4px);
+  transform: none; /* evitar que o item se mova */
 }
 
 .raca-item.ativo {
@@ -482,6 +503,7 @@
   border-color: var(--raca-accent);
   border-left-color: var(--raca-accent);
   box-shadow: 0 0 12px rgba(168, 85, 247, 0.25);
+  transform: none; /* garantir que não há escala/transform no estado ativo */
 }
 
 .raca-item-nome {
@@ -690,9 +712,10 @@
   position: relative;
 }
 
-.raca-selecionada::before {
-  content: none;
-}
+/* Manter o acento colorido também quando uma raça está selecionada.
+   A regra anterior removia o ::before e fazia o risco encolher/ desaparecer
+   ao selecionar a raça. Removemos essa sobrescrita para preservar o visual.
+*/
 
 .raca-bloqueada {
   position: relative;

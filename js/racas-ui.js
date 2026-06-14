@@ -293,6 +293,28 @@ class RacasUI {
       pasta.racas = racas.filter(raca => raca.tipo === pasta.tipo);
     });
 
+    // Ordenar raças dentro de cada pasta por raridade (prioridade definida)
+    const raridadePrioridade = {
+      comum: 0,
+      raro: 1,
+      epico: 2,
+      lendario: 3,
+      mitico: 4,
+      celestial: 5
+    };
+
+    pastas.forEach((pasta) => {
+      if (Array.isArray(pasta.racas) && pasta.racas.length > 0) {
+        pasta.racas.sort((a, b) => {
+          const pa = raridadePrioridade[a.raridade] ?? 99;
+          const pb = raridadePrioridade[b.raridade] ?? 99;
+          if (pa !== pb) return pa - pb;
+          // fallback: ordenar por nome
+          return (a.nome || '').localeCompare(b.nome || '');
+        });
+      }
+    });
+
     // Renderizar cada pasta
     pastas.forEach((pasta) => {
       const pastaElement = this.criarPasta(pasta);
