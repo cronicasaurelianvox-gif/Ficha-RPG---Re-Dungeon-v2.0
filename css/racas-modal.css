@@ -397,15 +397,9 @@
 }
 
 .rdg-race-folder .raca-item::before {
-  z-index: 0;
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 8px;
-  bottom: 8px;
-  width: 4px;
-  border-radius: 4px;
-  background: var(--folder-color, rgba(124,107,168,0.9));
+  /* Removido: antes era uma listra colorida no início de cada card.
+     Mantemos a marca de cor apenas no header da pasta. */
+  display: none;
 }
 
 /* garantir conteúdo acima do acento de cor */
@@ -486,8 +480,22 @@
   gap: 12px;
 }
 
+/* Listra lateral para a raça selecionada (diferencia visualmente das demais) */
+.raca-item.raca-selecionada {
+  /* Usar a cor da pasta/tipo quando disponível */
+  border-left: 6px solid var(--folder-color, #10b981);
+  background: rgba(255, 255, 255, 0.02);
+  box-shadow: 0 0 18px rgba(0, 0, 0, 0.12);
+}
+
+/* Forçar a cor da borda quando a classe for aplicada ao container de detalhes */
+.raca-selecionada {
+  border-color: var(--folder-color, #10b981) !important;
+}
+
 .rdg-race-folder-content .raca-item {
-  margin-left: 28px;
+  /* Ajuste de espaçamento após remoção da listra */
+  margin-left: 16px;
   margin-right: 12px;
   font-size: 13px;
 }

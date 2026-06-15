@@ -896,9 +896,13 @@ class RacasUI {
     document.querySelectorAll('.raca-item').forEach((item) => {
       const racaId = item.dataset.racaId;
       if (racaId !== this.racaSelecionadaId) {
+        // Raças não selecionadas ficam com visual de bloqueadas e não interativas
         item.classList.add('raca-bloqueada');
+        item.classList.remove('raca-selecionada');
         item.style.pointerEvents = 'none';
       } else {
+        // Raça escolhida: aplicar apenas a classe de selecionada (sem overlay/cadeado)
+        item.classList.remove('raca-bloqueada');
         item.classList.add('raca-selecionada');
         item.style.pointerEvents = 'auto';
       }

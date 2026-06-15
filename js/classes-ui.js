@@ -564,6 +564,26 @@ class ClassesUI {
       </div>
     `;
 
+    // Definir cor de seleção específica para esta classe (prioridade: campo 'cor' -> mapa por id -> pasta/fallback)
+    const corDaClasse = this.obterCorClasse(classe) || '';
+    if (corDaClasse) {
+      item.style.setProperty('--selection-color', corDaClasse);
+
+      // Converter HEX para componentes RGB e expor como variável --selection-color-rgb
+      const hex = corDaClasse.replace('#', '');
+      let r = 0, g = 0, b = 0;
+      if (hex.length === 3) {
+        r = parseInt(hex[0] + hex[0], 16);
+        g = parseInt(hex[1] + hex[1], 16);
+        b = parseInt(hex[2] + hex[2], 16);
+      } else if (hex.length === 6) {
+        r = parseInt(hex.substring(0,2), 16);
+        g = parseInt(hex.substring(2,4), 16);
+        b = parseInt(hex.substring(4,6), 16);
+      }
+      item.style.setProperty('--selection-color-rgb', `${r}, ${g}, ${b}`);
+    }
+
     return item;
   }
 
@@ -749,7 +769,7 @@ class ClassesUI {
         // Verificar se esta habilidade já foi selecionada (Art já existe)
         const jaSelecionada = this.verificarSeHabilidadeEstaAdicionada(habilidade.nome, classe?.nome || '');
         const classeButtonSelecionado = jaSelecionada ? 'selecionado' : '';
-        const corButton = jaSelecionada ? '#4ade80' : '#888';
+        const corButton = jaSelecionada ? (this.obterCorClasse(classe) || '#4ade80') : '#888';
 
         return `
           <div class="habilidade-card habilidade-classe ${classeBloqueada}">
@@ -1019,6 +1039,58 @@ class ClassesUI {
   }
 
   /**
+   * Obtém a cor usada para destacar uma classe quando selecionada.
+   * Procura em propriedades do objeto (cor / color) e faz fallback para um mapa
+   * de cores por id para classes comuns. Se nada for encontrado, retorna null.
+   * @private
+   * @param {Object} classe
+   * @returns {string|null} cor em hexadecimal ou null
+   */
+  obterCorClasse(classe) {
+    if (!classe) return null;
+
+    // Priorizar propriedade explícita
+    if (classe.cor) return classe.cor;
+    if (classe.color) return classe.color;
+    if (classe.corHex) return classe.corHex;
+
+    // Mapa por id/nome para casos onde dados não fornecem cor
+    const mapa = {
+      guerreiro: '#b22222',
+      mago: '#4169e1',
+      arqueiro: '#ffd700',
+      clerigo: '#ffd700',
+      ladrao: '#2f4f4f',
+      paladino: '#ffd700',
+      xama: '#228b22',
+      assassino: '#000000',
+      cavaleiro: '#696969'
+    };
+
+    const key = (classe.id || (classe.nome || '').toLowerCase()).toString().toLowerCase();
+    return mapa[key] || null;
+  }
+
+  /**
+   * Retorna cor de contraste (texto) para uma cor de fundo em HEX.
+   * Simples cálculo de luminância para escolher preto ou branco.
+   * @private
+   * @param {string} hex - Ex: '#aabbcc' ou 'aabbcc'
+   * @returns {string} '#000' ou '#fff'
+   */
+  obterCorContraste(hex) {
+    if (!hex) return '#000';
+    let h = hex.replace('#', '');
+    if (h.length === 3) h = h.split('').map(c => c + c).join('');
+    const r = parseInt(h.substring(0,2),16);
+    const g = parseInt(h.substring(2,4),16);
+    const b = parseInt(h.substring(4,6),16);
+    // Calcular luminância relativa
+    const luminance = (0.2126*r + 0.7152*g + 0.0722*b) / 255;
+    return luminance > 0.6 ? '#000' : '#fff';
+  }
+
+  /**
    * Adiciona uma nova classe ao sistema
    * ⚠️ Nota: Modifique classes-data.js para adicionar permanentemente
    * @public
@@ -1152,8 +1224,10 @@ class ClassesUI {
         btn.textContent = 'Multiclasse';
         btn.classList.add('btn-selecionada');
         btn.classList.remove('btn-bloqueado');
-        btn.style.backgroundColor = '#4ade80'; // Verde
-        btn.style.color = '#000'; // Texto escuro
+        // Usar cor da classe para o botão, com fallback para verde antigo
+        const corClasse = this.obterCorClasse(obterClassePorId(classeId)) || '#4ade80';
+        btn.style.backgroundColor = corClasse;
+        btn.style.color = this.obterCorContraste(corClasse);
         btn.disabled = false; // Pode remover
         btn.title = 'Clique para remover desta multiclasse';
       } else {
@@ -1349,7 +1423,9 @@ class ClassesUI {
       // Esta classe foi selecionada
       btnEscolher.textContent = 'Multiclasse';
       btnEscolher.classList.add('btn-selecionada');
-      btnEscolher.style.backgroundColor = '#4ade80';
+      const corBtn = this.obterCorClasse(obterClassePorId(classeId)) || '#4ade80';
+      btnEscolher.style.backgroundColor = corBtn;
+      btnEscolher.style.color = this.obterCorContraste(corBtn);
       btnCadeado.disabled = false; // Cadeado habilitado para remover
     } else {
       // Esta classe NÃO foi selecionada
