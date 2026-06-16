@@ -25,6 +25,55 @@ class ClassesUI {
   }
 
   /**
+   * Ajusta o tamanho da fonte das descrições das habilidades para evitar corte.
+   * Reduz o tamanho em passos até o texto caber ou atingir um tamanho mínimo.
+   */
+  ajustarDescricoesHabilidades() {
+    try {
+      console.log('[ClassesUI] ajustarDescricoesHabilidades chamado');
+      const container = this.painalDetalhes;
+      if (!container) return;
+
+      const descricoes = container.querySelectorAll('.habilidade-descricao');
+      descricoes.forEach((el) => {
+        // Reset para o tamanho original (baseado no CSS)
+        const estilo = window.getComputedStyle(el);
+        let fontSize = parseFloat(estilo.fontSize) || 13;
+        const minFontSize = 10; // px
+
+        // Garantir propriedades que influenciam cálculo
+        el.style.whiteSpace = 'normal';
+        el.style.overflow = 'hidden';
+        el.style.display = 'block';
+
+        // Se o texto não está cortado, nada a fazer
+        if (!(el.scrollHeight > el.clientHeight || el.scrollWidth > el.clientWidth)) {
+          el.style.fontSize = '';
+          return;
+        }
+
+        // Diminuir até caber ou atingir minFontSize
+        while ((el.scrollHeight > el.clientHeight || el.scrollWidth > el.clientWidth) && fontSize > minFontSize) {
+          fontSize -= 1;
+          el.style.fontSize = `${fontSize}px`;
+        }
+
+        // Se mesmo assim não coube, aplicar truncamento com -webkit-line-clamp
+        if (el.scrollHeight > el.clientHeight || el.scrollWidth > el.clientWidth) {
+          el.style.display = '-webkit-box';
+          const lineHeight = parseFloat(window.getComputedStyle(el).lineHeight) || (fontSize * 1.2);
+          const lines = Math.floor(el.clientHeight / lineHeight) || 3;
+          el.style.webkitLineClamp = lines;
+          el.style.webkitBoxOrient = 'vertical';
+          el.style.overflow = 'hidden';
+        }
+      });
+    } catch (err) {
+      console.error('Erro ao ajustar descrições de habilidades:', err);
+    }
+  }
+
+  /**
    * Inicializa o sistema
    * Chamada uma única vez no carregamento da página
    */
@@ -441,6 +490,8 @@ class ClassesUI {
       <span class="rdg-class-folder-count">${pasta.classes.length}</span>
     `;
 
+    // (ajuste de descrições será chamado após renderDetalhes)
+
     pastaElement.appendChild(headerPasta);
 
     // Container das classes dentro da pasta
@@ -712,6 +763,10 @@ class ClassesUI {
         </div>
       </section>
     `;
+
+    // Ajusta descrições longas para caber no card (reduz fonte se necessário)
+    // Pequeno delay para garantir que o DOM esteja calculado/renderizado
+    setTimeout(() => this.ajustarDescricoesHabilidades(), 50);
 
     // ✨ Não chama mais atualizarEstadoBotoes aqui
     // Isso é chamado de selecionarClasse()

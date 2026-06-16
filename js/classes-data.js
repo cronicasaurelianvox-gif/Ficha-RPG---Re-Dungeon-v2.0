@@ -132,105 +132,8 @@ const CLASSES_DATABASE = [
         dado: "N/A",
         bonus: [
           "Estado de fúria",
-          "+2dn contra alvos sangrando",
-          "Aumenta dano progressivamente"
+          "+2dn contra alvos sangrando"
         ]
-      },
-      {
-        nome: "Corte do Destino",
-        descricao: "O Guerreiro realiza um ataque final devastador, avançando através do alvo e causando dano físico massivo. O dano base desta habilidade é de 150% do Dano de Ataque fixo do Guerreiro. Para cada segundo restante do efeito de Sangramento no alvo (aplicado por Lacerar), o dano de Corte do Destino é aumentado em 25%. Se o alvo for eliminado por esta habilidade, o tempo de recarga de Investida Impetuosa é reduzido em 50%.",
-        tipo: "Imediata",
-        alcance: "3 m",
-        alvos: "1",
-        custo: "19 FaD",
-        recarga: "6",
-        duracao: "1 T",
-        dado: "N/A",
-        bonus: [
-          "Dano de 150% do Ataque",
-          "+25% por segundo de Sangramento",
-          "Reduz recarga de Investida em 50% se matar"
-        ]
-      }
-    ],
-    habilidadesAvancadas: []
-  },
-  {
-    id: "mago",
-    nome: "Mago",
-    raridade: "comum",
-    descricao: "Os Magos traçam sua linhagem aos primeiros estudiosos que ousaram decifrar os mistérios arcanos do universo, buscando o poder na sabedoria. Sua origem está ligada a antigas academias e bibliotecas secretas, onde a Inteligência é a moeda mais valiosa e o estudo é uma devoção. Eles são os arquitetos da realidade, capazes de manipular as energias primordiais através de complexos rituais e fórmulas mágicas. A busca incessante por conhecimento e domínio da magia é o motor que impulsiona a vida de um Mago.",
-    limiteAtributo: 110,
-    imagem: "https://i.imgur.com/vhI2jaF.png",
-    funcoes: ["Control", "Control DPS"],
-    atributos: {
-      forca: "1d4+6",
-      vitalidade: "1d4+6",
-      agilidade: "2d6+4",
-      inteligencia: "3d12+4",
-      percepcao: "2d10+6",
-      sorte: "0"
-    },
-    habilidadesBasicas: [
-      {
-        nome: "Pulso Arcano",
-        descricao: "O Mago dispara um projétil de mana pura que causa 4d8+6 do seu Poder Mágico fixo como dano arcano ao primeiro inimigo atingido. O alvo e todos os inimigos em um raio de 2 metros recebem 1 acúmulo de Saturação Arcana. Cada acúmulo aumenta o dano arcano fixo recebido em 10% (acumula até 3 vezes).",
-        tipo: "Imediata",
-        alcance: "15 m",
-        alvos: "Único (Dano)",
-        custo: "7 EnR",
-        recarga: "4",
-        duracao: "0",
-        dado: "4d8",
-        bonus: ["Dano arcano direto", "+6 Poder Mágico", "Aplica Saturação Arcana"]
-      },
-      {
-        nome: "Fluxo Instável",
-        descricao: "O Mago entra em um estado de fluxo instável. Durante a duração, todas as suas habilidades custam 50% mais mana, mas cada conjuração gera 1 Eco Arcano (acumula até 5). Ecos Arcanos podem ser consumidos para potencializar a Singularidade de Mana ou reduzir o tempo de recarga de outras habilidades em 1 T por carga ao expirar.",
-        tipo: "Duradoura",
-        alcance: "Pessoal",
-        alvos: "Próprio",
-        custo: "0",
-        recarga: "0",
-        duracao: "0",
-        dado: "N/A",
-        bonus: ["Custo +50%", "+1 Eco por conjuração", "Acumula até 5 Ecos"]
-      },
-      {
-        nome: "Distorção de Mana",
-        descricao: "Cria uma zona de distorção. Inimigos com Saturação Arcana são Silenciados (Condição) por 2 turnos ao entrar e têm a prontidão reduzida em 40%. A cada segundo, drena 5% da energia máxima residual dos inimigos saturados, restaurando 2% da mana máxima do Mago por alvo afetado.",
-        tipo: "Duradoura",
-        alcance: "12 metros",
-        alvos: "Área de 4 metros",
-        custo: "19 EnR",
-        recarga: "5",
-        duracao: "3 T",
-        dado: "N/A",
-        bonus: ["Silencia alvos saturados", "Reduz prontidão 40%", "Drena energia inimiga"]
-      },
-      {
-        nome: "Singularidade de Mana",
-        descricao: "Condensa a mana saturada em uma explosão massiva. Causa 10d8 de dano Mágico. Consome todos os acúmulos de Saturação Arcana dos alvos, aumentando o dano em 5% por acúmulo. Se o Mago possuir Ecos Arcanos, consome até 3 cargas para aumentar o dano final em 15% por carga.",
-        tipo: "Imediata",
-        alcance: "15 metros",
-        alvos: "Área de 5 metros",
-        custo: "29 EnR",
-        recarga: "7",
-        duracao: "0",
-        dado: "10d8",
-        bonus: ["Explosão massiva", "+5% dano por Saturação", "+15% por Eco Arcano"]
-      },
-      {
-        nome: "Fenda de Mana",
-        descricao: "O Mago abre uma fenda temporal no chão em uma área alvo causando 3d12+250% do AtK do fixo do jogador. Inimigos dentro da fenda são puxados lentamente para o centro e recebem 1 acúmulo de Instabilidade Espacial a cada segundo. Inimigos com Instabilidade Espacial têm sua velocidade de movimento reduzida em 15% por acúmulo (máximo de 5 acúmulos). Esta habilidade é excelente para agrupar inimigos e prepará-los para outras habilidades.",
-        tipo: "Sustentada",
-        alcance: "18 metros",
-        alvos: "Área de 3 metros",
-        custo: "19 EnR",
-        recarga: "6",
-        duracao: "5 T",
-        dado: "3d12",
-        bonus: ["Puxa inimigos para centro", "+1 Instabilidade/segundo", "Reduz velocidade 15% por Instabilidade"]
       },
       {
         nome: "Projeção de Eco",
@@ -8037,7 +7940,104 @@ const CLASSES_DATABASE = [
       percepcao: "2d6+4",
       sorte: "0"
     },
-    habilidadesBasicas: [],
+    habilidadesBasicas: [
+      {
+        nome: "Impacto Explosivo",
+        descricao: "O usuário fortalece seu corpo com Arcana e avança com brutalidade, efetuando uma jogada de corpo para derrubar o inimigo. Causa 3d8+6 de dano físico. Se o ataque conectar, o adversário deve ser bem-sucedido em um Teste de Atletismo (-7) ou ficará Atordoado por 1 rodada.",
+        tipo: "Imediata",
+        alcance: "Corpo a corpo",
+        alvos: "1 Inimigo",
+        custo: "8 EnE",
+        recarga: "3",
+        duracao: "1 T",
+        dado: "3d8+6",
+        bonus: [
+          "Dano físico direto",
+          "Derruba o inimigo",
+          "Aplica Atordoamento"
+        ]
+      },
+      {
+        nome: "Proteção Desesperada",
+        descricao: "O usuário usa sua reação para se atirar na direção de um ataque, colocando-se na frente, fortalecendo seu corpo com a Arcana e redirecionando o dano contra si. Pode proteger até 2 aliados adjacentes. Para cada aliado protegido, a eficiência da defesa diminui em 50%. Defende apenas o impacto inicial.",
+        tipo: "Duradoura",
+        alcance: "5 metros",
+        alvos: "Aliados na Área",
+        custo: "15 EnE",
+        recarga: "4",
+        duracao: "2 T",
+        dado: "N/A",
+        bonus: [
+          "Reação defensiva",
+          "Protege múltiplos aliados",
+          "Redireciona dano inicial"
+        ]
+      },
+      {
+        nome: "Escudo Humano",
+        descricao: "O Vanguarda interpõe-se entre um aliado adjacente e os ataques iminentes. Reduz o dano recebido em 2dN+250% DEF, mas o Vanguarda fica Imobilizado por 2 turnos enquanto mantém a defesa.",
+        tipo: "Duradoura",
+        alcance: "Adjacente",
+        alvos: "1 Aliado",
+        custo: "8 FaD & 8 EnE",
+        recarga: "5",
+        duracao: "3 T",
+        dado: "N/A",
+        bonus: [
+          "Absorve dano do aliado",
+          "Redução de dano escalável",
+          "Sacrifica mobilidade por defesa"
+        ]
+      },
+      {
+        nome: "Grito de Desafio",
+        descricao: "O Vanguarda emite um grito poderoso que atrai a atenção. Todos os inimigos em um raio de 10 metros devem focar seus ataques no Vanguarda por 1 rodada, ou sofrerão penalidade de -3 em suas rolagens de ataque.",
+        tipo: "Imediata",
+        alcance: "10 metros",
+        alvos: "Inimigos na Área",
+        custo: "10 EnE",
+        recarga: "4",
+        duracao: "1 T",
+        dado: "N/A",
+        bonus: [
+          "Controle de aggro (Provocação)",
+          "Penaliza ataques inimigos",
+          "Protege a equipe"
+        ]
+      },
+      {
+        nome: "Fortaleza Inabalável",
+        descricao: "Enquanto o Vanguarda estiver com menos de 30% de sua vida máxima, ele recebe +2dN DEF e +1 em testes de resistência. Este efeito ativa automaticamente em momentos críticos.",
+        tipo: "Passiva",
+        alcance: "Pessoal",
+        alvos: "Próprio",
+        custo: "0 FaD",
+        recarga: "Passiva",
+        duracao: "Passiva",
+        dado: "N/A",
+        bonus: [
+          "Aumento de defesa com vida baixa",
+          "Bônus em resistências",
+          "Sobrevivência extrema"
+        ]
+      },
+      {
+        nome: "Investida Implacável",
+        descricao: "O Vanguarda avança em linha reta por até 10 metros, empurrando e causando 4d8+10 de dano físico a todos no caminho. Inimigos atingidos devem realizar um Teste de Agilidade ou serão derrubados e Atordoados por 1 rodada.",
+        tipo: "Imediata",
+        alcance: "10 metros",
+        alvos: "Inimigos na Linha",
+        custo: "15 FaD",
+        recarga: "5",
+        duracao: "0 T",
+        dado: "4d10+8",
+        bonus: [
+          "Dano em área (linha)",
+          "Reposicionamento rápido",
+          "Controle de grupo (Derrubar/Atordoar)"
+        ]
+      }
+    ],
     habilidadesAvancadas: []
   },
   {
@@ -8056,7 +8056,104 @@ const CLASSES_DATABASE = [
       percepcao: "2d6+4",
       sorte: "0"
     },
-    habilidadesBasicas: [],
+    habilidadesBasicas: [
+      {
+        nome: "Disciplina do Desespero",
+        descricao: "Quando o personagem atinge 40% ou menos de sua vida, ele pode escolher um dos efeitos disciplinares para o restante do combate: Disciplina de Atenção (+3 em Reação); Disciplina da Resiliência (+2dN de DEF); Disciplina da Vitória (+2 de PreC / +2dN em Dano).",
+        tipo: "Passiva",
+        alcance: "Pessoal",
+        alvos: "Próprio",
+        custo: "0 FaD",
+        recarga: "Passiva",
+        duracao: "Permanente",
+        dado: "N/A",
+        bonus: [
+          "Bônus adaptativo em combate",
+          "Ativação em momentos críticos",
+          "Escolha estratégica"
+        ]
+      },
+      {
+        nome: "Marreta Arcana",
+        descricao: "Concentra Arcana na perna, realizando um salto e desferindo um golpe poderoso para esmagar o oponente no chão. Se o alvo falhar em um Teste de Foco, recebe -3 em Reação.",
+        tipo: "Imediata",
+        alcance: "Corpo a corpo",
+        alvos: "1 Inimigo",
+        custo: "10 FaD / 8 EnR",
+        recarga: "3",
+        duracao: "0 T",
+        dado: "5d10+12",
+        bonus: [
+          "Dano físico com controle",
+          "Penalidade de reação",
+          "Alto impacto"
+        ]
+      },
+      {
+        nome: "Punho de Adamantina",
+        descricao: "Imbui os punhos com Arcana, tornando-os duros como adamantium. Ataques desarmados ignoram 3dN de armadura do alvo e causam +2dN de dano.",
+        tipo: "Sustentada",
+        alcance: "Pessoal",
+        alvos: "Próprio",
+        custo: "9 EnR",
+        recarga: "4",
+        duracao: "0 T",
+        dado: "N/A",
+        bonus: [
+          "Ignora armadura",
+          "Aumento de dano desarmado",
+          "Aprimoramento físico"
+        ]
+      },
+      {
+        nome: "Sequência de Golpes",
+        descricao: "Realiza uma série rápida de ataques desarmados. Permite três ataques adicionais por turno por 2 rodadas; cada ataque adicional causa 1dN a menos de dano.",
+        tipo: "Imediata",
+        alcance: "Corpo a corpo",
+        alvos: "1 Inimigo",
+        custo: "15 FaD",
+        recarga: "5",
+        duracao: "2 T",
+        dado: "N/A",
+        bonus: [
+          "Múltiplos ataques",
+          "Dano contínuo",
+          "Pressão ofensiva"
+        ]
+      },
+      {
+        nome: "Contra-Ataque Perfeito",
+        descricao: "Sempre que o Pugilista desviar ou bloquear um ataque, ele pode realizar um ataque desarmado de reação com +2dN de dano.",
+        tipo: "Passiva",
+        alcance: "Pessoal",
+        alvos: "Próprio",
+        custo: "0 FaD",
+        recarga: "Passiva",
+        duracao: "Permanente",
+        dado: "N/A",
+        bonus: [
+          "Reação ofensiva",
+          "Dano bônus em contra-ataques",
+          "Defesa ativa"
+        ]
+      },
+      {
+        nome: "Fúria do Dragão",
+        descricao: "Entra em um estado de fúria, aumentando Força e Agilidade em +20 e causando 3dN de dano por rodada durante 5 rodadas. Enquanto em fúria, não pode usar habilidades mágicas que aprimorem capacidades físicas.",
+        tipo: "Duradoura",
+        alcance: "Pessoal",
+        alvos: "Próprio",
+        custo: "25 FaD",
+        recarga: "7",
+        duracao: "5 T",
+        dado: "N/A",
+        bonus: [
+          "Aumento massivo de atributos",
+          "Foco em combate físico",
+          "Restrição mágica"
+        ]
+      }
+    ],
     habilidadesAvancadas: []
   },
   {
@@ -8075,7 +8172,104 @@ const CLASSES_DATABASE = [
       percepcao: "3d6+8",
       sorte: "0"
     },
-    habilidadesBasicas: [],
+    habilidadesBasicas: [
+      {
+        nome: "Explosão de Velocidade",
+        descricao: "Canaliza Arcana para aumentar exponencialmente a movimentação. Recebe +20 de Agilidade e adiciona seu nível de Agilidade como bônus de dano. Receber qualquer dano encerra o efeito prematuramente.",
+        tipo: "Sustentada",
+        alcance: "Pessoal",
+        alvos: "Próprio",
+        custo: "12 FaD",
+        recarga: "6",
+        duracao: "Agi T",
+        dado: "N/A",
+        bonus: [
+          "Aumento massivo de Agilidade",
+          "Bônus de dano baseado em Agilidade",
+          "Requer evasão perfeita para manter"
+        ]
+      },
+      {
+        nome: "Desingage!",
+        descricao: "Utiliza agilidade para se desvencilhar. Recebe +3 de ReaC e +3 de EvA ou PreC. Se bem-sucedido, recua 2 metros e evita o ataque inimigo por completo, abrindo mão do próximo turno. Se usado para Contra-Atacar, seu ataque é considerado Crítico.",
+        tipo: "Imediata",
+        alcance: "3 metros",
+        alvos: "Próprio",
+        custo: "20 FaD",
+        recarga: "4",
+        duracao: "0 T",
+        dado: "N/A",
+        bonus: [
+          "Evasão absoluta de emergência",
+          "Reposicionamento tático",
+          "Alto risco, alta recompensa"
+        ]
+      },
+      {
+        nome: "Ataque Preciso",
+        descricao: "O Duelista foca em um ponto vital do inimigo, causando dano físico perfurante. Ignora 50% da armadura do alvo e aumenta o acerto crítico.",
+        tipo: "Imediata",
+        alcance: "Corpo a corpo",
+        alvos: "1 Inimigo",
+        custo: "12 FaD / 12 EnR",
+        recarga: "3",
+        duracao: "0 T",
+        dado: "4d10+12",
+        bonus: [
+          "Dano físico perfurante",
+          "Ignora 50% de armadura",
+          "Aumenta acerto crítico"
+        ]
+      },
+      {
+        nome: "Dança das Lâminas",
+        descricao: "Executa movimentos evasivos e ataques rápidos. Recebe +2 em Evasão e Reação, também pode realizar 2 ataques adicionais por turno durante 2 rodadas.",
+        tipo: "Duradoura",
+        alcance: "Pessoal",
+        alvos: "Próprio",
+        custo: "18 FaD",
+        recarga: "7",
+        duracao: "2 T",
+        dado: "N/A",
+        bonus: [
+          "Aumento de Evasão",
+          "Ataque extra por turno",
+          "Pressão contínua"
+        ]
+      },
+      {
+        nome: "Foco Mortal",
+        descricao: "Em situações de combate 1v1 (sem aliados ou outros inimigos interferindo), o Duelista recebe +2dN de dano e +2 em Precisão em todos os seus ataques.",
+        tipo: "Passiva",
+        alcance: "Pessoal",
+        alvos: "Próprio",
+        custo: "0 FaD",
+        recarga: "Passiva",
+        duracao: "Passiva",
+        dado: "N/A",
+        bonus: [
+          "Bônus passivo em duelos",
+          "Aumenta letalidade isolada",
+          "Sinergia com a classe"
+        ]
+      },
+      {
+        nome: "Golpe Final",
+        descricao: "Prepara um ataque devastador causando 6d12 + 250% do Dano de Ataque. Se conectar, o inimigo faz um Teste de Tolerância; se falhar, sofre o dobro do dano total.",
+        tipo: "Imediata",
+        alcance: "Corpo a corpo",
+        alvos: "1 Inimigo",
+        custo: "25 FaD",
+        recarga: "8",
+        duracao: "0 T",
+        dado: "6d12+250%",
+        bonus: [
+          "Dano massivo de finalização",
+          "Multiplicador condicional",
+          "Alto custo e recarga"
+        ]
+      }
+    ],
     habilidadesAvancadas: []
   },
   {
@@ -8094,7 +8288,104 @@ const CLASSES_DATABASE = [
       percepcao: "2d4+4",
       sorte: "0"
     },
-    habilidadesBasicas: [],
+    habilidadesBasicas: [
+      {
+        nome: "Double Tap",
+        descricao: "Realiza um ataque rápido seguido de um segundo ataque às cegas, causando 2d10+150% de dano físico. O inimigo faz um teste de Percepção (-7); se falhar, recebe o segundo ataque com 50% da eficiência sem poder reagir.",
+        tipo: "Imediata",
+        alcance: "Corpo a corpo",
+        alvos: "1 Inimigo",
+        custo: "15 FaD",
+        recarga: "3",
+        duracao: "0 T",
+        dado: "2d10+150%",
+        bonus: [
+          "Ataque duplo rápido",
+          "Punição por baixa percepção",
+          "Dano consistente"
+        ]
+      },
+      {
+        nome: "Surto de Arcana",
+        descricao: "O usuário canaliza a Arcana em seu corpo para aprimorar seus movimentos ao máximo, forçando seu corpo além de um limite possível por um curto período. Ao fim da habilidade, seu corpo entrará em superaquecimento e ficará Desorientado por 2 turnos.",
+        tipo: "Duradoura",
+        alcance: "Pessoal",
+        alvos: "Próprio",
+        custo: "12 FaD / 12 EnE",
+        recarga: "6",
+        duracao: "4 T",
+        dado: "2dN+200% ATK / 3dN DEF / +2 ReaC",
+        bonus: [
+          "Ação extra no turno",
+          "Bônus de dano",
+          "Risco de exaustão"
+        ]
+      },
+      {
+        nome: "Tática de Flanco",
+        descricao: "Coordena ataques com aliados. Se um aliado atacar o mesmo alvo na mesma rodada, o Cavaleiro Negro e seu aliado recebem +2dN de dano e +1 em Precisão contra aquele alvo.",
+        tipo: "Passiva",
+        alcance: "5 metros",
+        alvos: "Aliado/Inimigo",
+        custo: "9 FaD",
+        recarga: "3",
+        duracao: "1 T",
+        dado: "2dN Dano / +1 PreC",
+        bonus: [
+          "Sinergia de equipe",
+          "Bônus de flanqueamento",
+          "Aumenta precisão"
+        ]
+      },
+      {
+        nome: "Aura de Comando",
+        descricao: "Inspira aliados próximos. Todos os aliados em um raio de 10 metros recebem +1 em todas as rolagens de ataque e defesa e +2dN de ATK e DEF por 3 rodadas.",
+        tipo: "Sustentada",
+        alcance: "10 metros",
+        alvos: "Aliados na Área",
+        custo: "18 EnR",
+        recarga: "7",
+        duracao: "3 T",
+        dado: "N/A",
+        bonus: [
+          "Buff em área",
+          "Aumenta ataque e defesa da equipe",
+          "Liderança tática"
+        ]
+      },
+      {
+        nome: "Determinação Férrea",
+        descricao: "O Cavaleiro Negro é imune a efeitos de medo e intimidação Mediana. Uma vez por combate, pode ignorar automaticamente um efeito de Atordoamento ou Imobilização.",
+        tipo: "Passiva",
+        alcance: "Pessoal",
+        alvos: "Próprio",
+        custo: "0 FaD",
+        recarga: "Passiva",
+        duracao: "Passiva",
+        dado: "N/A",
+        bonus: [
+          "Imunidade a medo",
+          "Quebra de CC (1x por combate)",
+          "Resiliência mental"
+        ]
+      },
+      {
+        nome: "Execução Impecável",
+        descricao: "Mira um inimigo enfraquecido. Causa 8d12+15 de dano físico. Se o alvo estiver com menos de 50% de vida, o ataque ignora 50% de armadura e tem chance de crítico aumentada (5).",
+        tipo: "Imediata",
+        alcance: "Corpo a corpo",
+        alvos: "1 Inimigo",
+        custo: "18 FaD",
+        recarga: "5",
+        duracao: "0 T",
+        dado: "8d12+15",
+        bonus: [
+          "Dano massivo de execução",
+          "Ignora armadura em alvos feridos",
+          "Finalizador de elite"
+        ]
+      }
+    ],
     habilidadesAvancadas: []
   },
   {
@@ -8113,7 +8404,104 @@ const CLASSES_DATABASE = [
       percepcao: "3d8+8",
       sorte: "0"
     },
-    habilidadesBasicas: [],
+    habilidadesBasicas: [
+      {
+        nome: "Incendium",
+        descricao: "Cria uma chama em cone que causa dano de fogo e pode deixar o alvo queimando. Se o alvo falhar em um Teste de Tolerância (-7), ficará Queimando.",
+        tipo: "Imediata",
+        alcance: "10 metros",
+        alvos: "Área em Cone",
+        custo: "15 EnR",
+        recarga: "4",
+        duracao: "0 T",
+        dado: "5d8+10",
+        bonus: [
+          "Dano em área de fogo",
+          "Aplica queimaduras",
+          "Dano contínuo"
+        ]
+      },
+      {
+        nome: "Círculo da Restrição",
+        descricao: "Aponta para o alvo, fazendo um círculo de Arcana envolvê-lo e espremê-lo. Causa dano mágico e pode Atordoar o inimigo se falhar no teste de Atletismo.",
+        tipo: "Imediata",
+        alcance: "12 metros",
+        alvos: "1 Inimigo",
+        custo: "15 EnR",
+        recarga: "5",
+        duracao: "2 T",
+        dado: "3d8+8",
+        bonus: [
+          "Dano mágico com controle",
+          "Atordoamento de longa duração",
+          "Controle de grupo"
+        ]
+      },
+      {
+        nome: "Barreira Arcana",
+        descricao: "Conjura uma barreira de energia mágica que protege a si ou a um aliado. A barreira absorve 4dN + (Nível de Arcanismo x3) de dano mágico ou físico por 2 rodadas.",
+        tipo: "Duradoura",
+        alcance: "10 metros",
+        alvos: "1 Alvo",
+        custo: "10 EnR",
+        recarga: "4",
+        duracao: "2 T",
+        dado: "N/A",
+        bonus: [
+          "Proteção versátil",
+          "Absorção de dano",
+          "Defesa pontual"
+        ]
+      },
+      {
+        nome: "Explosão Elemental",
+        descricao: "Invoca uma explosão de energia elemental (fogo, gelo ou eletricidade). Inimigos no raio devem falhar em um Teste de Tolerância (-11) ou sofrer efeito secundário (queimadura, lentidão, choque).",
+        tipo: "Imediata",
+        alcance: "10 metros",
+        alvos: "Área de 5 metros",
+        custo: "20 EnR",
+        recarga: "6",
+        duracao: "0 T",
+        dado: "5d12+10",
+        bonus: [
+          "Dano elemental em área",
+          "Efeitos secundários de controle",
+          "Versatilidade elemental"
+        ]
+      },
+      {
+        nome: "Visão Arcana",
+        descricao: "O Guardião pode ver auras mágicas e identificar a natureza de feitiços e encantamentos. Recebe +2 em testes de Percepção Mágica e Inteligência para identificar magias.",
+        tipo: "Passiva",
+        alcance: "Pessoal",
+        alvos: "Próprio",
+        custo: "0 EnR",
+        recarga: "Passiva",
+        duracao: "Permanente",
+        dado: "N/A",
+        bonus: [
+          "Detecção mágica aprimorada",
+          "Bônus em testes de conhecimento",
+          "Consciência tática"
+        ]
+      },
+      {
+        nome: "Tempestade de Mana",
+        descricao: "Libera uma torrente de energia Arcana pura. Todos os inimigos na área recebem dano mágico massivo (o valor inclui multiplicador de Ataque quando aplicável).",
+        tipo: "Imediata",
+        alcance: "15 metros",
+        alvos: "Área de 5 metros",
+        custo: "30 EnR",
+        recarga: "8",
+        duracao: "0 T",
+        dado: "8d12 + [500% ATK]",
+        bonus: [
+          "Dano mágico massivo em área",
+          "Alto impacto",
+          "Finalizador arcano"
+        ]
+      }
+    ],
     habilidadesAvancadas: []
   },
     {
@@ -8132,7 +8520,88 @@ const CLASSES_DATABASE = [
       percepcao: "3d8+8",
       sorte: "0"
     },
-    habilidadesBasicas: [],
+    habilidadesBasicas: [
+      {
+        nome: "Bênção Divina",
+        descricao: "Invoca uma bênção que cura um aliado e concede bônus de defesa por 2 turnos. Se o alvo já estiver sob Bênção Divina, a cura é aumentada em 25%.",
+        tipo: "Duradoura",
+        alcance: "10 metros",
+        alvos: "1 Aliado",
+        custo: "15 EnR",
+        recarga: "2",
+        duracao: "2 T",
+        dado: "3d8+6",
+        bonus: [
+          "Cura e defesa para aliado",
+          "Bônus de cura condicional",
+          "Suporte divino"
+        ]
+      },
+      {
+        nome: "Aura de Proteção",
+        descricao: "Irradia uma aura que concede aumento de defesa a todos os aliados em um raio de 5 metros. Inimigos que atacarem aliados dentro da aura recebem dano sagrado.",
+        tipo: "Sustentada",
+        alcance: "5 metros",
+        alvos: "Aliados na Área",
+        custo: "18 EnR",
+        recarga: "5",
+        duracao: "3 T",
+        dado: "N/A",
+        bonus: [
+          "Defesa em área",
+          "Dano de retribuição",
+          "Proteção contínua"
+        ]
+      },
+      {
+        nome: "Golpe Sagrado",
+        descricao: "Um ataque imbuído de energia sagrada que causa dano sagrado. Se o alvo for um Infernal, o dano é dobrado e o alvo fica Amedrontado por 1 turno.",
+        tipo: "Imediata",
+        alcance: "Corpo a corpo",
+        alvos: "1 Inimigo",
+        custo: "12 FaD",
+        recarga: "3",
+        duracao: "0 T",
+        dado: "4d8+10",
+        bonus: [
+          "Dano sagrado contra Infernais",
+          "Aplica Amedrontado",
+          "Ataque poderoso"
+        ]
+      },
+      {
+        nome: "Fé Inabalável",
+        descricao: "Imunidade a Amedrontado e Enfeitiçado. Sempre que o Guerreiro Santo ou um aliado próximo sofrer dano de um Infernal, recupera 5 de EnR.",
+        tipo: "Passiva",
+        alcance: "Pessoal",
+        alvos: "Próprio",
+        custo: "0",
+        recarga: "Passiva",
+        duracao: "Permanente",
+        dado: "N/A",
+        bonus: [
+          "Imunidade a CC",
+          "Recuperação de energia",
+          "Resiliência contra Infernais"
+        ]
+      },
+      {
+        nome: "Intervenção Divina",
+        descricao: "Invoca uma barreira de luz que protege um aliado de um ataque iminente, absorvendo 100% do dano. Pode ser usada como reação (máx. 2 usos por Descanso Longo).",
+        tipo: "Imediata (Reação)",
+        alcance: "15 metros",
+        alvos: "1 Aliado",
+        custo: "25 EnR",
+        recarga: "8",
+        duracao: "0 T",
+        dado: "N/A",
+        bonus: [
+          "Proteção total contra um ataque",
+          "Habilidade de reação",
+          "Salva aliados em perigo"
+        ]
+      }
+    ],
     habilidadesAvancadas: []
   },
     {
@@ -8151,7 +8620,88 @@ const CLASSES_DATABASE = [
       percepcao: "3d10+6",
       sorte: "0"
     },
-    habilidadesBasicas: [],
+    habilidadesBasicas: [
+      {
+        nome: "Sombra Corrosiva",
+        descricao: "Libera uma nuvem de energia sombria que causa 5d10+12 de dano necrótico em área. Inimigos atingidos recebem 1 acúmulo de Corrosão (Condição), que reduz a defesa em 2nD por turno por 3 turnos.",
+        tipo: "Duradoura",
+        alcance: "10 metros",
+        alvos: "Área de 4 metros",
+        custo: "20 EnR",
+        recarga: "4",
+        duracao: "3 T",
+        dado: "5d10+12",
+        bonus: [
+          "Dano necrótico em área",
+          "Reduz defesa inimiga",
+          "Dano contínuo"
+        ]
+      },
+      {
+        nome: "Abraço da Escuridão",
+        descricao: "O Caído envolve um inimigo em sombras, causando 3d8+8 de dano necrótico por turno e impedindo-o de se mover. O alvo pode tentar um Teste de Atletismo (-11) a cada turno para se libertar.",
+        tipo: "Duradoura",
+        alcance: "8 metros",
+        alvos: "1 Inimigo",
+        custo: "22 EnR",
+        recarga: "5",
+        duracao: "3 T",
+        dado: "3d8+8",
+        bonus: [
+          "Dano necrótico e imobilização",
+          "Controle de grupo",
+          "Dano contínuo"
+        ]
+      },
+      {
+        nome: "Vínculo Sombrio",
+        descricao: "Cria um vínculo com um inimigo. Enquanto o vínculo durar, 25% do dano que o Caído recebe é transferido para o alvo. O alvo também sofre -2 em todos os testes de resistência.",
+        tipo: "Sustentada",
+        alcance: "12 metros",
+        alvos: "1 Inimigo",
+        custo: "8 EnR",
+        recarga: "6",
+        duracao: "0 T",
+        dado: "N/A",
+        bonus: [
+          "Redireciona dano",
+          "Reduz resistência do alvo",
+          "Suporte ofensivo"
+        ]
+      },
+      {
+        nome: "Consumir Alma",
+        descricao: "Ataca a alma de um inimigo, causando 6d12+15 de dano psíquico. Se o alvo for derrotado por esta habilidade, o Caído recupera 50% de sua vida e mana máxima.",
+        tipo: "Imediata",
+        alcance: "10 metros",
+        alvos: "1 Inimigo",
+        custo: "30 EnR",
+        recarga: "7",
+        duracao: "0 T",
+        dado: "6d12+15",
+        bonus: [
+          "Dano psíquico alto",
+          "Recuperação de recursos",
+          "Finalizador poderoso"
+        ]
+      },
+      {
+        nome: "Maldição Eterna",
+        descricao: "Amaldiçoa um inimigo, fazendo com que ele receba 1 acúmulo de Maldição Eterna (Condição). Cada acúmulo aumenta o dano necrótico recebido em 20% e reduz a cura recebida em 10%. Acumula até 5 vezes.",
+        tipo: "Duradoura",
+        alcance: "15 metros",
+        alvos: "1 Inimigo",
+        custo: "10% EnR Max.",
+        recarga: "8",
+        duracao: "5 T",
+        dado: "N/A",
+        bonus: [
+          "Aumenta dano necrótico",
+          "Reduz cura do alvo",
+          "Debuff poderoso"
+        ]
+      }
+    ],
     habilidadesAvancadas: []
   }
 ];

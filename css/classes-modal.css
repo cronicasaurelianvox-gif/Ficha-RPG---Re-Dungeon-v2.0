@@ -986,8 +986,8 @@
   word-wrap: break-word;
   white-space: normal;
   overflow-wrap: break-word;
-  max-height: 5.2em; /* controla texto muito longo */
-  overflow: hidden;
+  max-height: none; /* permitir expansão para evitar corte */
+  overflow: visible;
 }
 
 #modal-classes .habilidade-atributos {
