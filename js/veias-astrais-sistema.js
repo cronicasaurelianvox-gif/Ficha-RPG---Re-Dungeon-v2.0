@@ -438,10 +438,45 @@ class VeiasAstraisSystem {
         nishi: ["Fluxo Balanceado", "Harmonia Dual", "Equilíbrio Espiritual"],
         hestia: ["Broto da Vida", "Crescimento Natural", "Fluxo Vital"],
       };
+
       for (let i = 0; i < 3; i++) {
         const spreadAngle = -40 + i * 40;
         const subAngle = mainAngleRad + (spreadAngle * Math.PI) / 180;
         const distance = 420 + Math.random() * 40;
+
+        // Definir effect específico por constelação e índice
+        let l2Effect = "";
+        if (treeConfig.id === "arty") {
+          l2Effect = [
+            "+5% de Dano de Ataque",
+            "+3% de Velocidade de Ataque",
+            "+2 de Força",
+          ][i];
+        } else if (treeConfig.id === "aune") {
+          l2Effect = [
+            "+1 de Sorte",
+            "+3% de Chance de Crítico",
+            "+2% de Ganho de Experiência",
+          ][i];
+        } else if (treeConfig.id === "ephelias") {
+          l2Effect = [
+            "+2 de Inteligência",
+            "+5% de Resistência Mágica",
+            "+1 de Compreensão",
+          ][i];
+        } else if (treeConfig.id === "nishi") {
+          l2Effect = [
+            "+2 de Agilidade",
+            "+4% de Esquiva",
+            "+3% de Velocidade de Movimento",
+          ][i];
+        } else if (treeConfig.id === "hestia") {
+          l2Effect = [
+            "+3 de Vitalidade",
+            "+10% de Regeneração de HP",
+            "+5% de Resistência Física",
+          ][i];
+        }
 
         node = new AstralNode({
           id: nodeId++,
@@ -460,6 +495,13 @@ class VeiasAstraisSystem {
           size: "small",
           parentId: layer1NodeId,
           rarity: 1,
+          // ✨ Bônus associado ao nó L2
+          bonus: {
+            id: `bonus-${treeConfig.id}-l2-${i}`,
+            name: `Poder Básico de ${treeConfig.name}`,
+            effect: l2Effect,
+            stats: {},
+          },
         });
         this.nodes.push(node);
       }
@@ -472,6 +514,7 @@ class VeiasAstraisSystem {
         nishi: ["Convergência Interna", "Ordem Cósmica", "Pulso Sereno"],
         hestia: ["Renascimento", "Essência Viva", "Raiz Celestial"],
       };
+
       const layer2Nodes = this.nodes.filter(
         (n) => n.treeId === treeConfig.id && n.layer === 2,
       );
@@ -479,6 +522,40 @@ class VeiasAstraisSystem {
         const spreadAngle = -50 + i * 50;
         const subAngle = mainAngleRad + (spreadAngle * Math.PI) / 180;
         const distance = 700 + Math.random() * 60;
+
+        // Definir effect específico por constelação e índice
+        let l3Effect = "";
+        if (treeConfig.id === "arty") {
+          l3Effect = [
+            "+15% de Dano de Ataque e +2 de Força",
+            "+12% de Velocidade de Ataque",
+            "+20% de Dano Crítico",
+          ][i];
+        } else if (treeConfig.id === "aune") {
+          l3Effect = [
+            "+3 de Sorte e +5% de Luck Rolls",
+            "+15% de Chance de Crítico",
+            "+10% de Bônus de Experiência",
+          ][i];
+        } else if (treeConfig.id === "ephelias") {
+          l3Effect = [
+            "+5 de Inteligência e +15% de Resistência Mágica",
+            "+8% de Velocidade de Lançamento de Magia",
+            "+3 de Compreensão Arcana",
+          ][i];
+        } else if (treeConfig.id === "nishi") {
+          l3Effect = [
+            "+5 de Agilidade e +12% de Esquiva",
+            "+15% de Velocidade de Movimento",
+            "+8% de Redução de Cooldown",
+          ][i];
+        } else if (treeConfig.id === "hestia") {
+          l3Effect = [
+            "+8 de Vitalidade e +25% de Regeneração de HP",
+            "+20% de Resistência Física e Mágica",
+            "+15% de Cura Recebida",
+          ][i];
+        }
 
         node = new AstralNode({
           id: nodeId++,
@@ -497,6 +574,13 @@ class VeiasAstraisSystem {
           size: "medium",
           parentId: layer2Nodes[i % layer2Nodes.length].id,
           rarity: 2,
+          // ✨ Bônus associado ao nó L3
+          bonus: {
+            id: `bonus-${treeConfig.id}-l3-${i}`,
+            name: `Poder Intermediário de ${treeConfig.name}`,
+            effect: l3Effect,
+            stats: {},
+          },
         });
         this.nodes.push(node);
       }
@@ -509,6 +593,7 @@ class VeiasAstraisSystem {
         nishi: ["Sintonia Universal", "Controle Absoluto"],
         hestia: ["Pulso da Criação", "Gênese Suprema"],
       };
+
       const layer3Nodes = this.nodes.filter(
         (n) => n.treeId === treeConfig.id && n.layer === 3,
       );
@@ -516,6 +601,35 @@ class VeiasAstraisSystem {
         const spreadAngle = -45 + i * 90;
         const subAngle = mainAngleRad + (spreadAngle * Math.PI) / 180;
         const distance = 950 + Math.random() * 80;
+
+        // Definir effect específico por constelação e índice
+        let l4Effect = "";
+        if (treeConfig.id === "arty") {
+          l4Effect = [
+            "Desbloqueie: Multiplicador de Dano +50% e Fúria Berserker",
+            "Desbloqueie: Ataque Duplo Automático ao Criticar",
+          ][i];
+        } else if (treeConfig.id === "aune") {
+          l4Effect = [
+            "Desbloqueie: Sorte Extrema - +20% em todos os rolls",
+            "Desbloqueie: Destino Reescrito - Reroll uma vez por combate",
+          ][i];
+        } else if (treeConfig.id === "ephelias") {
+          l4Effect = [
+            "Desbloqueie: Visão Infinita - Veja todos os inimigos",
+            "Desbloqueie: Mágica Suprema - -50% custo de magia",
+          ][i];
+        } else if (treeConfig.id === "nishi") {
+          l4Effect = [
+            "Desbloqueie: Dança Cósmica - +100% de Esquiva por 5s",
+            "Desbloqueie: Sincronização Perfeita - Ataque sincronizado a cada turno",
+          ][i];
+        } else if (treeConfig.id === "hestia") {
+          l4Effect = [
+            "Desbloqueie: Imortalidade Momentânea - Invulnerabilidade ativa",
+            "Desbloqueie: Cura Suprema - HP totalmente restaurado periodicamente",
+          ][i];
+        }
 
         node = new AstralNode({
           id: nodeId++,
@@ -534,6 +648,13 @@ class VeiasAstraisSystem {
           size: "large",
           parentId: layer3Nodes[i % layer3Nodes.length].id,
           rarity: 3,
+          // ✨ Bônus associado ao nó L4
+          bonus: {
+            id: `bonus-${treeConfig.id}-l4-${i}`,
+            name: `Poder Avançado de ${treeConfig.name}`,
+            effect: l4Effect,
+            stats: {},
+          },
         });
         this.nodes.push(node);
       }
@@ -546,6 +667,26 @@ class VeiasAstraisSystem {
         nishi: "Avatar de Nishi",
         hestia: "Avatar de Hestia",
       };
+
+      // Definir effect específico por constelação
+      let l5Effect = "";
+      if (treeConfig.id === "arty") {
+        l5Effect =
+          "PODER DIVINO SUPREMO: Transformação em Entidade de Caos - Dano +500%, Ataque Duplo Permanente";
+      } else if (treeConfig.id === "aune") {
+        l5Effect =
+          "PODER DIVINO SUPREMO: Encarnação do Destino - Controle Total da Probabilidade, Impossível Falhar";
+      } else if (treeConfig.id === "ephelias") {
+        l5Effect =
+          "PODER DIVINO SUPREMO: Onisciência Cósmica - Conhecimento Infinito, Prevê todos os ataques";
+      } else if (treeConfig.id === "nishi") {
+        l5Effect =
+          "PODER DIVINO SUPREMO: Perfeição Universal - Sincronização com o Cosmos, Poder Ilimitado";
+      } else if (treeConfig.id === "hestia") {
+        l5Effect =
+          "PODER DIVINO SUPREMO: Essência da Criação - Vida Infinita, Regeneração Absoluta, Gênesis";
+      }
+
       const layer4Nodes = this.nodes.filter(
         (n) => n.treeId === treeConfig.id && n.layer === 4,
       );
@@ -569,6 +710,13 @@ class VeiasAstraisSystem {
         size: "large",
         parentId: layer4Nodes[0].id,
         rarity: 5,
+        // ✨ Bônus associado ao nó L5
+        bonus: {
+          id: `bonus-${treeConfig.id}-l5`,
+          name: `Avatar Divino de ${treeConfig.name}`,
+          effect: l5Effect,
+          stats: {},
+        },
       });
       this.nodes.push(node);
 
@@ -1014,12 +1162,7 @@ class VeiasAstraisSystem {
     // Aprimoramento (bonus effect)
     const enhancementEl = document.getElementById("node-detail-enhancement");
     if (enhancementEl) {
-      console.log(
-        "Renderizando aprimoramento para nó:",
-        node.name,
-        "Bônus:",
-        node.bonus,
-      );
+      console.log("nó:", node);
       if (node.bonus && node.bonus.effect) {
         enhancementEl.textContent = node.bonus.effect;
       } else {
@@ -1337,6 +1480,20 @@ class VeiasAstraisSystem {
   }
 
   /**
+   * ATIVAR BÔNUS
+   */
+  activateBonus(bonus) {
+    if (!bonus || !bonus.id) return;
+
+    // Evitar duplicatas
+    const jaAtivo = this.activeBonuses.find((b) => b.id === bonus.id);
+    if (jaAtivo) return;
+
+    this.activeBonuses.push(bonus);
+    console.log(`✅ Bônus ativado: ${bonus.name} — ${bonus.effect}`);
+  }
+
+  /**
    * DESATIVAR BÔNUS
    */
   deactivateBonus(bonusId) {
@@ -1606,6 +1763,9 @@ class AstralNode {
     this.state = config.state || "locked";
     this.layer = config.layer || 1; // Camada hierárquica (1, 2, 3)
     this.parentId = config.parentId || null; // ID do nó pai na hierarquia
+    this.bonus = config.bonus || null; // Bônus/aprimoramento do nó
+    this.size = config.size || "medium";
+    this.rarity = config.rarity || 1;
   }
 }
 
