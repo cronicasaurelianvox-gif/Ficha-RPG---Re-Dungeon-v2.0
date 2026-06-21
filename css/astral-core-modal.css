@@ -220,3 +220,67 @@
     min-height: 200px;
   }
 }
+
+/* ============================================================================
+   6. RESUMO DE APRIMORAMENTOS (BONUS SUMMARY)
+   ============================================================================ */
+
+.bonus-summary-container {
+  width: 100%;
+  max-width: 800px;
+  color: #e0e0e0;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.bonus-tree-section {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 8px;
+  padding: 12px 15px;
+  margin-bottom: 16px;
+  transition: all 0.3s ease;
+}
+
+.bonus-tree-section:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.bonus-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.bonus-item {
+  transition: all 0.2s ease;
+  animation: slideInLeft 0.3s ease-out;
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.bonus-item:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  transform: translateX(4px);
+}
+
+.bonus-summary-footer {
+  animation: fadeIn 0.4s ease-out 0.2s both;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
