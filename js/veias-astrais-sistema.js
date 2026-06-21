@@ -518,6 +518,17 @@ class VeiasAstraisSystem {
       const layer2Nodes = this.nodes.filter(
         (n) => n.treeId === treeConfig.id && n.layer === 2,
       );
+
+      // Mapeamento explícito de qual nó L2 é pai de cada nó L3 (por índice)
+      // ephelias: Conhecimento Oculto(0)→Percepção Astral(0), Mente Aberta(1)→Sabedoria Antiga(1), Fluxo Arcano(2)→Eco da Memória(2)
+      const l3ParentIdxMap = {
+        arty: [0, 1, 2],
+        aune: [0, 1, 2],
+        ephelias: [0, 1, 2],
+        nishi: [0, 1, 2],
+        hestia: [0, 1, 2],
+      };
+
       for (let i = 0; i < 3; i++) {
         const spreadAngle = -50 + i * 50;
         const subAngle = mainAngleRad + (spreadAngle * Math.PI) / 180;
@@ -572,7 +583,7 @@ class VeiasAstraisSystem {
           state: "locked",
           layer: 3,
           size: "medium",
-          parentId: layer2Nodes[i % layer2Nodes.length].id,
+          parentId: layer2Nodes[l3ParentIdxMap[treeConfig.id][i]].id,
           rarity: 2,
           // ✨ Bônus associado ao nó L3
           bonus: {
@@ -597,6 +608,17 @@ class VeiasAstraisSystem {
       const layer3Nodes = this.nodes.filter(
         (n) => n.treeId === treeConfig.id && n.layer === 3,
       );
+
+      // Mapeamento explícito de qual nó L3 é pai de cada nó L4 (por índice)
+      // ephelias[1] = Compreensão Suprema → deve herdar de Eco da Memória (índice 2)
+      const l4ParentIdxMap = {
+        arty: [0, 1],
+        aune: [2, 0],
+        ephelias: [1, 2],
+        nishi: [0, 1],
+        hestia: [2, 0],
+      };
+
       for (let i = 0; i < 2; i++) {
         const spreadAngle = -45 + i * 90;
         const subAngle = mainAngleRad + (spreadAngle * Math.PI) / 180;
@@ -646,7 +668,7 @@ class VeiasAstraisSystem {
           state: "locked",
           layer: 4,
           size: "large",
-          parentId: layer3Nodes[i % layer3Nodes.length].id,
+          parentId: layer3Nodes[l4ParentIdxMap[treeConfig.id][i]].id,
           rarity: 3,
           // ✨ Bônus associado ao nó L4
           bonus: {
@@ -690,6 +712,17 @@ class VeiasAstraisSystem {
       const layer4Nodes = this.nodes.filter(
         (n) => n.treeId === treeConfig.id && n.layer === 4,
       );
+
+      // Mapeamento explícito de qual nó L4 é pai do nó L5 (por índice)
+      // ephelias: Avatar herda de Compreensão Suprema (índice 1) para seguir a cadeia correta
+      const l5ParentIdxMap = {
+        arty: 0,
+        aune: 0,
+        ephelias: 0,
+        nishi: 0,
+        hestia: 0,
+      };
+
       const supremeAngle = mainAngleRad;
       const supremeDistance = 1200;
 
@@ -708,7 +741,7 @@ class VeiasAstraisSystem {
         state: "locked",
         layer: 5,
         size: "large",
-        parentId: layer4Nodes[0].id,
+        parentId: layer4Nodes[l5ParentIdxMap[treeConfig.id]].id,
         rarity: 5,
         // ✨ Bônus associado ao nó L5
         bonus: {
@@ -1003,12 +1036,16 @@ class VeiasAstraisSystem {
       line.setAttribute("data-from", conn.from);
       line.setAttribute("data-to", conn.to);
 
-      // ✨ NOVA LÓGICA: Determinar padrão baseado no estado dos nós
-      // Se AMBOS os nós estão desbloqueados = linha SÓLIDA
+      // ✨ NOVA LÓGICA: Determinar padrão baseado no estado ATUAL dos nós
+      // Se AMBOS os nós estão desbloqueados/maxed = linha SÓLIDA
       // Se algum está bloqueado = linha TRACEJADA
-      const bothUnlocked =
-        startNode.state === "unlocked" && endNode.state === "unlocked";
-      const isUnlockedPath = bothUnlocked || conn.state === "unlocked";
+      const startUnlocked =
+        conn.from === "core" ||
+        startNode.state === "unlocked" ||
+        startNode.state === "maxed";
+      const endUnlocked =
+        endNode.state === "unlocked" || endNode.state === "maxed";
+      const isUnlockedPath = startUnlocked && endUnlocked;
 
       // Aplicar classes
       const classes = ["astral-link", `link-${conn.state}`];
@@ -1109,18 +1146,13 @@ class VeiasAstraisSystem {
 
   /**
    * VALIDAÇÃO DE DESBLOQUEIO
-   * Verifica se todos os nós pai estão desbloqueados
+   * Verifica se há PC suficiente para desbloquear todo o caminho até o nó
    */
   canUnlockNode(node) {
-    // Nós de camada 1 (L1) sempre podem ser desbloqueados se tiverem PC
-    if (node.layer === 1) {
-      return this.powerCombat >= node.cost;
-    }
+    if (node.state !== "locked") return false;
 
-    // 🔥 MODIFICADO: Para outros nós, verificar se o caminho inteiro pode ser desbloqueado
     const caminho = this.findPathToNode(node);
     const pcNecessario = this.calcularPCNecessarioParaCaminho(caminho);
-
     return this.powerCombat >= pcNecessario;
   }
 
@@ -1129,12 +1161,15 @@ class VeiasAstraisSystem {
    * Retorna mensagem explicando por que o nó não pode ser desbloqueado
    */
   getUnlockBlockReason(node) {
-    // 🔥 MODIFICADO: Verificar PC necessário para todo o caminho
+    if (node.state !== "locked") return null;
+
     const caminho = this.findPathToNode(node);
     const pcNecessario = this.calcularPCNecessarioParaCaminho(caminho);
 
     if (this.powerCombat < pcNecessario) {
-      return `❌ PC insuficiente para o caminho (${this.powerCombat}/${pcNecessario})`;
+      const bloqueados = caminho.filter((n) => n.state === "locked");
+      const nomes = bloqueados.map((n) => n.name).join(" → ");
+      return `❌ PC insuficiente (${this.powerCombat}/${pcNecessario}) para desbloquear: ${nomes}`;
     }
 
     return null; // Sem bloqueios
@@ -1253,7 +1288,7 @@ class VeiasAstraisSystem {
     const path = [node];
 
     // Se tem parentId e não é 'core', encontrar o pai
-    if (node.parentId && node.parentId !== "core") {
+    if (node.parentId != null && node.parentId !== "core") {
       const parentNode = this.nodes.find((n) => n.id === node.parentId);
       if (parentNode) {
         path.unshift(...this.findPathToNode(parentNode, visited));
@@ -1274,63 +1309,38 @@ class VeiasAstraisSystem {
   }
 
   unlockNode(node) {
-    // ✨ VALIDAÇÃO: Verificar se pode desbloquear
-    if (!this.canUnlockNode(node)) {
-      const reason = this.getUnlockBlockReason(node);
-      console.warn("❌ Não pode desbloquear:", reason);
-      alert(`Não pode desbloquear:\n${reason}`);
-      return;
-    }
-
     if (node.state !== "locked") {
       console.warn("⚠️ Nó já foi desbloqueado");
       return;
     }
 
-    // 🔥 NOVO: Encontrar caminho linear do cristal até este nó
+    // Encontrar caminho completo (pais bloqueados + nó alvo)
     const caminho = this.findPathToNode(node);
     const pcNecessario = this.calcularPCNecessarioParaCaminho(caminho);
 
-    // Verificar se tem PC suficiente para todo o caminho
     if (this.powerCombat < pcNecessario) {
-      const pcInsuficiente = pcNecessario - this.powerCombat;
-      console.warn(`❌ PC insuficiente: faltam ${pcInsuficiente} PC`);
+      const faltam = pcNecessario - this.powerCombat;
+      console.warn(`❌ PC insuficiente: faltam ${faltam} PC`);
       this.showNotification(
-        `❌ PC insuficiente! Faltam ${pcInsuficiente} PC`,
+        `❌ PC insuficiente! Faltam ${faltam} PC`,
         "error",
         3000,
       );
       return;
     }
 
+    // Desbloquear todos os nós bloqueados no caminho (pais + nó alvo)
+    const nosDesbloqueados = [];
     let pcGasto = 0;
-    const nomesNosDesbloqueados = [];
-
-    // Desbloquear todos os nós no caminho
     caminho.forEach((no) => {
       if (no.state === "locked") {
         this.powerCombat -= no.cost;
         pcGasto += no.cost;
         no.state = "unlocked";
-        nomesNosDesbloqueados.push(no.name);
+        nosDesbloqueados.push(no.name);
 
-        // Efeito visual do nó
-        const nodeEl = document.getElementById(`node-${no.id}`);
-        if (nodeEl) {
-          nodeEl.style.animation = "node-unlock-glow 0.6s ease-out";
-        }
+        if (no.bonus) this.activateBonus(no.bonus);
 
-        // ✨ Ativar linhas conectadas ao nó desbloqueado
-        if (this.lineActivation) {
-          this.lineActivation.activateNodePath(no.id);
-        }
-
-        // ✨ Ativar bônus do nó
-        if (no.bonus) {
-          this.activateBonus(no.bonus);
-        }
-
-        // Atualizar contagem de árvore
         const tree = this.trees[no.treeId];
         if (tree) {
           tree.unlockedNodes = this.nodes.filter(
@@ -1340,18 +1350,26 @@ class VeiasAstraisSystem {
       }
     });
 
+    // Efeito visual do nó alvo
+    const nodeEl = document.getElementById(`node-${node.id}`);
+    if (nodeEl) {
+      nodeEl.style.animation = "node-unlock-glow 0.6s ease-out";
+    }
+
+    // Ativar linhas conectadas ao nó desbloqueado
+    if (this.lineActivation) {
+      this.lineActivation.activateNodePath(node.id);
+    }
+
     // 💾 Salvar estado dos nós
     this.saveState();
 
-    // Log e notificação
-    if (caminho.length > 1) {
+    if (nosDesbloqueados.length > 1) {
       console.log(
-        `🔓 Caminho desbloqueado até "${node.name}": ${caminho.length} nó(s)`,
+        `🔓 Caminho desbloqueado: ${nosDesbloqueados.join(" → ")}. PC gasto: ${pcGasto}`,
       );
-      console.log(`   Nós desbloqueados: ${nomesNosDesbloqueados.join(" → ")}`);
-      console.log(`   Total de PC gasto: ${pcGasto}`);
       this.showNotification(
-        `🔓 Caminho aberto até ${node.name}! -${pcGasto} PC`,
+        `🔓 ${nosDesbloqueados.join(" → ")} desbloqueados! -${pcGasto} PC`,
         "success",
         4000,
       );
@@ -1373,7 +1391,7 @@ class VeiasAstraisSystem {
 
   /**
    * ENCONTRAR TODOS OS NÓS DESCENDENTES
-   * Retorna um array com todos os nós que dependem do nó fornecido
+   * Retorna um array com todos os nós que dependem do nó fornecido (via parentId)
    */
   findDescendantNodes(node, visited = new Set()) {
     if (visited.has(node.id)) return [];
@@ -1381,18 +1399,14 @@ class VeiasAstraisSystem {
 
     const descendants = [];
 
-    // Encontrar todas as conexões que saem deste nó
-    const childConnections = this.connections.filter(
-      (conn) => conn.from === node.id,
+    // Encontrar filhos diretos via parentId (ignora conexões laterais)
+    const directChildren = this.nodes.filter(
+      (n) => n.parentId === node.id && n.state !== "locked",
     );
 
-    childConnections.forEach((conn) => {
-      const childNode = this.nodes.find((n) => n.id === conn.to);
-      if (childNode && childNode.state !== "locked") {
-        descendants.push(childNode);
-        // Recursivamente encontrar descendentes do filho
-        descendants.push(...this.findDescendantNodes(childNode, visited));
-      }
+    directChildren.forEach((child) => {
+      descendants.push(child);
+      descendants.push(...this.findDescendantNodes(child, visited));
     });
 
     return descendants;
@@ -1502,9 +1516,6 @@ class VeiasAstraisSystem {
       const bonus = this.activeBonuses[index];
       console.log(`❌ Bônus desativado: ${bonus.name}`);
       this.activeBonuses.splice(index, 1);
-
-      // Atualizar UI de bônus
-      this.renderBonusPopup();
     }
   }
 
@@ -1762,7 +1773,7 @@ class AstralNode {
     this.color = config.color;
     this.state = config.state || "locked";
     this.layer = config.layer || 1; // Camada hierárquica (1, 2, 3)
-    this.parentId = config.parentId || null; // ID do nó pai na hierarquia
+    this.parentId = config.parentId != null ? config.parentId : null; // ID do nó pai na hierarquia
     this.bonus = config.bonus || null; // Bônus/aprimoramento do nó
     this.size = config.size || "medium";
     this.rarity = config.rarity || 1;
