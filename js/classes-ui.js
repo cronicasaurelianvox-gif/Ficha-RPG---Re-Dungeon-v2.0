@@ -443,6 +443,13 @@ class ClassesUI {
         aberta: false,
         classes: [],
         mostrarRaridade: false
+      },
+      {
+        nome: 'A Crônica dos Varkhan',
+        icon: '📜',
+        aberta: false,
+        classes: [],
+        mostrarRaridade: false
       }
     ];
 
