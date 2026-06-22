@@ -25,6 +25,55 @@ class ClassesUI {
   }
 
   /**
+   * Ajusta o tamanho da fonte das descrições das habilidades para evitar corte.
+   * Reduz o tamanho em passos até o texto caber ou atingir um tamanho mínimo.
+   */
+  ajustarDescricoesHabilidades() {
+    try {
+      console.log('[ClassesUI] ajustarDescricoesHabilidades chamado');
+      const container = this.painalDetalhes;
+      if (!container) return;
+
+      const descricoes = container.querySelectorAll('.habilidade-descricao');
+      descricoes.forEach((el) => {
+        // Reset para o tamanho original (baseado no CSS)
+        const estilo = window.getComputedStyle(el);
+        let fontSize = parseFloat(estilo.fontSize) || 13;
+        const minFontSize = 10; // px
+
+        // Garantir propriedades que influenciam cálculo
+        el.style.whiteSpace = 'normal';
+        el.style.overflow = 'hidden';
+        el.style.display = 'block';
+
+        // Se o texto não está cortado, nada a fazer
+        if (!(el.scrollHeight > el.clientHeight || el.scrollWidth > el.clientWidth)) {
+          el.style.fontSize = '';
+          return;
+        }
+
+        // Diminuir até caber ou atingir minFontSize
+        while ((el.scrollHeight > el.clientHeight || el.scrollWidth > el.clientWidth) && fontSize > minFontSize) {
+          fontSize -= 1;
+          el.style.fontSize = `${fontSize}px`;
+        }
+
+        // Se mesmo assim não coube, aplicar truncamento com -webkit-line-clamp
+        if (el.scrollHeight > el.clientHeight || el.scrollWidth > el.clientWidth) {
+          el.style.display = '-webkit-box';
+          const lineHeight = parseFloat(window.getComputedStyle(el).lineHeight) || (fontSize * 1.2);
+          const lines = Math.floor(el.clientHeight / lineHeight) || 3;
+          el.style.webkitLineClamp = lines;
+          el.style.webkitBoxOrient = 'vertical';
+          el.style.overflow = 'hidden';
+        }
+      });
+    } catch (err) {
+      console.error('Erro ao ajustar descrições de habilidades:', err);
+    }
+  }
+
+  /**
    * Inicializa o sistema
    * Chamada uma única vez no carregamento da página
    */
@@ -344,6 +393,8 @@ class ClassesUI {
       {
         nome: "Re'Dungeon",
         icon: '⚔️',
+        image: 'https://i.imgur.com/dDoawMK.jpeg',
+        color: '#ef4444',
         aberta: true,
         classes: [],
         mostrarRaridade: true
@@ -351,13 +402,17 @@ class ClassesUI {
       {
         nome: 'The Chaotical Gate',
         icon: '⚡',
+        image: 'https://i.imgur.com/1GTo2G2.png',
+        color: '#f59e0b',
         aberta: false,
         classes: [],
         mostrarRaridade: false
       },
       {
-        nome: 'Wuxia/Xianxia',
+        nome: 'Cultivo',
         icon: '🔮',
+        image: 'https://i.imgur.com/LXn1Jej.png',
+        color: '#3b82f6',
         aberta: false,
         classes: [],
         mostrarRaridade: false
@@ -365,6 +420,8 @@ class ClassesUI {
       {
         nome: 'One Piece',
         icon: '🏴‍☠️',
+        image: 'https://i.imgur.com/vXSjzr6.jpeg',
+        color: '#a78bfa',
         aberta: false,
         classes: [],
         mostrarRaridade: false
@@ -372,6 +429,17 @@ class ClassesUI {
       {
         nome: 'Bleach',
         icon: '⚔️',
+        image: 'https://i.imgur.com/s4CFxTM.png',
+        color: '#10b981',
+        aberta: false,
+        classes: [],
+        mostrarRaridade: false
+      },
+      {
+        nome: 'A Crônica dos Varkhan',
+        icon: '📜',
+        image: 'https://i.imgur.com/ejGrhaP.jpeg',
+        color: '#7c3aed',
         aberta: false,
         classes: [],
         mostrarRaridade: false
@@ -397,6 +465,8 @@ class ClassesUI {
     pastas.forEach((pasta) => {
       console.log(`[DEBUG renderLista] Renderizando pasta "${pasta.nome}" com ${pasta.classes.length} classes`);
       const pastaElement = this.criarPasta(pasta);
+      // definir variavel CSS no elemento da pasta para que filhos herdem a cor (se fornecida)
+      pastaElement.style.setProperty('--folder-color', pasta.color || '#7c6ba8');
       this.listaClasses.appendChild(pastaElement);
     });
     console.log(`[DEBUG renderLista] Renderização concluída. Pastas criadas: ${pastas.length}`);
@@ -418,11 +488,16 @@ class ClassesUI {
     // Header da pasta
     const headerPasta = document.createElement('div');
     headerPasta.className = 'rdg-class-folder-header';
+    // setar variavel de cor no header tambem (para compatibilidade com estilos locais)
+    headerPasta.style.setProperty('--folder-color', pasta.color || '#7c6ba8');
     headerPasta.innerHTML = `
       <span class="rdg-class-folder-icon">${pasta.aberta ? '▼' : '›'}</span>
-      <span class="rdg-class-folder-name">${pasta.icon} ${pasta.nome}</span>
+      <span class="rdg-class-folder-avatar">${pasta.image ? `<img src="${pasta.image}" alt="${pasta.nome}"/>` : pasta.icon}</span>
+      <span class="rdg-class-folder-name">${pasta.nome}</span>
       <span class="rdg-class-folder-count">${pasta.classes.length}</span>
     `;
+
+    // (ajuste de descrições será chamado após renderDetalhes)
 
     pastaElement.appendChild(headerPasta);
 
@@ -546,6 +621,26 @@ class ClassesUI {
         ${this.formatarRaridade(classe.raridade)}
       </div>
     `;
+
+    // Definir cor de seleção específica para esta classe (prioridade: campo 'cor' -> mapa por id -> pasta/fallback)
+    const corDaClasse = this.obterCorClasse(classe) || '';
+    if (corDaClasse) {
+      item.style.setProperty('--selection-color', corDaClasse);
+
+      // Converter HEX para componentes RGB e expor como variável --selection-color-rgb
+      const hex = corDaClasse.replace('#', '');
+      let r = 0, g = 0, b = 0;
+      if (hex.length === 3) {
+        r = parseInt(hex[0] + hex[0], 16);
+        g = parseInt(hex[1] + hex[1], 16);
+        b = parseInt(hex[2] + hex[2], 16);
+      } else if (hex.length === 6) {
+        r = parseInt(hex.substring(0,2), 16);
+        g = parseInt(hex.substring(2,4), 16);
+        b = parseInt(hex.substring(4,6), 16);
+      }
+      item.style.setProperty('--selection-color-rgb', `${r}, ${g}, ${b}`);
+    }
 
     return item;
   }
@@ -676,6 +771,10 @@ class ClassesUI {
       </section>
     `;
 
+    // Ajusta descrições longas para caber no card (reduz fonte se necessário)
+    // Pequeno delay para garantir que o DOM esteja calculado/renderizado
+    setTimeout(() => this.ajustarDescricoesHabilidades(), 50);
+
     // ✨ Não chama mais atualizarEstadoBotoes aqui
     // Isso é chamado de selecionarClasse()
   }
@@ -732,7 +831,7 @@ class ClassesUI {
         // Verificar se esta habilidade já foi selecionada (Art já existe)
         const jaSelecionada = this.verificarSeHabilidadeEstaAdicionada(habilidade.nome, classe?.nome || '');
         const classeButtonSelecionado = jaSelecionada ? 'selecionado' : '';
-        const corButton = jaSelecionada ? '#4ade80' : '#888';
+        const corButton = jaSelecionada ? (this.obterCorClasse(classe) || '#4ade80') : '#888';
 
         return `
           <div class="habilidade-card habilidade-classe ${classeBloqueada}">
@@ -1002,6 +1101,58 @@ class ClassesUI {
   }
 
   /**
+   * Obtém a cor usada para destacar uma classe quando selecionada.
+   * Procura em propriedades do objeto (cor / color) e faz fallback para um mapa
+   * de cores por id para classes comuns. Se nada for encontrado, retorna null.
+   * @private
+   * @param {Object} classe
+   * @returns {string|null} cor em hexadecimal ou null
+   */
+  obterCorClasse(classe) {
+    if (!classe) return null;
+
+    // Priorizar propriedade explícita
+    if (classe.cor) return classe.cor;
+    if (classe.color) return classe.color;
+    if (classe.corHex) return classe.corHex;
+
+    // Mapa por id/nome para casos onde dados não fornecem cor
+    const mapa = {
+      guerreiro: '#b22222',
+      mago: '#4169e1',
+      arqueiro: '#ffd700',
+      clerigo: '#ffd700',
+      ladrao: '#2f4f4f',
+      paladino: '#ffd700',
+      xama: '#228b22',
+      assassino: '#000000',
+      cavaleiro: '#696969'
+    };
+
+    const key = (classe.id || (classe.nome || '').toLowerCase()).toString().toLowerCase();
+    return mapa[key] || null;
+  }
+
+  /**
+   * Retorna cor de contraste (texto) para uma cor de fundo em HEX.
+   * Simples cálculo de luminância para escolher preto ou branco.
+   * @private
+   * @param {string} hex - Ex: '#aabbcc' ou 'aabbcc'
+   * @returns {string} '#000' ou '#fff'
+   */
+  obterCorContraste(hex) {
+    if (!hex) return '#000';
+    let h = hex.replace('#', '');
+    if (h.length === 3) h = h.split('').map(c => c + c).join('');
+    const r = parseInt(h.substring(0,2),16);
+    const g = parseInt(h.substring(2,4),16);
+    const b = parseInt(h.substring(4,6),16);
+    // Calcular luminância relativa
+    const luminance = (0.2126*r + 0.7152*g + 0.0722*b) / 255;
+    return luminance > 0.6 ? '#000' : '#fff';
+  }
+
+  /**
    * Adiciona uma nova classe ao sistema
    * ⚠️ Nota: Modifique classes-data.js para adicionar permanentemente
    * @public
@@ -1135,8 +1286,10 @@ class ClassesUI {
         btn.textContent = 'Multiclasse';
         btn.classList.add('btn-selecionada');
         btn.classList.remove('btn-bloqueado');
-        btn.style.backgroundColor = '#4ade80'; // Verde
-        btn.style.color = '#000'; // Texto escuro
+        // Usar cor da classe para o botão, com fallback para verde antigo
+        const corClasse = this.obterCorClasse(obterClassePorId(classeId)) || '#4ade80';
+        btn.style.backgroundColor = corClasse;
+        btn.style.color = this.obterCorContraste(corClasse);
         btn.disabled = false; // Pode remover
         btn.title = 'Clique para remover desta multiclasse';
       } else {
@@ -1332,7 +1485,9 @@ class ClassesUI {
       // Esta classe foi selecionada
       btnEscolher.textContent = 'Multiclasse';
       btnEscolher.classList.add('btn-selecionada');
-      btnEscolher.style.backgroundColor = '#4ade80';
+      const corBtn = this.obterCorClasse(obterClassePorId(classeId)) || '#4ade80';
+      btnEscolher.style.backgroundColor = corBtn;
+      btnEscolher.style.color = this.obterCorContraste(corBtn);
       btnCadeado.disabled = false; // Cadeado habilitado para remover
     } else {
       // Esta classe NÃO foi selecionada

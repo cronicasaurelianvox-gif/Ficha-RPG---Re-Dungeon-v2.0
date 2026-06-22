@@ -41,6 +41,9 @@ class LocalStorageManager {
             
             // Veias Astrais
             veiasAstrais: 'veias_astrais'
+            ,
+            // Templates de Background
+            backgroundTemplates: 'background_templates'
         };
         
         console.log('✅ LocalStorageManager inicializado');
@@ -269,6 +272,22 @@ class LocalStorageManager {
      */
     saveJogadorInfo(info) {
         return this.save(this.keys.jogadorInfo, info);
+    }
+
+    /**
+     * Salva templates do editor de background
+     * @param {Array} templates - Array de templates {label, html}
+     */
+    saveBackgroundTemplates(templates) {
+        return this.save(this.keys.backgroundTemplates, templates || []);
+    }
+
+    /**
+     * Carrega templates do editor de background
+     * @returns {Array} templates
+     */
+    loadBackgroundTemplates(defaultValue = []) {
+        return this.load(this.keys.backgroundTemplates, defaultValue);
     }
 
     /**

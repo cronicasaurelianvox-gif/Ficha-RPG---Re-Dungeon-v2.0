@@ -4,6 +4,282 @@
 /* ================================================= */
 
 /**
+ * RichTextEditor
+ * Editor modular para o campo Background com:
+ * - API de comandos (bold/italic/underline/lists/align)
+ * - Sanitização de conteúdo colado
+ * - Templates de lore
+ * - Contador avançado (caracteres/ palavras)
+ * - Integração por callbacks para atualizar estado externo
+ */
+class RichTextEditor {
+    constructor(selector, options = {}) {
+        this.selector = selector;
+        this.editor = null;
+        this.toolbarSelector = options.toolbarSelector || null;
+        this.charCountSelector = options.charCountSelector || null;
+        this.templates = options.templates || [];
+        this.onChange = options.onChange || function(){};
+        this.maxChars = options.maxChars || 5000;
+        this.init();
+    }
+
+    init() {
+        this.editor = document.querySelector(this.selector);
+        if (!this.editor) return;
+
+        this.editor.setAttribute('contenteditable', 'true');
+        this.editor.classList.add('rte-editor');
+
+        this.bindToolbar();
+        this.bindInputEvents();
+        this._lastSafeHTML = this.editor.innerHTML || '';
+        this.updateCharCount();
+    }
+
+    bindToolbar() {
+        if (!this.toolbarSelector) return;
+        const toolbar = document.querySelector(this.toolbarSelector);
+        if (!toolbar) return;
+
+        // Mapear botões por ID - mantém compatibilidade com IDs existentes
+        const map = {
+            'info-background-bold': () => this.exec('bold'),
+            'info-background-italic': () => this.exec('italic'),
+            'info-background-underline': () => this.exec('underline'),
+            'info-background-strikethrough': () => this.exec('strikeThrough'),
+            'info-background-align-left': () => this.exec('justifyLeft'),
+            'info-background-align-center': () => this.exec('justifyCenter'),
+            'info-background-align-right': () => this.exec('justifyRight'),
+            'info-background-align-justify': () => this.exec('justifyFull'),
+            'info-background-list-ul': () => this.exec('insertUnorderedList'),
+            'info-background-list-ol': () => this.exec('insertOrderedList'),
+            'info-background-clear': () => this.exec('removeFormat')
+        };
+
+        Object.keys(map).forEach(id => {
+            const btn = document.getElementById(id);
+            if (btn) btn.addEventListener('click', (e) => { e.preventDefault(); map[id](); this.editor.focus(); });
+        });
+
+        // Color inputs
+        const colorText = document.getElementById('info-background-color-text');
+        if (colorText) colorText.addEventListener('change', (e) => { this.exec('foreColor', false, e.target.value); });
+
+        const colorBg = document.getElementById('info-background-color-highlight');
+        if (colorBg) colorBg.addEventListener('change', (e) => { this.exec('backColor', false, e.target.value); });
+
+        // Templates dropdown (cria se não existir)
+        if (!document.getElementById('info-background-templates')) {
+            const tplSelect = document.createElement('select');
+            tplSelect.id = 'info-background-templates';
+            tplSelect.className = 'popup-info-background__templates';
+            const emptyOpt = document.createElement('option');
+            emptyOpt.value = '';
+            emptyOpt.textContent = 'Inserir template...';
+            tplSelect.appendChild(emptyOpt);
+            this.templates.forEach((t, i) => {
+                const opt = document.createElement('option');
+                opt.value = i;
+                opt.textContent = t.label;
+                tplSelect.appendChild(opt);
+            });
+            toolbar.appendChild(tplSelect);
+            // Botão para gerenciar templates
+            const manageBtn = document.createElement('button');
+            manageBtn.type = 'button';
+            manageBtn.id = 'info-background-templates-manage';
+            manageBtn.className = 'popup-info-background__templates-manage';
+            manageBtn.title = 'Gerenciar templates';
+            // SVG gear icon
+            manageBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 15.5A3.5 3.5 0 1 0 12 8.5a3.5 3.5 0 0 0 0 7zm8.94-2.5a1 1 0 0 0 .06-.25l.02-.25-2.03-1.18a7.98 7.98 0 0 0-.45-1.07l1.23-1.87-.18-.3-2.17-.08a7.9 7.9 0 0 0-.98-.98L16.7 3.6l-.3.18-1.87 1.23c-.34-.17-.7-.31-1.07-.45L12.18 3h-.36l-.25.02a1 1 0 0 0-.25.06L9.8 4.93c-.33.2-.66.42-.98.66l-1.87-1.23-.3-.18L5.42 5.3l1.23 1.87c-.14.37-.28.73-.45 1.07L4 8.52l-.08.18.18.3L5.33 11c-.03.16-.05.33-.05.5 0 .17.02.34.05.5L4.1 13.52l-.18.3.08.18 2.17.08c.17.35.36.69.57 1.02l-1.23 1.87.18.3 2.17.08c.3.24.63.46.98.66l1.93 1.19.25-.02.36-.01.25-.02.25.02 1.93-1.19c.33-.2.66-.42.98-.66l2.17-.08.18-.3-1.23-1.87c.21-.33.4-.67.57-1.02l2.17-.08.18-.3-.08-.18-2.03-1.18z" fill="currentColor"/></svg>';
+            toolbar.appendChild(manageBtn);
+            manageBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (typeof this.onManageTemplates === 'function') this.onManageTemplates();
+            });
+            tplSelect.addEventListener('change', (e) => {
+                const idx = e.target.value;
+                if (idx === '') return;
+                this.insertTemplate(this.templates[idx].html || this.templates[idx].text);
+                e.target.value = '';
+            });
+        }
+
+        // expor função para atualizar opções externamente
+        this._tplSelect = document.getElementById('info-background-templates') || null;
+    }
+
+    /**
+     * Atualiza lista de templates exibida no select
+     */
+    updateTemplates(templates) {
+        this.templates = templates || [];
+        if (!this._tplSelect) return;
+        // limpar opções (mantendo a primeira)
+        while (this._tplSelect.options.length > 1) this._tplSelect.remove(1);
+        this.templates.forEach((t, i) => {
+            const opt = document.createElement('option');
+            opt.value = i;
+            opt.textContent = t.label;
+            this._tplSelect.appendChild(opt);
+        });
+    }
+
+    bindInputEvents() {
+        if (!this.editor) return;
+
+        this.editor.addEventListener('input', () => {
+            // enforce max chars based on innerText
+            const text = (this.editor.innerText || '').trim();
+            if (this.maxChars && text.length > this.maxChars) {
+                // Reverter para último estado seguro
+                this.editor.innerHTML = this._lastSafeHTML || this.escapeHtml(text.slice(0, this.maxChars)).replace(/\n/g, '<br>');
+                this.placeCaretAtEnd();
+            } else {
+                // salvar estado seguro
+                this._lastSafeHTML = this.editor.innerHTML;
+            }
+
+            this.onChange(this.getContent());
+            this.updateCharCount();
+        });
+
+        this.editor.addEventListener('keydown', (e) => {
+            // atalhos comuns
+            if (e.ctrlKey && e.key.toLowerCase() === 'b') { e.preventDefault(); this.exec('bold'); }
+            if (e.ctrlKey && e.key.toLowerCase() === 'i') { e.preventDefault(); this.exec('italic'); }
+            if (e.ctrlKey && e.key.toLowerCase() === 'u') { e.preventDefault(); this.exec('underline'); }
+        });
+
+        // paste
+        this.editor.addEventListener('paste', (e) => this.handlePaste(e));
+
+        // drop
+        this.editor.addEventListener('drop', (e) => this.handleDrop(e));
+        this.editor.addEventListener('dragover', (e) => { e.preventDefault(); });
+    }
+
+    exec(command, showUI = false, value = null) {
+        try {
+            document.execCommand(command, showUI, value);
+            this.onChange(this.getContent());
+            this.updateCharCount();
+        } catch (err) {
+            console.warn('RTE exec error', err);
+        }
+    }
+
+    insertTemplate(html) {
+        if (!html) return;
+        this.exec('insertHTML', false, html);
+        this.onChange(this.getContent());
+    }
+
+    handlePaste(e) {
+        e.preventDefault();
+        const clipboardData = e.clipboardData || window.clipboardData;
+        let html = clipboardData.getData('text/html');
+        const text = clipboardData.getData('text/plain');
+        if (html) {
+            html = this.sanitizeHTML(html);
+            // limitar tamanho se necessário
+            const incomingText = (new DOMParser().parseFromString(html, 'text/html')).body.innerText || '';
+            const allowed = this.maxChars ? this.maxChars - ((this.editor.innerText||'').length) : null;
+            let toInsert = html;
+            if (allowed !== null && allowed <= 0) {
+                return; // nada a inserir
+            } else if (allowed !== null && incomingText.length > allowed) {
+                toInsert = this.escapeHtml(incomingText.slice(0, allowed)).replace(/\n/g, '<br>');
+            }
+            this.exec('insertHTML', false, toInsert);
+        } else if (text) {
+            const allowed = this.maxChars ? this.maxChars - ((this.editor.innerText||'').length) : null;
+            let plain = text;
+            if (allowed !== null && allowed <= 0) return;
+            if (allowed !== null && plain.length > allowed) plain = plain.slice(0, allowed);
+            const escaped = this.escapeHtml(plain).replace(/\n/g, '<br>');
+            this.exec('insertHTML', false, escaped);
+        }
+    }
+
+    handleDrop(e) {
+        e.preventDefault();
+        const text = e.dataTransfer.getData('text/html') || e.dataTransfer.getData('text/plain');
+        if (text) this.exec('insertHTML', false, this.sanitizeHTML(text));
+    }
+
+    sanitizeHTML(html) {
+        // Remover scripts e event handlers básicos
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        const scripts = doc.querySelectorAll('script'); scripts.forEach(s => s.remove());
+        // Remover attributes on* e javascript: links
+        doc.querySelectorAll('*').forEach(node => {
+            [...node.attributes].forEach(attr => {
+                if (/^on/i.test(attr.name)) node.removeAttribute(attr.name);
+                if (attr.value && /javascript:/i.test(attr.value)) node.removeAttribute(attr.name);
+            });
+        });
+        return doc.body.innerHTML;
+    }
+
+    escapeHtml(unsafe) {
+        return unsafe.replace(/[&<"'`=\/]/g, function (s) {
+            return ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;', '/': '&#x2F;', '`': '&#x60;', '=': '&#x3D;'
+            })[s];
+        });
+    }
+
+    getContent() {
+        return this.editor ? this.editor.innerHTML : '';
+    }
+
+    setContent(html) {
+        if (this.editor) {
+            this.editor.innerHTML = html || '';
+            this.onChange(this.getContent());
+            this.updateCharCount();
+        }
+    }
+
+    updateCharCount() {
+        if (!this.charCountSelector) return;
+        const counter = document.querySelector(this.charCountSelector);
+        if (!counter || !this.editor) return;
+        const text = (this.editor.innerText || '').trim();
+        const chars = text.length;
+        const words = text ? text.split(/\s+/).length : 0;
+        if (this.maxChars) {
+            counter.textContent = `${chars} / ${this.maxChars}`;
+        } else {
+            counter.textContent = `${chars}`;
+        }
+        // também expõe data-attributes para uso visual
+        counter.setAttribute('data-words', words);
+        counter.setAttribute('data-chars', chars);
+    }
+
+    placeCaretAtEnd() {
+        if (!this.editor) return;
+        this.editor.focus();
+        if (typeof window.getSelection != 'undefined' && typeof document.createRange != 'undefined') {
+            const range = document.createRange();
+            range.selectNodeContents(this.editor);
+            range.collapse(false);
+            const sel = window.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(range);
+        }
+    }
+
+    destroy() {
+        // remover listeners se necessário
+    }
+}
+
+
+/**
  * PopupInfoJogador
  * Responsável por:
  * - Gerenciar dados de informações do personagem
@@ -285,6 +561,41 @@ class PopupInfoJogador {
 
         if (!document.getElementById('popup-info-jogador-overlay')) {
             document.body.insertAdjacentHTML('beforeend', popupHTML);
+            // Adicionar estilos específicos do popup/ editor (se ainda não existirem)
+                if (!document.getElementById('popup-info-jogador-styles')) {
+                const style = document.createElement('style');
+                style.id = 'popup-info-jogador-styles';
+                style.textContent = `
+                    .popup-info-jogador-overlay { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background: rgba(0,0,0,0.6); z-index:9999; opacity:0; pointer-events:none; transition:opacity .18s ease; }
+                    .popup-info-jogador-overlay.active { opacity:1; pointer-events:auto; }
+                    .popup-info-jogador { width:900px; max-width:calc(100% - 40px); background: linear-gradient(180deg,#0f1113,#151515); border-radius:14px; box-shadow:0 10px 40px rgba(0,0,0,.7); border:2px solid rgba(90,150,255,0.06); padding:18px; color:#e6c07b; font-family: "Montserrat", Arial, sans-serif; }
+                    .popup-info-jogador__header { display:flex; align-items:center; justify-content:space-between; margin-bottom:8px }
+                    .popup-info-jogador__title { font-size:20px; letter-spacing:1px; color:#ffdd76 }
+                    .popup-info-jogador__tabs { display:flex; gap:12px; margin:12px 0 }
+                    .popup-info-jogador__tab { background:transparent; border:1px solid rgba(255,255,255,0.03); padding:8px 12px; color:#bfbfbf; border-radius:6px; cursor:pointer }
+                    .popup-info-jogador__tab--active { border-color:#ffd86b; box-shadow:0 0 0 3px rgba(255,216,107,0.06); color:#ffd86b }
+                    .popup-info-jogador__content { margin-top:6px }
+                    .popup-info-background { background:rgba(10,10,12,0.3); padding:12px; border-radius:8px }
+                    .popup-info-background__toolbar { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-bottom:10px }
+                    .popup-info-background__toolbar-btn { background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.03); color:#f5e7c8; padding:6px 8px; border-radius:6px; cursor:pointer }
+                    .popup-info-background__editor { min-height:180px; max-height:420px; overflow:auto; background:linear-gradient(180deg,#0b0b0b,#0f0f0f); padding:18px 22px; border-radius:8px; border:1px solid rgba(255,255,255,0.03); color:#f5e7c8; font-size:14px; line-height:1.55; caret-color:#7fb1ff; white-space:pre-wrap; box-sizing:border-box; word-wrap:break-word; overflow-wrap:anywhere }
+                    .popup-info-background__editor ul, .popup-info-background__editor ol { padding-left: 2.2rem; margin: 0 0 0.8rem 0; list-style-position: inside; }
+                    .popup-info-background__editor li { margin: 0.25rem 0; }
+                    .popup-info-background__editor ul, .popup-info-background__editor ol { max-width:100%; }
+                    .popup-info-background__editor li { word-break: break-word; }
+                    .popup-info-background__editor:empty:before { content: attr(data-placeholder); color: rgba(255,255,255,0.12); }
+                    .rte-editor h3{ margin:0 0 6px 0; color:#ffd86b }
+                    .popup-info-background__footer { display:flex; justify-content:flex-end; margin-top:8px; color:#c1b48a }
+                    #info-background-char-count { font-weight:600 }
+                    .popup-info-jogador__footer{ display:flex; gap:12px; justify-content:flex-end; margin-top:12px }
+                    .popup-info-jogador__btn{ padding:10px 18px; border-radius:8px; cursor:pointer; border:0 }
+                    .popup-info-jogador__btn--save{ background:linear-gradient(90deg,#4fafff,#c8b78f); color:#06203a }
+                    .popup-info-jogador__btn--cancel{ background:rgba(255,255,255,0.03); color:#b99f73 }
+                    .rte-editor:focus{ outline: 3px solid rgba(127,177,255,0.12); box-shadow: 0 4px 20px rgba(15,30,60,0.25); }
+                    ::selection{ background: rgba(127,177,255,0.18); }
+                `;
+                document.head.appendChild(style);
+            }
         }
     }
 
@@ -335,127 +646,40 @@ class PopupInfoJogador {
             this.tempValues.tituloPersonagem = e.target.value;
         });
 
-        // Editor de background
-        const backgroundEditor = document.querySelector('#info-background-editor');
-        if (backgroundEditor) {
-            backgroundEditor.addEventListener('input', () => {
-                this.tempValues.background = backgroundEditor.innerHTML;
-                this.updateBackgroundCharCount();
-            });
+        // Inicializar editor rico para Background (substitui listeners simples)
+        try {
+            // Carregar templates persistidos se houver
+            let templates = [
+                { label: 'Ficha - Resumo', html: '<p><strong>Resumo:</strong> &lt;insira resumo do personagem&gt;</p>' },
+                { label: 'Ficha - Infância', html: '<h3>Infância</h3><p>&lt;detalhes da infância&gt;</p>' },
+                { label: 'Ficha - Eventos Marcantes', html: '<h3>Eventos Marcantes</h3><ul><li>&lt;evento 1&gt;</li><li>&lt;evento 2&gt;</li></ul>' }
+            ];
+            if (window.localStorageManager && typeof window.localStorageManager.loadBackgroundTemplates === 'function') {
+                try {
+                    const persisted = window.localStorageManager.loadBackgroundTemplates([]);
+                    if (Array.isArray(persisted) && persisted.length > 0) {
+                        templates = persisted;
+                    }
+                } catch (e) {
+                    console.warn('Erro ao carregar templates persistidos:', e);
+                }
+            }
 
-            // Ctrl+B para negrito
-            backgroundEditor.addEventListener('keydown', (e) => {
-                if (e.ctrlKey && e.key === 'b') {
-                    e.preventDefault();
-                    document.execCommand('bold');
-                }
-                // Ctrl+I para itálico
-                else if (e.ctrlKey && e.key === 'i') {
-                    e.preventDefault();
-                    document.execCommand('italic');
-                }
-                // Ctrl+U para sublinhado
-                else if (e.ctrlKey && e.key === 'u') {
-                    e.preventDefault();
-                    document.execCommand('underline');
-                }
+            this.backgroundRichEditor = new RichTextEditor('#info-background-editor', {
+                toolbarSelector: '.popup-info-background__toolbar',
+                charCountSelector: '#info-background-char-count',
+                templates: templates,
+                maxChars: 8000,
+                onChange: (html) => {
+                    this.tempValues.background = html;
+                },
+                onManageTemplates: () => this.openTemplatesManager()
             });
+            // guardar lista atual
+            this._backgroundTemplates = templates;
+        } catch (err) {
+            console.warn('⚠️ Erro ao inicializar RichTextEditor:', err);
         }
-
-        // Botões de formatação
-        document.querySelector('#info-background-bold')?.addEventListener('click', (e) => {
-            e.preventDefault();
-            document.execCommand('bold');
-        });
-
-        document.querySelector('#info-background-italic')?.addEventListener('click', (e) => {
-            e.preventDefault();
-            document.execCommand('italic');
-        });
-
-        document.querySelector('#info-background-underline')?.addEventListener('click', (e) => {
-            e.preventDefault();
-            document.execCommand('underline');
-        });
-
-        // Riscado
-        document.querySelector('#info-background-strikethrough')?.addEventListener('click', (e) => {
-            e.preventDefault();
-            document.execCommand('strikethrough');
-        });
-
-        // Alinhamento
-        document.querySelector('#info-background-align-left')?.addEventListener('click', (e) => {
-            e.preventDefault();
-            document.execCommand('justifyLeft');
-        });
-
-        document.querySelector('#info-background-align-center')?.addEventListener('click', (e) => {
-            e.preventDefault();
-            document.execCommand('justifyCenter');
-        });
-
-        document.querySelector('#info-background-align-right')?.addEventListener('click', (e) => {
-            e.preventDefault();
-            document.execCommand('justifyRight');
-        });
-
-        document.querySelector('#info-background-align-justify')?.addEventListener('click', (e) => {
-            e.preventDefault();
-            document.execCommand('justifyFull');
-        });
-
-        // Listas
-        document.querySelector('#info-background-list-ul')?.addEventListener('click', (e) => {
-            e.preventDefault();
-            document.execCommand('insertUnorderedList');
-        });
-
-        document.querySelector('#info-background-list-ol')?.addEventListener('click', (e) => {
-            e.preventDefault();
-            document.execCommand('insertOrderedList');
-        });
-
-        // Cores de texto
-        document.querySelector('#info-background-color-text')?.addEventListener('change', (e) => {
-            e.preventDefault();
-            document.execCommand('foreColor', false, e.target.value);
-        });
-
-        // Cor de fundo
-        document.querySelector('#info-background-color-highlight')?.addEventListener('change', (e) => {
-            e.preventDefault();
-            document.execCommand('backColor', false, e.target.value);
-        });
-
-        document.querySelector('#info-background-clear')?.addEventListener('click', (e) => {
-            e.preventDefault();
-            document.execCommand('removeFormat');
-        });
-
-        // Permitir paste (Ctrl+V) no editor
-        document.querySelector('#info-background-editor')?.addEventListener('paste', (e) => {
-            e.preventDefault();
-            const text = e.clipboardData.getData('text/html') || e.clipboardData.getData('text/plain');
-            if (text) {
-                document.execCommand('insertHTML', false, text);
-            }
-        });
-
-        // Permitir drop (arrastar e colar) no editor
-        document.querySelector('#info-background-editor')?.addEventListener('drop', (e) => {
-            e.preventDefault();
-            const text = e.dataTransfer.getData('text/html') || e.dataTransfer.getData('text/plain');
-            if (text) {
-                document.execCommand('insertHTML', false, text);
-            }
-        });
-
-        // Permitir dragover no editor
-        document.querySelector('#info-background-editor')?.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-        });
 
         // Inputs da aba Informações Gerais (agora editáveis)
         document.querySelector('#info-geral-origem')?.addEventListener('input', (e) => {
@@ -666,22 +890,357 @@ class PopupInfoJogador {
 
         // Aba 3: Background
         const backgroundEditor = document.querySelector('#info-background-editor');
-        if (backgroundEditor) {
+        if (this.backgroundRichEditor) {
+            this.backgroundRichEditor.setContent(this.tempValues.background);
+        } else if (backgroundEditor) {
             backgroundEditor.innerHTML = this.tempValues.background;
-            this.updateBackgroundCharCount();
         }
+        this.updateBackgroundCharCount();
     }
 
     /**
      * Atualiza o contador de caracteres do background
      */
     updateBackgroundCharCount() {
-        const editor = document.querySelector('#info-background-editor');
         const counter = document.querySelector('#info-background-char-count');
-        
-        if (editor && counter) {
+        if (!counter) return;
+
+        if (this.backgroundRichEditor) {
+            this.backgroundRichEditor.updateCharCount();
+            return;
+        }
+
+        const editor = document.querySelector('#info-background-editor');
+        if (editor) {
             const text = editor.innerText || '';
             counter.textContent = text.length;
+        }
+    }
+
+    /**
+     * Abre o gerenciador de templates (cria modal se necessário)
+     */
+    openTemplatesManager() {
+        if (!document.getElementById('popup-templates-manager-overlay')) {
+            this.createTemplatesManagerModal();
+        }
+        const overlay = document.getElementById('popup-templates-manager-overlay');
+        if (overlay) {
+            overlay.classList.add('active');
+        }
+    }
+
+    createTemplatesManagerModal() {
+        const existing = document.getElementById('popup-templates-manager-overlay');
+        if (existing) return;
+
+        const modalHTML = `
+            <div id="popup-templates-manager-overlay" class="popup-templates-manager-overlay" aria-hidden="true">
+                <div class="popup-templates-manager">
+                    <div class="popup-templates-manager__header">
+                        <h3>Gerenciar Templates de Background</h3>
+                        <div class="popup-templates-manager__header-actions">
+                            <select id="popup-templates-pack-select">
+                                <option value="default">Pack Padrão (10)</option>
+                                <option value="npcs">Pack NPCs</option>
+                                <option value="campanha">Pack Campanha</option>
+                                <option value="missoes">Pack Missões</option>
+                                <option value="conflitos">Pack Conflitos</option>
+                                <option value="cidade">Pack Cidade</option>
+                                <option value="culturas">Pack Culturas</option>
+                            </select>
+                            <button id="popup-templates-addpack">Adicionar Pack</button>
+                            <button id="popup-templates-export">Exportar</button>
+                            <button id="popup-templates-import">Importar</button>
+                            <button id="popup-templates-manager-close">✘</button>
+                        </div>
+                    </div>
+                    <div class="popup-templates-manager__body">
+                        <div id="templates-list" class="templates-list"></div>
+
+                        <div class="templates-editor">
+                            <label>Label</label>
+                            <input id="template-label-input" type="text" />
+                            <label>Conteúdo (WYSIWYG)</label>
+                            <div id="template-html-editor" class="template-html-editor" contenteditable="true" data-placeholder="Conteúdo do template..."></div>
+                            <div class="templates-editor__actions">
+                                <button id="template-add-btn">Adicionar</button>
+                                <button id="template-update-btn" style="display:none">Atualizar</button>
+                                <button id="template-cancel-btn">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+        // Styles mínimos do modal (apenas se não existir)
+        if (!document.getElementById('popup-templates-manager-styles')) {
+            const s = document.createElement('style');
+            s.id = 'popup-templates-manager-styles';
+            s.textContent = `
+                .popup-templates-manager-overlay { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.65); z-index:10000; }
+                .popup-templates-manager { width:760px; max-width:calc(100% - 40px); background:#0f0f10; color:#e6d6a8; border-radius:10px; padding:12px; box-shadow:0 10px 40px rgba(0,0,0,0.6); }
+                .popup-templates-manager__header { display:flex; justify-content:space-between; align-items:center; }
+                .popup-templates-manager__body { display:flex; gap:12px; margin-top:8px }
+                .templates-list { flex:1; max-height:360px; overflow:auto; border-right:1px solid rgba(255,255,255,0.03); padding-right:8px }
+                .templates-list .tpl-item { padding:8px; border-radius:6px; cursor:pointer; display:flex; justify-content:space-between; align-items:center }
+                .templates-list .tpl-item:hover { background:rgba(255,255,255,0.02) }
+                .templates-editor { flex:1; display:flex; flex-direction:column; gap:6px }
+                .templates-editor input, .templates-editor textarea { width:100%; background:#0b0b0b; color:#e6d6a8; border:1px solid rgba(255,255,255,0.03); padding:8px; border-radius:6px }
+                .templates-editor__actions { display:flex; gap:8px; justify-content:flex-end }
+            `;
+            document.head.appendChild(s);
+        }
+
+        // Popular lista de templates
+        this.refreshTemplatesList();
+
+        // Listeners
+        document.getElementById('popup-templates-manager-close')?.addEventListener('click', () => {
+            document.getElementById('popup-templates-manager-overlay')?.classList.remove('active');
+        });
+
+        document.getElementById('template-add-btn')?.addEventListener('click', () => {
+            // pegar conteúdo do editor WYSIWYG
+            const label = document.getElementById('template-label-input').value.trim();
+            const html = (this._templateEditor && typeof this._templateEditor.getContent === 'function') ? this._templateEditor.getContent() : document.getElementById('template-html-editor').innerHTML;
+            if (!label) { alert('Informe um label para o template'); return; }
+            this._backgroundTemplates = this._backgroundTemplates || [];
+            this._backgroundTemplates.push({ label, html });
+            this.saveTemplatesToStorage();
+            this.refreshTemplatesList();
+            document.getElementById('template-label-input').value = '';
+            if (this._templateEditor && typeof this._templateEditor.setContent === 'function') this._templateEditor.setContent('');
+            else document.getElementById('template-html-editor').innerHTML = '';
+        });
+
+        document.getElementById('template-cancel-btn')?.addEventListener('click', () => {
+            document.getElementById('template-label-input').value = '';
+            if (this._templateEditor && typeof this._templateEditor.setContent === 'function') this._templateEditor.setContent('');
+            else document.getElementById('template-html-editor').innerHTML = '';
+            document.getElementById('template-update-btn').style.display = 'none';
+            document.getElementById('template-add-btn').style.display = '';
+        });
+
+        document.getElementById('template-update-btn')?.addEventListener('click', () => {
+            const idx = document.getElementById('template-update-btn').dataset.idx;
+            if (typeof idx === 'undefined') return;
+            const label = document.getElementById('template-label-input').value.trim();
+            const html = (this._templateEditor && typeof this._templateEditor.getContent === 'function') ? this._templateEditor.getContent() : document.getElementById('template-html-editor').innerHTML;
+            if (!label) { alert('Informe um label'); return; }
+            this._backgroundTemplates[idx] = { label, html };
+            this.saveTemplatesToStorage();
+            this.refreshTemplatesList();
+            document.getElementById('template-update-btn').style.display = 'none';
+            document.getElementById('template-add-btn').style.display = '';
+        });
+
+        // Export / Import
+        document.getElementById('popup-templates-export')?.addEventListener('click', () => this.exportTemplates());
+        document.getElementById('popup-templates-import')?.addEventListener('click', () => {
+            // criar input file temporário
+            const f = document.createElement('input');
+            f.type = 'file';
+            f.accept = 'application/json';
+            f.addEventListener('change', (ev) => {
+                const file = ev.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = (evt) => {
+                    try {
+                        const data = JSON.parse(evt.target.result);
+                        if (!Array.isArray(data)) throw new Error('Formato inválido');
+                        this._backgroundTemplates = data;
+                        this.saveTemplatesToStorage();
+                        this.refreshTemplatesList();
+                        alert('Templates importados com sucesso');
+                    } catch (e) { alert('Erro ao importar templates: ' + e.message); }
+                };
+                reader.readAsText(file);
+            });
+            f.click();
+        });
+
+        // Adicionar pack selecionado
+        document.getElementById('popup-templates-addpack')?.addEventListener('click', () => {
+            const select = document.getElementById('popup-templates-pack-select');
+            const key = select ? select.value : 'default';
+            const map = {
+                default: 'Pack Padrão (10 templates)',
+                npcs: 'Pack NPCs',
+                campanha: 'Pack Campanha',
+                missoes: 'Pack Missões',
+                conflitos: 'Pack Conflitos',
+                cidade: 'Pack Cidade',
+                culturas: 'Pack Culturas'
+            };
+            const label = map[key] || 'Pack selecionado';
+            if (!confirm(`Adicionar ${label}? Isso adicionará os templates à sua lista atual.`)) return;
+            this.addTemplatePack(key);
+            alert(`${label} adicionado com sucesso.`);
+            this.refreshTemplatesList();
+        });
+
+        // Inicializar pequeno editor WYSIWYG para edição de template
+        try {
+            this._templateEditor = new RichTextEditor('#template-html-editor', { maxChars: 8000 });
+        } catch (e) { console.warn('Erro iniciando editor do template', e); }
+    }
+
+    refreshTemplatesList() {
+        this._backgroundTemplates = this._backgroundTemplates || [];
+        const listEl = document.getElementById('templates-list');
+        if (!listEl) return;
+        listEl.innerHTML = '';
+        this._backgroundTemplates.forEach((t, i) => {
+            const item = document.createElement('div');
+            item.className = 'tpl-item';
+            item.innerHTML = `<span>${t.label}</span><span><button data-idx='${i}' class='tpl-insert'>Inserir</button> <button data-idx='${i}' class='tpl-edit'>Editar</button> <button data-idx='${i}' class='tpl-del'>Remover</button></span>`;
+            listEl.appendChild(item);
+        });
+
+        // listeners para insert/edit/delete
+        listEl.querySelectorAll('.tpl-insert').forEach(btn => btn.addEventListener('click', (e) => {
+            const idx = e.target.dataset.idx;
+            const tpl = this._backgroundTemplates[idx];
+            if (tpl && this.backgroundRichEditor) {
+                this.backgroundRichEditor.insertTemplate(tpl.html || tpl.text);
+            }
+        }));
+
+        listEl.querySelectorAll('.tpl-edit').forEach(btn => btn.addEventListener('click', (e) => {
+            const idx = e.target.dataset.idx;
+            const tpl = this._backgroundTemplates[idx];
+            if (!tpl) return;
+            document.getElementById('template-label-input').value = tpl.label || '';
+            document.getElementById('template-html-input').value = tpl.html || tpl.text || '';
+            document.getElementById('template-update-btn').style.display = '';
+            document.getElementById('template-update-btn').dataset.idx = idx;
+            document.getElementById('template-add-btn').style.display = 'none';
+        }));
+
+        listEl.querySelectorAll('.tpl-del').forEach(btn => btn.addEventListener('click', (e) => {
+            const idx = parseInt(e.target.dataset.idx);
+            if (!confirm('Remover template?')) return;
+            this._backgroundTemplates.splice(idx,1);
+            this.saveTemplatesToStorage();
+            this.refreshTemplatesList();
+        }));
+
+        // também atualizar editor dropdown
+        if (this.backgroundRichEditor) this.backgroundRichEditor.updateTemplates(this._backgroundTemplates);
+    }
+
+    saveTemplatesToStorage() {
+        if (window.localStorageManager && typeof window.localStorageManager.saveBackgroundTemplates === 'function') {
+            try {
+                window.localStorageManager.saveBackgroundTemplates(this._backgroundTemplates || []);
+            } catch (e) { console.warn('Erro salvando templates no localStorageManager', e); }
+        } else {
+            // fallback direto no localStorage
+            try { localStorage.setItem('redungeon_ficha_background_templates', JSON.stringify(this._backgroundTemplates || [])); } catch (e) {}
+        }
+        if (this.backgroundRichEditor) this.backgroundRichEditor.updateTemplates(this._backgroundTemplates || []);
+    }
+
+    /**
+     * Adiciona um pack padrão com 10 templates em português
+     */
+    addDefaultTemplatePack() {
+        const pack = [
+            { label: 'Resumo', html: '<p><strong>Resumo:</strong> &lt;insira resumo do personagem&gt;</p>' },
+            { label: 'Infância', html: '<h3>Infância</h3><p>&lt;detalhes da infância&gt;</p>' },
+            { label: 'Família', html: '<h3>Família</h3><p>&lt;descreva família e relações&gt;</p>' },
+            { label: 'Eventos Marcantes', html: '<h3>Eventos Marcantes</h3><ul><li>&lt;evento 1&gt;</li><li>&lt;evento 2&gt;</li></ul>' },
+            { label: 'Conexões', html: '<h3>Conexões</h3><p>&lt;lista de NPCs importantes&gt;</p>' },
+            { label: 'Segredos', html: '<h3>Segredos</h3><p>&lt;segredos e segredos ocultos&gt;</p>' },
+            { label: 'Motivações', html: '<h3>Motivações</h3><p>&lt;motivações do personagem&gt;</p>' },
+            { label: 'Habilidades Notáveis', html: '<h3>Habilidades Notáveis</h3><ul><li>&lt;habilidade 1&gt;</li></ul>' },
+            { label: 'Relacionamentos', html: '<h3>Relacionamentos</h3><p>&lt;descrição das relações&gt;</p>' },
+            { label: 'Diário / Notas', html: '<h3>Diário</h3><p>&lt;anotações, memórias e diário&gt;</p>' }
+        ];
+
+        this._backgroundTemplates = this._backgroundTemplates || [];
+        // mesclar evitando duplicatas por label
+        const existingLabels = new Set(this._backgroundTemplates.map(t => t.label));
+        pack.forEach(t => { if (!existingLabels.has(t.label)) this._backgroundTemplates.push(t); });
+        this.saveTemplatesToStorage();
+    }
+
+    /**
+     * Retorna definição de packs disponíveis
+     */
+    getTemplatePacks() {
+        return {
+            default: [
+                { label: 'Resumo', html: '<p><strong>Resumo:</strong> &lt;insira resumo do personagem&gt;</p>' },
+                { label: 'Infância', html: '<h3>Infância</h3><p>&lt;detalhes da infância&gt;</p>' },
+                { label: 'Família', html: '<h3>Família</h3><p>&lt;descreva família e relações&gt;</p>' },
+                { label: 'Eventos Marcantes', html: '<h3>Eventos Marcantes</h3><ul><li>&lt;evento 1&gt;</li><li>&lt;evento 2&gt;</li></ul>' },
+                { label: 'Conexões', html: '<h3>Conexões</h3><p>&lt;lista de NPCs importantes&gt;</p>' },
+                { label: 'Segredos', html: '<h3>Segredos</h3><p>&lt;segredos e segredos ocultos&gt;</p>' },
+                { label: 'Motivações', html: '<h3>Motivações</h3><p>&lt;motivações do personagem&gt;</p>' },
+                { label: 'Habilidades Notáveis', html: '<h3>Habilidades Notáveis</h3><ul><li>&lt;habilidade 1&gt;</li></ul>' },
+                { label: 'Relacionamentos', html: '<h3>Relacionamentos</h3><p>&lt;descrição das relações&gt;</p>' },
+                { label: 'Diário / Notas', html: '<h3>Diário</h3><p>&lt;anotações, memórias e diário&gt;</p>' }
+            ],
+            npcs: [
+                { label: 'NPC - Descrição', html: '<h3>Nome do NPC</h3><p>&lt;descrição física e personalidade&gt;</p>' },
+                { label: 'NPC - Motivação', html: '<h3>Motivação</h3><p>&lt;objetivos e desejos&gt;</p>' },
+                { label: 'NPC - Conexões', html: '<h3>Conexões</h3><p>&lt;ligações com o jogador ou facções&gt;</p>' }
+            ],
+            campanha: [
+                { label: 'Campanha - Premissa', html: '<h3>Premissa</h3><p>&lt;breve descrição da campanha&gt;</p>' },
+                { label: 'Campanha - Ganchos', html: '<h3>Ganchos</h3><ul><li>&lt;gancho 1&gt;</li></ul>' }
+            ],
+            missoes: [
+                { label: 'Missão - Resumo', html: '<h3>Missão</h3><p>&lt;resumo da missão&gt;</p>' },
+                { label: 'Missão - Objetivos', html: '<h3>Objetivos</h3><ul><li>&lt;objetivo 1&gt;</li></ul>' }
+            ],
+            conflitos: [
+                { label: 'Conflito - Defesa', html: '<h3>Conflito</h3><p>&lt;partes envolvidas e motivo&gt;</p>' }
+            ],
+            cidade: [
+                { label: 'Cidade - Visão Geral', html: '<h3>Cidade</h3><p>&lt;descrição geral&gt;</p>' },
+                { label: 'Cidade - Locais', html: '<h3>Locais</h3><ul><li>&lt;local 1&gt;</li></ul>' }
+            ],
+            culturas: [
+                { label: 'Cultura - Costumes', html: '<h3>Cultura</h3><p>&lt;costumes e tradições&gt;</p>' },
+                { label: 'Cultura - Língua', html: '<h3>Língua</h3><p>&lt;observações linguísticas&gt;</p>' }
+            ]
+        };
+    }
+
+    /**
+     * Adiciona um pack por chave
+     */
+    addTemplatePack(key) {
+        const packs = this.getTemplatePacks();
+        const pack = packs[key] || packs['default'];
+        this._backgroundTemplates = this._backgroundTemplates || [];
+        const existingLabels = new Set(this._backgroundTemplates.map(t => t.label));
+        pack.forEach(t => { if (!existingLabels.has(t.label)) this._backgroundTemplates.push(t); });
+        this.saveTemplatesToStorage();
+    }
+
+    exportTemplates() {
+        try {
+            const data = JSON.stringify(this._backgroundTemplates || [], null, 2);
+            const blob = new Blob([data], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'background-templates.json';
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            URL.revokeObjectURL(url);
+        } catch (e) {
+            console.warn('Erro exportando templates', e);
+            alert('Erro ao exportar templates');
         }
     }
 

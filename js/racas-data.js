@@ -51,21 +51,7 @@ const RACAS_DATABASE = [
       }
     ],
     habilidadesAvancadas: [
-      {
-        nome: "Vontade Inabalável",
-        descricao: "A força do humano não está no corpo, mas na recusa em desistir. +2 em Testes de Resistência mental e emocional contra medo, intimidação, controle mental ou penalidades emocionais. Uma vez por sessão, ao cair abaixo de 30% dos recursos principais, ignora uma penalidade negativa ativa por 1 turno.",
-        tipo: "Duradoura",
-        alcance: "Pessoal",
-        alvos: "Você",
-        custo: 0,
-        recarga: 0,
-        duracao: 0,
-        dado: "0",
-        bonus: [
-          "+2 em Testes de Resistência mental e emocional contra medo, intimidação ou controle mental",
-          "Uma vez por sessão, ao cair abaixo de 30% dos recursos principais, ignora uma penalidade negativa ativa por 1 turno"
-        ]
-      },
+      
       {
         nome: "Poder Latente",
         descricao: "Quando pressionado ao limite, algo desperta. Durante 1 turno, escolhe um atributo principal e recebe +3 temporário nele. Se usado abaixo de 25% de HP, o bônus aumenta para +5. Sofre fadiga narrativa após o efeito (descrita pelo mestre).",
@@ -1438,7 +1424,7 @@ const RACAS_DATABASE = [
     id: "espirito",
     nome: "Espírito",
     tipo: "Re'Geron",
-    raridade: "lendario",
+    raridade: "mitico",
     descricao: "Os Espíritos são entidades formadas a partir de emoções positivas intensas e da convergência de elementos primordiais do mundo. Eles não possuem uma forma fixa: seu corpo se molda conforme o sentimento que os originou e o elemento ao qual estão ligados. Um Espírito de esperança pode parecer luz em movimento; um de serenidade pode assumir a forma de água calma ou vento suave. Diferente das raças físicas, os Espíritos não veem o mundo como território, mas como fluxo. Eles existem enquanto sua emoção-fonte permanece viva e tendem a se transformar quando o ambiente emocional ou elemental ao redor muda, tornando-os seres mutáveis, raros e profundamente simbólicos.",
     limiteAtributo: 150,
     imagem: "https://i.imgur.com/5FGgXkr.png",
@@ -2407,7 +2393,7 @@ const RACAS_DATABASE = [
     tipo: "A Crônica dos Varkhan",
     raridade: "comum",
     descricao: "O Refugiado é o retrato vivo da sobrevivência diante da adversidade. Forçado a abandonar seu lar devido a guerras devastadoras, catástrofes naturais ou perseguições políticas, ele carrega em sua bagagem não apenas pertences materiais escassos, mas o peso da perda e a cicatriz de um passado abruptamente interrompido. Essa vivência traumática molda uma personalidade cautelosa, observadora e extremamente pragmática. Eles não buscam a glória ou o heroísmo cego; seu objetivo principal é garantir que eles e aqueles sob sua responsabilidade vejam o amanhecer do dia seguinte. No grupo de aventureiros, o Refugiado costuma atuar como a voz da razão e da prudência, sendo excelente em prever riscos e encontrar soluções engenhosas com recursos mínimos.",
-    imagem: "https://i.imgur.com/Wg65NTY.png",
+    imagem: "https://i.imgur.com/Dw1dXYE.png",
     limiteAtributo: 150,
     atributos: {
       forca: "3d6+8",
@@ -2419,10 +2405,10 @@ const RACAS_DATABASE = [
     },
     habilidadesBasicas: [
       {
-        nome: "Adaptação",
-        descricao: "A dura jornada de fuga ensinou que a rigidez mental é um caminho rápido para a morte. A flexibilidade é a maior arma do Refugiado. Antes do início da campanha ou de um arco narrativo importante, o jogador pode redistribuir os valores de um de seus atributos para outro de sua escolha, representando a capacidade de se especializar rapidamente.",
+        nome: "Engenhosidade",
+        descricao: "A vida na fuga ensinou o Refugiado a tirar o máximo proveito de cada situação e de cada item. Ele possui uma mente ágil para improvisar soluções em momentos de crise.",
         bonus: [
-          "Redistribui valores de um atributo para outro antes do início da campanha/arco"
+          "Uma vez por cena, o Refugiado pode gastar uma ação bônus para transformar um item mundano (pedaço de pano, corda, galho, etc.) em uma ferramenta útil à situação. Isso pode conceder vantagem em um teste de perícia específico ou permitir uma ação que seria impossível sem a ferramenta."
         ]
       },
       {
@@ -2469,9 +2455,9 @@ const RACAS_DATABASE = [
       },
       {
         nome: "Treinável",
-        descricao: "Uma mente jovem e maleável possui uma neuroplasticidade fantástica. No início da campanha, o Aprendiz pode escolher e aprender uma Aptidão extra sem gastar pontos de criação, representando o foco recente de seus estudos.",
+        descricao: "Uma mente jovem e maleável possui uma neuroplasticidade fantástica. No início da campanha, o Aprendiz pode escolher uma Aptidão que receberá um nível intermediário (+3) extra sem gastar pontos de criação, representando um foco recente de estudos. A Aptidão escolhida deve ser 'treinável' por um tutor e ter justificativa no background.",
         bonus: [
-          "Aprende uma Aptidão extra no início da campanha sem custo"
+          "No início da campanha: ganha uma Aptidão extra em nível intermediário (+3) sem gastar pontos. Requer justificativa e disponibilidade de tutor."
         ]
       },
       {
@@ -2491,7 +2477,7 @@ const RACAS_DATABASE = [
     tipo: "A Crônica dos Varkhan",
     raridade: "comum",
     descricao: "O Estudante compartilha a faixa etária e a sede de conhecimento do Aprendiz, mas seu foco é formal, acadêmico e institucional. Criado em grandes bibliotecas, universidades ou academias de prestígio, ele é treinado em metodologias científicas, análise lógica, dedução e catalogação de dados. Costumam ser indivíduos metódicos, organizados e extremamente intelectuais, embora às vezes sofram com uma certa desconexão do mundo prático ou das nuances das ruas. Para o grupo, o Estudante é o decifrador de enigmas, o tradutor de línguas mortas e o estrategista que analisa os padrões de comportamento dos inimigos através de registros históricos.",
-    imagem: "https://i.imgur.com/S1J2wKS.png",
+    imagem: "https://i.imgur.com/8psHGk3.png",
     limiteAtributo: 150,
     atributos: {
       forca: "2d6+6",
@@ -2517,10 +2503,10 @@ const RACAS_DATABASE = [
         ]
       },
       {
-        nome: "Adaptável",
-        descricao: "Antes do início da campanha, o Estudante pode trocar os valores de um de seus atributos principais por outro, moldando sua ficha para refletir seu foco de pesquisa atual.",
+        nome: "Teoria Aplicada",
+        descricao: "O Estudante tem a capacidade de transformar conhecimento teórico em prática imediata. Ele pode usar sua vasta base de informações para improvisar soluções para problemas técnicos ou mágicos.",
         bonus: [
-          "Troca valores de um atributo por outro antes da campanha"
+          "Uma vez por descanso curto: gastar uma ação bônus para realizar um teste de Inteligência (Conhecimento) com obstáculo reduzido em 3 para aplicar uma teoria. Se bem-sucedido, pode desativar armadilhas, aplicar condicionantes técnicos ou permitir uma ação que dependa de conhecimento aplicado."
         ]
       }
     ],
@@ -2533,7 +2519,7 @@ const RACAS_DATABASE = [
     tipo: "A Crônica dos Varkhan",
     raridade: "comum",
     descricao: "O arquétipo da Periferia representa aqueles que cresceram nas margens da sociedade — nos becos escuros das metrópoles, nos distritos industriais esquecidos ou nas favelas onde a lei do Estado raramente chega. Criados sob a égide da escassez, eles aprenderam desde cedo que as regras formais da sociedade muitas vezes servem apenas para proteger os privilegiados. Consequentemente, desenvolveram uma astúcia prática invejável, uma profunda desconfiança em relação a figuras de autoridade e uma lealdade inabalável para com o seu próprio grupo.",
-    imagem: "https://i.imgur.com/useLuQO.png",
+    imagem: "https://i.imgur.com/eEEpZaY.png",
     limiteAtributo: 150,
     atributos: {
       forca: "3d6+8",
@@ -2617,7 +2603,7 @@ const RACAS_DATABASE = [
     tipo: "A Crônica dos Varkhan",
     raridade: "raro",
     descricao: "O Atleta dedicou sua vida à busca da perfeição física, à superação de limites biológicos e à glória da competição. Sejam corredores velocistas, lutadores de arena, ginastas acrobáticos ou nadadores de resistência, eles possuem uma coordenação motora impecável, reflexos rápidos e uma musculatura perfeitamente condicionada. Além do vigor físico, o Atleta carrega uma mentalidade competitiva inabalável; ele vê cada obstáculo, monstro ou desafio como um oponente a ser superado. No grupo de aventureiros, ele se destaca pela mobilidade extraordinária no campo de batalha, sendo capaz de alcançar posições estratégicas e realizar manobras acrobáticas impossíveis para outros personagens.",
-    imagem: "https://i.imgur.com/jPUuvNF.png",
+    imagem: "https://i.imgur.com/PfIoCWF.png",
     limiteAtributo: 150,
     atributos: {
       forca: "5d6+12",
@@ -2662,7 +2648,7 @@ const RACAS_DATABASE = [
     tipo: "A Crônica dos Varkhan",
     raridade: "raro",
     descricao: "O Criminoso opera nas sombras da sociedade, dominando as artes da infiltração, do silêncio e da oportunidade. Seja um ladrão de colarinho branco que frauda contratos, um batedor de carteiras ágil nos mercados ou um contrabandista que conhece todas as rotas secretas, ele compreende as fraquezas do sistema legal e sabe como explorá-las em seu benefício. São indivíduos pragmáticos, perspicazes e extremamente discretos, que preferem resolver problemas com inteligência e sutileza antes que as lâminas precisem ser sacadas. Sua rede de contatos no submundo é uma ferramenta inestimável para obter informações que o dinheiro legal não pode comprar.",
-    imagem: "https://i.imgur.com/gMfesnu.png",
+    imagem: "https://i.imgur.com/9TNgBB4.png",
     limiteAtributo: 150,
     atributos: {
       forca: "3d6+8",
@@ -2706,7 +2692,7 @@ const RACAS_DATABASE = [
     tipo: "A Crônica dos Varkhan",
     raridade: "raro",
     descricao: "O Professor representa o ápice do conhecimento acadêmico e da erudição formal. Tendo dedicado décadas de sua vida à pesquisa científica, ao ensino em grandes universidades e à catalogação de saberes esquecidos, ele possui uma mente analítica extraordinária. Embora possa não ter o vigor físico de um guerreiro, o Professor compensa essa fraqueza com uma capacidade incomparável de decifrar línguas antigas, compreender fenômenos físicos e misticismo complexo, e identificar os pontos fracos de qualquer criatura ou estrutura. No grupo, ele atua como o cérebro das operações, o decifrador de mistérios e o conselheiro estratégico.",
-    imagem: "https://i.imgur.com/mZy3HGe.png",
+    imagem: "https://i.imgur.com/70AjdXi.png",
     limiteAtributo: 150,
     atributos: {
       forca: "2d6+6",
@@ -2748,7 +2734,7 @@ const RACAS_DATABASE = [
     tipo: "A Crônica dos Varkhan",
     raridade: "raro",
     descricao: "O Sobrevivente é aquele que encarou os cenários mais hostis do mundo — desertos inclementes, florestas tropicais repletas de predadores, invernos polares ou o isolamento total após um desastre — e conseguiu retornar para contar a história. Ele é pragmático, durão e possui uma \"casca grossa\" moldada por privações severas. Não se importa com luxos, etiquetas sociais ou formalidades; seu único foco é a sobrevivência biológica e a manutenção da integridade da seu grupo. No grupo, ele é o especialista em acampamentos, navegação em terrenos selvagens, primeiros socorros e gerenciamento de recursos escassos.",
-    imagem: "https://i.imgur.com/r8zrIII.jpeg",
+    imagem: "https://i.imgur.com/Lkakiqb.png",
     limiteAtributo: 150,
     atributos: {
       forca: "4d6+10",
@@ -2790,7 +2776,7 @@ const RACAS_DATABASE = [
     tipo: "A Crônica dos Varkhan",
     raridade: "epico",
     descricao: "O Filho de Herói cresceu sob a sombra de feitos lendários e de expectativas sociais esmagadoras. Ele carrega em suas veias o sangue de um herói do passado e, em seus ombros, a pressão constante de provar que é digno desse legado. Essa herança traz tanto uma determinação de aço quanto um conflito interno constante. Eles são líderes natos, cujos nomes e linhagens podem abrir portas em castelos reais ou, inversamente, atrair a fúria de inimigos jurados de seus pais. No campo de batalha, o Filho de Herói luta com uma bravura contagiante, servindo como o escudo e a espada do grupo, inspirando todos ao seu redor a superarem seus próprios limites.",
-    imagem: "https://i.imgur.com/eTlXVhq.png",
+    imagem: "https://i.imgur.com/gDWcTrb.png",
     limiteAtributo: 150,
     atributos: {
       forca: "4d8+14",
@@ -2802,10 +2788,10 @@ const RACAS_DATABASE = [
     },
     habilidadesBasicas: [
       {
-        nome: "Hereditariedade Heroica",
-        descricao: "O sangue dos grandes guerreiros e salvadores do mundo corre em suas veias, despertando em momentos de extrema necessidade. Uma vez por cena, o Filho de Herói recebe um bônus extra massivo em qualquer teste relacionado a atos de pura bravura, resistência moral contra a corrupção ou testes de liderança para inspirar seus companheiros.",
+        nome: "Marca do Legado",
+        descricao: "O próprio destino parece conspirar para manter a linhagem do herói viva. Uma marca ancestral ativa-se nos momentos de maior necessidade, protegendo seu portador contra a morte iminente.",
         bonus: [
-          "Uma vez por cena: bônus extra massivo em testes de bravura, resistência moral ou liderança"
+          "Três vezes por descanso longo (não acumuláveis): ao sofrer um ataque que o levaria à morte ou dano crítico devastador, uma força interior mística se ativa, recuperando instantaneamente uma quantidade significativa de pontos de vida e permitindo que o personagem continue lutando. Aplicação e valores exatos definidos pelo Mestre."
         ]
       },
       {
@@ -2816,10 +2802,10 @@ const RACAS_DATABASE = [
         ]
       },
       {
-        nome: "Marca do Legado",
-        descricao: "O próprio destino parece conspirar para manter a linhagem do herói viva. Uma vez por campanha, ao sofrer um ataque que o levaria à morte ou ao sofrer um dano crítico devastador, uma força interior mística se ativa, recuperando instantaneamente uma quantidade significativa de seus pontos de vida (HP), permitindo-lhe continuar lutando.",
+        nome: "Hereditariedade Heroica",
+        descricao: "O sangue dos grandes guerreiros e salvadores do mundo corre em suas veias, despertando em momentos de extrema necessidade. Uma vez por cena, o Filho de Herói recebe um bônus extra massivo em qualquer teste relacionado a atos de pura bravura, resistência moral contra a corrupção ou testes de liderança para inspirar seus companheiros.",
         bonus: [
-          "Uma vez por campanha: ao sofrer ataque letal/critico, recupera quantidade significativa de HP"
+          "Uma vez por cena: bônus extra massivo em testes de bravura, resistência moral ou liderança"
         ]
       }
     ],
@@ -2832,7 +2818,7 @@ const RACAS_DATABASE = [
     tipo: "A Crônica dos Varkhan",
     raridade: "epico",
     descricao: "O Gênio possui uma mente que opera em um nível cognitivo e de processamento de dados incompreensível para os mortais comuns. Desde a infância, ele desvenda equações matemáticas impossíveis, cria tecnologias revolucionárias ou decifra fórmulas mágicas ancestrais com a mesma facilidade com que uma criança brinca. Embora possam parecer arrogantes, excêntricos ou emocionalmente distantes devido à velocidade de seus pensamentos, sua capacidade de antecipar cenários e calcular variáveis em tempo real é uma vantagem tática insuperável. No grupo, o Gênio é o arquiteto dos planos mais complexos e o solucionador definitivo de qualquer barreira intelectual ou tecnológica.",
-    imagem: "https://i.imgur.com/bdPe0TI.png",
+    imagem: "https://i.imgur.com/W64WhR2.png",
     limiteAtributo: 150,
     atributos: {
       forca: "2d6+6",
@@ -2844,17 +2830,17 @@ const RACAS_DATABASE = [
     },
     habilidadesBasicas: [
       {
-        nome: "Aprendizado Acelerado",
-        descricao: "Uma capacidade cognitiva fora da curva que permite a absorção instantânea de padrões. O Gênio consegue aprender novas fórmulas matemáticas, feitiços místicos ou idiomas inteiros em metade do tempo e com metade dos recursos normalmente exigidos por outros personagens, Recebe +2 Aptidões gratuitas.",
+        nome: "Aptidão Inata",
+        descricao: "O Gênio possui uma compreensão tão profunda de certos domínios que sua aptidão beira o inato. Ao criar o personagem, o Gênio escolhe uma Aptidão que é elevada ao nível 6. Essa escolha deve ser justificada no background (BKs) e pode ser vetada pelo Mestre se não houver justificativa coerente.",
         bonus: [
-          "Aprende fórmulas/feitiços/idiomas em metade do tempo; +2 Aptidões gratuitas"
+          "Ao criar o personagem: escolha uma Aptidão que será elevada ao nível 6. Requer justificativa no background; sujeito à aprovação do Mestre."
         ]
       },
       {
-        nome: "Raciocínio Superior",
-        descricao: "Processamento lógico em tempo real. O Gênio recebe bônus substanciais constantes em todos os testes de Inteligência (INT) que envolvam lógica pura, criptografia, dedução científica, decifração de enigmas antigos ou engenharia reversa de tecnologias desconhecidas.",
+        nome: "Eureka",
+        descricao: "Em momentos de grande desafio ou frente a um problema aparentemente insolúvel, a mente do Gênio pode ter um lampejo de inspiração que desbloqueia soluções ocultas.",
         bonus: [
-          "Bônus substanciais em testes de INT relacionados a lógica, criptografia e engenharia"
+          "Uma vez por descanso curto: como reação quando o Gênio ou um aliado falha em um teste de Conhecimento, Percepção, Persuasão ou aptidão lógica, o Gênio pode ativar 'Eureka' para refazer o teste com Vantagem, ou optar por receber uma pista direta do Mestre sobre a situação."
         ]
       },
       {
@@ -2874,7 +2860,7 @@ const RACAS_DATABASE = [
     tipo: "A Crônica dos Varkhan",
     raridade: "epico",
     descricao: "O Herdeiro de Clã pertence à alta nobreza, a dinastias mercantis de imensa riqueza ou a clãs de guerreiros tradicionais de prestígio histórico. Criado desde o berço sob a tutela dos melhores mentores, ele foi treinado nas artes da diplomacia, da etiqueta, da estratégia política e em técnicas refinadas de combate. Ele possui uma postura impecável e uma autoridade natural que exige respeito. O Herdeiro de Clã sabe como navegar pelas cortes reais, negociar tratados comerciais e usar o peso de seu nome familiar para obter vantagens que a força bruta jamais conseguiria. No grupo, ele é o diplomata refinado, o financiador de expedições e um combatente de técnica cirúrgica.",
-    imagem: "https://i.imgur.com/MRcO0Tx.png",
+    imagem: "https://i.imgur.com/MSJTiuz.png",
     limiteAtributo: 150,
     atributos: {
       forca: "4d6+10",
@@ -2935,10 +2921,10 @@ const RACAS_DATABASE = [
         ]
       },
       {
-        nome: "Energia Juvenil",
-        descricao: "Um vigor espiritual e físico que se recusa a ser contido por limitações biológicas. Uma vez por cena, a Criança Milagrosa pode repetir qualquer teste físico (Força, Vitalidade ou Agilidade) que tenha falhado, canalizando sua determinação pura para reescrever as leis da física ao seu redor.",
+        nome: "Domínio de Fluxo",
+        descricao: "Assim como o 'Infinito', a Criança Milagrosa tem um controle tão perfeito sobre a energia que ela nunca se esgota e sempre flui a seu favor. Ela é o centro de uma tempestade de poder.",
         bonus: [
-          "Uma vez por cena: repetir qualquer teste físico falhado, mantendo o melhor resultado"
+          "Reduz em 50% qualquer custo de recurso (Mana, Energia, Stamina) aplicado às suas habilidades ou técnicas."
         ]
       },
       {
@@ -2958,7 +2944,7 @@ const RACAS_DATABASE = [
     tipo: "A Crônica dos Varkhan",
     raridade: "lendario",
     descricao: "O Escolhido é o protagonista das lendas e profecias antigas. Marcado pelas divindades, pelo destino ou pelas forças fundamentais do universo para cumprir um propósito monumental que alterará o curso da história humana. Ele carrega uma aura inconfundível de autoridade, destino e poder latente. Cada passo que dá parece ser sutilmente guiado por uma força maior, e o próprio tecido da realidade parece se curvar para garantir que ele cumpra sua missão profética. São líderes natos, guerreiros formidáveis e símbolos vivos de mudança, capazes de realizar feitos considerados impossíveis para qualquer outro ser mortal.",
-    imagem: "https://i.imgur.com/WEGH4Sk.png",
+    imagem: "https://i.imgur.com/wzZEXlA.png",
     limiteAtributo: 150,
     atributos: {
       forca: "5d8+16",
@@ -3000,7 +2986,7 @@ const RACAS_DATABASE = [
     tipo: "A Crônica dos Varkhan",
     raridade: "lendario",
     descricao: "O Humano Perfeito representa o ápice absoluto da evolução física, mental e espiritual de sua espécie. Ele é a harmonia perfeita encarnada: livre de qualquer falha genética, fraqueza moral ou limitação corporal. Exibe uma simetria física deslumbrante, uma capacidade cognitiva incomparável e atributos físicos que beiram o divino. Ele não é apenas bom em uma área; ele é perfeito em todas. Age com uma calma imperturbável e uma precisão cirúrgica em qualquer situação, seja decifrando uma fórmula científica complexa, negociando a paz entre impérios ou derrotando exércitos inteiros em combate corpo a corpo.",
-    imagem: "https://i.imgur.com/Jrfpi7z.png",
+    imagem: "https://i.imgur.com/k0mPVED.png",
     limiteAtributo: 150,
     atributos: {
       forca: "6d8+16",
@@ -3013,9 +2999,9 @@ const RACAS_DATABASE = [
     habilidadesBasicas: [
       {
         nome: "Potencial Máximo",
-        descricao: "Seus limites biológicos estão situados muito além do que a ciência ou a magia consideram possíveis para os mortais comuns. Uma vez por sessão de jogo, o Humano Perfeito pode aumentar temporariamente qualquer um de seus atributos em um valor extraordinário de +15, permitindo-lhe realizar feitos físicos ou mentais considerados milagres absolutos.",
+        descricao: "Seus limites biológicos estão situados muito além do que a ciência ou a magia consideram possíveis para os mortais comuns. Uma vez por cena, o Humano Perfeito pode entrar em um estado de Transcendência por até 5 rodadas.",
         bonus: [
-          "Uma vez por sessão: aumentar temporariamente um atributo em +15"
+          "Durante Transcendência (até 5 rodadas): +10 em todos os atributos, ganha uma ação adicional por turno e ignora penalidades de movimento ou ferimentos. Uso: 1 vez por cena."
         ]
       },
       {
@@ -3040,7 +3026,7 @@ const RACAS_DATABASE = [
     id: "reencarnado",
     nome: "Reencarnado",
     tipo: "A Crônica dos Varkhan",
-    raridade: "lendario",
+    raridade: "mitico",
     descricao: "O Reencarnado é uma alma antiga que retém as memórias, conhecimentos e experiências de suas vidas passadas, tendo despertado neste novo corpo e era. Ele carrega a sabedoria acumulada de séculos, técnicas de combate esquecidas pelo tempo e uma perspectiva profundamente filosófica sobre a vida, a morte e o fluxo da história. Costumam ser indivíduos calmos, enigmáticos e por vezes melancólicos, pois já viram impérios erguerem-se e caírem em pó múltiplas vezes. No entanto, sua experiência prática acumulada em dezenas de existências anteriores faz dele um aliado de valor inestimável, capaz de trazer soluções do passado para os problemas do presente.",
     imagem: "https://i.imgur.com/ADVh9kV.png",
     limiteAtributo: 150,
@@ -3077,6 +3063,418 @@ const RACAS_DATABASE = [
     ],
     habilidadesAvancadas: [],
     codigo: "0034"
+  }
+  ,
+  {
+    id: "synoma",
+    nome: "Synoma",
+    tipo: "The Chaotical Gate",
+    raridade: "comum",
+    descricao: "É a manifestação mais comum e estável do Gene Anômalo, representando a evolução direta das capacidades naturais do corpo humano. Diferente de outras categorias que criam matéria, manipulam energia ou alteram fenômenos externos, o Synoma atua exclusivamente sobre o próprio organismo, despertando potenciais biológicos adormecidos e levando-os muito além dos limites humanos. Seus usuários desenvolvem corpos capazes de suportar pressões extremas, adaptar-se a ambientes hostis e executar feitos que desafiam a compreensão da ciência moderna. Essa evolução pode ocorrer de diversas formas: através do fortalecimento muscular, permitindo força e resistência sobre-humanas; da amplificação sensorial, elevando os sentidos a níveis extraordinários; da adaptação fisiológica, tornando possível sobreviver em condições letais; ou ainda por especializações biológicas únicas, como regeneração acelerada, produção de toxinas e camuflagem orgânica. Em seus níveis mais elevados, um usuário de Synoma transcende completamente as limitações da espécie humana, adquirindo capacidades capazes de rivalizar com armas de destruição em massa, sobreviver em ambientes impossíveis e remodelar o próprio corpo para enfrentar qualquer ameaça, tornando-se a expressão máxima da adaptação e da sobrevivência.",
+    limiteAtributo: 150,
+    imagem: "https://i.imgur.com/HJ2ArGy.jpeg",
+    atributos: {
+      forca: "2d10+4",
+      vitalidade: "2d8+8",
+      agilidade: "2d8+4",
+      inteligencia: "2d6+2",
+      percepcao: "2d10+4",
+      sorte: "5d20"
+    },
+    habilidadesBasicas: [
+      {
+        nome: "Organismo Superior",
+        descricao: "O corpo de um Synoma opera em um nível biológico muito acima do padrão humano. Seus músculos apresentam eficiência elevada, seus órgãos trabalham de forma otimizado e seu metabolismo é capaz de suportar esforços que normalmente levariam um ser humano comum ao colapso físico.",
+        bonus: [
+          "Recebe +25% HP extra",
+          "Maior resistência narrativa contra fadiga, exaustão física e esforços prolongados"
+        ]
+      },
+      {
+        nome: "Adaptação Emergencial",
+        descricao: "O Gene Anômalo presente nos Synoma reage constantemente a ameaças que colocam sua sobrevivência em risco. Quando submetido a ambientes extremos ou condições hostis, o organismo inicia um processo acelerado de adaptação biológica, buscando reduzir os danos causados pelo estímulo agressor.",
+        bonus: [
+          "Após sobreviver a uma ameaça ambiental/condição extrema, o Mestre pode conceder resistência parcial ou vantagem narrativa contra exposições semelhantes durante a cena ou campanha",
+          "Reduz danos e efeitos repetidos da mesma ameaça (não é perfeito nem instantâneo)"
+        ]
+      },
+      {
+        nome: "Instinto Primordial",
+        descricao: "Microcontrações musculares, alterações hormonais e impulsos nervosos percorrem seu organismo diante de ameaças iminentes, criando uma sensação instintiva de alerta impossível de explicar logicamente.",
+        bonus: [
+          "Recebe +3 Reação",
+          "Permite perceber perigos iminentes, emboscadas ou situações anormais mesmo sem informação consciente suficiente"
+        ]
+      },
+      {
+        nome: "Regeneração Biológica",
+        descricao: "As células de um Synoma possuem capacidade regenerativa superior à humana. Tecidos danificados são reconstruídos com maior velocidade e eficiência, reduzindo significativamente o tempo necessário para recuperação.",
+        bonus: [
+          "Recupera-se mais rapidamente de ferimentos leves, fraturas simples e danos físicos não críticos",
+          "Redução nos tempos de recuperação de lesões comuns (a critério do Mestre)"
+        ]
+      },
+      {
+        nome: "Vontade de Sobrevivência",
+        descricao: "Quando colocado diante da morte, seu organismo mobiliza recursos ocultos, redistribui energia e força o corpo a continuar funcionando mesmo além dos limites considerados seguros.",
+        bonus: [
+          "Uma vez por cena, ao sofrer dano ou condição que normalmente o deixaria incapaz, pode permanecer consciente por mais um turno/ação",
+          "Efeito pode gerar penalidades narrativas ou exaustão após uso"
+        ]
+      },
+      {
+        nome: "Evolução Contínua",
+        descricao: "O corpo está em constante processo de aperfeiçoamento, observando estímulos, armazenando informações biológicas e refinando suas próprias capacidades para enfrentar desafios futuros. Cada batalha e ambiente hostil deixam marcas evolutivas no organismo.",
+        bonus: [
+          "O Mestre pode recompensar experiências extremas com adaptações biológicas menores, mutações benéficas ou evoluções narrativas compatíveis com a especialização do personagem",
+          "Melhora progressiva do personagem com exposição a desafios reais"
+        ]
+      }
+    ],
+    habilidadesAvancadas: [],
+    codigo: "9001"
+  } 
+  ,
+  {
+    id: "Stoika",
+    nome: "Stoika",
+    tipo: "The Chaotical Gate",
+    raridade: "epico",
+    descricao: "Stoika é uma das manifestações mais versáteis e perigosas do Gene Anômalo, permitindo ao usuário interagir diretamente com a matéria presente no ambiente. Diferente de categorias focadas no aprimoramento corporal ou na manipulação de energia, o Stoika estabelece uma conexão genética entre o indivíduo e determinados materiais, possibilitando moldá-los, movimentá-los, alterar sua forma e explorar suas propriedades físicas de maneiras impossíveis para a ciência convencional. Essa capacidade surge através de uma mutação instável do Gene Anômalo, que sacrifica parte do potencial biológico do portador em troca de um domínio excepcional sobre elementos externos. Cada usuário desenvolve afinidade com um ou mais tipos de matéria, tornando-se capaz de transformar ambientes inteiros em extensões de sua própria vontade. Em níveis avançados, um Stoika pode remodelar campos de batalha, erguer fortalezas instantaneamente, criar armamentos complexos ou alterar estruturas inteiras em questão de segundos. Embora extremamente poderoso, o Stoika possui uma regra fundamental: não cria matéria do nada. Todo material manipulado deve existir previamente no ambiente ou ter sido assimilado pelo usuário através de métodos específicos.",
+    limiteAtributo: 150,
+    imagem: "https://i.imgur.com/s7Lok9I.png",
+    atributos: {
+      forca: "2d6+2",
+      vitalidade: "2d8+2",
+      agilidade: "2d6+4",
+      inteligencia: "2d8+8",
+      percepcao: "2d10+8",
+      sorte: "5d20"
+    },
+    habilidadesBasicas: [
+      {
+        nome: "Afinidade Material",
+        descricao: "Desde o despertar do Gene Anômalo, o organismo do usuário desenvolve uma conexão instintiva com um tipo específico de matéria. Essa afinidade vai além do simples conhecimento físico; o usuário passa a sentir a presença, densidade, composição e estado do material como se fosse uma extensão de seus próprios sentidos. Mesmo sem treinamento avançado, muitos Stoika conseguem identificar impurezas, rachaduras ou alterações estruturais em materiais compatíveis apenas através do contato ou proximidade.",
+        bonus: [
+          "Recebe percepção ampliada sobre sua matéria de afinidade (Nv3 Grátis).",
+          "Pode identificar propriedades, defeitos e alterações estruturais sem necessidade de equipamentos especializados."
+        ]
+      } ,
+      {
+        nome: "Interface Anômala",
+        descricao: "O Gene Anômalo cria uma ligação direta entre o sistema nervoso e a matéria compatível. Conforme essa conexão se fortalece, manipular materiais deixa de ser uma ação consciente e passa a ocorrer de forma quase intuitiva. Objetos compatíveis respondem com maior facilidade aos comandos do usuário, reduzindo o esforço necessário para moldagem, movimentação e controle.",
+        bonus: [
+          "Ações envolvendo a matéria de afinidade possuem menor dificuldade e exigem menor desgaste físico ou mental.",
+        ]
+      },
+      {
+        nome: "Consciência Estrutural",
+        descricao: "O Stoika aprende a perceber tensões, compressões e falhas estruturais através da própria matéria. Ao tocar uma parede, uma arma ou uma estrutura compatível, o usuário consegue compreender intuitivamente sua resistência, estabilidade e pontos vulneráveis. Veteranos da categoria são capazes de ler construções inteiras apenas através de pequenos fragmentos de material.",
+        bonus: [
+          "Recebe vantagem rolagem ao analisar construções, armaduras, armas e estruturas feitas de sua matéria de afinidade.",
+        ]
+      },
+      {
+        nome: "Assimilação Material",
+        descricao: "A exposição constante à matéria compatível provoca alterações graduais no organismo. Embora não transforme diretamente o corpo do usuário, essa convivência cria resistência natural aos efeitos nocivos produzidos por sua própria matéria. Um manipulador de metal aprende a suportar peso e vibrações extremas. Um manipulador de cristal torna-se mais resistente a cortes e fragmentações. Um manipulador mineral desenvolve maior tolerância à pressão e impacto.",
+        bonus: [
+          "Recebe bônus moderado a efeitos relacionados à sua matéria de afinidade.",
+        ]
+      },
+      {
+        nome: "Domínio Territorial",
+        descricao: "O verdadeiro poder de um Stoika nunca está apenas nele. Está no ambiente. Quanto maior a quantidade de matéria compatível presente ao redor, mais confortável e eficiente sua manipulação se torna. Campos ricos em sua afinidade tornam-se extensões naturais de sua influência.",
+        bonus: [
+          "O Mestre pode conceder bônus narrativos ou vantagens situacionais sempre que houver grande abundância da matéria compatível no cenário.",
+        ]
+      },
+      {
+        nome: "Reino da Matéria",
+        descricao: "Com o passar do tempo, a relação entre usuário e matéria se torna tão profunda que o ambiente passa a reagir naturalmente à sua presença. Não é controle consciente. É familiaridade. É como se a matéria reconhecesse seu manipulador.",
+        bonus: [
+          "Quando estiver cercado por grande quantidade de sua matéria de afinidade, o usuário recebe vantagens narrativas em manipulação, percepção e controle territorial.",
+        ]
+      }
+    ],
+    habilidadesAvancadas: [],
+    codigo: "9002"
+  }
+  ,
+  {
+    id: "Yaima",
+    nome: "Yaima",
+    tipo: "The Chaotical Gate",
+    raridade: "epico",
+    descricao: "O Yaima é uma manifestação singular do Gene Anômalo que permite ao usuário integrar materiais diretamente à própria estrutura biológica. Diferente do Stoika, que manipula a matéria ao seu redor, o Yaima converte o próprio corpo em uma extensão do material assimilado, fundindo carne, ossos e órgãos com substâncias que desafiam as limitações naturais da biologia humana. Essa transformação ocorre através de uma mutação genética altamente adaptativa, capaz de reestruturar células, tecidos e até mesmo o sistema esquelético para reproduzir as propriedades físicas de determinados materiais. Dependendo da afinidade desenvolvida, um usuário pode endurecer a pele como aço, cristalizar membros inteiros, transformar músculos em fibras minerais ou incorporar características orgânicas complexas de outras formas de vida.",    limiteAtributo: 150,
+    imagem: "https://i.imgur.com/a6HvVbo.jpeg",
+    atributos: {
+      forca: "2d10+4",
+      vitalidade: "2d8+8",
+      agilidade: "2d8+2",
+      inteligencia: "2d6+2",
+      percepcao: "2d6+4",
+      sorte: "5d20"
+    },
+    habilidadesBasicas: [
+      {
+        nome: "Matéria Viva",
+        descricao: "O corpo de um Yaima não imita materiais. Ele os incorpora. Quando submetido a danos, pressão ou ambientes hostis, o organismo utiliza as propriedades da matéria assimilada para aumentar suas chances de sobrevivência. Cada transformação fortalece a ligação entre corpo e material, tornando a adaptação cada vez mais natural.",
+        bonus: [
+          "Sempre que utilizar um material como base de suas transformações, recebe vantagens narrativas relacionadas às propriedades naturais desse material.",
+          "Benefícios aplicados como resistência temporária, bônus em testes ou vantagens ambientais, a critério do Mestre."
+        ]
+      },
+      {
+        nome: "Estrutura Estável",
+        descricao: "Mesmo quando partes do corpo sofrem alterações materiais, a biologia do Yaima mantém suas funções corporais estáveis e eficientes.",
+        bonus: [
+          "Recebe resistência moderada contra fraturas, deslocamentos e lesões estruturais (Nv.3 Tolerância).",
+          "Redução do risco de perda de membros ou incapacitação por dano estrutural; recuperação mais rápida a critério do Mestre."
+        ]
+      },
+      {
+        nome: "Estrutura Híbrida",
+        descricao: "A fusão constante entre matéria e organismo fortalece naturalmente a estrutura corporal do usuário. Ossos, músculos e tecidos tornam-se progressivamente mais densos e resistentes conforme a evolução do Gene Anômalo. Mesmo em estado parcialmente humano, um Yaima apresenta uma durabilidade física muito superior à média.",
+        bonus: [
+          "Jogador recebe 1 HP por Vitalidade e Fortitude.",
+          "Jogador ganha uma defesa passiva adicional contra ataques físicos, representando a resistência natural de sua estrutura híbrida."
+        ]
+      } ,
+      {
+        nome: "Adaptação Morfológica",
+        descricao: "O corpo de um Yaima está em constante transformação. Sempre que exposto por longos períodos a um material compatível, o organismo começa a desenvolver pequenas adaptações espontâneas relacionadas às propriedades da matéria assimilada. Essas alterações normalmente surgem de forma sutil antes de evoluírem para transformações completas.",
+        bonus: [
+          "O Mestre pode conceder adaptações biológicas menores relacionadas ao material predominante utilizado pelo personagem.",
+        ]
+      },
+      {
+        nome: "Resistência Estrutural",
+        descricao: "Mesmo quando ferido, o organismo híbrido do Yaima apresenta uma estabilidade incomum. Partes do corpo convertidas em materiais especializados mantêm sua integridade por mais tempo, dificultando fraturas, rompimentos e danos estruturais severos. A própria composição híbrida do corpo distribui impactos de maneira mais eficiente.",
+        bonus: [
+          "Recebe resistência moderada contra ferimentos físicos, esmagamento e danos estruturais (Nv.3 Tolerancia).",
+        ]
+      },
+      {
+        nome: "Memória Celular Material",
+        descricao: "Após assimilar um material, o organismo registra parte de sua composição em nível celular. Com o passar do tempo, reproduzir características já utilizadas anteriormente torna-se mais natural e menos desgastante para o corpo. Veteranos da categoria conseguem alternar entre diferentes estados de transformação com muito mais facilidade do que usuários iniciantes.",
+        bonus: [
+          "Transformações e integrações previamente dominadas exigem menor esforço para serem reproduzidas novamente.",
+        ]
+      },
+    ],
+    habilidadesAvancadas: [],
+    codigo: "9003"
+  }  
+  ,
+  {
+    id: "psicoplasmica",
+    nome: "Psicoplásmica",
+    tipo: "The Chaotical Gate",
+    raridade: "lendario",
+    descricao: "A Psicoplásmica é uma manifestação instável do Gene Anômalo que permite ao usuário remodelar a própria estrutura biológica através da vontade, emoção e instinto. Diferente do Synoma, que aprimora capacidades já existentes, a Psicoplásmica altera completamente a forma física do indivíduo, permitindo que seu corpo assuma características impossíveis para um ser humano comum. Essa transformação ocorre por meio de uma mutação altamente adaptativa que reescreve músculos, ossos, órgãos e tecidos em tempo real. Usuários dessa categoria frequentemente desenvolvem traços bestiais, monstruosos ou híbridos, refletindo heranças genéticas ligadas aos antigos Anaplásmata ou a linhagens anômalas esquecidas. Em seus estágios iniciais, a transformação costuma ser parcial, manifestando garras, presas, olhos especializados ou membros alterados. Conforme evolui, o usuário torna-se capaz de assumir formas completas, criar estruturas corporais inéditas e adaptar seu organismo para sobreviver aos mais variados ambientes e situações de combate. Nos níveis mais elevados, a Psicoplásmica permite uma evolução contínua, onde cada batalha, ferimento ou desafio acelera a adaptação do corpo, transformando o usuário em uma criatura viva de constante aperfeiçoamento.",
+    limiteAtributo: 150,
+    imagem: "https://i.imgur.com/04UWpuI.jpeg",
+    atributos: {
+      forca: "2d10+8",
+      vitalidade: "2d8+4",
+      agilidade: "2d12+8",
+      inteligencia: "2d6+4",
+      percepcao: "2d8+4",
+      sorte: "5d20"
+    },
+    habilidadesBasicas: [
+      {
+        nome: "Corpo Mutável",
+        descricao: "O organismo Psicoplásmico nunca é completamente estático. Pequenas alterações corporais ocorrem naturalmente conforme emoções, estresse ou instintos entram em ação. Olhos podem mudar de formato, unhas podem endurecer e músculos podem se adaptar temporariamente a situações extremas.",
+        bonus: [
+          "Vantagem narrativa em testes envolvendo adaptação física, escalada, perseguição, sobrevivência ou situações onde o corpo precise improvisar uma solução biológica."
+        ]
+      },
+      {
+        nome: "Instinto Bestial",
+        descricao: "Mesmo em forma humana, parte dos instintos primitivos permanece ativa. O usuário percebe ameaças, movimentos e intenções hostis com maior facilidade.",
+        bonus: [
+          "+3 ReA",
+          "+1 PreC"
+        ]
+      },
+      {
+        nome: "Evolução Reativa",
+        descricao: "O corpo aprende através da experiência. Cada combate deixa pequenas marcas evolutivas que tornam o organismo mais eficiente para enfrentar desafios semelhantes.",
+        bonus: [
+          "Uma vez por cena, após sofrer uma condição negativa pela primeira vez, o usuário recebe uma pequena resistência narrativa contra aquele mesmo efeito."
+        ]
+      },
+      {
+        nome: "Flexibilidade Biológica",
+        descricao: "Músculos, articulações e tecidos possuem elasticidade muito superior à humana.",
+        bonus: [
+          "+15 Agilidade",
+          "+10% Prontidão"
+        ]
+      },
+      {
+        nome: "Instinto Predatório",
+        descricao: "Em situações extremas, emoções intensas podem influenciar o comportamento do usuário.",
+        bonus: [
+          "O Mestre pode solicitar testes de autocontrole em momentos de fúria, medo extremo ou instinto de sobrevivência.",
+          "Se, em fúria, o personagem ainda mantiver sanidade, recebe +3 em Precisão e +7 em dano."
+        ]
+      }
+    ,
+      {
+        nome: "Transmutação Emocional",
+        descricao: "As emoções intensas moldam temporariamente a física do Psicoplásmico, permitindo que o corpo adote uma resposta adaptativa imediata e poderosa.",
+        bonus: [
+          "Uma vez por cena, quando experimentar uma emoção intensa (raiva, medo, desespero, êxtase), escolha uma resposta imediata: +3 Precisão por 1 turno; OU +10 AGI por 1 turno; OU resistência leve a dano físico por 1 turno.",
+          "Se usada repetidamente sem recuperação, o Mestre pode impor efeitos colaterais narrativos ou penalidades temporárias para refletir instabilidade fisiológica."
+        ]
+      }
+    ],
+    habilidadesAvancadas: [],
+    codigo: "9004"
+  }
+  ,
+  {
+    id: "anaplasmata",
+    nome: "Anaplásmata",
+    tipo: "The Chaotical Gate",
+    raridade: "raro",
+    descricao: "O Anaplásmata é uma manifestação única do Gene Anômalo baseada na criação de um vínculo psíquico e biológico entre um humano e uma criatura compatível. Diferente das demais categorias, seu verdadeiro potencial não reside apenas no usuário, mas na conexão estabelecida entre ambos. Quando o vínculo é formado, humano e criatura passam a compartilhar instintos, emoções, experiências e parte do próprio desenvolvimento evolutivo. O crescimento de um influencia diretamente o outro, permitindo que ambos se fortaleçam juntos ao longo do tempo. As criaturas associadas podem assumir inúmeras formas, variando entre bestas comuns alteradas pelo Gene Anômalo até organismos completamente desconhecidos pela ciência moderna. Quanto mais forte a conexão, maior a capacidade de comunicação, coordenação e evolução compartilhada. Nos estágios avançados, usuário e criatura tornam-se praticamente uma única entidade em dois corpos distintos, capazes de agir como uma consciência sincronizada e desenvolver habilidades exclusivas resultantes dessa união.",
+    limiteAtributo: 150,
+    imagem: "https://i.imgur.com/pniymVA.png",
+    atributos: {
+      forca: "2d8+4",
+      vitalidade: "2d6+4",
+      agilidade: "2d6+4",
+      inteligencia: "2d10+8",
+      percepcao: "2d12+8",
+      sorte: "5d20"
+    },
+    habilidadesBasicas: [
+      {
+        nome: "Elo Simbiótico",
+        descricao: "O vínculo entre mestre e companheiro transcende comunicação convencional. Ambos compartilham emoções, intenções e sensações básicas mesmo sem palavras.",
+        bonus: [
+          "Usuário e criatura sempre sabem a localização aproximada um do outro.",
+          "Facilita coordenação em combate e retirada tática."
+        ]
+      },
+      {
+        nome: "Sentidos Compartilhados",
+        descricao: "A conexão permite que pequenas percepções sejam transmitidas através do vínculo, avisando sobre perigos ou oportunidades.",
+        bonus: [
+          "Uma vez por cena, mestre ou criatura podem alertar imediatamente o outro sobre um perigo percebido.",
+          "Reduz chance de ser surpreendido quando o parceiro está atento."
+        ]
+      },
+      {
+        nome: "Crescimento Compartilhado",
+        descricao: "A evolução de um fortalece o outro. Treinamentos, adaptações e melhorias têm efeitos reciprócos entre mestre e criatura.",
+        bonus: [
+          "Quando um dos dois recebe uma evolução, treinamento ou melhoria significativa, o outro recebe um pequeno benefício narrativo relacionado.",
+          "Benefícios aplicados conforme decisão do Mestre para manter equilíbrio." 
+        ]
+      },
+      {
+        nome: "Proteção Instintiva",
+        descricao: "O vínculo desperta um forte instinto de proteção mútua, levando a ações rápidas e arriscadas para salvar o parceiro.",
+        bonus: [
+          "Quando um estiver em perigo crítico, o outro pode agir mesmo em situações onde normalmente hesitaria ou recuaria.",
+          "Gera opções narrativas para intervenções heroicas ou salvamentos arriscados." 
+        ]
+      }
+      ,
+      {
+        nome: "Síncope Empática",
+        descricao: "A ligação é tão profunda que parte da dor ou estresse do companheiro pode ser assumida pelo usuário, equilibrando o custo da proteção.",
+        bonus: [
+          "Uma vez por cena, o usuário pode absorver parcialmente um efeito negativo sofrido pela criatura ligada (reduzindo dano ou intensidade do efeito pela metade).",
+          "Uso repetido pode gerar desgaste narrativo no usuário; a aplicação e limites ficam a critério do Mestre."
+        ]
+      },
+      {
+        nome: "Coordenação Instintiva",
+        descricao: "Instintos compartilhados permitem movimentos e ataques coordenados quase telepaticamente entre mestre e criatura.",
+        bonus: [
+          "Quando realizam uma ação conjunta (ataque combinado, defesa mútua ou manobra tática), ambos recebem +2 em Precisão ou +1 dado de bônus, por 1 turno.",
+          "A ação conjunta deve ser comunicada em narrativa pelo jogador; o Mestre decide aplicabilidade em situações ambíguas."
+        ]
+      }
+    ],
+    habilidadesAvancadas: [],
+    codigo: "9005"
+  }
+  ,
+  {
+    id: "akonis",
+    nome: "Akónis",
+    tipo: "The Chaotical Gate",
+    raridade: "mitico",
+    descricao: "O Akónis representa uma das maiores anomalias já registradas entre os portadores do Gene Anômalo. Enquanto a maioria dos indivíduos desperta apenas uma manifestação principal, os Akónis possuem a rara capacidade de desenvolver múltiplas Unic Skills simultaneamente. Essa condição surge devido a uma compatibilidade genética extraordinária que permite ao organismo sustentar diferentes manifestações sem colapso imediato. Como resultado, um Akónis pode combinar habilidades normalmente incompatíveis, criando estilos de combate e capacidades impossíveis de serem reproduzidos por outros usuários. Entretanto, esse poder possui um preço. A presença de múltiplas manifestações gera uma enorme instabilidade genética, exigindo constante adaptação do organismo para evitar rejeições internas, mutações descontroladas ou colapsos biológicos. Apesar dos riscos, os Akónis são considerados indivíduos de potencial quase ilimitado. Em seus níveis mais elevados, podem fundir diferentes manifestações em habilidades inéditas, criando poderes que desafiam todas as classificações conhecidas.",
+    limiteAtributo: 150,
+    imagem: "https://i.imgur.com/z9nF43J.png",
+    atributos: {
+      forca: "2d8+8",
+      vitalidade: "2d10+4",
+      agilidade: "2d10+4",
+      inteligencia: "2d10+4",
+      percepcao: "2d10+4",
+      sorte: "5d20"
+    },
+    habilidadesBasicas: [
+      {
+        nome: "Genoma Compatível",
+        descricao: "O organismo Akónis possui uma estabilidade genética anormalmente elevada, permitindo coexistência entre diferentes manifestações.",
+        bonus: [
+          "Pode possuir mais de uma Unic Skill sem sofrer rejeição imediata.",
+          "Reduz chance de falhas de compatibilidade quando combina habilidades distintas."
+        ]
+      },
+      {
+        nome: "Desenvolvimento Acelerado",
+        descricao: "A presença de múltiplas manifestações estimula o Gene Anômalo constantemente, promovendo adaptação e aprendizado mais rápidos.",
+        bonus: [
+          "Aprende novas técnicas e aplicações de suas habilidades com maior facilidade.",
+          "O Mestre pode conceder progressão narrativa ou pequena redução de custo para aprendizado de novas Unic Skills."
+        ]
+      },
+      {
+        nome: "Sinergia Anômala",
+        descricao: "As diferentes manifestações presentes no organismo tendem a interagir naturalmente, gerando combinações inesperadas e úteis.",
+        bonus: [
+          "Recebe vantagem narrativa ao combinar duas ou mais habilidades de formas criativas.",
+          "Combinações podem gerar efeitos bônus aprovados pelo Mestre."
+        ]
+      },
+      {
+        nome: "Adaptação Genética",
+        descricao: "O corpo aprende a administrar conflitos entre manifestações distintas, minimizando efeitos colaterais e rejeições internas.",
+        bonus: [
+          "Resistência moderada contra efeitos de sobrecarga causados pelas próprias habilidades.",
+          "Menor penalidade ao usar múltiplas habilidades simultâneas."
+        ]
+      }
+      ,
+      {
+        nome: "Catalisador Genético",
+        descricao: "Uma vez por combate, o Akónis ativa um catalisador anômalo que potencializa adaptações imediatas. Ao ativar, escolha um dos efeitos: 1) ganhar +1d em uma rolagem de atributo durante a cena; 2) reduzir o custo narrativo de uma Unic Skill em 1; 3) recuperar 1d6 PV. O efeito dura até o fim da cena. Uso: 1 vez por combate.",
+        bonus: [
+          "Escolha um efeito ao ativar: +1d6 em uma rolagem de atributo como bonus; reduzir custo narrativo de uma Unic Skill em 50%; ou recuperar 4d8+12 PV.",
+          "Dura até o fim da cena. Uso: 1 vez por combate. Abuso pode causar instabilidade narrativo-mecânica, a critério do Mestre."
+        ]
+      },
+      {
+        nome: "Fusão Controlada",
+        descricao: "O corpo do Akónis aprende a combinar partes de duas manifestações em um efeito unificado e controlado, explorando sinergias sem causar rejeições imediatas.",
+        bonus: [
+          "Pode combinar duas habilidades menores em uma ação única com efeito sinérgico (a critério do Mestre).",
+          "A fusão causa custo narrativo ou penalidade leve pós-uso para equilibrar o poder; aplicabilidade decidida pelo Mestre."
+        ]
+      }
+    ],
+    habilidadesAvancadas: [],
+    codigo: "9006"
   }
 ]
 

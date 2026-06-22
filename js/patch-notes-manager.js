@@ -75,7 +75,7 @@ class PatchNotesManager {
         const html = `
             <div style="color: #d4af37; margin-bottom: 20px;">
                 <h3 style="margin-top: 0; color: #d4af37;">✨ Versão ${this.currentVersion}</h3>
-                <p style="font-size: 0.9em; color: #888; margin: 0;">6 de Junho de 2026</p>
+                <p style="font-size: 0.9em; color: #888; margin: 0;">14 de Junho de 2026</p>
             </div>
 
             <!-- SEÇÃO: CORREÇÕES -->
@@ -102,6 +102,16 @@ class PatchNotesManager {
                     <li>📝 <strong>Patch Notes:</strong> Este modal que você está vendo! Receba atualizações importantes</li>
                     <li>♻️ <strong>Preferências do Usuário:</strong> Opção de não mostrar patch notes novamente (até nova versão)</li>
                     <li>📚 <strong>Novas Raças e Classes:</strong> Adicionada a coleção <em>A Crônica dos Varkhan</em> com novas classes: Varokh, Thyrkan, Veyrath, Drahkhan e Verakhan</li>
+                    <li>🧭 <strong>Atualizações de Raças (A Crônica dos Varkhan):</strong>
+                        <ul style="margin-top:6px; padding-left:18px; margin-bottom:6px;">
+                            <li>🖼️ Atualizadas as imagens das sub-raças (Refugiado, Estudante, Periferia, Atleta, Criminoso, Professor, Sobrevivente, Filho do Herói, Gênio, Herdeiro de Clã, Escolhido, Humano Perfeito).</li>
+                            <li>🆕 Novas raças adicionadas: <em>Psicoplásmica</em>, <em>Anaplásmata</em> e <em>Akónis</em>.</li>
+                            <li>🛠️ Alterações e reworks nas habilidades básicas: Refugiado (Adaptação → Engenhosidade), Aprendiz (Treinável reworked: Aptidão +3 no início), Estudante (Adaptável → Teoria Aplicada), Filho do Herói (Marca do Legado rework), Gênio (Aptidão Inata & Eureka), Criança Milagrosa (Domínio de Fluxo), Humano Perfeito (Potencial Máximo rework).</li>
+                            <li>🔁 Substituição: habilidade <strong>Reserva Anômala</strong> foi trocada por <strong>Catalisador Genético</strong> no Akónis.</li>
+                            <li>🔧 Correção: erros de sintaxe em <code>js/racas-data.js</code> corrigidos para garantir carregamento seguro das funções de raça.</li>
+                            <li>🎛️ UI: Modal de Raças — itens bloqueados permanecem clicáveis (removido bloqueio por pointer-events) e cards de habilidades básicas agora exibidos 2 por linha em telas grandes.</li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
 
