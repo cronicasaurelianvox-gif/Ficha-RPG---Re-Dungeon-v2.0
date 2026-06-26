@@ -32,6 +32,9 @@ class VeiasAstraisSystem {
     // Navegação
     this.navigation = null;
 
+    // Destaque visual por constelação (treeId) - null = nenhum
+    this.highlightedTreeId = null;
+
     // Ativação de Linhas (será inicializada depois)
     this.lineActivation = null;
 
@@ -388,11 +391,11 @@ class VeiasAstraisSystem {
 
       // L1: Nó próximo ao cristal central (conexão direta)
       let l1Names = {
-        arty: "Centelha do Caos",
+        arty: "Primeiro Sangue",
         aune: "Fio do Destino",
-        ephelias: "Primeiro Insight",
-        nishi: "Centro Interior",
-        hestia: "Semente Primordial",
+        ephelias: "Olhar do Discernimento",
+        nishi: "Centro Imóvel",
+        hestia: "Sopro da Origem",
       };
       let node = new AstralNode({
         id: nodeId++,
@@ -412,31 +415,51 @@ class VeiasAstraisSystem {
         parentId: "core",
         rarity: 1,
         // ✨ Bônus associado ao nó
-        bonus: {
-          id: `bonus-${treeConfig.id}-l1`,
-          name: `Bênção de ${treeConfig.name}`,
-          effect: `Ganhe acesso aos poderes de ${treeConfig.name}`,
-          stats: {
-            forca: treeConfig.id === "arty" ? 2 : 0,
-            inteligencia: treeConfig.id === "ephelias" ? 2 : 0,
-            agilidade: treeConfig.id === "nishi" ? 2 : 0,
-            vitalidade: treeConfig.id === "hestia" ? 2 : 0,
-            sorte: treeConfig.id === "aune" ? 2 : 0,
-            ataque: treeConfig.id === "arty" ? 1 : 0,
-            defesa: treeConfig.id === "hestia" ? 1 : 0,
-          },
-        },
+        bonus: (function() {
+          const base = {
+            id: `bonus-${treeConfig.id}-l1`,
+            name: `Bênção de ${treeConfig.name}`,
+            effect: `Ganhe acesso aos poderes de ${treeConfig.name}`,
+            stats: {
+              forca: treeConfig.id === "arty" ? 2 : 0,
+              inteligencia: treeConfig.id === "ephelias" ? 2 : 0,
+              agilidade: treeConfig.id === "nishi" ? 2 : 0,
+              vitalidade: treeConfig.id === "hestia" ? 2 : 0,
+              sorte: treeConfig.id === "aune" ? 2 : 0,
+              ataque: treeConfig.id === "arty" ? 1 : 0,
+              defesa: treeConfig.id === "hestia" ? 1 : 0,
+            },
+          };
+
+          // Personalizar texto do bônus para Hestia (Semente Primordial)
+          if (treeConfig.id === 'arty') {
+            base.effect = 'Toda guerra começa com uma única gota de sangue.  +2dn adicional de dado de dano | +5 Força';
+          } 
+          if (treeConfig.id === 'aune') {
+            base.effect = 'Todo destino tem um ponto de partida. +15% Saúde Máxima  ou  +15% Energia Máxima';
+          }
+          if (treeConfig.id === 'ephelias') {
+            base.effect = 'Compreender é o primeiro passo para transcender. +5 Percepção | +10 Inteligência';
+          }
+          if (treeConfig.id === 'nishi') {
+            base.effect = 'A estabilidade é a base de toda existência. +5 Vitalidade  | +10 Inteligência';
+          }
+          if (treeConfig.id === 'hestia') {
+            base.effect = 'A primeira respiração do universo. +10% Saúde Máxima  | +10% Energia Máxima';
+          }
+          return base;
+        })(),
       });
       this.nodes.push(node);
       const layer1NodeId = node.id;
 
       // L2: 3 nós básicos (pequenos)
       let l2Names = {
-        arty: ["Fúria Emergente", "Ruptura Violenta", "Sangue Ardente"],
-        aune: ["Visão do Amanhã", "Caminho Traçado", "Escolha Inevitável"],
-        ephelias: ["Conhecimento Oculto", "Mente Aberta", "Fluxo Arcano"],
-        nishi: ["Fluxo Balanceado", "Harmonia Dual", "Equilíbrio Espiritual"],
-        hestia: ["Broto da Vida", "Crescimento Natural", "Fluxo Vital"],
+        arty: ["Fúria Crescente", "Instinto de Batalha", "Dança da Carnificina"],
+        aune: ["Visão do Possível", "Tecer do Tempo", "Precisão do Destino"],
+        ephelias: ["Mente Serena", "Leitura da Essência", "Conhecimento Acumulado"],
+        nishi: ["Harmonia Corporal", "Espírito Sereno", "Balança Celestial"],
+        hestia: ["Matéria Primordial", "Movimento das Estrelas", "Consciência Universal"],
       };
 
       for (let i = 0; i < 3; i++) {
@@ -448,33 +471,33 @@ class VeiasAstraisSystem {
         let l2Effect = "";
         if (treeConfig.id === "arty") {
           l2Effect = [
-            "+5% de Dano de Ataque",
-            "+3% de Velocidade de Ataque",
-            "+2 de Força",
+            "Quanto maior o conflito, mais intensa se torna sua chama. +10 Força ou +10 Agilidade",
+            "Sobrevive quem reage primeiro. +1 Reação | +30 Prontidão",
+            "Cada golpe desferido é uma obra de destruição.  +1 Precisão | +3 Evasão",
           ][i];
         } else if (treeConfig.id === "aune") {
           l2Effect = [
-            "+1 de Sorte",
-            "+3% de Chance de Crítico",
-            "+2% de Ganho de Experiência",
+            "Ela enxerga todos os caminhos que podem se tornar realidade. +5 Percepção | +5 Inteligência",
+            "Age em compreende o tempo chegue.  +25  Prontidão ou +3 Reação",
+            "Seus fios nunca erram o alvo. +1 Precisão | +1 Evasão",
           ][i];
         } else if (treeConfig.id === "ephelias") {
           l2Effect = [
-            "+2 de Inteligência",
-            "+5% de Resistência Mágica",
-            "+1 de Compreensão",
+            "Uma mente calma jamais desperdiça seu poder. +30% Energia Máxima",
+            "Toda existência revela sua verdadeira natureza para quem sabe observar. +1 Precisão  | +15% Prontidão",
+            "Cada experiência se torna um novo alicerce. +5 Inteligência | +5 Defesa",
           ][i];
         } else if (treeConfig.id === "nishi") {
           l2Effect = [
-            "+2 de Agilidade",
-            "+4% de Esquiva",
-            "+3% de Velocidade de Movimento",
+            "Corpo e mente devem caminhar lado a lado. Para cada 5 pontos em Forca você ganha +1 Agilidade",
+            "Quando tudo está em equilíbrio, nada falta. Quando dois atributos opostos estao com mesmo valores eles se intensificam em 10%. ",
+            "Toda força deve encontrar uma resistência equivalente. +10% Energia Máxima e +10% Saúde Máxima",
           ][i];
         } else if (treeConfig.id === "hestia") {
           l2Effect = [
-            "+3 de Vitalidade",
-            "+10% de Regeneração de HP",
-            "+5% de Resistência Física",
+            "Da vontade de Hestia surgiu a matéria. +10 Vitalidade ou +10 Força",
+            "Nada permanece imóvel diante da criação.  +5 Agilidade  | +10% Prontidão",
+            "Toda sabedoria nasceu de seu pensamento. +10 Inteligência ou +10 Percepção",
           ][i];
         }
 
@@ -508,11 +531,11 @@ class VeiasAstraisSystem {
 
       // L3: 3 nós intermediários (médios)
       let l3Names = {
-        arty: ["Colapso Brutal", "Guerra Primordial", "Instinto Destrutivo"],
-        aune: ["Trama Celestial", "Eco das Possibilidades", "Linha Temporal"],
-        ephelias: ["Percepção Astral", "Sabedoria Antiga", "Eco da Memória"],
-        nishi: ["Convergência Interna", "Ordem Cósmica", "Pulso Sereno"],
-        hestia: ["Renascimento", "Essência Viva", "Raiz Celestial"],
+        arty: ["Chamas do Conflito", "Campo de Ossos", "Caos Incontrolável"],
+        aune: ["Capricho da Fortuna", "Proteção do Futuro", "Caminhos Entrelaçados"],
+        ephelias: ["Sabedoria Inabalável", "Entendimento Absoluto", "Harmonia da Razão"],
+        nishi: ["Olhos da Harmonia", "Fluxo Perfeito", "Caminho do Meio"],
+        hestia: ["Destino Tecido", "Chama da Existência", "Harmonia da Criação"],
       };
 
       const layer2Nodes = this.nodes.filter(
@@ -538,33 +561,33 @@ class VeiasAstraisSystem {
         let l3Effect = "";
         if (treeConfig.id === "arty") {
           l3Effect = [
-            "+15% de Dano de Ataque e +2 de Força",
-            "+12% de Velocidade de Ataque",
-            "+20% de Dano Crítico",
+            "A guerra exige sacrifícios. +30% Dano causado | -30% de defesa",
+            "Os caídos alimentam os vencedores. Recupera 25% da Energia (Final do  Combate). | Recupera 25% da Fadiga (Final do  Combate).",
+            "A imprevisibilidade é a arma favorita do caos. +10 Sorte  | +5 Ataque",
           ][i];
         } else if (treeConfig.id === "aune") {
           l3Effect = [
-            "+3 de Sorte e +5% de Luck Rolls",
-            "+15% de Chance de Crítico",
-            "+10% de Bônus de Experiência",
+            "O acaso é apenas uma face do destino que ela comanda. +5 Sorte  | +16% Chance de Acerto Crítico ",
+            "Ela molda o amanhã para proteger seus escolhidos. +5 Defesa  |  +10 Vitalidade",
+            "Cada escolha abre caminhos. Ela os entrelaça ao seu favor. +5 Ataque  | +2 Agilidade",
           ][i];
         } else if (treeConfig.id === "ephelias") {
           l3Effect = [
-            "+5 de Inteligência e +15% de Resistência Mágica",
-            "+8% de Velocidade de Lançamento de Magia",
-            "+3 de Compreensão Arcana",
+            "A sabedoria permite agir antes que o erro aconteça. +2 Vitalidade  | +15 Reação",
+            "Ao compreender uma fraqueza, ela deixa de existir como obstáculo. +15 Ataque  | Ignora 10% da Defesa do alvo.",
+            "A verdadeira força nasce do equilíbrio entre conhecimento e ação. +1dn adicional Defesa e Ataque",
           ][i];
         } else if (treeConfig.id === "nishi") {
           l3Effect = [
-            "+5 de Agilidade e +12% de Esquiva",
-            "+15% de Velocidade de Movimento",
-            "+8% de Redução de Cooldown",
+            "Aquele que compreende o equilíbrio jamais desperdiça um movimento. A cada 5 pontos de agilidade o jogador ganha 1 de Prontidão.",
+            "Agir no momento certo vale mais que agir primeiro. Sempre que jogador abre mao de uma acao do turno sua prontidao aumenta em 25%.",
+            "Nem o excesso, nem a escassez conduzem à verdadeira perfeição. Quando estiver com energia ou fadiga acabando o jogador uma recuperação passiva 1d6 a cada 10% de EnR ou FaD Gasto.",
           ][i];
         } else if (treeConfig.id === "hestia") {
           l3Effect = [
-            "+8 de Vitalidade e +25% de Regeneração de HP",
-            "+20% de Resistência Física e Mágica",
-            "+15% de Cura Recebida",
+            "Mesmo o acaso caminha por trilhas já vistas por Héstia. +10 Sorte",
+            "A fonte que alimenta todas as coisas.  +25% Recuperação de Energia | -25% Consumo de Energia",
+            "Criar é equilibrar destruição e preservação. +10 Ataque  | +10 Defesa",
           ][i];
         }
 
@@ -598,11 +621,11 @@ class VeiasAstraisSystem {
 
       // L4: 2 nós avançados (grandes)
       let l4Names = {
-        arty: ["Eco da Devastação", "Domínio do Caos"],
-        aune: ["Mão do Destino", "Convergência Suprema"],
-        ephelias: ["Verdade Universal", "Compreensão Suprema"],
-        nishi: ["Sintonia Universal", "Controle Absoluto"],
-        hestia: ["Pulso da Criação", "Gênese Suprema"],
+        arty: ["Avatar da Guerra", "Ruína Inevitável"],
+        aune: ["Reverso do Fado", "Olhar da Inevitabilidade"],
+        ephelias: ["Revelação da Verdade", "Iluminação Interior"],
+        nishi: ["Ciclo Eterno", "Dualidade Perfeita"],
+        hestia: ["Olhos da Eternidade", "Vontade Absoluta"],
       };
 
       const layer3Nodes = this.nodes.filter(
@@ -628,28 +651,28 @@ class VeiasAstraisSystem {
         let l4Effect = "";
         if (treeConfig.id === "arty") {
           l4Effect = [
-            "Desbloqueie: Multiplicador de Dano +50% e Fúria Berserker",
-            "Desbloqueie: Ataque Duplo Automático ao Criticar",
+            "Quanto mais próximo da morte, mais perigoso se torna. Quando estiver abaixo de 50% da Saúde: +100% Ataque. | +3 Reação.",
+            "Seu corpo torna-se uma arma viva. +15 Força ou +15 Vitalidade",
           ][i];
         } else if (treeConfig.id === "aune") {
           l4Effect = [
-            "Desbloqueie: Sorte Extrema - +20% em todos os rolls",
-            "Desbloqueie: Destino Reescrito - Reroll uma vez por combate",
+            "Mesmo o inevitável pode ser dobrado. -25% Tempo de Recarga de Habilidades | +20% Recuperação de Energia",
+            "Ao iniciar a batalha, recebe 1 acúmulo de Presságio (máx. 3). Cada acúmulo aumenta +5% do dano causado e +5% de redução do dano recebido. ",
           ][i];
         } else if (treeConfig.id === "ephelias") {
           l4Effect = [
-            "Desbloqueie: Visão Infinita - Veja todos os inimigos",
-            "Desbloqueie: Mágica Suprema - -50% custo de magia",
+            "A verdade sempre encontra aqueles que a procuram. +15 Percepção ou +10 Sorte",
+            "Quanto mais aprende, menos esforço precisa para agir. +20 Energia Máxima | +20 Prontidão. Sempre que utilizar uma habilidade, recupera 5% da Energia Máxima.",
           ][i];
         } else if (treeConfig.id === "nishi") {
           l4Effect = [
-            "Desbloqueie: Dança Cósmica - +100% de Esquiva por 5s",
-            "Desbloqueie: Sincronização Perfeita - Ataque sincronizado a cada turno",
+            "Tudo que é gasto retorna ao seu estado natural.  Recupera 10% da Saúde e 10% da Energia ao final de cada combate.",
+            "Ofensa e defesa são apenas dois lados da mesma verdade. Sempre que sofrer dano, recebe +2dn de  Ataque no próximo turno. Sempre que causar dano, recebe +2dn Defesa até o próximo turno.",
           ][i];
         } else if (treeConfig.id === "hestia") {
           l4Effect = [
-            "Desbloqueie: Imortalidade Momentânea - Invulnerabilidade ativa",
-            "Desbloqueie: Cura Suprema - HP totalmente restaurado periodicamente",
+            "Nenhum detalhe escapa ao olhar da Criadora. +1 Precisão  |  +3 Reação",
+            "Sua vontade sustenta os céus.  +1 Evasão | +25 Prontidão |  Imunidade a penalidades leves de Fadiga",
           ][i];
         }
 
@@ -683,30 +706,30 @@ class VeiasAstraisSystem {
 
       // L5: 1 nó supremo (muito grande - estrela divina)
       let l5Names = {
-        arty: "Avatar de Arty",
-        aune: "Avatar de Aune",
-        ephelias: "Avatar de Ephelias",
-        nishi: "Avatar de Nishi",
-        hestia: "Avatar de Hestia",
+        arty: "Trono da Destruição",
+        aune: "Trono do Destino",
+        ephelias: "Trono da Compreensão",
+        nishi: "Trono do Equilíbrio",
+        hestia: "Trono da Criadora",
       };
 
       // Definir effect específico por constelação
       let l5Effect = "";
       if (treeConfig.id === "arty") {
         l5Effect =
-          "PODER DIVINO SUPREMO: Transformação em Entidade de Caos - Dano +500%, Ataque Duplo Permanente";
+          "Uma vez por combate, ao sofrer dano fatal: Sobrevive com 1 de Saúde e Recebe +100% Ataque e +25% Prontidão por 3 turnos.";
       } else if (treeConfig.id === "aune") {
         l5Effect =
-          "PODER DIVINO SUPREMO: Encarnação do Destino - Controle Total da Probabilidade, Impossível Falhar";
+          "Uma vez a cada 3 sessão, pode reescrever o fio do destino: Restaura 30% da Saúde e 30% da Energia; ou Remove todos os efeitos negativos e se torna Imune a Controle por 2 turnos. +5 Em todos atributos.";
       } else if (treeConfig.id === "ephelias") {
         l5Effect =
-          "PODER DIVINO SUPREMO: Onisciência Cósmica - Conhecimento Infinito, Prevê todos os ataques";
+          "Uma vez a cada três combate, alcança um estado de Iluminação por 3 turnos: Recebendo +5 Reação e +3 Precisão, e reduzindo custo de habilidades de energia em 50%. ";
       } else if (treeConfig.id === "nishi") {
         l5Effect =
-          "PODER DIVINO SUPREMO: Perfeição Universal - Sincronização com o Cosmos, Poder Ilimitado";
+          "Uma vez por combate, entra no estado de Equilíbrio Absoluto por 3 turnos:  Todo dano recebido é reduzido em 25%. Todo dano causado é aumentado em 25%. Recupera 25% da Saúde e 25% da Energia ao final de cada turno. Torna-se imune a efeitos que alterem seus atributos.";
       } else if (treeConfig.id === "hestia") {
         l5Effect =
-          "PODER DIVINO SUPREMO: Essência da Criação - Vida Infinita, Regeneração Absoluta, Gênesis";
+          "Aquela que criou a existência não permite que sua chama se apague tão facilmente.  +10 em TODOS os atributos principais | +10% Saúde Máxima | +10% Energia Máxima";
       }
 
       const layer4Nodes = this.nodes.filter(
@@ -910,6 +933,12 @@ class VeiasAstraisSystem {
       const treeItem = document.createElement("div");
       treeItem.className = "tree-item trees-list-item";
       treeItem.setAttribute("data-tree", tree.id);
+      // Indicar que é clicável
+      treeItem.style.cursor = 'pointer';
+      // Marcar ativo se for o destacado atualmente
+      if (this.highlightedTreeId === tree.id) {
+        treeItem.classList.add('tree-item--active');
+      }
       treeItem.style.borderLeftColor = tree.color || "#4a9eff";
       treeItem.innerHTML = `
                 <div style="display: flex; gap: 12px; align-items: flex-start;">
@@ -923,6 +952,10 @@ class VeiasAstraisSystem {
                     <span style="font-weight: 600; font-size: 0.7rem; white-space: nowrap; flex-shrink: 0;">${tree.unlockedNodes}/${tree.totalNodes}</span>
                 </div>
             `;
+      // Clique: alterna destaque desta constelação
+      treeItem.addEventListener('click', () => {
+        this.toggleHighlight(tree.id);
+      });
 
       // ⚠️ NAVEGAÇÃO AUTOMÁTICA DESATIVADA
       // Descomentar a linha abaixo para reativar navegação ao clicar em constelação
@@ -976,6 +1009,15 @@ class VeiasAstraisSystem {
       nodeEl.innerHTML = content;
 
       nodeEl.addEventListener("click", () => this.selectNode(node));
+
+      // Se esta constelação estiver destacada, aplicar estilo de destaque
+      if (this.highlightedTreeId && this.highlightedTreeId === node.treeId) {
+        // efeito leve de brilho
+        nodeEl.style.transition = 'box-shadow 0.3s, transform 0.3s, opacity 0.3s';
+        nodeEl.style.boxShadow = `0 0 20px 6px ${this.trees[node.treeId]?.color || '#ffffff'}88`;
+        nodeEl.style.border = `1px solid ${this.trees[node.treeId]?.color || '#ffffff'}AA`;
+        nodeEl.style.transform = 'translate(-50%, -50%) scale(1.08)';
+      }
 
       this.nodesContainer.appendChild(nodeEl);
     });
@@ -1052,11 +1094,14 @@ class VeiasAstraisSystem {
       if (conn.type) {
         classes.push(`link-${conn.type}`);
       }
-      // Usar tracejado para linhas de nós bloqueados, sólido para desbloqueados
-      if (!isUnlockedPath || conn.isDashed) {
+      // Somente conexões explicitamente marcadas como 'isDashed' usarão traçado.
+      // Caminhos bloqueados permanecem sólidos (mas com opacidade reduzida).
+      if (conn.isDashed) {
         classes.push("link-dashed");
-      } else {
+      } else if (isUnlockedPath) {
         classes.push("link-unlocked");
+      } else {
+        classes.push("link-locked");
       }
       line.setAttribute("class", classes.join(" "));
 
@@ -1112,11 +1157,7 @@ class VeiasAstraisSystem {
       // PADRÕES VISUAIS
       // Linhas DESBLOQUEADAS: sólidas e brilhantes
       // Linhas BLOQUEADAS: tracejadas e opacas
-      if (!isUnlockedPath) {
-        // Linha tracejada para nós que podem desbloquear
-        line.setAttribute("stroke-dasharray", "12,8");
-      }
-      // Se for lateral (conexão intra-camada), sempre tracejado
+      // Apenas conexões explicitamente marcadas como dashed usarão traço.
       if (conn.isDashed) {
         line.setAttribute("stroke-dasharray", "8,4");
       }
@@ -1128,6 +1169,66 @@ class VeiasAstraisSystem {
     console.log(
       `✨ ${this.connections.length} veias energéticas renderizadas com padrões distintos`,
     );
+  }
+
+  /**
+   * Alterna destaque visual de uma constelação (treeId)
+   * - clicar no mesmo card desativa
+   * - clicar em outro card ativa o novo e desativa o anterior
+   */
+  toggleHighlight(treeId) {
+    if (this.highlightedTreeId === treeId) {
+      this.clearHighlight();
+    } else {
+      this.highlightTree(treeId);
+    }
+    // Re-render sidebar para atualizar estado visual dos cards
+    this.renderSidebar();
+  }
+
+  highlightTree(treeId) {
+    // Limpar destaque anterior
+    if (this.highlightedTreeId && this.highlightedTreeId !== treeId) {
+      this.clearHighlight();
+    }
+
+    this.highlightedTreeId = treeId;
+
+    const color = this.trees[treeId]?.color || '#ffffff';
+
+    // Aplicar estilo de destaque aos elementos DOM dos nós pertencentes à constelação
+    const nodeEls = Array.from(document.querySelectorAll(`.branch-${treeId}`));
+    nodeEls.forEach((el) => {
+      el.style.transition = 'box-shadow 0.3s, transform 0.3s, opacity 0.3s';
+      el.style.boxShadow = `0 0 22px 8px ${color}CC`;
+      el.style.border = `1px solid ${color}CC`;
+      el.style.transform = 'translate(-50%, -50%) scale(1.08)';
+      el.style.opacity = '1';
+      // destacar também visualmente acima
+      el.style.zIndex = '60';
+    });
+
+    // Diminuir opacidade dos nós das outras constelações para dar foco
+    const otherEls = Array.from(document.querySelectorAll('.astral-node')).filter((el) => !el.classList.contains(`branch-${treeId}`));
+    otherEls.forEach((el) => {
+      el.style.transition = 'opacity 0.25s';
+      el.style.opacity = '0.45';
+    });
+  }
+
+  clearHighlight() {
+    const prev = this.highlightedTreeId;
+    this.highlightedTreeId = null;
+
+    // Reverter estilos nos nós
+    document.querySelectorAll('.astral-node').forEach((el) => {
+      el.style.transition = '';
+      el.style.transform = 'translate(-50%, -50%)';
+      el.style.opacity = '';
+      el.style.boxShadow = '';
+      el.style.border = '';
+      el.style.zIndex = '';
+    });
   }
 
   /**
@@ -1262,6 +1363,7 @@ class VeiasAstraisSystem {
       }
     }
 
+    // ✨ NOVO: Botão de bloquear (para nós desbloqueados)
     // ✨ NOVO: Botão de bloquear (para nós desbloqueados)
     const lockBtn = document.getElementById("lock-node-btn");
     if (lockBtn) {

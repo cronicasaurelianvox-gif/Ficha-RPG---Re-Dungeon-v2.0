@@ -87,12 +87,25 @@ class VeiasAstraisModal {
         if (this.modal) {
             this.modal.classList.remove('hidden');
             
-            // Inicializar sistema na primeira abertura
+            // Inicializar sistema na primeira abertura (defensivo: usar init se classe ainda não estiver disponível)
             if (!this.system) {
-                this.system = new VeiasAstraisSystem();
-                setTimeout(() => {
-                    this.system.open();
-                }, 100);
+                if (typeof VeiasAstraisSystem === 'function') {
+                    this.system = new VeiasAstraisSystem();
+                    setTimeout(() => this.system.open(), 100);
+                } else if (window.initVeiasAstrais) {
+                    this.system = window.initVeiasAstrais();
+                    setTimeout(() => this.system.open(), 100);
+                } else {
+                    // Caso o script ainda não tenha sido carregado, tentar novamente em 200ms
+                    setTimeout(() => {
+                        if (window.initVeiasAstrais) {
+                            this.system = window.initVeiasAstrais();
+                            this.system.open();
+                        } else {
+                            console.warn('⚠️ VeiasAstraisSystem não disponível no momento');
+                        }
+                    }, 200);
+                }
             } else {
                 this.system.updateUI();
             }
@@ -138,12 +151,24 @@ class VeiasAstraisModal {
         if (this.modal) {
             this.modal.classList.remove('hidden');
             
-            // Inicializar sistema na primeira abertura
+            // Inicializar sistema na primeira abertura (defensivo)
             if (!this.system) {
-                this.system = new VeiasAstraisSystem();
-                setTimeout(() => {
-                    this.system.open();
-                }, 100);
+                if (typeof VeiasAstraisSystem === 'function') {
+                    this.system = new VeiasAstraisSystem();
+                    setTimeout(() => this.system.open(), 100);
+                } else if (window.initVeiasAstrais) {
+                    this.system = window.initVeiasAstrais();
+                    setTimeout(() => this.system.open(), 100);
+                } else {
+                    setTimeout(() => {
+                        if (window.initVeiasAstrais) {
+                            this.system = window.initVeiasAstrais();
+                            this.system.open();
+                        } else {
+                            console.warn('⚠️ VeiasAstraisSystem não disponível no momento');
+                        }
+                    }, 200);
+                }
             } else {
                 this.system.updateUI();
             }

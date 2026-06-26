@@ -790,6 +790,16 @@
     line-height: 1.5;
 }
 
+/* Garantir que o texto dos aprimoramentos quebre em múltiplas linhas
+   e não seja truncado por regras globais. Aplicado especificamente
+   ao elemento de aprimoramento do painel para evitar regressões. */
+#node-detail-enhancement {
+    white-space: normal !important;
+    word-break: break-word !important;
+    overflow-wrap: anywhere !important;
+    hyphens: auto !important;
+}
+
 .requirements-list,
 .effects-list {
     margin: 0;
