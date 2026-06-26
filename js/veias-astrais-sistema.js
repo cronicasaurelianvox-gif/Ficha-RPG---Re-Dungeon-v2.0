@@ -122,6 +122,9 @@ class VeiasAstraisSystem {
     if (this.initialized) return;
 
     try {
+      // OTIMIZADO: Detectar modo performance antes de inicializar
+      this.detectPerformanceMode();
+
       this.generateTrees();
       this.generateNodes();
 
@@ -130,7 +133,11 @@ class VeiasAstraisSystem {
 
       this.generateConnections();
       this.renderUI();
-      this.createCoreParticles();
+      
+      // OTIMIZADO: Criar partículas apenas se não estiver em modo performance
+      if (!this.performanceMode) {
+        this.createCoreParticles();
+      }
 
       // Inicializar navegação
       if (!this.navigation) {
@@ -1769,6 +1776,39 @@ class VeiasAstraisSystem {
   }
 
   /**
+   * 🚀 OTIMIZAÇÕES DE PERFORMANCE
+   * Detectar e aplicar modo de baixo desempenho
+   */
+  detectPerformanceMode() {
+    // Verificar critérios de low-end device
+    const hwConcurrency = navigator.hardwareConcurrency || 4;
+    const deviceMemory = navigator.deviceMemory || 8;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion)').matches;
+    
+    // Ativar performance mode se:
+    // - CPU < 4 cores, OU
+    // - RAM < 4GB, OU
+    // - Usuário preferir redução de movimento
+    this.performanceMode = hwConcurrency <= 4 || deviceMemory <= 4 || prefersReducedMotion;
+    
+    if (this.performanceMode) {
+      console.log('⚡ Modo Performance Ativado (Low-End Device)');
+      console.log(`   CPU: ${hwConcurrency} cores | RAM: ${deviceMemory}GB | Reduzir movimento: ${prefersReducedMotion}`);
+      this.enablePerformanceMode();
+    }
+  }
+
+  enablePerformanceMode() {
+    // Adicionar classe CSS ao viewport
+    if (this.viewport) {
+      this.viewport.classList.add('performance-mode');
+    }
+    
+    // Desativar efeitos visuais pesados
+    document.documentElement.style.setProperty('--particle-count', '0');
+  }
+
+  /**
    * PARTÍCULAS DO NÚCLEO
    */
   createCoreParticles() {
@@ -1777,10 +1817,13 @@ class VeiasAstraisSystem {
 
     container.innerHTML = "";
 
-    for (let i = 0; i < 6; i++) {
+    // OTIMIZADO: Reduzir de 6 para 2 partículas
+    const particleCount = this.performanceMode ? 0 : 2;
+    
+    for (let i = 0; i < particleCount; i++) {
       const particle = document.createElement("div");
       particle.className = "particle";
-      particle.style.animationDelay = `${i * 1}s`;
+      particle.style.animationDelay = `${i * 3}s`;  // Aumentar delay (menos sincronização)
       particle.style.left = "0";
       particle.style.top = "0";
 

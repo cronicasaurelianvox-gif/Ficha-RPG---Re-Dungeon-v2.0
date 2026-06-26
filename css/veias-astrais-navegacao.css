@@ -79,15 +79,13 @@
     transparent 100%
   );
   border-radius: 50%;
+  /* OTIMIZADO: Reduzir de 6 sombras para 3, remover inset */
   box-shadow:
     0 0 20px rgba(74, 158, 255, 1),
-    0 0 40px rgba(74, 158, 255, 0.8),
-    0 0 60px rgba(37, 99, 235, 0.6),
-    0 0 80px rgba(15, 58, 125, 0.4),
-    inset -10px -10px 20px rgba(0, 0, 0, 0.5),
-    inset 10px 10px 20px rgba(255, 255, 255, 0.2);
+    0 0 40px rgba(37, 99, 235, 0.6);
   animation: crystal-shimmer 3s ease-in-out infinite;
-  filter: drop-shadow(0 0 40px rgba(74, 158, 255, 0.8));
+  filter: drop-shadow(0 0 30px rgba(74, 158, 255, 0.6));
+  will-change: box-shadow, filter;
 }
 
 /* Imagem da Esfera Cósmica */
@@ -191,6 +189,9 @@
   border-radius: 50%;
   box-shadow: 0 0 6px rgba(74, 158, 255, 0.8);
   animation: orbit 6s linear infinite;
+  /* OTIMIZADO: Ativar GPU acceleration */
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
 /* ============================================================================
@@ -345,25 +346,26 @@
    ============================================================================ */
 
 .astral-viewport {
+  /* OTIMIZADO: Usar fixed attachment em vez de local */
   background:
     repeating-linear-gradient(
       0deg,
-      rgba(74, 158, 255, 0.02) 0px,
-      rgba(74, 158, 255, 0.02) 1px,
+      rgba(74, 158, 255, 0.015) 0px,
+      rgba(74, 158, 255, 0.015) 1px,
       transparent 1px,
       transparent 100px
     ),
     repeating-linear-gradient(
       90deg,
-      rgba(74, 158, 255, 0.02) 0px,
-      rgba(74, 158, 255, 0.02) 1px,
+      rgba(74, 158, 255, 0.015) 0px,
+      rgba(74, 158, 255, 0.015) 1px,
       transparent 1px,
       transparent 100px
     );
   background-size: 100px 100px;
   background-position: 0 0;
-  background-attachment: local;
-  transition: background-position 0.1s linear;
+  background-attachment: fixed;
+  /* Remover transition contínua - será atualizada por JS com throttle */
 }
 
 /* ============================================================================
@@ -406,6 +408,53 @@
 
 .astral-nodes-container {
   backface-visibility: hidden;
+}
+
+/* ============================================================================
+   MODO LOW-PERFORMANCE (para dispositivos fracos)
+   ============================================================================ */
+
+.astral-viewport.performance-mode {
+  /* Simplificar background em modo low-end */
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(74, 158, 255, 0.008) 0px,
+      rgba(74, 158, 255, 0.008) 1px,
+      transparent 1px,
+      transparent 100px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(74, 158, 255, 0.008) 0px,
+      rgba(74, 158, 255, 0.008) 1px,
+      transparent 1px,
+      transparent 100px
+    );
+}
+
+/* Desativar partículas em modo performance */
+.astral-viewport.performance-mode .particle {
+  display: none !important;
+}
+
+/* Simplificar sombras do núcleo */
+.astral-viewport.performance-mode .core-crystal {
+  box-shadow:
+    0 0 15px rgba(74, 158, 255, 1),
+    0 0 25px rgba(37, 99, 235, 0.4);
+  filter: drop-shadow(0 0 15px rgba(74, 158, 255, 0.4));
+}
+
+/* Desativar animações pesadas */
+.astral-viewport.performance-mode .core-crystal {
+  animation: none;
+}
+
+.astral-viewport.performance-mode @keyframes crystal-shimmer {
+  0%, 100% {
+    opacity: 1;
+  }
 }
 
 /* ============================================================================
