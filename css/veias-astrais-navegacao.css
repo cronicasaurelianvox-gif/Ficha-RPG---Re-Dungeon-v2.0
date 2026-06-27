@@ -457,6 +457,26 @@
   }
 }
 
+.astral-viewport.performance-mode .astral-links-canvas {
+  opacity: 0.65;
+  filter: none;
+}
+
+.astral-viewport.performance-mode .astral-node {
+  box-shadow: none !important;
+  filter: none !important;
+  animation: none !important;
+  backdrop-filter: none !important;
+}
+
+.astral-viewport.performance-mode .astral-core {
+  background: rgba(10, 18, 38, 0.85);
+}
+
+.astral-viewport.performance-mode .astral-settings-status {
+  background: rgba(56, 189, 248, 0.16);
+}
+
 /* ============================================================================
    CORES E ESTILOS DAS DIVINDADES PRIMORDIAIS
    ============================================================================ */

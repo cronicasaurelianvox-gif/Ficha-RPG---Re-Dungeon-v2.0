@@ -158,6 +158,11 @@ class VeiasAstraisNavigation {
         const zoomInBtn = document.getElementById('zoom-in-btn');
         const zoomOutBtn = document.getElementById('zoom-out-btn');
         const resetViewBtn = document.getElementById('reset-view-btn');
+        const settingsBtn = document.getElementById('astral-settings-btn');
+        const settingsPanel = document.getElementById('astral-settings-panel');
+        const performanceToggle = document.getElementById('astral-performance-toggle');
+        const settingsApplyBtn = document.getElementById('astral-settings-apply-btn');
+        const settingsCloseBtn = document.getElementById('astral-settings-close-btn');
 
         if (zoomInBtn) {
             zoomInBtn.addEventListener('click', () => this.handleZoomIn());
@@ -170,6 +175,35 @@ class VeiasAstraisNavigation {
         if (resetViewBtn) {
             resetViewBtn.addEventListener('click', () => this.resetView());
         }
+
+        if (settingsBtn) {
+            settingsBtn.addEventListener('click', () => this.toggleSettingsPanel());
+        }
+
+        if (settingsCloseBtn) {
+            settingsCloseBtn.addEventListener('click', () => this.hideSettingsPanel());
+        }
+
+        if (settingsApplyBtn) {
+            settingsApplyBtn.addEventListener('click', () => this.applyAstralSettings());
+        }
+
+        if (performanceToggle) {
+            performanceToggle.checked = Boolean(this.system.performanceMode);
+            performanceToggle.addEventListener('change', () => {
+                this.system.setPerformanceMode(performanceToggle.checked);
+                this.updatePerformanceStatus();
+            });
+        }
+
+        if (settingsPanel) {
+            settingsPanel.addEventListener('click', (event) => {
+                if (event.target === settingsPanel) {
+                    this.hideSettingsPanel();
+                }
+            });
+        }
+        this.updatePerformanceStatus();
     }
 
     handleZoomIn() {
@@ -193,6 +227,43 @@ class VeiasAstraisNavigation {
         this.smoothTransition = true;
         this.updateMapTransform();
         this.updateZoomIndicator();
+    }
+
+    toggleSettingsPanel() {
+        const panel = document.getElementById('astral-settings-panel');
+        if (!panel) return;
+        panel.classList.toggle('hidden');
+        this.updatePerformanceStatus();
+    }
+
+    hideSettingsPanel() {
+        const panel = document.getElementById('astral-settings-panel');
+        if (!panel) return;
+        panel.classList.add('hidden');
+    }
+
+    applyAstralSettings() {
+        const performanceToggle = document.getElementById('astral-performance-toggle');
+        if (!performanceToggle) return;
+        this.system.setPerformanceMode(performanceToggle.checked);
+        this.hideSettingsPanel();
+        this.updatePerformanceStatus();
+    }
+
+    updatePerformanceStatus() {
+        const statusEl = document.getElementById('astral-settings-status');
+        const settingsBtn = document.getElementById('astral-settings-btn');
+        const performanceToggle = document.getElementById('astral-performance-toggle');
+        if (statusEl) {
+            const modeText = this.system.performanceMode ? 'Performance ativado' : 'Modo normal';
+            statusEl.textContent = `Status: ${modeText}`;
+        }
+        if (settingsBtn) {
+            settingsBtn.innerHTML = this.system.performanceMode ? '<span>⚡ Otimizado</span>' : '<span>⚙️ Otimizar</span>';
+        }
+        if (performanceToggle) {
+            performanceToggle.checked = Boolean(this.system.performanceMode);
+        }
     }
 
     /**

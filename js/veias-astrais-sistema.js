@@ -38,11 +38,16 @@ class VeiasAstraisSystem {
     // Ativação de Linhas (será inicializada depois)
     this.lineActivation = null;
 
+    // Controla se as linhas de 'caminhos possíveis' (tracejadas/roxas) são exibidas
+    // Defina `true` se quiser reativar a visualização de caminhos possíveis
+    this.showPossiblePaths = false;
+
     // Estado
     this.initialized = false;
 
     // Configuração de animações
     this.particleManager = new ParticleManager();
+    this.performancePreference = null;
   }
 
   /**
@@ -122,6 +127,7 @@ class VeiasAstraisSystem {
     if (this.initialized) return;
 
     try {
+      this.loadPerformancePreference();
       // OTIMIZADO: Detectar modo performance antes de inicializar
       this.detectPerformanceMode();
 
@@ -1016,6 +1022,11 @@ class VeiasAstraisSystem {
       nodeEl.innerHTML = content;
 
       nodeEl.addEventListener("click", () => this.selectNode(node));
+      // Menu de contexto (botão direito) para ações rápidas sobre o nó
+      nodeEl.addEventListener("contextmenu", (ev) => {
+        ev.preventDefault();
+        this.showContextMenu(ev.clientX, ev.clientY, node);
+      });
 
       // Se esta constelação estiver destacada, aplicar estilo de destaque
       if (this.highlightedTreeId && this.highlightedTreeId === node.treeId) {
@@ -1063,6 +1074,26 @@ class VeiasAstraisSystem {
         return;
       }
 
+      // Mostrar somente conexões hierárquicas (pai -> filho) ou do 'core' para L1.
+      // Ignorar conexões laterais/teia que possam ligar nós que não são pai/filho.
+      const hierarchicalTypes = [
+        "primary",
+        "secondary",
+        "tertiary",
+        "quaternary",
+        "supreme",
+      ];
+
+      if (conn.from !== "core") {
+        // Se o tipo não for hierárquico, pular (ex.: 'lateral')
+        if (!hierarchicalTypes.includes(conn.type)) return;
+
+        // Garantir que a conexão representa a relação pai->filho
+        const childNode = this.nodes.find((n) => n.id === conn.to);
+        if (!childNode) return;
+        if (childNode.parentId !== conn.from) return;
+      }
+
       // Criar linha com curvatura suave
       const line = document.createElementNS(svgNS, "path");
 
@@ -1096,20 +1127,21 @@ class VeiasAstraisSystem {
         endNode.state === "unlocked" || endNode.state === "maxed";
       const isUnlockedPath = startUnlocked && endUnlocked;
 
-      // Aplicar classes
-      const classes = ["astral-link", `link-${conn.state}`];
+      // Calcular estado atual da conexão com base nos nós (não confiar em conn.state armazenado)
+      const dynamicState = isUnlockedPath ? "unlocked" : "locked";
+
+      // Aplicar classes dinâmicas
+      const classes = ["astral-link", `link-${dynamicState}`];
       if (conn.type) {
         classes.push(`link-${conn.type}`);
       }
-      // Somente conexões explicitamente marcadas como 'isDashed' usarão traçado.
-      // Caminhos bloqueados permanecem sólidos (mas com opacidade reduzida).
-      if (conn.isDashed) {
+
+      // Somente conexões explicitamente marcadas como 'isDashed' usarão traço,
+      // e somente se `showPossiblePaths` estiver ativado.
+      if (conn.isDashed && this.showPossiblePaths) {
         classes.push("link-dashed");
-      } else if (isUnlockedPath) {
-        classes.push("link-unlocked");
-      } else {
-        classes.push("link-locked");
       }
+
       line.setAttribute("class", classes.join(" "));
 
       // Mapear cores por constelação
@@ -1165,7 +1197,8 @@ class VeiasAstraisSystem {
       // Linhas DESBLOQUEADAS: sólidas e brilhantes
       // Linhas BLOQUEADAS: tracejadas e opacas
       // Apenas conexões explicitamente marcadas como dashed usarão traço.
-      if (conn.isDashed) {
+      // Aplicar apenas se a flag `showPossiblePaths` estiver ativada.
+      if (conn.isDashed && this.showPossiblePaths) {
         line.setAttribute("stroke-dasharray", "8,4");
       }
 
@@ -1660,6 +1693,173 @@ class VeiasAstraisSystem {
   }
 
   /**
+   * CONTEXT MENU: Cria e gerencia menu de contexto para ações sobre nós
+   */
+  createContextMenu() {
+    // Evitar criar múltiplas vezes
+    if (this._contextMenu) return;
+
+    const menu = document.createElement('div');
+    menu.id = 'astral-node-context-menu';
+    menu.style.position = 'fixed';
+    menu.style.zIndex = 9999;
+    menu.style.minWidth = '160px';
+    menu.style.background = 'linear-gradient(180deg, rgba(18,24,36,0.98), rgba(10,14,22,0.98))';
+    menu.style.border = '1px solid rgba(255,255,255,0.06)';
+    menu.style.boxShadow = '0 10px 30px rgba(0,0,0,0.6)';
+    menu.style.padding = '6px';
+    menu.style.borderRadius = '8px';
+    menu.style.display = 'none';
+    menu.style.fontSize = '13px';
+    menu.style.color = '#dfe7f5';
+
+    document.body.appendChild(menu);
+    this._contextMenu = menu;
+
+    // Fechar ao clicar fora
+    document.addEventListener('click', (e) => {
+      if (!menu.contains(e.target)) {
+        menu.style.display = 'none';
+      }
+    });
+    // Fechar ao redimensionar/scroll
+    window.addEventListener('scroll', () => menu.style.display = 'none');
+    window.addEventListener('resize', () => menu.style.display = 'none');
+  }
+
+  showContextMenu(x, y, node) {
+    this.createContextMenu();
+    const menu = this._contextMenu;
+    menu.innerHTML = '';
+
+    const addItem = (label, onClick, danger = false) => {
+      const it = document.createElement('div');
+      it.textContent = label;
+      it.style.padding = '8px 10px';
+      it.style.cursor = 'pointer';
+      it.style.borderRadius = '6px';
+      it.style.margin = '2px 0';
+      if (danger) it.style.color = '#ff8b8b';
+      it.addEventListener('click', (ev) => {
+        ev.stopPropagation();
+        menu.style.display = 'none';
+        onClick();
+      });
+      it.addEventListener('mouseenter', () => it.style.background = 'rgba(255,255,255,0.03)');
+      it.addEventListener('mouseleave', () => it.style.background = 'transparent');
+      menu.appendChild(it);
+    };
+
+    addItem('🔒 Bloquear nó', () => this.lockNode(node));
+    addItem('🔓 Desbloquear nó', () => this.unlockNode(node));
+    addItem('♻️ Resetar constelação', () => {
+      if (confirm(`Resetar todos os nós da constelação ${node.treeId}?`)) {
+        this.resetConstellation(node.treeId);
+      }
+    });
+    addItem('♻️ Resetar tudo', () => {
+      if (confirm('Resetar todos os nós de todas as constelações?')) {
+        this.resetAllNodes();
+      }
+    }, true);
+
+    // Posicionar garantindo que não saia da tela
+    const pad = 8;
+    const maxX = window.innerWidth - menu.offsetWidth - pad;
+    const maxY = window.innerHeight - menu.offsetHeight - pad;
+    menu.style.left = Math.min(x, maxX) + 'px';
+    menu.style.top = Math.min(y, maxY) + 'px';
+    menu.style.display = 'block';
+  }
+
+  /**
+   * Bloquear apenas os descendentes (mantendo o nó selecionado intacto)
+   */
+  lockDescendants(node) {
+    const descendants = this.findDescendantNodes(node);
+    descendants.forEach((d) => {
+      if (d.state !== 'locked') {
+        if (d.bonus) this.deactivateBonus(d.bonus.id);
+        d.state = 'locked';
+      }
+    });
+    this.saveState();
+    this.renderNodes();
+    this.renderConnections();
+    this.showNotification(`🔒 ${descendants.length} nó(s) bloqueado(s)`,'warning',3000);
+  }
+
+  /**
+   * Reset (bloquear) todos os nós de uma constelação
+   */
+  resetConstellation(treeId) {
+    const targets = this.nodes.filter((n) => n.treeId === treeId);
+    let changed = 0;
+    targets.forEach((n) => {
+      if (n.state !== 'locked') {
+        if (n.bonus) this.deactivateBonus(n.bonus.id);
+        n.state = 'locked';
+        changed++;
+      }
+    });
+    // Atualizar contagem
+    if (this.trees[treeId]) {
+      this.trees[treeId].unlockedNodes = this.nodes.filter((n) => n.treeId === treeId && n.state !== 'locked').length;
+    }
+    this.saveState();
+    this.renderNodes();
+    this.renderConnections();
+    this.renderSidebar();
+    this.showNotification(`♻️ ${changed} nó(s) resetado(s) em ${treeId}`,'info',3000);
+  }
+
+  /**
+   * Reset (bloquear) todos os nós do sistema
+   */
+  resetAllNodes() {
+    let changed = 0;
+    this.nodes.forEach((n) => {
+      if (n.state !== 'locked') {
+        if (n.bonus) this.deactivateBonus(n.bonus.id);
+        n.state = 'locked';
+        changed++;
+      }
+    });
+    // Atualizar contagens por árvore
+    Object.values(this.trees).forEach((t) => {
+      t.unlockedNodes = this.nodes.filter((n) => n.treeId === t.id && n.state !== 'locked').length;
+    });
+    this.saveState();
+    this.renderNodes();
+    this.renderConnections();
+    this.renderSidebar();
+    this.showNotification(`♻️ Reset completo: ${changed} nó(s) bloqueado(s)`,'warning',4000);
+  }
+
+  /**
+   * Apagar nó (remover do sistema) — remove também conexões relacionadas
+   */
+  deleteNode(node) {
+    // Remover o nó do array
+    this.nodes = this.nodes.filter((n) => n.id !== node.id);
+    // Remover conexões relacionadas
+    this.connections = this.connections.filter((c) => c.from !== node.id && c.to !== node.id);
+    // Atualizar contagens
+    if (this.trees[node.treeId]) {
+      this.trees[node.treeId].totalNodes = this.nodes.filter((n) => n.treeId === node.treeId).length;
+      this.trees[node.treeId].unlockedNodes = this.nodes.filter((n) => n.treeId === node.treeId && n.state !== 'locked').length;
+    }
+    // Desativar bônus se ativo
+    if (node.bonus) this.deactivateBonus(node.bonus.id);
+    // Salvar e re-render
+    this.saveState();
+    this.renderNodes();
+    this.renderConnections();
+    this.renderSidebar();
+    this.showNotification(`🗑 Nó "${node.name}" apagado`,'info',3000);
+  }
+
+  /**
    * UTILITÁRIOS
    */
   generateNodeName(treeId, index) {
@@ -1785,11 +1985,15 @@ class VeiasAstraisSystem {
     const deviceMemory = navigator.deviceMemory || 8;
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion)').matches;
     
-    // Ativar performance mode se:
-    // - CPU < 4 cores, OU
-    // - RAM < 4GB, OU
-    // - Usuário preferir redução de movimento
-    this.performanceMode = hwConcurrency <= 4 || deviceMemory <= 4 || prefersReducedMotion;
+    if (this.performancePreference !== null) {
+      this.performanceMode = Boolean(this.performancePreference);
+    } else {
+      // Ativar performance mode se:
+      // - CPU < 4 cores, OU
+      // - RAM < 4GB, OU
+      // - Usuário preferir redução de movimento
+      this.performanceMode = hwConcurrency <= 4 || deviceMemory <= 4 || prefersReducedMotion;
+    }
     
     if (this.performanceMode) {
       console.log('⚡ Modo Performance Ativado (Low-End Device)');
@@ -1806,6 +2010,41 @@ class VeiasAstraisSystem {
     
     // Desativar efeitos visuais pesados
     document.documentElement.style.setProperty('--particle-count', '0');
+  }
+
+  disablePerformanceMode() {
+    if (this.viewport) {
+      this.viewport.classList.remove('performance-mode');
+    }
+    document.documentElement.style.setProperty('--particle-count', '2');
+    this.showNotification('Modo de desempenho normal ativado', 'info');
+  }
+
+  setPerformanceMode(enabled) {
+    this.performanceMode = Boolean(enabled);
+    if (this.performanceMode) {
+      this.enablePerformanceMode();
+      this.showNotification('Otimização das Veias Astrais ativada', 'success');
+    } else {
+      this.disablePerformanceMode();
+    }
+    this.createCoreParticles();
+    try {
+      window.localStorage.setItem('astral-performance-mode', JSON.stringify(this.performanceMode));
+    } catch (error) {
+      console.warn('⚠️ Não foi possível salvar a preferência de desempenho:', error);
+    }
+  }
+
+  loadPerformancePreference() {
+    try {
+      const stored = window.localStorage.getItem('astral-performance-mode');
+      if (stored !== null) {
+        this.performancePreference = JSON.parse(stored);
+      }
+    } catch (error) {
+      console.warn('⚠️ Não foi possível carregar preferência de desempenho:', error);
+    }
   }
 
   /**

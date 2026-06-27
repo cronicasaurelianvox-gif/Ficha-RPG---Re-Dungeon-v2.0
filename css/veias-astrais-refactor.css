@@ -434,6 +434,82 @@
 .reset-view-btn {
     grid-column: 1 / -1;
 }
+.controls-group .settings-btn {
+    grid-column: 1 / -1;
+}
+
+.control-btn.small {
+    padding: 5px 8px;
+    font-size: 0.72rem;
+}
+
+.control-btn.transparent {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.08);
+    color: var(--color-text-primary);
+}
+
+.astral-settings-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 12px;
+    border: 1px solid rgba(74, 158, 255, 0.18);
+    border-radius: 10px;
+    background: rgba(9, 15, 33, 0.82);
+    box-shadow: 0 12px 22px rgba(0, 0, 0, 0.18);
+}
+
+.astral-settings-panel.hidden {
+    display: none;
+}
+
+.astral-settings-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.85rem;
+    color: var(--color-text-primary);
+}
+
+.astral-settings-row input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+}
+
+.astral-settings-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.astral-settings-title {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+}
+
+.astral-settings-status {
+    font-size: 0.75rem;
+    color: var(--color-accent);
+    background: rgba(74, 158, 255, 0.12);
+    border: 1px solid rgba(74, 158, 255, 0.24);
+    padding: 4px 8px;
+    border-radius: 999px;
+}
+.astral-settings-info {
+    margin: 0;
+    font-size: 0.73rem;
+    color: var(--color-text-secondary);
+    line-height: 1.4;
+}
+
+.astral-settings-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
 
 @keyframes shine-premium {
     0% { left: -100%; }
@@ -452,7 +528,6 @@
         opacity: 1;
         transform: translate(-50%, -50%) scale(1);
     }
-}
 }
 
 .controls-info {
