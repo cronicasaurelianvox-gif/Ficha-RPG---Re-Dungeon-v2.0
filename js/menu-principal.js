@@ -26,6 +26,7 @@ class MenuPrincipal {
         ];
 
         this.isOpen = false;
+        this.quickShortcutItems = this.menuData.map(item => ({ ...item }));
         this.init();
     }
 
@@ -34,7 +35,9 @@ class MenuPrincipal {
      */
     init() {
         this.createMenuHTML();
+        this.createContextMenuHTML();
         this.attachEventListeners();
+        this.attachContextMenuListeners();
         console.log('✅ MenuPrincipal inicializado');
     }
 
@@ -105,6 +108,69 @@ class MenuPrincipal {
     }
 
     /**
+     * Cria a estrutura HTML do menu de contexto rápido
+     */
+    createContextMenuHTML() {
+        if (document.getElementById('menu-principal-context-overlay')) {
+            return;
+        }
+
+        const overlay = document.createElement('div');
+        overlay.id = 'menu-principal-context-overlay';
+        overlay.className = 'menu-principal-overlay menu-principal-context-overlay';
+        overlay.style.backgroundColor = 'transparent';
+        overlay.style.display = 'none';
+        document.body.appendChild(overlay);
+
+        const popup = document.createElement('div');
+        popup.id = 'menu-principal-context-popup';
+        popup.className = 'menu-principal-popup menu-principal-context-popup';
+        popup.setAttribute('role', 'dialog');
+        popup.setAttribute('aria-labelledby', 'menu-principal-context-title');
+        popup.setAttribute('aria-modal', 'true');
+        popup.style.position = 'fixed';
+        popup.style.zIndex = '10001';
+
+        const header = document.createElement('div');
+        header.className = 'menu-principal-header';
+        header.innerHTML = `
+            <h2 id="menu-principal-context-title" class="menu-principal-title">Opções do Menu</h2>
+        `;
+        popup.appendChild(header);
+
+        const list = document.createElement('div');
+        list.className = 'menu-principal-context-list';
+
+        this.quickShortcutItems.forEach(item => {
+            const entry = document.createElement('button');
+            entry.className = 'menu-principal-context-entry';
+            entry.id = `menu-principal-context-entry-${item.id}`;
+            entry.setAttribute('data-route-vertical', item.route);
+            entry.setAttribute('title', item.label);
+            entry.type = 'button';
+
+            const iconMarkup = item.icon && item.icon.startsWith('http')
+                ? `<img src="${item.icon}" alt="${item.label}" class="menu-principal-context-entry-img">`
+                : `<span class="menu-principal-context-entry-icon-text">${item.icon || '•'}</span>`;
+
+            entry.innerHTML = `
+                <span class="menu-principal-context-entry-icon">${iconMarkup}</span>
+                <span class="menu-principal-context-entry-label">${item.label}</span>
+            `;
+
+            entry.addEventListener('click', () => {
+                this.handleButtonClick(item);
+                this.closeContextMenu();
+            });
+
+            list.appendChild(entry);
+        });
+
+        popup.appendChild(list);
+        document.body.appendChild(popup);
+    }
+
+    /**
      * Anexa event listeners
      */
     attachEventListeners() {
@@ -128,6 +194,22 @@ class MenuPrincipal {
         if (overlay) {
             overlay.addEventListener('click', () => this.close());
         }
+
+        document.addEventListener('click', (e) => {
+            if (!this.isContextMenuOpen()) return;
+            const popup = document.getElementById('menu-principal-context-popup');
+            const overlay = document.getElementById('menu-principal-context-overlay');
+            if (!popup || !overlay) return;
+            if (!popup.contains(e.target)) {
+                this.closeContextMenu();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && this.isContextMenuOpen()) {
+                this.closeContextMenu();
+            }
+        });
 
         // Fechar com ESC
         document.addEventListener('keydown', (e) => {
@@ -191,6 +273,83 @@ class MenuPrincipal {
 
             console.log('✅ Menu Principal aberto');
         }
+    }
+
+    /**
+     * Retorna se o menu de contexto rápido está aberto
+     * @returns {boolean}
+     */
+    isContextMenuOpen() {
+        const popup = document.getElementById('menu-principal-context-popup');
+        return Boolean(popup && popup.classList.contains('active'));
+    }
+
+    /**
+     * Abre o menu de contexto rápido em uma posição de clique
+     * @param {number} x
+     * @param {number} y
+     */
+    openContextMenu(x, y) {
+        const overlay = document.getElementById('menu-principal-context-overlay');
+        const popup = document.getElementById('menu-principal-context-popup');
+        if (!overlay || !popup) return;
+
+        overlay.style.display = 'block';
+        overlay.classList.add('active');
+        popup.classList.add('active');
+        popup.style.left = `${Math.min(x, window.innerWidth - popup.offsetWidth - 12)}px`;
+        popup.style.top = `${Math.min(y, window.innerHeight - popup.offsetHeight - 12)}px`;
+    }
+
+    /**
+     * Fecha o menu de contexto rápido
+     */
+    closeContextMenu() {
+        const overlay = document.getElementById('menu-principal-context-overlay');
+        const popup = document.getElementById('menu-principal-context-popup');
+        if (!overlay || !popup) return;
+        overlay.style.display = 'none';
+        overlay.classList.remove('active');
+        popup.classList.remove('active');
+    }
+
+    /**
+     * Verifica se o evento de clique direito ocorreu sobre um elemento interativo
+     * @param {MouseEvent} event
+     * @returns {boolean}
+     */
+    isInteractiveContextTarget(event) {
+        return Boolean(event.target.closest('button, a, input, textarea, select, [contenteditable], [role="button"], .menu-principal-button, .btn-acao, .btn-principal, .companheiros-btn-acao'));
+    }
+
+    /**
+     * Anexa listeners de clique direito aos conteúdos das abas suportadas
+     */
+    attachContextMenuListeners() {
+        const sections = [
+            'rpg-content-atributos',
+            'rpg-content-aptidoes',
+            'rpg-content-habilidades',
+            'rpg-content-inventario',
+            'rpg-content-treinamento',
+            'rpg-content-companheiros'
+        ];
+
+        sections.forEach(id => {
+            const section = document.getElementById(id);
+            if (!section) return;
+
+            section.addEventListener('contextmenu', (e) => {
+                if (this.isInteractiveContextTarget(e)) {
+                    return;
+                }
+
+                e.preventDefault();
+                this.close();
+                this.closeContextMenu();
+                this.openContextMenu(e.clientX + 4, e.clientY + 4);
+            });
+        });
     }
 
     /**

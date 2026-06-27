@@ -317,9 +317,29 @@ class PopupInfoJogador {
     init() {
         console.log('🔧 Inicializando PopupInfoJogador...');
         this.createPopupHTML();
+        this.ensurePopupClosed();
         this.setupEventListeners();
         this.loadValuesFromState();
         console.log('✅ PopupInfoJogador pronto!');
+    }
+
+    /**
+     * Garante que o popup comece fechado ao inicializar.
+     * Isso evita flashes de abertura automática quando a página é recarregada.
+     */
+    ensurePopupClosed() {
+        const overlay = document.getElementById('popup-info-jogador-overlay');
+        if (!overlay) return;
+
+        if (overlay.classList.contains('active')) {
+            overlay.classList.remove('active');
+            overlay.setAttribute('aria-hidden', 'true');
+            console.log('⚠️ PopupInfoJogador resetado para fechado no init');
+        }
+
+        overlay.dataset.jsReady = 'false';
+
+        this.isOpen = false;
     }
 
     /**
@@ -328,7 +348,7 @@ class PopupInfoJogador {
     createPopupHTML() {
         const popupHTML = `
             <!-- Popup de Informações do Jogador -->
-            <div id="popup-info-jogador-overlay" class="popup-info-jogador-overlay" aria-hidden="true" role="dialog" aria-labelledby="popup-info-jogador-title">
+            <div id="popup-info-jogador-overlay" class="popup-info-jogador-overlay" data-js-ready="false" aria-hidden="true" role="dialog" aria-labelledby="popup-info-jogador-title">
                 <div class="popup-info-jogador">
                     <!-- Header -->
                     <div class="popup-info-jogador__header">
@@ -566,8 +586,8 @@ class PopupInfoJogador {
                 const style = document.createElement('style');
                 style.id = 'popup-info-jogador-styles';
                 style.textContent = `
-                    .popup-info-jogador-overlay { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background: rgba(0,0,0,0.6); z-index:9999; opacity:0; pointer-events:none; transition:opacity .18s ease; }
-                    .popup-info-jogador-overlay.active { opacity:1; pointer-events:auto; }
+                    .popup-info-jogador-overlay { position:fixed; inset:0; display:none; align-items:center; justify-content:center; background: rgba(0,0,0,0.6); z-index:9999; opacity:0; pointer-events:none; transition:opacity .18s ease; }
+                    .popup-info-jogador-overlay.active[data-js-ready="true"] { display:flex; opacity:1; pointer-events:auto; }
                     .popup-info-jogador { width:900px; max-width:calc(100% - 40px); background: linear-gradient(180deg,#0f1113,#151515); border-radius:14px; box-shadow:0 10px 40px rgba(0,0,0,.7); border:2px solid rgba(90,150,255,0.06); padding:18px; color:#e6c07b; font-family: "Montserrat", Arial, sans-serif; }
                     .popup-info-jogador__header { display:flex; align-items:center; justify-content:space-between; margin-bottom:8px }
                     .popup-info-jogador__title { font-size:20px; letter-spacing:1px; color:#ffdd76 }
@@ -1414,6 +1434,8 @@ class PopupInfoJogador {
         
         const overlay = document.querySelector('#popup-info-jogador-overlay');
         if (overlay) {
+            overlay.dataset.jsReady = 'true';
+            overlay.style.display = 'flex';
             overlay.classList.add('active');
             overlay.setAttribute('aria-hidden', 'false');
             this.isOpen = true;
@@ -1432,6 +1454,8 @@ class PopupInfoJogador {
         if (overlay) {
             overlay.classList.remove('active');
             overlay.setAttribute('aria-hidden', 'true');
+            overlay.dataset.jsReady = 'false';
+            overlay.style.display = 'none';
             this.isOpen = false;
         }
 

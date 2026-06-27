@@ -17,6 +17,10 @@ class ClassesUI {
     this.btnFechar = null;
     this.listasClasses = null;
     this.painalDetalhes = null;
+    this.xpBarFill = null;
+    this.xpBarStatus = null;
+    this.xpBarCurrent = null;
+    this.xpBarNext = null;
     this.inicializado = false;
 
     // ✨ SISTEMA DE MULTICLASSE
@@ -156,6 +160,10 @@ class ClassesUI {
     this.btnVoltar = document.querySelector('.btn-voltar-classes');
     this.listaClasses = document.querySelector('.classes-lista');
     this.painalDetalhes = document.querySelector('.classe-detalhes');
+    this.xpBarFill = document.getElementById('classes-xp-fill');
+    this.xpBarStatus = document.getElementById('classes-xp-status');
+    this.xpBarCurrent = document.getElementById('classes-xp-current');
+    this.xpBarNext = document.getElementById('classes-xp-next');
     
     console.log('[DEBUG capturarElementos]', {
       modal: !!this.modal,
@@ -164,6 +172,10 @@ class ClassesUI {
       btnVoltar: !!this.btnVoltar,
       listaClasses: !!this.listaClasses,
       painalDetalhes: !!this.painalDetalhes
+      , xpBarFill: !!this.xpBarFill
+      , xpBarStatus: !!this.xpBarStatus
+      , xpBarCurrent: !!this.xpBarCurrent
+      , xpBarNext: !!this.xpBarNext
     });
   }
 
@@ -295,6 +307,78 @@ class ClassesUI {
         this.aplicarFiltros(filtroBusca?.value || '', e.target.value);
       });
     }
+
+    // Atualizar barra de experiência de desbloqueio de classes
+    this.bindPowerCombatUpdates();
+  }
+
+  /**
+   * Vincula a barra de desbloqueio ao Power Combat calculado.
+   * @private
+   */
+  bindPowerCombatUpdates() {
+    const atualizar = (valor) => this.updateXpBar(valor);
+
+    if (window.powerCombatCalculator && typeof window.powerCombatCalculator.onChange === 'function') {
+      window.powerCombatCalculator.onChange(atualizar);
+      this.updateXpBar(window.powerCombatCalculator.valorPC);
+      return;
+    }
+
+    // Fallback: polling caso o calculador não tenha sido inicializado ainda
+    const intervalId = setInterval(() => {
+      if (window.powerCombatCalculator) {
+        clearInterval(intervalId);
+        if (typeof window.powerCombatCalculator.onChange === 'function') {
+          window.powerCombatCalculator.onChange(atualizar);
+        }
+        this.updateXpBar(window.powerCombatCalculator.valorPC);
+      }
+    }, 300);
+  }
+
+  /**
+   * Atualiza a barra de desbloqueio de classes com base no Power Combat.
+   * @param {number} pc
+   */
+  updateXpBar(pc = 0) {
+    if (!this.xpBarFill || !this.xpBarStatus || !this.xpBarCurrent || !this.xpBarNext) {
+      return;
+    }
+
+    const thresholds = [100, 200, 300];
+    const progress = Math.min(100, Math.max(0, (pc / thresholds[thresholds.length - 1]) * 100));
+    const level = thresholds.filter((threshold) => pc >= threshold).length;
+    const nextThreshold = thresholds[level] || thresholds[thresholds.length - 1];
+
+    this.xpBarFill.style.width = `${progress}%`;
+    this.xpBarCurrent.textContent = `${Math.min(pc, thresholds[thresholds.length - 1])} / ${thresholds[thresholds.length - 1]} PC`;
+
+    if (level >= thresholds.length) {
+      this.xpBarStatus.textContent = 'Todas as classes desbloqueadas';
+      this.xpBarNext.textContent = 'Máximo alcançado';
+    } else {
+      this.xpBarStatus.textContent = `Meta ${level + 1} de ${thresholds.length} a ${nextThreshold} PC`;
+      this.xpBarNext.textContent = `Próxima meta: ${nextThreshold} PC`;
+    }
+
+    this.updateXpMarkers(pc, thresholds);
+  }
+
+  /**
+   * Atualiza o estado visual dos marcadores da barra.
+   * @private
+   */
+  updateXpMarkers(pc, thresholds) {
+    const markers = this.modal.querySelectorAll('.classes-xp-marker');
+    markers.forEach((marker) => {
+      const threshold = Number(marker.dataset.threshold) || 0;
+      if (pc >= threshold) {
+        marker.classList.add('ativo');
+      } else {
+        marker.classList.remove('ativo');
+      }
+    });
   }
 
   /**
@@ -310,6 +394,7 @@ class ClassesUI {
     
     // ✨ Atualizar estado dos botões ao abrir o modal
     this.atualizarBotoesSelecionados();
+    this.updateXpBar(window.powerCombatCalculator?.valorPC || 0);
     console.log('✅ Modal de classes aberto - botões atualizados');
   }
 
@@ -695,6 +780,16 @@ class ClassesUI {
    * @param {Object} classe - Objeto classe
    */
   renderDetalhes(classe) {
+    const imagemClasse = classe.imagem || classe.image || '';
+    const imagemEhURL = typeof imagemClasse === 'string' && /^(https?:\/\/|\/|data:)/i.test(imagemClasse);
+    const imagemHTML = imagemEhURL
+      ? `<img
+           src="${imagemClasse}"
+           alt="${classe.nome}"
+           onerror="this.onerror=null; this.src='https://i.imgur.com/0uGU22m.png';"
+         />`
+      : `<div class="classe-imagem-placeholder">${imagemClasse || '🎭'}</div>`;
+
     this.painalDetalhes.innerHTML = `
       <!-- Header da Classe -->
       <div class="classe-header">
@@ -706,15 +801,13 @@ class ClassesUI {
         </div>
         <div class="classe-header-right">
           <button class="btn-escolher" data-classe-id="${classe.id}">Escolher</button>
-          <button class="btn-cadeado" data-classe-id="${classe.id}" title="Desbloquear">
-            🔒
-          </button>
+          <button class="btn-cadeado" data-classe-id="${classe.id}" title="Desbloquear">🔒</button>
         </div>
       </div>
 
       <!-- Imagem da Classe -->
       <div class="classe-imagem">
-        <img src="${classe.imagem}" alt="${classe.nome}" />
+        ${imagemHTML}
       </div>
 
       <!-- Descrição -->
@@ -769,6 +862,7 @@ class ClassesUI {
           ` : ''}
         </div>
       </section>
+
     `;
 
     // Ajusta descrições longas para caber no card (reduz fonte se necessário)

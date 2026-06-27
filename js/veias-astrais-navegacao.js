@@ -203,6 +203,7 @@ class VeiasAstraisNavigation {
                 }
             });
         }
+        window.addEventListener('resize', () => this.positionSettingsPanel());
         this.updatePerformanceStatus();
     }
 
@@ -232,7 +233,15 @@ class VeiasAstraisNavigation {
     toggleSettingsPanel() {
         const panel = document.getElementById('astral-settings-panel');
         if (!panel) return;
-        panel.classList.toggle('hidden');
+        const isHidden = panel.classList.contains('hidden');
+        if (isHidden) {
+            panel.classList.remove('hidden');
+            panel.classList.add('visible');
+            this.positionSettingsPanel();
+        } else {
+            panel.classList.add('hidden');
+            panel.classList.remove('visible');
+        }
         this.updatePerformanceStatus();
     }
 
@@ -240,6 +249,34 @@ class VeiasAstraisNavigation {
         const panel = document.getElementById('astral-settings-panel');
         if (!panel) return;
         panel.classList.add('hidden');
+        panel.classList.remove('visible');
+    }
+
+    positionSettingsPanel() {
+        const panel = document.getElementById('astral-settings-panel');
+        const button = document.getElementById('astral-settings-btn');
+        if (!panel || !button || panel.classList.contains('hidden')) return;
+
+        const buttonRect = button.getBoundingClientRect();
+        const panelRect = panel.getBoundingClientRect();
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+        const margin = 10;
+
+        const spaceAbove = buttonRect.top;
+        const spaceBelow = viewportHeight - buttonRect.bottom;
+        const placeAbove = spaceAbove > panelRect.height + margin && spaceAbove > spaceBelow;
+        const top = placeAbove
+            ? Math.max(margin, buttonRect.top - panelRect.height - margin)
+            : Math.min(viewportHeight - panelRect.height - margin, buttonRect.bottom + margin);
+        const left = Math.min(
+            Math.max(margin, buttonRect.left + buttonRect.width / 2 - panelRect.width / 2),
+            viewportWidth - panelRect.width - margin
+        );
+
+        panel.style.top = `${top}px`;
+        panel.style.left = `${left}px`;
+        panel.dataset.placement = placeAbove ? 'top' : 'bottom';
     }
 
     applyAstralSettings() {
