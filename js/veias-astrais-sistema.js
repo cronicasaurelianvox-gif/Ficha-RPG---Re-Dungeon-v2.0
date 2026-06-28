@@ -446,19 +446,19 @@ class VeiasAstraisSystem {
 
           // Personalizar texto do bônus para Hestia (Semente Primordial)
           if (treeConfig.id === 'arty') {
-            base.effect = 'Toda guerra começa com uma única gota de sangue.  +2dn adicional de dado de dano | +5 Força';
+            base.effect = 'Toda guerra começa com uma única gota de sangue. +2dn adicional de dado de dano e +5 Força';
           } 
           if (treeConfig.id === 'aune') {
-            base.effect = 'Todo destino tem um ponto de partida. +15% Saúde Máxima  ou  +15% Energia Máxima';
+            base.effect = 'Todo destino tem um ponto de partida. role um sequencia de 3d6 e some o resultado a um atributo de sua escolha.';
           }
           if (treeConfig.id === 'ephelias') {
-            base.effect = 'Compreender é o primeiro passo para transcender. +5 Percepção | +10 Inteligência';
+            base.effect = 'Compreender é o primeiro passo para transcender. +5 Percepção e +10 Inteligência';
           }
           if (treeConfig.id === 'nishi') {
-            base.effect = 'A estabilidade é a base de toda existência. +5 Vitalidade  | +10 Inteligência';
+            base.effect = 'A estabilidade é a base de toda existência. +5 Vitalidade e +10 Inteligência';
           }
           if (treeConfig.id === 'hestia') {
-            base.effect = 'A primeira respiração do universo. +10% Saúde Máxima  | +10% Energia Máxima';
+            base.effect = 'A primeira respiração do universo. +15% Saúde Máxima e +15% Energia Máxima';
           }
           return base;
         })(),
@@ -485,31 +485,31 @@ class VeiasAstraisSystem {
         if (treeConfig.id === "arty") {
           l2Effect = [
             "Quanto maior o conflito, mais intensa se torna sua chama. +10 Força ou +10 Agilidade",
-            "Sobrevive quem reage primeiro. +1 Reação | +30 Prontidão",
-            "Cada golpe desferido é uma obra de destruição.  +1 Precisão | +3 Evasão",
+            "Sobrevive quem reage primeiro. +1 Reação e +30 Prontidão",
+            "Cada golpe desferido é uma obra de destruição. +1 Precisão e +1 Evasão",
           ][i];
         } else if (treeConfig.id === "aune") {
           l2Effect = [
-            "Ela enxerga todos os caminhos que podem se tornar realidade. +5 Percepção | +5 Inteligência",
+            "Ela enxerga todos os caminhos que podem se tornar realidade. +5 Percepção e +5 Inteligência",
             "Age em compreende o tempo chegue.  +25  Prontidão ou +3 Reação",
-            "Seus fios nunca erram o alvo. +1 Precisão | +1 Evasão",
+            "Seus fios nunca erram o alvo. +1 Precisão e +1 Evasão",
           ][i];
         } else if (treeConfig.id === "ephelias") {
           l2Effect = [
-            "Uma mente calma jamais desperdiça seu poder. +30% Energia Máxima",
-            "Toda existência revela sua verdadeira natureza para quem sabe observar. +1 Precisão  | +15% Prontidão",
-            "Cada experiência se torna um novo alicerce. +5 Inteligência | +5 Defesa",
+            "Uma mente calma jamais desperdiça seu poder. +30% Energia ou Fadiga Máxima",
+            "Toda existência revela sua verdadeira natureza para quem sabe observar. +1 Precisão  e +15% Prontidão",
+            "Cada experiência se torna um novo alicerce. Sempre que sobreviver a um combate, ganha +1dn de Ataque e Defesa no próximo combate.",
           ][i];
         } else if (treeConfig.id === "nishi") {
           l2Effect = [
-            "Corpo e mente devem caminhar lado a lado. Para cada 5 pontos em Forca você ganha +1 Agilidade",
-            "Quando tudo está em equilíbrio, nada falta. Quando dois atributos opostos estao com mesmo valores eles se intensificam em 10%. ",
+            "Corpo e mente devem caminhar lado a lado. Para cada 5 pontos em Força você ganha +1 Agilidade",
+            "Quando tudo está em equilíbrio, nada falta. Quando tres atributos alinhados (Estrelas) estao com mesmo valores eles se intensificam em 25%. ",
             "Toda força deve encontrar uma resistência equivalente. +10% Energia Máxima e +10% Saúde Máxima",
           ][i];
         } else if (treeConfig.id === "hestia") {
           l2Effect = [
             "Da vontade de Hestia surgiu a matéria. +10 Vitalidade ou +10 Força",
-            "Nada permanece imóvel diante da criação.  +5 Agilidade  | +10% Prontidão",
+            "Nada permanece imóvel diante da criação.  +5 Agilidade  e +10% Prontidão",
             "Toda sabedoria nasceu de seu pensamento. +10 Inteligência ou +10 Percepção",
           ][i];
         }
@@ -574,20 +574,20 @@ class VeiasAstraisSystem {
         let l3Effect = "";
         if (treeConfig.id === "arty") {
           l3Effect = [
-            "A guerra exige sacrifícios. +30% Dano causado | -30% de defesa",
-            "Os caídos alimentam os vencedores. Recupera 25% da Energia (Final do  Combate). | Recupera 25% da Fadiga (Final do  Combate).",
-            "A imprevisibilidade é a arma favorita do caos. +10 Sorte  | +5 Ataque",
+            "A guerra exige sacrifícios. +30% Dano causado e -30% de defesa",
+            "Os caídos alimentam os vencedores. Recupera 25% da Energia (Final do  Combate) e Recupera 25% da Fadiga (Final do  Combate).",
+            "A imprevisibilidade é a arma favorita do caos. +10 Sorte",
           ][i];
         } else if (treeConfig.id === "aune") {
           l3Effect = [
-            "O acaso é apenas uma face do destino que ela comanda. +5 Sorte  | +16% Chance de Acerto Crítico ",
-            "Ela molda o amanhã para proteger seus escolhidos. +5 Defesa  |  +10 Vitalidade",
-            "Cada escolha abre caminhos. Ela os entrelaça ao seu favor. +5 Ataque  | +2 Agilidade",
+            "O acaso é apenas uma face do destino que ela comanda. +5 Sorte e +16% Chance de Acerto Crítico ",
+            "Ela molda o amanhã para proteger seus escolhidos. +5 Defesa  e  +10 Vitalidade",
+            "Cada escolha abre caminhos. Ela os entrelaça ao seu favor. +5 Ataque  e +2 Agilidade",
           ][i];
         } else if (treeConfig.id === "ephelias") {
           l3Effect = [
-            "A sabedoria permite agir antes que o erro aconteça. +2 Vitalidade  | +15 Reação",
-            "Ao compreender uma fraqueza, ela deixa de existir como obstáculo. +15 Ataque  | Ignora 10% da Defesa do alvo.",
+            "A sabedoria permite agir antes que o erro aconteça. +10 Vitalidade e +2 Reação",
+            "Ao compreender uma fraqueza, ela deixa de existir como obstáculo. +5 Ataque  e Ignora 10% da Defesa do alvo.",
             "A verdadeira força nasce do equilíbrio entre conhecimento e ação. +1dn adicional Defesa e Ataque",
           ][i];
         } else if (treeConfig.id === "nishi") {
@@ -599,8 +599,8 @@ class VeiasAstraisSystem {
         } else if (treeConfig.id === "hestia") {
           l3Effect = [
             "Mesmo o acaso caminha por trilhas já vistas por Héstia. +10 Sorte",
-            "A fonte que alimenta todas as coisas.  +25% Recuperação de Energia | -25% Consumo de Energia",
-            "Criar é equilibrar destruição e preservação. +10 Ataque  | +10 Defesa",
+            "A fonte que alimenta todas as coisas.  +25% Recuperação de Energia e -25% Consumo de Energia",
+            "Criar é equilibrar destruição e preservação. Se ataque e a defesa estiverem com mesmo valor, ambos recebem +1dn adicional.",
           ][i];
         }
 
@@ -664,18 +664,18 @@ class VeiasAstraisSystem {
         let l4Effect = "";
         if (treeConfig.id === "arty") {
           l4Effect = [
-            "Quanto mais próximo da morte, mais perigoso se torna. Quando estiver abaixo de 50% da Saúde: +100% Ataque. | +3 Reação.",
+            "Quanto mais próximo da morte, mais perigoso se torna. Quando estiver abaixo de 30% da Saúde: +50% Ataque. e +3 Reação.",
             "Seu corpo torna-se uma arma viva. +15 Força ou +15 Vitalidade",
           ][i];
         } else if (treeConfig.id === "aune") {
           l4Effect = [
-            "Mesmo o inevitável pode ser dobrado. -25% Tempo de Recarga de Habilidades | +20% Recuperação de Energia",
+            "Mesmo o inevitável pode ser dobrado. -25% Tempo de Recarga de Habilidades e +20% Recuperação de Energia",
             "Ao iniciar a batalha, recebe 1 acúmulo de Presságio (máx. 3). Cada acúmulo aumenta +5% do dano causado e +5% de redução do dano recebido. ",
           ][i];
         } else if (treeConfig.id === "ephelias") {
           l4Effect = [
             "A verdade sempre encontra aqueles que a procuram. +15 Percepção ou +10 Sorte",
-            "Quanto mais aprende, menos esforço precisa para agir. +20 Energia Máxima | +20 Prontidão. Sempre que utilizar uma habilidade, recupera 5% da Energia Máxima.",
+            "Quanto mais aprende, menos esforço precisa para agir. +20 Energia Máxima e +20 Prontidão. Sempre que utilizar uma habilidade, recupera 5% da Energia Máxima.",
           ][i];
         } else if (treeConfig.id === "nishi") {
           l4Effect = [
@@ -684,8 +684,8 @@ class VeiasAstraisSystem {
           ][i];
         } else if (treeConfig.id === "hestia") {
           l4Effect = [
-            "Nenhum detalhe escapa ao olhar da Criadora. +1 Precisão  |  +3 Reação",
-            "Sua vontade sustenta os céus.  +1 Evasão | +25 Prontidão |  Imunidade a penalidades leves de Fadiga",
+            "Nenhum detalhe escapa ao olhar da Criadora. +1 Precisão  e  +3 Reação",
+            "Sua vontade sustenta os céus.  +1 Evasão e +25 Prontidão e  Imunidade a penalidades leves de Fadiga",
           ][i];
         }
 
@@ -730,7 +730,7 @@ class VeiasAstraisSystem {
       let l5Effect = "";
       if (treeConfig.id === "arty") {
         l5Effect =
-          "Uma vez por combate, ao sofrer dano fatal: Sobrevive com 1 de Saúde e Recebe +100% Ataque e +25% Prontidão por 3 turnos.";
+          "Uma vez por combate, ao sofrer dano fatal: Sobrevive com 1 de Saúde e Recebe +100% Ataque e +30% Prontidão por 3 turnos.";
       } else if (treeConfig.id === "aune") {
         l5Effect =
           "Uma vez a cada 3 sessão, pode reescrever o fio do destino: Restaura 30% da Saúde e 30% da Energia; ou Remove todos os efeitos negativos e se torna Imune a Controle por 2 turnos. +5 Em todos atributos.";
