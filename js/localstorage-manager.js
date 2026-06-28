@@ -631,19 +631,45 @@ class LocalStorageManager {
 
     /**
      * VEIAS ASTRAIS - Salvar estado dos nós
-     * @param {Array} nodes - Array de nós com seus estados
+     * @param {Array|object} payload - Array de nós ou objeto completo de estado astral
      */
     saveVeiasAstrais(nodes) {
         try {
             const chave = this.getKey(this.keys.veiasAstrais);
-            const nodesData = nodes.map(node => ({
-                id: node.id,
-                state: node.state,
-                level: node.level,
-                treeId: node.treeId
-            }));
-            localStorage.setItem(chave, JSON.stringify(nodesData));
-            console.log('💾 ✅ Veias Astrais salvas:', nodesData.length, 'nós');
+            let payload = {};
+            if (Array.isArray(nodes)) {
+                payload.nodes = nodes.map((node) => ({
+                    id: node.id,
+                    state: node.state,
+                    level: node.level,
+                    treeId: node.treeId,
+                }));
+            } else if (nodes && Array.isArray(nodes.nodes)) {
+                payload.nodes = nodes.nodes.map((node) => ({
+                    id: node.id,
+                    state: node.state,
+                    level: node.level,
+                    treeId: node.treeId,
+                }));
+                payload.powerCombat = Number.isFinite(nodes.powerCombat)
+                    ? nodes.powerCombat
+                    : 0;
+                payload.maxPowerCombat = Number.isFinite(nodes.maxPowerCombat)
+                    ? nodes.maxPowerCombat
+                    : 0;
+                payload.resonance = Number.isFinite(nodes.resonance)
+                    ? nodes.resonance
+                    : 45;
+                payload.maxResonance = Number.isFinite(nodes.maxResonance)
+                    ? nodes.maxResonance
+                    : 100;
+            } else {
+                console.warn('⚠️ saveVeiasAstrais recebeu payload inválido');
+                payload.nodes = [];
+            }
+
+            localStorage.setItem(chave, JSON.stringify(payload));
+            console.log('💾 ✅ Veias Astrais salvas:', payload.nodes.length, 'nós');
         } catch (e) {
             console.warn('⚠️ Erro ao salvar Veias Astrais:', e.message);
         }
@@ -663,9 +689,17 @@ class LocalStorageManager {
                 return null;
             }
             
-            const nodesData = JSON.parse(jsonData);
-            console.log('📥 ✅ Veias Astrais carregadas:', nodesData.length, 'nós');
-            return nodesData;
+            const parsed = JSON.parse(jsonData);
+            if (Array.isArray(parsed)) {
+                console.log('📥 ✅ Veias Astrais carregadas (formato antigo):', parsed.length, 'nós');
+                return parsed;
+            }
+            if (parsed && Array.isArray(parsed.nodes)) {
+                console.log('📥 ✅ Veias Astrais carregadas:', parsed.nodes.length, 'nós');
+                return parsed;
+            }
+            console.warn('⚠️ Dados de Veias Astrais com formato desconhecido');
+            return null;
         } catch (e) {
             console.warn('⚠️ Erro ao carregar Veias Astrais:', e.message);
             return null;

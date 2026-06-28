@@ -45,6 +45,9 @@ class VeiasAstraisSystem {
     // Estado
     this.initialized = false;
 
+    // Estado restaurado do localStorage
+    this.loadedSavedAstralState = false;
+
     // Configuração de animações
     this.particleManager = new ParticleManager();
     this.performancePreference = null;
@@ -230,6 +233,7 @@ class VeiasAstraisSystem {
           `⚔️ Power Combat: ${this.powerCombat} / ${this.maxPowerCombat}`,
         );
         this.updateUI();
+        this.saveState();
       }
     } catch (error) {
       console.error("❌ Erro ao sincronizar Power Combat:", error);
@@ -243,7 +247,11 @@ class VeiasAstraisSystem {
    */
   setupPowerCombatListener() {
     // Sincronizar imediatamente
-    this.syncPowerCombatFromAppState();
+    if (!this.loadedSavedAstralState) {
+      this.syncPowerCombatFromAppState();
+    } else {
+      console.log('🔁 Estado das Veias Astrais restaurado do localStorage; mantendo Power Combat salvo');
+    }
 
     // 🔔 Registrar callback para mudanças imediatas
     if (window.powerCombatCalculator) {
@@ -2076,7 +2084,13 @@ class VeiasAstraisSystem {
   saveState() {
     try {
       if (window.localStorageManager) {
-        window.localStorageManager.saveVeiasAstrais(this.nodes);
+        window.localStorageManager.saveVeiasAstrais({
+          nodes: this.nodes,
+          powerCombat: this.powerCombat,
+          maxPowerCombat: this.maxPowerCombat,
+          resonance: this.resonance,
+          maxResonance: this.maxResonance,
+        });
         console.log("💾 Estado das Veias Astrais salvo");
       }
     } catch (error) {
@@ -2095,13 +2109,34 @@ class VeiasAstraisSystem {
       }
 
       const savedData = window.localStorageManager.loadVeiasAstrais();
-      if (!savedData || !Array.isArray(savedData)) {
+      if (!savedData) {
         console.log("ℹ️ Nenhum estado salvo para Veias Astrais");
         return;
       }
 
       // Aplicar estados salvos aos nós
-      savedData.forEach((savedNode) => {
+      const nodesData = Array.isArray(savedData)
+        ? savedData
+        : savedData.nodes || [];
+
+      if (savedData && typeof savedData.powerCombat === 'number') {
+        this.powerCombat = savedData.powerCombat;
+      }
+      if (savedData && typeof savedData.maxPowerCombat === 'number') {
+        this.maxPowerCombat = savedData.maxPowerCombat;
+      }
+      if (savedData && typeof savedData.resonance === 'number') {
+        this.resonance = savedData.resonance;
+      }
+      if (savedData && typeof savedData.maxResonance === 'number') {
+        this.maxResonance = savedData.maxResonance;
+      }
+
+      if (!Array.isArray(savedData)) {
+        this.loadedSavedAstralState = true;
+      }
+
+      nodesData.forEach((savedNode) => {
         const node = this.nodes.find((n) => n.id === savedNode.id);
         if (node) {
           node.state = savedNode.state;
@@ -2109,6 +2144,8 @@ class VeiasAstraisSystem {
           console.log(`📥 Nó ${node.name} restaurado: ${node.state}`);
         }
       });
+
+      this.updateUI();
 
       console.log("✅ Estados restaurados com sucesso");
     } catch (error) {
