@@ -219,19 +219,18 @@ class AtributosConfigModal {
                             >
                         </div>
 
-                        <!-- Bônus (Bloqueado) -->
+                        <!-- Bônus (Desbloqueado) -->
                         <div class="atributos-config-quad">
                             <div class="atributos-config-quad__header">
                                 <label class="atributos-config-quad__label">Bônus</label>
-                                <span class="atributos-config-quad__lock">🔒</span>
                             </div>
                             <input 
                                 type="number" 
                                 id="atributos-config-bonus" 
-                                class="atributos-config-quad__input atributos-config-quad__input--locked"
+                                class="atributos-config-quad__input"
                                 data-atributo-bonus="forca"
                                 placeholder="0"
-                                readonly
+                                min="0"
                             >
                         </div>
                     </div>
@@ -282,6 +281,7 @@ class AtributosConfigModal {
         // Input listeners para atualizar Total em tempo real
         document.getElementById('atributos-config-base')?.addEventListener('input', () => this.updateTotal());
         document.getElementById('atributos-config-extra')?.addEventListener('input', () => this.updateTotal());
+        document.getElementById('atributos-config-bonus')?.addEventListener('input', () => this.updateTotal());
 
         // ⭐ ENTER dispara SALVAR - usando event delegation global
         const self = this;
@@ -371,8 +371,7 @@ class AtributosConfigModal {
 
     /**
      * Carrega dados do atributo atual
-     * ✅ Carrega base, extra do state-manager
-     * ✅ Carrega bonus do AtributosManager (inclui aptidões)
+     * ✅ Carrega base, extra, bonus do state-manager
      * ✅ Para secundários: exibe o valor calculado da fórmula + (base+extra+bonus)
      * ✅ Recalcula total na abertura
      */
@@ -383,18 +382,6 @@ class AtributosConfigModal {
         let base = 0, extra = 0, bonus = 0, total = 0;
         let formulaCalculado = 0; // Para secundários
         let isSecundario = false;
-
-        // ✅ IMPORTANTE: Ler bônus do AtributosManager (inclui bônus de aptidões)
-        let bonusManual = 0;
-        let bonusAptidoes = 0;
-        if (window.atributosManager && window.atributosManager.personagemData) {
-            bonusManual = window.atributosManager.personagemData.atributosBonusManual?.[atributoType] ?? 0;
-            bonusAptidoes = window.atributosManager.personagemData.atributosBonusAptidoes?.[atributoType] ?? 0;
-            
-            console.log(`📂 Bônus do AtributosManager para ${atributoType}:`, {
-                bonusManual, bonusAptidoes, total: bonusManual + bonusAptidoes
-            });
-        }
 
         if (stateManager) {
             const state = stateManager.getState();
@@ -410,12 +397,12 @@ class AtributosConfigModal {
                 const attr = state.atributos.primarios[atributoType];
                 base = attr.base ?? 0;
                 extra = attr.extra ?? 0;
-                // ✅ CORRIGIDO: Usar bônus total (manual + aptidões) do AtributosManager
-                bonus = bonusManual + bonusAptidoes;
+                // ✅ Ler bônus diretamente do estado salvo
+                bonus = attr.bonus ?? 0;
                 total = base + extra + bonus; // ✅ Recalcular na abertura
                 
                 console.log(`📂 Atributo Primário "${atributoType}" carregado:`, {
-                    base, extra, bonusManual, bonusAptidoes, bonus, total
+                    base, extra, bonus, total
                 });
             } else if (isSecundario && state.atributos?.secundarios?.[atributoType]) {
                 // ✅ Carregar secundário do estado
@@ -425,15 +412,15 @@ class AtributosConfigModal {
                 // O total já foi calculado pela fórmula em calcularAtributosSecundarios()
                 base = attr.base ?? 0;
                 extra = attr.extra ?? 0;
-                // ✅ CORRIGIDO: Usar bônus total (manual + aptidões) do AtributosManager
-                bonus = bonusManual + bonusAptidoes;
+                // ✅ Ler bônus diretamente do estado salvo
+                bonus = attr.bonus ?? 0;
                 total = attr.total ?? 0; // ✅ Usar o total já calculado
                 
                 // Calcular a parte da fórmula (total - ajustes do usuário) para exibição
                 formulaCalculado = total - (base + extra + bonus);
                 
                 console.log(`📂 Atributo Secundário "${atributoType}" carregado:`, {
-                    base, extra, bonusManual, bonusAptidoes, bonus, formulaCalculado, total
+                    base, extra, bonus, formulaCalculado, total
                 });
             } else {
                 // ✅ Valores padrão se atributo não existir no estado
@@ -510,10 +497,10 @@ class AtributosConfigModal {
             extraInput.value = this.tempValues.extra || 0;
         }
 
-        // ✅ Campo Bônus é SOMENTE LEITURA (reservado para futuro)
+        // ✅ Campo Bônus é editável
         if (bonusInput) {
-            bonusInput.readOnly = true;
-            bonusInput.classList.add('atributos-config-quad__input--locked');
+            bonusInput.readOnly = false;
+            bonusInput.classList.remove('atributos-config-quad__input--locked');
             bonusInput.setAttribute('data-atributo-bonus', this.statusType);
             bonusInput.value = this.tempValues.bonus || 0;
         }

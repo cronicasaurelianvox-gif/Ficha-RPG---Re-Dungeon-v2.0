@@ -591,10 +591,25 @@ const AtualizarFichaCompleta = (() => {
       etapa7: false
     };
 
+    // Configuração: por padrão, remover/ignorar sincronização completa de atributos
+    // Isso atende ao pedido de "tira os atributos do update".
+    // Se for necessário reativar, definir `window.atualizarFichaConfig = { skipAtributos: false }`.
+    const config = (typeof window.atualizarFichaConfig === 'object') ? window.atualizarFichaConfig : { skipAtributos: true };
+    const skipAtributos = (config.skipAtributos === undefined) ? true : !!config.skipAtributos;
+
     // Executar etapas em ordem
     resultados.etapa1 = etapa1_RecalcularBonusAptidoes();
-    resultados.etapa2 = etapa2_SincronizarPrimarios();
-    resultados.etapa3 = etapa3_SincronizarSecundarios();
+
+    if (skipAtributos) {
+      console.log('ℹ️ Pulando sincronização de atributos primários e secundários (skipAtributos=true)');
+      // Marcar como sucesso para manter fluxo sem executar as funções que alteram atributos
+      resultados.etapa2 = true;
+      resultados.etapa3 = true;
+    } else {
+      resultados.etapa2 = etapa2_SincronizarPrimarios();
+      resultados.etapa3 = etapa3_SincronizarSecundarios();
+    }
+
     resultados.etapa4 = etapa4_AtualizarStatus();
     resultados.etapa5 = etapa5_SincronizarPopups();
     resultados.etapa6 = etapa6_Renderizar();

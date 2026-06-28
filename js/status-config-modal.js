@@ -157,13 +157,16 @@ const StatusConfigModal = {
                         </div>
                     </div>
 
-                    <!-- Quadrado: Bônus (Informativo) -->
-                    <div class="status-config-quad hp locked" data-field="bonus">
+                    <!-- Quadrado: Bônus (Editável) -->
+                    <div class="status-config-quad hp" data-field="bonus">
                         <label class="status-config-quad-label">Bônus</label>
-                        <div class="status-config-value" id="status-config-bonus">
-                            <span id="status-config-bonus-value">0</span>
-                            <span class="status-config-calc-icon">ℹ️</span>
-                        </div>
+                        <input 
+                            type="number" 
+                            class="status-config-input" 
+                            id="status-config-bonus"
+                            min="0"
+                            placeholder="Valor bônus"
+                        >
                     </div>
                 </div>
             </div>
@@ -316,6 +319,45 @@ const StatusConfigModal = {
                 if (this.state.tempValues[this.state.activeStatus]) {
                     this.state.tempValues[this.state.activeStatus].extra = extraValue;
                     console.log(`💾 BLUR: EXTRA salvo em tempValues para ${this.state.activeStatus}: ${extraValue}`);
+                }
+            }
+        });
+
+        // ⭐ NOVO: Listeners para o campo de Bônus
+        document.getElementById('status-config-bonus')?.addEventListener('input', () => {
+            const bonusInput = document.getElementById('status-config-bonus');
+            if (this.state.activeStatus && bonusInput) {
+                const bonusValue = parseInt(bonusInput.value) || 0;
+                this.state.tempValues[this.state.activeStatus].bonus = bonusValue;
+                console.log(`💾 BÔNUS atualizado em tempo real para ${this.state.activeStatus}: ${bonusValue}`);
+            }
+            
+            this.updateMaxValue();
+            this.updatePreview();  // Atualizar prévia em tempo real
+            // Salvar em tempo real
+            if (this.state.activeStatus && this.state.tempValues[this.state.activeStatus]) {
+                if (window.localStorageManager && window.appState) {
+                    try {
+                        window.localStorageManager.saveStatus({
+                            [this.state.activeStatus]: this.state.tempValues[this.state.activeStatus]
+                        });
+                    } catch (e) {
+                        console.warn('⚠️ Erro ao salvar bônus em tempo real:', e.message);
+                    }
+                }
+            }
+            
+            // 💾 Sincronizar para localStorage
+            this.syncStatusFieldsToLocalStorage();
+        });
+
+        document.getElementById('status-config-bonus')?.addEventListener('blur', () => {
+            const bonusInput = document.getElementById('status-config-bonus');
+            if (this.state.activeStatus && bonusInput) {
+                const bonusValue = parseInt(bonusInput.value) || 0;
+                if (this.state.tempValues[this.state.activeStatus]) {
+                    this.state.tempValues[this.state.activeStatus].bonus = bonusValue;
+                    console.log(`💾 BLUR: BÔNUS salvo em tempValues para ${this.state.activeStatus}: ${bonusValue}`);
                 }
             }
         });
@@ -586,26 +628,52 @@ const StatusConfigModal = {
                 if (savedFields[typeKey]) {
                     extra = savedFields[typeKey].extra || 0;
                     base = savedFields[typeKey].base || 0;
-                    console.log(`✅ Recuperado de localStorage: ${typeKey} → extra=${extra}, base=${base}`);
+                    // ⭐ NOVO: Recuperar bônus também do localStorage
+                    const bonusFromStorage = savedFields[typeKey].bonus || 0;
+                    console.log(`✅ Recuperado de localStorage: ${typeKey} → extra=${extra}, base=${base}, bonus=${bonusFromStorage}`);
+                    
+                    // Se há bônus no localStorage, usar ele
+                    if (bonusFromStorage > 0) {
+                        console.log(`  ⭐ Usando bônus salvo em localStorage: ${bonusFromStorage}`);
+                    }
                 }
             }
         } catch (e) {
             console.warn(`⚠️ Erro ao recuperar status fields de localStorage:`, e.message);
         }
         
-        // ⭐ IMPORTANTE: Bonus SEMPRE vem do BonusCalculator, não do StatusBarsManager antigo!
-        // Isso evita usar valores de bonus/máximo antigos/limitados
+        // ⭐ IMPORTANTE: Bonus PODE VIR DE DIFERENTES FONTES:
+        // 1. Primeiro, tenta recuperar do localStorage (bônus editado manualmente)
+        // 2. Se não há no localStorage, tenta do BonusCalculator (bônus de aptidões)
+        // 3. Se nenhum disponível, usa valor antigo do StatusBarsManager
         let bonus = 0;
         
-        // Tentar obter bonus do BonusCalculator se disponível
-        const bonusKey = statusType === 'hp' ? 'saude' : statusType === 'energy' ? 'energia' : 'fadiga';
-        if (window.bonusCalculator && typeof window.bonusCalculator.getBonus === 'function') {
-            bonus = window.bonusCalculator.getBonus(bonusKey) || 0;
-            console.log(`  ✓ Bonus carregado do BonusCalculator (${bonusKey}): ${bonus}`);
-        } else {
-            // Fallback: usar valor antigo se BonusCalculator não disponível
-            bonus = statusData.bonus || 0;
-            console.log(`  ⚠️  BonusCalculator não disponível, usando bonus antigo: ${bonus}`);
+        // Tentar obter bonus do localStorage PRIMEIRO (prioridade para bônus editado manualmente)
+        try {
+            const savedFieldsJson = localStorage.getItem('redungeon_status_fields_extra_bonus');
+            if (savedFieldsJson) {
+                const savedFields = JSON.parse(savedFieldsJson);
+                const typeKey = statusType === 'hp' ? 'hp' : statusType === 'energy' ? 'energia' : 'fadiga';
+                if (savedFields[typeKey] && typeof savedFields[typeKey].bonus !== 'undefined') {
+                    bonus = parseInt(savedFields[typeKey].bonus) || 0;
+                    console.log(`  ✓ Bonus carregado do localStorage (${typeKey}): ${bonus}`);
+                }
+            }
+        } catch (e) {
+            console.warn(`⚠️ Erro ao recuperar bonus de localStorage:`, e.message);
+        }
+        
+        // Se não há bônus no localStorage, tentar do BonusCalculator
+        if (bonus === 0) {
+            const bonusKey = statusType === 'hp' ? 'saude' : statusType === 'energy' ? 'energia' : 'fadiga';
+            if (window.bonusCalculator && typeof window.bonusCalculator.getBonus === 'function') {
+                bonus = window.bonusCalculator.getBonus(bonusKey) || 0;
+                console.log(`  ✓ Bonus carregado do BonusCalculator (${bonusKey}): ${bonus}`);
+            } else {
+                // Fallback: usar valor antigo se BonusCalculator não disponível
+                bonus = statusData.bonus || 0;
+                console.log(`  ⚠️  BonusCalculator não disponível, usando bonus antigo: ${bonus}`);
+            }
         }
 
         console.log(`  ✓ Valores carregados:`, { current, base, extra, bonus });
@@ -700,15 +768,14 @@ const StatusConfigModal = {
         // ⭐ IMPORTANTE: SEMPRE pegar do input, não do tempValues
         // Isso garante que valores digitados mas não salvos sejam capturados
         const currentInput = document.getElementById('status-config-current');
-        const baseInput = document.getElementById('status-config-base');
         const extraInput = document.getElementById('status-config-extra');
-        const bonusValueElement = document.getElementById('status-config-bonus-value');
+        const bonusInput = document.getElementById('status-config-bonus');
         
         // Coletar valores dos inputs ATUAIS (com fallback para tempValues se não existirem inputs)
         const current = currentInput ? parseInt(currentInput.value) || 0 : this.state.tempValues[currentStatus].current || 0;
-        const base = baseInput ? parseInt(baseInput.value) || 0 : this.state.tempValues[currentStatus].base || 0;
+        const base = 0; // Base não é mais editável no novo sistema
         const extra = extraInput ? parseInt(extraInput.value) || 0 : this.state.tempValues[currentStatus].extra || 0;
-        const bonus = bonusValueElement ? parseInt(bonusValueElement.textContent) || 0 : this.state.tempValues[currentStatus].bonus || 0;
+        const bonus = bonusInput ? parseInt(bonusInput.value) || 0 : this.state.tempValues[currentStatus].bonus || 0;
 
         console.log(`  💾 ║ VALORES CAPTURADOS DOS INPUTS:`);
         console.log(`  💾 ║   current: ${current}`);
@@ -850,7 +917,7 @@ const StatusConfigModal = {
         // Atualizar valores nos inputs
         const currentEl = document.getElementById('status-config-current');
         const extraEl = document.getElementById('status-config-extra');
-        const bonusEl = document.getElementById('status-config-bonus-value');
+        const bonusEl = document.getElementById('status-config-bonus');
         const maxEl = document.getElementById('status-config-max-value');
         
         console.log(`\n  📝 CARREGANDO VALORES NOS INPUTS:`);
@@ -864,8 +931,8 @@ const StatusConfigModal = {
             console.log(`  ✓ Campo EXTRA (Extra): ${extraEl.value}`);
         }
         if (bonusEl) {
-            bonusEl.textContent = values.bonus || 0;
-            console.log(`  ✓ Campo BÔNUS (Bonus): ${bonusEl.textContent}`);
+            bonusEl.value = values.bonus || 0;
+            console.log(`  ✓ Campo BÔNUS (Bonus): ${bonusEl.value}`);
         }
         if (maxEl) {
             maxEl.textContent = values.maximum || 0;
@@ -977,6 +1044,7 @@ const StatusConfigModal = {
         // Ler valores dos inputs
         const currentInput = document.getElementById('status-config-current');
         const extraInput = document.getElementById('status-config-extra');
+        const bonusInput = document.getElementById('status-config-bonus');
         
         if (!currentInput || !extraInput) {
             console.warn(`  ⚠️  Inputs não encontrados - current: ${!!currentInput}, extra: ${!!extraInput}`);
@@ -986,14 +1054,16 @@ const StatusConfigModal = {
         const extra = extraInput ? (parseInt(extraInput.value) || 0) : 0;
         const base = values.base || 0;
         
-        // ⭐ IMPORTANTE: Bonus SEMPRE vem do BonusCalculator em tempo real!
-        // Isso garante que temos o bonus atual, não um valor antigo
+        // ⭐ IMPORTANTE: Bonus SEMPRE vem do INPUT do usuário em tempo real!
+        // Primeiro tenta ler do input que o usuário está editando
+        // Se não houver input, usa o valor armazenado em tempValues
         let bonus = 0;
-        const bonusKey = statusType === 'hp' ? 'saude' : statusType === 'energy' ? 'energia' : 'fadiga';
-        if (window.bonusCalculator && typeof window.bonusCalculator.getBonus === 'function') {
-            bonus = window.bonusCalculator.getBonus(bonusKey) || 0;
+        if (bonusInput && bonusInput.value) {
+            bonus = parseInt(bonusInput.value) || 0;
+            console.log(`  ✓ Bonus lido do INPUT: ${bonus}`);
         } else {
             bonus = values.bonus || 0; // Fallback para valor armazenado
+            console.log(`  ✓ Bonus lido de tempValues (fallback): ${bonus}`);
         }
 
         console.log(`  ✓ Valores dos inputs: current=${current}, base=${base}, extra=${extra}, bonus=${bonus}`);
@@ -1037,7 +1107,7 @@ const StatusConfigModal = {
 
         // ⭐ Exibir valores nos campos
         const maxElement = document.getElementById('status-config-max-value');
-        const bonusElement = document.getElementById('status-config-bonus-value');
+        const bonusElement = document.getElementById('status-config-bonus');
         
         if (maxElement) {
             maxElement.textContent = maximoFinal;
@@ -1047,10 +1117,10 @@ const StatusConfigModal = {
         }
         
         if (bonusElement) {
-            bonusElement.textContent = bonus;
-            console.log(`  ✓ Campo BONUS atualizado: ${bonusElement.textContent}`);
+            bonusElement.value = bonus;
+            console.log(`  ✓ Campo BONUS atualizado: ${bonusElement.value}`);
         } else {
-            console.warn('  ⚠️  Elemento status-config-bonus-value não encontrado');
+            console.warn('  ⚠️  Elemento status-config-bonus não encontrado');
         }
 
         // ⭐ NOVO: Atualizar prévia em tempo real ao editar
