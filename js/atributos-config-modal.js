@@ -69,12 +69,12 @@ class AtributosConfigModal {
 
         // 🔹 PRONTIDÃO
         // soma = (AGI × 0.6) + (PER × 0.3) + (SOR × 0.1)
-        // total = ceil((soma / 150) × 315) + (base + extra + bonus)
+        // total = ceil((soma / 250) × 315) + (base + extra + bonus)
         if (!state.atributos.secundarios.prontidao) {
             state.atributos.secundarios.prontidao = { base: 0, extra: 0, bonus: 0 };
         }
         const somaProntidao = (AGI * 0.6) + (PER * 0.3) + (SOR * 0.1);
-        const prontidaoCalculado = Math.ceil((somaProntidao / 150) * 315);
+        const prontidaoCalculado = Math.ceil((somaProntidao / 250) * 315);
         const prontidaoAjustes = (state.atributos.secundarios.prontidao.base || 0) +
                                  (state.atributos.secundarios.prontidao.extra || 0) +
                                  (state.atributos.secundarios.prontidao.bonus || 0);
@@ -82,12 +82,12 @@ class AtributosConfigModal {
 
         // 🔹 ATAQUE
         // soma = (FOR × 0.7) + (INT × 0.3)
-        // total = ceil((soma / 150) × 21) + (base + extra + bonus)
+        // total = ceil((soma / 250) × 21) + (base + extra + bonus)
         if (!state.atributos.secundarios.ataque) {
             state.atributos.secundarios.ataque = { base: 0, extra: 0, bonus: 0 };
         }
         const somaAtaque = (FOR * 0.7) + (INT * 0.3);
-        const ataqueCalculado = Math.ceil((somaAtaque / 150) * 21);
+        const ataqueCalculado = Math.ceil((somaAtaque / 250) * 21);
         const ataqueAjustes = (state.atributos.secundarios.ataque.base || 0) +
                               (state.atributos.secundarios.ataque.extra || 0) +
                               (state.atributos.secundarios.ataque.bonus || 0);
@@ -95,12 +95,12 @@ class AtributosConfigModal {
 
         // 🔹 DEFESA
         // soma = (VIT × 0.6) + (AGI × 0.3) + (SOR × 0.1)
-        // total = ceil((soma / 150) × 16) + (base + extra + bonus)
+        // total = ceil((soma / 250) × 16) + (base + extra + bonus)
         if (!state.atributos.secundarios.defesa) {
             state.atributos.secundarios.defesa = { base: 0, extra: 0, bonus: 0 };
         }
         const somaDefesa = (VIT * 0.6) + (AGI * 0.3) + (SOR * 0.1);
-        const defesaCalculado = Math.ceil((somaDefesa / 150) * 16);
+        const defesaCalculado = Math.ceil((somaDefesa / 250) * 16);
         const defesaAjustes = (state.atributos.secundarios.defesa.base || 0) +
                               (state.atributos.secundarios.defesa.extra || 0) +
                               (state.atributos.secundarios.defesa.bonus || 0);
@@ -108,12 +108,12 @@ class AtributosConfigModal {
 
         // 🔹 REAÇÃO
         // soma = (AGI × 0.5) + (PER × 0.3) + (SOR × 0.2)
-        // total = ceil((soma / 150) × (12 - 6)) + 6 + (base + extra + bonus)
+        // total = ceil((soma / 250) × (12 - 6)) + 6 + (base + extra + bonus)
         if (!state.atributos.secundarios.reacao) {
             state.atributos.secundarios.reacao = { base: 0, extra: 0, bonus: 0 };
         }
         const somaReacao = (AGI * 0.5) + (PER * 0.3) + (SOR * 0.2);
-        const reacaoCalculado = Math.ceil((somaReacao / 150) * (12 - 6)) + 6;
+        const reacaoCalculado = Math.ceil((somaReacao / 250) * (12 - 6)) + 6;
         const reacaoAjustes = (state.atributos.secundarios.reacao.base || 0) +
                               (state.atributos.secundarios.reacao.extra || 0) +
                               (state.atributos.secundarios.reacao.bonus || 0);
@@ -121,12 +121,12 @@ class AtributosConfigModal {
 
         // 🔹 PRECISÃO
         // soma = (AGI × 0.3) + (PER × 0.6) + (SOR × 0.1)
-        // total = ceil((soma / 150) × 12) + (base + extra + bonus)
+        // total = ceil((soma / 250) × 12) + (base + extra + bonus)
         if (!state.atributos.secundarios.precisao) {
             state.atributos.secundarios.precisao = { base: 0, extra: 0, bonus: 0 };
         }
         const somaPrecisao = (AGI * 0.3) + (PER * 0.6) + (SOR * 0.1);
-        const precisaoCalculado = Math.ceil((somaPrecisao / 150) * 12);
+        const precisaoCalculado = Math.ceil((somaPrecisao / 250) * 12);
         const precisaoAjustes = (state.atributos.secundarios.precisao.base || 0) +
                                 (state.atributos.secundarios.precisao.extra || 0) +
                                 (state.atributos.secundarios.precisao.bonus || 0);
@@ -134,12 +134,12 @@ class AtributosConfigModal {
 
         // 🔹 EVASÃO
         // soma = (AGI × 0.5) + (PER × 0.4) + (SOR × 0.1)
-        // total = ceil((soma / 150) × 12) + (base + extra + bonus)
+        // total = ceil((soma / 250) × 12) + (base + extra + bonus)
         if (!state.atributos.secundarios.evasao) {
             state.atributos.secundarios.evasao = { base: 0, extra: 0, bonus: 0 };
         }
         const somaEvasao = (AGI * 0.5) + (PER * 0.4) + (SOR * 0.1);
-        const evasaoCalculado = Math.ceil((somaEvasao / 150) * 12);
+        const evasaoCalculado = Math.ceil((somaEvasao / 250) * 12);
         const evasaoAjustes = (state.atributos.secundarios.evasao.base || 0) +
                               (state.atributos.secundarios.evasao.extra || 0) +
                               (state.atributos.secundarios.evasao.bonus || 0);
@@ -726,22 +726,22 @@ class AtributosConfigModal {
 
             if (atributoType === 'prontidao') {
                 const soma = (AGI * 0.6) + (PER * 0.3) + (SOR * 0.1);
-                calculado = Math.ceil((soma / 150) * 315);
+                calculado = Math.ceil((soma / 250) * 315);
             } else if (atributoType === 'ataque') {
                 const soma = (FOR * 0.7) + (INT * 0.3);
-                calculado = Math.ceil((soma / 150) * 21);
+                calculado = Math.ceil((soma / 250) * 21);
             } else if (atributoType === 'defesa') {
                 const soma = (VIT * 0.6) + (AGI * 0.3) + (SOR * 0.1);
-                calculado = Math.ceil((soma / 150) * 16);
+                calculado = Math.ceil((soma / 250) * 16);
             } else if (atributoType === 'reacao') {
                 const soma = (AGI * 0.5) + (PER * 0.3) + (SOR * 0.2);
-                calculado = Math.ceil((soma / 150) * (12 - 6)) + 6;
+                calculado = Math.ceil((soma / 250) * (12 - 6)) + 6;
             } else if (atributoType === 'precisao') {
                 const soma = (AGI * 0.3) + (PER * 0.6) + (SOR * 0.1);
-                calculado = Math.ceil((soma / 150) * 12);
+                calculado = Math.ceil((soma / 250) * 12);
             } else if (atributoType === 'evasao') {
                 const soma = (AGI * 0.5) + (PER * 0.4) + (SOR * 0.1);
-                calculado = Math.ceil((soma / 150) * 12);
+                calculado = Math.ceil((soma / 250) * 12);
             }
 
             const total = calculado + baseEditavel;

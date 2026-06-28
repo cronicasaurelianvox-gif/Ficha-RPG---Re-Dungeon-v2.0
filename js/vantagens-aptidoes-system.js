@@ -25,258 +25,263 @@ const VantagensAptidoesSystem = (() => {
    * - Níveis ímpares (1, 3, 5) = EFEITOS
    * - Níveis pares (2, 4, 6) = BÔNUS
    */
+  // Sincronizado com o catálogo de `aptidoes-db.js` — níveis 1/3/5 usam os textos do catálogo
   const vantagensAptidoes = {
     'acrobacia': {
-      1: { tipo: 'bonus', valor: '+5 Agilidade' },
-      3: { tipo: 'bonus', valor: '+1 Reação' },
-      5: { tipo: 'bonus', valor: '+1 Evasão' }
+      1: { tipo: 'efeito', valor: 'Nunca sofre penalidades por superfícies estreitas ou instáveis comuns.', narrativa: 'Equilíbrio Natural' },
+      3: { tipo: 'efeito', valor: 'Pode atravessar obstáculos, grades, janelas e espaços reduzidos sem precisar reduzir o movimento.', narrativa: 'Corpo Adaptável' },
+      5: { tipo: 'efeito', valor: 'Uma vez por cena, realiza uma manobra física considerada impossível para uma pessoa comum, desde que não desafie as leis do mundo.', narrativa: 'Movimento Impossível' }
     },
     'alquimia': {
-      1: { tipo: 'efeito', valor: 'Reduz dificuldade ao fabricar itens alquímicos em -3' },
-      3: { tipo: 'bonus', valor: '+5 Inteligência' },
-      5: { tipo: 'efeito', valor: 'Reduz teste para descontrole alquímico em -3' }
+      1: { tipo: 'efeito', valor: 'Identifica ingredientes alquímicos apenas observando-os.', narrativa: 'Conhecimento de Reagentes' },
+      3: { tipo: 'efeito', valor: 'Pode substituir um ingrediente comum por outro semelhante sem comprometer completamente a receita.', narrativa: 'Improvisação' },
+      5: { tipo: 'efeito', valor: 'Uma vez por descanso, uma criação alquímica que falharia produz um resultado imperfeito em vez de falhar totalmente.', narrativa: 'Mestre Alquimista' }
     },
     'ambidestro': {
-      1: { tipo: 'bonus', valor: '+1 Precisão' },
-      3: { tipo: 'efeito', valor: 'Permite atacar com ambas as mãos' },
-      5: { tipo: 'efeito', valor: 'Ataque com segunda mão conta como ação comum' }
+      1: { tipo: 'efeito', valor: 'Coordenação Total — Utiliza ambas as mãos com a mesma habilidade, sem qualquer perda de precisão ou controle.', narrativa: 'Coordenação Total' },
+      3: { tipo: 'efeito', valor: 'Combate Simétrico — Consegue alternar armas, ferramentas e movimentos entre as duas mãos de forma completamente natural, confundindo adversários.', narrativa: 'Combate Simétrico' },
+      5: { tipo: 'efeito', valor: 'Mestre das Duas Mãos — Uma vez por combate, pode executar uma sequência perfeitamente coordenada utilizando ambas as mãos simultaneamente, realizando duas ações compatíveis em perfeita sincronia.', narrativa: 'Mestre das Duas Mãos' }
     },
     'arcanismo': {
-      1: { tipo: 'efeito', valor: 'Casting com magias reduz dificuldade em -3' },
-      3: { tipo: 'bonus', valor: '+1 Precisão' },
-      5: { tipo: 'efeito', valor: 'Reduz teste de descontrole mágico em -3' }
+      1: { tipo: 'efeito', valor: 'Conhecimento Arcano — Reconhece escolas mágicas, encantamentos e fenômenos arcanos com facilidade.', narrativa: 'Conhecimento Arcano' },
+      3: { tipo: 'efeito', valor: 'Manipulação Arcana — Consegue moldar a energia mágica com extrema precisão, reduzindo falhas durante conjurações complexas.', narrativa: 'Manipulação Arcana' },
+      5: { tipo: 'efeito', valor: 'Arquimago — Uma vez por cena, pode compreender instantaneamente o funcionamento básico de uma magia ou artefato arcano desconhecido.', narrativa: 'Arquimago' }
     },
     'atletismo': {
-      1: { tipo: 'bonus', valor: '+5 Vitalidade' },
-      3: { tipo: 'bonus', valor: '+50 Saúde' },
-      5: { tipo: 'bonus', valor: '+5 Força' }
+      1: { tipo: 'efeito', valor: 'Condicionamento Físico — Escala, nada, corre e realiza esforços físicos intensos com muito mais eficiência.', narrativa: 'Condicionamento Físico' },
+      3: { tipo: 'efeito', valor: 'Corpo Treinado — Consegue executar acrobacias, saltos e feitos físicos difíceis com naturalidade.', narrativa: 'Corpo Treinado' },
+      5: { tipo: 'efeito', valor: 'Limite Humano — Uma vez por cena, pode superar temporariamente seus próprios limites físicos para realizar um feito extraordinário.', narrativa: 'Limite Humano' }
     },
     'atuacao': {
-      1: { tipo: 'bonus', valor: '+5 Inteligência' },
-      3: { tipo: 'efeito', valor: 'Aplica obstáculo em alvos por atuar/enganar em -3' },
-      5: { tipo: 'efeito', valor: 'Pode imitar vozes ou gestos com precisão' }
+      1: { tipo: 'efeito', valor: 'Ator Nato — Consegue interpretar emoções e personalidades de maneira extremamente convincente.', narrativa: 'Ator Nato' },
+      3: { tipo: 'efeito', valor: 'Mestre dos Papéis — Imita sotaques, trejeitos, postura e comportamento de outras pessoas após observá-las.', narrativa: 'Mestre dos Papéis' },
+      5: { tipo: 'efeito', valor: 'Transformação Completa — Uma vez por cena, assume um personagem de forma tão perfeita que até conhecidos podem ser enganados.', narrativa: 'Transformação Completa' }
     },
     'beleza': {
-      1: { tipo: 'efeito', valor: '+1 em testes sociais onde aparência impacta' },
-      3: { tipo: 'bonus', valor: '+5 Sorte' },
-      5: { tipo: 'efeito', valor: 'Pode distrair inimigos que falham em percepção (-1 Precisão)' }
+      1: { tipo: 'efeito', valor: 'Boa Impressão — Sua aparência chama atenção e costuma causar uma primeira impressão positiva.', narrativa: 'Boa Impressão' },
+      3: { tipo: 'efeito', valor: 'Presença Encantadora — Sua postura, elegância e carisma tornam difícil ignorar sua presença.', narrativa: 'Presença Encantadora' },
+      5: { tipo: 'efeito', valor: 'Figura Memorável — Uma vez por cena, pode atrair naturalmente a atenção de todos ao redor por alguns instantes, tornando-se o centro das atenções.', narrativa: 'Figura Memorável' }
     },
     'camuflagem': {
-      1: { tipo: 'bonus-percentual', valor: '+20% Prontidão' },
-      3: { tipo: 'bonus', valor: '+5 Agilidade' },
-      5: { tipo: 'bonus', valor: '+1 Reação' }
+      1: { tipo: 'efeito', valor: 'Mistura Natural — Consegue utilizar o ambiente para ocultar sua presença com grande eficiência.', narrativa: 'Mistura Natural' },
+      3: { tipo: 'efeito', valor: 'Disfarce Ambiental — Adapta rapidamente sua postura e movimentação para combinar com qualquer terreno ou cenário.', narrativa: 'Disfarce Ambiental' },
+      5: { tipo: 'efeito', valor: 'Invisibilidade Natural — Uma vez por cena, consegue permanecer praticamente imperceptível enquanto permanecer imóvel ou utilizar perfeitamente a cobertura do ambiente.', narrativa: 'Invisibilidade Natural' }
     },
     'canto': {
-      1: { tipo: 'efeito', valor: '+1 em testes de encantar/inspirar/acalmar' },
-      3: { tipo: 'bonus', valor: '+5 Inteligência' },
-      5: { tipo: 'bonus-opcional', valor: '+1 Reação', valorOpcional: '+1 Precisão' }
+      1: { tipo: 'efeito', valor: 'Voz Harmoniosa — Sua voz é agradável, firme e capaz de prender facilmente a atenção de quem escuta.', narrativa: 'Voz Harmoniosa' },
+      3: { tipo: 'efeito', valor: 'Melodia Inspiradora — Seu canto desperta emoções profundas, podendo acalmar, inspirar ou confortar aqueles que o ouvem.', narrativa: 'Melodia Inspiradora' },
+      5: { tipo: 'efeito', valor: 'Canção Lendária — Uma vez por cena, pode executar uma apresentação memorável capaz de alterar significativamente o clima emocional de um grupo, desde que possam ouvi-lo.', narrativa: 'Canção Lendária' }
     },
     'compreensao': {
-      1: { tipo: 'bonus', valor: '+5 Inteligência' },
-      3: { tipo: 'efeito', valor: 'Aprenda técnicas extras rolando 1d4+2' },
-      5: { tipo: 'efeito', valor: 'Compreenda elementos com efeitos narrativos poderosos' }
+      1: { tipo: 'efeito', valor: 'Após alguns minutos analisando algo, compreende seu funcionamento básico.', narrativa: 'Observador' },
+      3: { tipo: 'efeito', valor: 'Consegue identificar fraquezas, padrões ou inconsistências em técnicas, objetos e comportamentos.', narrativa: 'Entendimento Profundo' },
+      5: { tipo: 'efeito', valor: 'Uma vez por cena, pode fazer uma pergunta ao mestre sobre uma situação, habilidade ou fenômeno e receber uma resposta verdadeira dentro do conhecimento que seu personagem seria capaz de alcançar.', narrativa: 'Iluminação' }
     },
     'controleqi': {
-      1: { tipo: 'bonus-opcional', valor: '+5 Percepção', valorOpcional: '+5 Inteligência' },
-      3: { tipo: 'bonus', valor: '+1 Reação' },
-      5: { tipo: 'efeito', valor: 'Interrompa circulação de Qi de inimigos com toque' }
+      1: { tipo: 'efeito', valor: 'Consegue perceber naturalmente a circulação de Qi em si mesmo e em outros seres vivos.', narrativa: 'Fluxo Energético' },
+      3: { tipo: 'efeito', valor: 'Pode controlar seu próprio fluxo de Qi com extrema precisão, evitando desperdícios durante técnicas e meditação.', narrativa: 'Circulação Perfeita' },
+      5: { tipo: 'efeito', valor: 'Uma vez por combate, pode interromper temporariamente o fluxo de Qi de um alvo, dificultando a utilização de técnicas espirituais por um turno.', narrativa: 'Supressão Energética' }
     },
     'conhecimento': {
-      1: { tipo: 'bonus', valor: '+5 Inteligência' },
-      3: { tipo: 'efeito', valor: 'Dados extras (+1d6) em testes de decifração e investigação' },
-      5: { tipo: 'efeito', valor: 'Relembre fatos úteis sobre locais, criaturas e eventos' }
+      1: { tipo: 'efeito', valor: 'Reconhece facilmente livros, símbolos, artefatos e conhecimentos comuns de diversas áreas.', narrativa: 'Estudioso' },
+      3: { tipo: 'efeito', valor: 'Consegue relacionar informações aparentemente desconexas e formular conclusões rapidamente.', narrativa: 'Biblioteca Viva' },
+      5: { tipo: 'efeito', valor: 'Nunca esquece algo que tenha estudado ou presenciado conscientemente e pode recordar essas informações sempre que necessário.', narrativa: 'Memória Absoluta' }
     },
     'cultivo': {
-      1: { tipo: 'efeito', valor: 'Recuperação de energia em descansos curtos dobrada' },
-      3: { tipo: 'bonus', valor: '+5 Inteligência' },
-      5: { tipo: 'efeito', valor: 'Atravesse barreiras ou resista a campos de supressão inferiores' }
+      1: { tipo: 'efeito', valor: 'Obtém muito mais proveito de períodos de meditação e treinamento espiritual.', narrativa: 'Meditação Profunda' },
+      3: { tipo: 'efeito', valor: 'Seu cultivo torna-se extremamente estável, reduzindo significativamente o risco de desvios energéticos.', narrativa: 'Harmonia Interior' },
+      5: { tipo: 'efeito', valor: 'Uma vez por descanso, pode alcançar um estado de profunda compreensão sobre seu próprio cultivo, identificando falhas, gargalos ou o próximo passo para evoluir.', narrativa: 'Iluminação' }
     },
     'danca': {
-      1: { tipo: 'bonus', valor: '+1 Evasão' },
-      3: { tipo: 'bonus', valor: '+5 Agilidade' },
-      5: { tipo: 'bonus', valor: '+1 Reação' }
+      1: { tipo: 'efeito', valor: 'Consegue mover-se com extrema leveza e naturalidade, mesmo em ambientes difíceis.', narrativa: 'Passos Elegantes' },
+      3: { tipo: 'efeito', valor: 'Adapta seus movimentos ao ritmo de qualquer combate, música ou situação sem perder a fluidez.', narrativa: 'Ritmo Perfeito' },
+      5: { tipo: 'efeito', valor: 'Uma vez por cena, pode executar uma sequência de movimentos tão perfeita que confunde momentaneamente todos os observadores.', narrativa: 'Dança Celestial' }
     },
     'diplomacia': {
-      1: { tipo: 'efeito', valor: 'Reduz hostilidade de NPCs com sucesso bem-sucedido' },
-      3: { tipo: 'bonus', valor: '+5 Inteligência' },
-      5: { tipo: 'efeito', valor: 'Aja como mediador entre grupos em conflito' }
+      1: { tipo: 'efeito', valor: 'Consegue manter conversas respeitosas mesmo entre pessoas com opiniões completamente opostas.', narrativa: 'Mediador' },
+      3: { tipo: 'efeito', valor: 'Identifica rapidamente os interesses e motivações de ambas as partes durante uma negociação.', narrativa: 'Negociador Experiente' },
+      5: { tipo: 'efeito', valor: 'Uma vez por cena, pode interromper temporariamente um conflito para abrir espaço para diálogo, desde que exista disposição mínima para conversar.', narrativa: 'Pacificador' }
     },
     'douqi': {
-      1: { tipo: 'efeito', valor: 'Um dado adicional de dano em habilidades com custo de energia' },
-      3: { tipo: 'bonus-opcional', valor: '+5 Força', valorOpcional: '+5 Inteligência' },
-      5: { tipo: 'efeito', valor: 'Ataques imbuídos ignoram 30% de armadura' }
+      1: { tipo: 'efeito', valor: 'Consegue revestir naturalmente ataques e armas com Qi.', narrativa: 'Canalização Espiritual' },
+      3: { tipo: 'efeito', valor: 'Pode moldar o fluxo do Qi durante o combate para adaptar suas técnicas conforme a situação.', narrativa: 'Manipulação Refinada' },
+      5: { tipo: 'efeito', valor: 'Seu Qi consegue atravessar barreiras espirituais simples e atingir diretamente a energia do alvo.', narrativa: 'Perfuração Espiritual' }
     },
     'estrategia': {
-      1: { tipo: 'bonus', valor: '+5 Inteligência' },
-      3: { tipo: 'efeito', valor: '+1d6 adicional para aumentar eficiência do plano' },
-      5: { tipo: 'efeito', valor: 'Aliados que seguem plano ganham vantagem 3x por combate' }
+      1: { tipo: 'efeito', valor: 'Consegue analisar rapidamente um campo de batalha e identificar posições vantajosas.', narrativa: 'Pensamento Estratégico' },
+      3: { tipo: 'efeito', valor: 'Antes de uma missão, pode declarar pequenas preparações plausíveis realizadas previamente.', narrativa: 'Plano de Contingência' },
+      5: { tipo: 'efeito', valor: 'Uma vez por combate, pode reorganizar completamente o plano de ação do grupo, coordenando aliados de forma quase perfeita.', narrativa: 'Mestre Estrategista' }
     },
     'ferraria': {
-      1: { tipo: 'bonus', valor: '+5 Força' },
-      3: { tipo: 'efeito', valor: 'Metal pode despertar sob martelo' },
-      5: { tipo: 'bonus', valor: '+5 Sorte' }
+      1: { tipo: 'efeito', valor: 'Reconhece facilmente metais, ligas e materiais de qualidade.', narrativa: 'Conhecimento Metalúrgico' },
+      3: { tipo: 'efeito', valor: 'Produz equipamentos com acabamento superior e maior resistência ao desgaste.', narrativa: 'Ferreiro Experiente' },
+      5: { tipo: 'efeito', valor: 'Uma vez por descanso, pode criar um equipamento excepcional capaz de desenvolver uma característica única, definida durante sua criação.', narrativa: 'Obra-Prima' }
     },
     'folego': {
-      1: { tipo: 'bonus', valor: '+5 Vitalidade' },
-      3: { tipo: 'efeito', valor: 'Reduz custo de arts que usam fadiga em 30%' },
-      5: { tipo: 'efeito', valor: 'Recupere 50% da fadiga em descanso curto' }
+      1: { tipo: 'efeito', valor: 'Mantém a respiração estável mesmo durante esforços prolongados.', narrativa: 'Respiração Controlada' },
+      3: { tipo: 'efeito', valor: 'Consegue prolongar atividades físicas intensas por muito mais tempo que uma pessoa comum.', narrativa: 'Ritmo Constante' },
+      5: { tipo: 'efeito', valor: 'Uma vez por cena, pode continuar agindo normalmente mesmo após atingir seu limite físico, até que a situação termine.', narrativa: 'Incansável' }
     },
     'furtividade': {
-      1: { tipo: 'efeito', valor: '-3 de obstáculo adicional em alvos tentando avistar' },
-      3: { tipo: 'bonus', valor: '+5 Agilidade' },
-      5: { tipo: 'bonus', valor: '+1 Precisão' }
+      1: { tipo: 'efeito', valor: 'Move-se produzindo o mínimo possível de ruído.', narrativa: 'Passos Silenciosos' },
+      3: { tipo: 'efeito', valor: 'Sabe aproveitar sombras, obstáculos e distrações para permanecer despercebido.', narrativa: 'Presença Oculta' },
+      5: { tipo: 'efeito', valor: 'Uma vez por cena, desaparece momentaneamente da percepção dos inimigos ao utilizar perfeitamente o ambiente ao seu redor, reaparecendo em uma posição vantajosa.', narrativa: 'Fantasma' }
     },
     'idioma': {
-      1: { tipo: 'efeito', valor: 'Compreenda uma nova língua por nível' },
-      3: { tipo: 'bonus', valor: '+5 Inteligência' },
-      5: { tipo: 'efeito', valor: 'Diminui -3 custo de testes sociais com povos estrangeiros' }
+      1: { tipo: 'efeito', valor: 'Aprende novos idiomas com muito mais facilidade e compreende expressões básicas de línguas aparentadas.', narrativa: 'Poliglota' },
+      3: { tipo: 'efeito', valor: 'Consegue identificar a origem, a época e até aspectos culturais de uma língua ou escrita desconhecida após analisá-la.', narrativa: 'Linguista' },
+      5: { tipo: 'efeito', valor: 'Após alguns minutos de interação, consegue estabelecer comunicação básica com qualquer criatura inteligente, mesmo sem compartilhar um idioma.', narrativa: 'Comunicação Universal' }
     },
     'intimidacao': {
-      1: { tipo: 'bonus', valor: '+5 Inteligência' },
-      3: { tipo: 'efeito', valor: '+1 em testes contra inimigos ou oponentes fracos' },
-      5: { tipo: 'efeito', valor: 'Inimigos fracos hesitam/falham em atacar por 1 rodada' }
+      1: { tipo: 'efeito', valor: 'Sua simples postura é suficiente para desencorajar indivíduos inseguros ou inexperientes.', narrativa: 'Presença Ameaçadora' },
+      3: { tipo: 'efeito', valor: 'Consegue identificar rapidamente quem possui medo, insegurança ou hesitação e explorar essas fraquezas durante uma conversa.', narrativa: 'Domínio Psicológico' },
+      5: { tipo: 'efeito', valor: 'Uma vez por cena, pode intimidar um alvo apenas com sua presença, obrigando-o a hesitar antes de agir caso sua determinação seja inferior à sua.', narrativa: 'Olhar do Predador' }
     },
     'intuicao': {
-      1: { tipo: 'efeito', valor: 'Detecte situações de surpresa com antecipação' },
-      3: { tipo: 'bonus', valor: '+5 Percepção' },
-      5: { tipo: 'efeito', valor: 'Dados extras (+1d4) quando faltam informações' }
+      1: { tipo: 'efeito', valor: 'Percebe quando algo está errado mesmo sem conseguir explicar o motivo.', narrativa: 'Sexto Sentido' },
+      3: { tipo: 'efeito', valor: 'Consegue perceber mentiras, intenções ocultas ou mudanças de comportamento através de pequenos detalhes.', narrativa: 'Leitura Instintiva' },
+      5: { tipo: 'efeito', valor: 'Uma vez por cena, pode perguntar ao mestre se determinada decisão representa um grande risco ou uma oportunidade favorável.', narrativa: 'Presságio' }
     },
     'labia': {
-      1: { tipo: 'bonus', valor: '+5 Inteligência' },
-      3: { tipo: 'efeito', valor: 'Inverta acusação ou coloque culpa em outro com sucesso' },
-      5: { tipo: 'efeito', valor: 'Reduz dificuldade social em -3 contra figuras de autoridade' }
+      1: { tipo: 'efeito', valor: 'Consegue conduzir naturalmente uma conversa para o assunto que desejar.', narrativa: 'Conversador Nato' },
+      3: { tipo: 'efeito', valor: 'É capaz de plantar dúvidas, sugestões ou falsas conclusões sem que a outra pessoa perceba imediatamente.', narrativa: 'Manipulador' },
+      5: { tipo: 'efeito', valor: 'Uma vez por cena, pode transformar uma conversa extremamente desfavorável em uma negociação justa, desde que o alvo esteja disposto a ouvir.', narrativa: 'Língua de Ouro' }
     },
     'lideranca': {
-      1: { tipo: 'efeito', valor: 'Aliados recebem bônus de +1 em ações seguindo plano' },
-      3: { tipo: 'efeito', valor: 'Redução em testes de Sanidade ou Vontade em -3' },
-      5: { tipo: 'efeito', valor: 'Reorganize iniciativa do grupo 1x por combate' }
+      1: { tipo: 'efeito', valor: 'Aliados tendem a confiar em suas decisões durante situações difíceis.', narrativa: 'Inspiração Natural' },
+      3: { tipo: 'efeito', valor: 'Consegue distribuir tarefas e organizar grupos grandes com extrema eficiência, evitando confusão e desperdício de tempo.', narrativa: 'Coordenação' },
+      5: { tipo: 'efeito', valor: 'Uma vez por cena, coordena perfeitamente todos os aliados próximos, permitindo que executem um plano previamente elaborado sem falhas de comunicação.', narrativa: 'Comandante Supremo' }
     },
     'maestria': {
-      1: { tipo: 'bonus', valor: '+1 em testes ligados à área de maestria' },
-      3: { tipo: 'efeito', valor: 'Reduz obstáculo da área em -3' },
-      5: { tipo: 'bonus', valor: '+5 em atributo relacionado à área escolhida' }
+      1: { tipo: 'efeito', valor: 'Escolha uma profissão, técnica ou conhecimento específico. Você aprende e evolui nessa área muito mais rapidamente.', narrativa: 'Especialista' },
+      3: { tipo: 'efeito', valor: 'Erros simples relacionados à sua especialidade tornam-se extremamente raros.', narrativa: 'Domínio Absoluto' },
+      5: { tipo: 'efeito', valor: 'Sua habilidade é tão refinada que outros especialistas conseguem reconhecer sua maestria apenas observando seu trabalho.', narrativa: 'Mestre Lendário' }
     },
     'matrizes': {
-      1: { tipo: 'bonus', valor: '+5 Inteligência' },
-      3: { tipo: 'bonus-percentual', valor: '+20% Prontidão' },
-      5: { tipo: 'efeito', valor: 'Ative uma matriz previamente desenhada como ação bônus 1x' }
+      1: { tipo: 'efeito', valor: 'Consegue compreender e reproduzir matrizes simples.', narrativa: 'Conhecimento Rúnico' },
+      3: { tipo: 'efeito', valor: 'Pode criar matrizes condicionais que são ativadas apenas quando uma condição específica for atendida.', narrativa: 'Programação Arcana' },
+      5: { tipo: 'efeito', valor: 'É capaz de combinar diversas matrizes em uma única formação complexa, produzindo efeitos inéditos.', narrativa: 'Mestre das Matrizes' }
     },
     'olhocritico': {
-      1: { tipo: 'bonus', valor: '+1 Precisão' },
-      3: { tipo: 'bonus', valor: '+5 Percepção' },
-      5: { tipo: 'efeito', valor: 'Reduza defesa do alvo com ataques críticos' }
+      1: { tipo: 'efeito', valor: 'Identifica pequenos defeitos em objetos, estruturas e equipamentos.', narrativa: 'Observador' },
+      3: { tipo: 'efeito', valor: 'Após observar um alvo por algum tempo, consegue descobrir hábitos, padrões de combate ou possíveis fraquezas.', narrativa: 'Leitura de Vulnerabilidades' },
+      5: { tipo: 'efeito', valor: 'Uma vez por cena, pode descobrir o ponto fraco mais evidente de uma criatura, objeto ou construção.', narrativa: 'Análise Perfeita' }
     },
     'percepcao': {
-      1: { tipo: 'efeito', valor: 'Detecte armadilhas, pistas ou emboscadas sem rolagem' },
-      3: { tipo: 'bonus', valor: '+5 Percepção' },
-      5: { tipo: 'bonus', valor: '+1 Reação' }
+      1: { tipo: 'efeito', valor: 'Percebe sons, odores e movimentos discretos com facilidade.', narrativa: 'Sentidos Aguçados' },
+      3: { tipo: 'efeito', valor: 'Consegue reconstruir parcialmente acontecimentos através de pegadas, marcas, vestígios e detalhes do ambiente.', narrativa: 'Investigador' },
+      5: { tipo: 'efeito', valor: 'É extremamente difícil ser surpreendido quando estiver atento ao ambiente.', narrativa: 'Olhos que Tudo Veem' }
     },
     'prestidigitacao': {
-      1: { tipo: 'bonus', valor: '+1 Precisão' },
-      3: { tipo: 'bonus', valor: '+5 Agilidade' },
-      5: { tipo: 'efeito', valor: 'Re-role um dado falho em ações fora de combate' }
+      1: { tipo: 'efeito', valor: 'Executa movimentos delicados com extrema precisão.', narrativa: 'Dedos Ágeis' },
+      3: { tipo: 'efeito', valor: 'Consegue esconder, trocar ou retirar pequenos objetos sem chamar atenção.', narrativa: 'Manipulação Imperceptível' },
+      5: { tipo: 'efeito', valor: 'Uma vez por cena, pode realizar um truque manual praticamente impossível aos olhos de quem estiver observando.', narrativa: 'Mãos Fantasma' }
     },
     'pressentimento': {
-      1: { tipo: 'efeito', valor: 'Aumente reação em +3 após evasão falha no turno seguinte' },
-      3: { tipo: 'bonus', valor: '+5 Sorte' },
-      5: { tipo: 'efeito', valor: 'Re-role uma falha em percepção/reação 1x por combate' }
+      1: { tipo: 'efeito', valor: 'Pouco antes de um perigo iminente, sente uma estranha sensação de alerta.', narrativa: 'Mau Presságio' },
+      3: { tipo: 'efeito', valor: 'Recebe breves intuições sobre acontecimentos que podem ocorrer nos próximos instantes.', narrativa: 'Vislumbre' },
+      5: { tipo: 'efeito', valor: 'Uma vez por cena, pode pedir ao mestre um aviso sobre um perigo imediato antes que ele aconteça.', narrativa: 'Premonição' }
     },
     'religiao': {
-      1: { tipo: 'efeito', valor: 'Identifique símbolos sagrados, maldições e eventos espirituais' },
-      3: { tipo: 'efeito', valor: 'Reduza obstáculos relacionados em -2 pontos' },
-      5: { tipo: 'bonus', valor: '+5 Inteligência' }
+      1: { tipo: 'efeito', valor: 'Reconhece divindades, símbolos religiosos, rituais e maldições comuns.', narrativa: 'Erudição Sagrada' },
+      3: { tipo: 'efeito', valor: 'Compreende os costumes, doutrinas e práticas das principais religiões.', narrativa: 'Devoto Experiente' },
+      5: { tipo: 'efeito', valor: 'Durante uma oração ou ritual, pode receber um pequeno presságio ou orientação da divindade que segue, caso existam condições para isso.', narrativa: 'Revelação Divina' }
     },
     'sanidade': {
-      1: { tipo: 'efeito', valor: 'Reduz dificuldade de testes de sanidade em -3' },
-      3: { tipo: 'bonus', valor: '+5 Vitalidade' },
-      5: { tipo: 'efeito', valor: 'Ganhe vantagem contra medo 2x por sessão' }
+      1: { tipo: 'efeito', valor: 'Mantém a calma diante de situações perturbadoras.', narrativa: 'Mente Estável' },
+      3: { tipo: 'efeito', valor: 'Recupera-se muito mais rapidamente de traumas emocionais e choques psicológicos.', narrativa: 'Psique Resiliente' },
+      5: { tipo: 'efeito', valor: 'Uma vez por cena, pode ignorar completamente um efeito de medo, desespero ou terror.', narrativa: 'Mente Inabalável' }
     },
     'seducao': {
-      1: { tipo: 'efeito', valor: 'Interessados sofrem -3 em ações contra sua vontade' },
-      3: { tipo: 'bonus', valor: '+5 Sorte' },
-      5: { tipo: 'efeito', valor: 'Inverta hostilidade de um alvo para neutralidade' }
+      1: { tipo: 'efeito', valor: 'Sua presença desperta simpatia e curiosidade com facilidade.', narrativa: 'Charme Natural' },
+      3: { tipo: 'efeito', valor: 'Consegue criar rapidamente uma conexão emocional durante uma conversa.', narrativa: 'Encanto' },
+      5: { tipo: 'efeito', valor: 'Uma vez por cena, pode transformar uma interação hostil em uma oportunidade de diálogo ou aproximação, desde que o alvo seja emocionalmente influenciável.', narrativa: 'Conquista Perfeita' }
     },
     'selos': {
-      1: { tipo: 'efeito', valor: 'Armazene magias em selos (1 por nível)' },
-      3: { tipo: 'bonus', valor: '+5 Inteligência' },
-      5: { tipo: 'bonus', valor: '+1 Precisão' }
+      1: { tipo: 'efeito', valor: 'Consegue armazenar pequenos objetos ou energias em selos.', narrativa: 'Selagem Básica' },
+      3: { tipo: 'efeito', valor: 'Pode criar selos mais resistentes e duradouros.', narrativa: 'Selagem Avançada' },
+      5: { tipo: 'efeito', valor: 'É capaz de desenvolver selos complexos para armazenar técnicas, criaturas, artefatos ou grandes quantidades de energia.', narrativa: 'Mestre Selador' }
     },
     'sobrevivencia': {
-      1: { tipo: 'efeito', valor: 'Reduz dificuldade em ações de seu conhecimento' },
-      3: { tipo: 'bonus-opcional', valor: '+5 Percepção', valorOpcional: '+5 Inteligência' },
-      5: { tipo: 'efeito', valor: 'Detecte trilhas com vantagem (+1d6)' }
+      1: { tipo: 'efeito', valor: 'Encontra facilmente abrigo, água e recursos básicos na natureza.', narrativa: 'Adaptabilidade' },
+      3: { tipo: 'efeito', valor: 'Consegue seguir rastros, identificar animais e prever mudanças ambientais.', narrativa: 'Rastreador' },
+      5: { tipo: 'efeito', valor: 'Mesmo em ambientes extremamente hostis, encontra maneiras de permanecer vivo utilizando apenas os recursos disponíveis.', narrativa: 'Sobrevivente Lendário' }
     },
     'tolerancia': {
-      1: { tipo: 'efeito', valor: 'Reduz dificuldade de obstáculos em -3' },
-      3: { tipo: 'efeito', valor: 'Reduz duração de venenos/queimaduras/doenças em 1 turno' },
-      5: { tipo: 'efeito', valor: 'Permaneça em pé apesar de golpe derrubador 1x por sessão' }
+      1: { tipo: 'efeito', valor: 'Suporta melhor temperaturas extremas, fome, sede e desconforto.', narrativa: 'Corpo Adaptável' },
+      3: { tipo: 'efeito', valor: 'Seu organismo combate com maior eficiência venenos, doenças e condições adversas.', narrativa: 'Resistência Natural' },
+      5: { tipo: 'efeito', valor: 'Uma vez por cena, permanece consciente e capaz de agir mesmo quando seu corpo deveria ceder ao esgotamento.', narrativa: 'Vontade Inquebrável' }
     },
     'unicskill': {
-      1: { tipo: 'efeito', valor: 'Núcleo Habilidade Extra' },
-      3: { tipo: 'bonus', valor: '+1 em testes de ativação e controle' },
-      5: { tipo: 'bonus', valor: '+5 no atributo primário do poder' }
+      1: { tipo: 'efeito', valor: 'Desenvolve uma habilidade exclusiva ligada ao seu Núcleo.', narrativa: 'Despertar' },
+      3: { tipo: 'efeito', valor: 'Descobre novas formas de utilizar sua habilidade única, ampliando sua versatilidade.', narrativa: 'Evolução' },
+      5: { tipo: 'efeito', valor: 'Sua habilidade desperta uma característica exclusiva que nenhum outro usuário consegue reproduzir exatamente.', narrativa: 'Singularidade' }
     },
     'vontade': {
-      1: { tipo: 'bonus', valor: '+5 Vitalidade' },
-      3: { tipo: 'efeito', valor: '+2 resistências contra efeitos mentais' },
-      5: { tipo: 'efeito', valor: 'Negue um efeito mental 1x por dia com sucesso automático' }
+      1: { tipo: 'efeito', valor: 'Mantém suas convicções mesmo sob grande pressão.', narrativa: 'Espírito Indomável' },
+      3: { tipo: 'efeito', valor: 'É extremamente difícil fazê-lo desistir de um objetivo importante.', narrativa: 'Determinação Absoluta' },
+      5: { tipo: 'efeito', valor: 'Uma vez por cena, rompe ou resiste a um efeito de manipulação mental, ilusão ou controle da mente.', narrativa: 'Liberdade da Mente' }
     },
     'zanjutsu': {
-      1: { tipo: 'bonus', valor: '+1 Precisão' },
-      3: { tipo: 'bonus', valor: '+5 Força' },
-      5: { tipo: 'efeito', valor: 'Permite realizar um aparo (parry) como Reação, reduzindo dano físico em 30%' }
+      1: { tipo: 'efeito', valor: 'Domina corretamente a postura, empunhadura e fundamentos das espadas.', narrativa: 'Técnica Refinada' },
+      3: { tipo: 'efeito', valor: 'Consegue adaptar seu estilo rapidamente ao tipo de arma branca utilizada.', narrativa: 'Espadachim Experiente' },
+      5: { tipo: 'efeito', valor: 'Uma vez por combate, realiza um aparo perfeito capaz de neutralizar completamente um ataque corpo a corpo executado contra você, desde que seja possível bloqueá-lo.', narrativa: 'Defesa Perfeita' }
     },
     'hoho': {
-      1: { tipo: 'bonus', valor: '+5 Agilidade' },
-      3: { tipo: 'bonus', valor: '+1 Evasão' },
-      5: { tipo: 'efeito', valor: 'Shunpo: mover-se para qualquer ponto no campo de visão como ação bônus 1x por combate' }
+      1: { tipo: 'efeito', valor: 'Domina os fundamentos do Hohō, movimentando-se com extrema leveza e rapidez.', narrativa: 'Passos Instantâneos' },
+      3: { tipo: 'efeito', valor: 'Consegue realizar deslocamentos tão rápidos que deixa pós-imagens ou desaparece momentaneamente da percepção de quem observa.', narrativa: 'Movimento Fantasma' },
+      5: { tipo: 'efeito', valor: 'Uma vez por combate, pode realizar um Shunpo para qualquer ponto dentro do seu campo de visão, desde que o local seja acessível.', narrativa: 'Shunpo' }
     },
     'kido': {
-      1: { tipo: 'bonus', valor: '+5 Inteligência' },
-      3: { tipo: 'efeito', valor: 'Kidōs até nível 30 têm dificuldade reduzida em -3' },
-      5: { tipo: 'efeito', valor: 'Eishohaki: conjura Kidō como ação bônus com 50% de potência' }
+      1: { tipo: 'efeito', valor: 'Consegue moldar o Reiryoku com precisão para executar Kidōs com maior estabilidade.', narrativa: 'Canalização Espiritual' },
+      3: { tipo: 'efeito', valor: 'É capaz de conjurar Kidōs com menos gestos e palavras, mantendo sua eficiência.', narrativa: 'Domínio do Kidō' },
+      5: { tipo: 'efeito', valor: 'Uma vez por combate, pode conjurar um Kidō sem recitar seu encantamento completo, preservando praticamente todo o seu poder.', narrativa: 'Eishōhaki' }
     },
     'hakuda': {
-      1: { tipo: 'bonus', valor: '+5 Força' },
-      3: { tipo: 'efeito', valor: 'Ataques desarmados ganham +1 Precisão e ignoram 10% de armadura' },
-      5: { tipo: 'bonus', valor: '+1 Reação' }
+      1: { tipo: 'efeito', valor: 'Domina os fundamentos do combate corpo a corpo utilizando apenas o próprio corpo.', narrativa: 'Artes Marciais' },
+      3: { tipo: 'efeito', valor: 'Consegue alternar golpes, projeções, imobilizações e contra-ataques com extrema naturalidade.', narrativa: 'Combate Adaptável' },
+      5: { tipo: 'efeito', valor: 'Uma vez por combate, pode executar uma técnica perfeita de combate desarmado capaz de interromper completamente a ação de um inimigo.', narrativa: 'Mestre do Hakuda' }
     },
     'reiatsu': {
-      1: { tipo: 'bonus', valor: '+5 Vitalidade' },
-      3: { tipo: 'efeito', valor: 'Inimigos com Inteligência menor sofrem -1 Precisão quando próximos' },
-      5: { tipo: 'efeito', valor: 'Liberação de Pressão: 1x por combate, inimigos testam Vontade ou ficam Abalados' }
+      1: { tipo: 'efeito', valor: 'Sua Reiatsu pode ser sentida claramente por outros usuários espirituais.', narrativa: 'Presença Espiritual' },
+      3: { tipo: 'efeito', valor: 'Aprende a controlar sua Reiatsu, ocultando-a ou liberando-a conforme desejar.', narrativa: 'Domínio da Pressão' },
+      5: { tipo: 'efeito', valor: 'Uma vez por combate, libera sua Reiatsu de forma avassaladora, obrigando todos os inimigos próximos a enfrentarem um teste de Vontade ou ficarem abalados diante da diferença de poder.', narrativa: 'Pressão Absoluta' }
     },
     'reiraku': {
-      1: { tipo: 'bonus', valor: '+5 Percepção' },
-      3: { tipo: 'efeito', valor: 'Detecta localização e força de seres espirituais em até 1km' },
-      5: { tipo: 'bonus', valor: '+1 Reação contra inimigos ocultos ou invisíveis' }
+      1: { tipo: 'efeito', valor: 'Percebe naturalmente a presença de seres espirituais próximos.', narrativa: 'Sentido Espiritual' },
+      3: { tipo: 'efeito', valor: 'É capaz de seguir rastros espirituais e localizar indivíduos através da assinatura do seu Reiryoku.', narrativa: 'Rastreamento Espiritual' },
+      5: { tipo: 'efeito', valor: 'Consegue perceber seres ocultos, invisíveis, disfarçados espiritualmente ou utilizando técnicas de ocultação espiritual.', narrativa: 'Visão da Alma' }
     },
     'comunicacao_zanpakuto': {
-      1: { tipo: 'bonus', valor: '+5 Sorte' },
-      3: { tipo: 'efeito', valor: '-30% custo de ativação da Shikai' },
-      5: { tipo: 'efeito', valor: 'Sincronia: re-role um ataque ou habilidade da Zanpakutō 1x por dia' }
+      1: { tipo: 'efeito', valor: 'Consegue ouvir e compreender melhor a vontade da sua Zanpakutō durante a meditação.', narrativa: 'Voz Interior' },
+      3: { tipo: 'efeito', valor: 'A comunicação com sua Zanpakutō torna-se natural, permitindo compreender seus sentimentos e intenções com facilidade.', narrativa: 'Sincronia Espiritual' },
+      5: { tipo: 'efeito', valor: 'Uma vez por descanso, pode pedir orientação diretamente à sua Zanpakutō, recebendo uma resposta sincera dentro do conhecimento que ela possui.', narrativa: 'Harmonia Absoluta' }
     },
     'conhecimento_soul_society': {
-      1: { tipo: 'bonus', valor: '+5 Inteligência' },
-      3: { tipo: 'efeito', valor: '+1d6 em testes sobre as 13 Divisões' },
-      5: { tipo: 'efeito', valor: 'Identifica fraquezas de Hollows comuns automaticamente' }
+      1: { tipo: 'efeito', valor: 'Conhece a estrutura, história e funcionamento da Soul Society.', narrativa: 'Estudioso da Soul Society' },
+      3: { tipo: 'efeito', valor: 'Reconhece técnicas, tradições, famílias nobres, divisões e figuras importantes apenas observando detalhes.', narrativa: 'Especialista' },
+      5: { tipo: 'efeito', valor: 'Consegue identificar rapidamente características, hábitos e possíveis habilidades de Hollows, Arrancars, Quincy e Shinigamis conhecidos.', narrativa: 'Enciclopédia Viva' }
     },
     'resistencia_espiritual': {
-      1: { tipo: 'bonus', valor: '+5 Vitalidade' },
-      3: { tipo: 'bonus-percentual', valor: '+10% defesa' },
-      5: { tipo: 'efeito', valor: 'Reduz dano espiritual recebido em 2 dados adicionais' }
+      1: { tipo: 'efeito', valor: 'Mantém a estabilidade espiritual mesmo diante de grandes pressões.', narrativa: 'Espírito Resiliente' },
+      3: { tipo: 'efeito', valor: 'Seu espírito suporta técnicas espirituais intensas sem perder facilmente o controle.', narrativa: 'Alma Inabalável' },
+      5: { tipo: 'efeito', valor: 'Uma vez por combate, pode suportar completamente uma técnica espiritual que normalmente o incapacitaria, permanecendo consciente.', narrativa: 'Barreira Espiritual' }
     },
     'konso': {
-      1: { tipo: 'efeito', valor: '+1 em testes sociais com almas ou espíritos errantes' },
-      3: { tipo: 'bonus', valor: '+5 Inteligência' },
-      5: { tipo: 'efeito', valor: 'Purifica almas menores instantaneamente fora de combate sem gastar ação' }
+      1: { tipo: 'efeito', valor: 'Consegue realizar corretamente o ritual de envio das almas para a Soul Society.', narrativa: 'Guia Espiritual' },
+      3: { tipo: 'efeito', valor: 'Reconhece almas corrompidas e compreende o estado espiritual em que se encontram.', narrativa: 'Purificação' },
+      5: { tipo: 'efeito', valor: 'Uma vez por cena, pode purificar uma alma menor ou espírito corrompido sem necessidade de combate, caso sua corrupção ainda seja reversível.', narrativa: 'Purificação Suprema' }
     },
     'meditacao_jinzen': {
-      1: { tipo: 'efeito', valor: 'Recuperação de Reiryoku em descanso curto é dobrada' },
-      3: { tipo: 'bonus', valor: '+5 Inteligência' },
-      5: { tipo: 'efeito', valor: 'Transe: recupera 100% da fadiga em 10 minutos' }
+      1: { tipo: 'efeito', valor: 'Entra em estado meditativo com extrema facilidade, alcançando rapidamente a paz interior.', narrativa: 'Meditação Profunda' },
+      3: { tipo: 'efeito', valor: 'Consegue acessar conscientemente seu mundo interior para compreender melhor sua Zanpakutō e seu próprio espírito.', narrativa: 'Mundo Interior' },
+      5: { tipo: 'efeito', valor: 'Uma vez por descanso, pode entrar em um profundo estado de Jinzen, fortalecendo temporariamente sua conexão espiritual e recebendo uma revelação, ensinamento ou orientação de sua Zanpakutō.', narrativa: 'Êxtase Espiritual' }
+    },
+    'investigacao': {
+      1: { tipo: 'efeito', valor: 'Consegue encontrar e preservar pistas, evidências e detalhes que a maioria das pessoas ignoraria durante uma investigação.', narrativa: 'Coleta de Evidências' },
+      3: { tipo: 'efeito', valor: 'Após analisar uma cena, consegue reconstruir parcialmente a sequência dos acontecimentos com base nos vestígios encontrados.', narrativa: 'Reconstrução dos Fatos' },
+      5: { tipo: 'efeito', valor: 'Uma vez por cena, pode formular uma hipótese sobre um mistério, crime ou acontecimento. O mestre deve informar se essa hipótese está correta, parcialmente correta ou incorreta, sem revelar detalhes adicionais.', narrativa: 'Detetive Exímio' }
     }
-   
   };
 
   /**

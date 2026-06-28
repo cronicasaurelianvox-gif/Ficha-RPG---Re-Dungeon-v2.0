@@ -354,16 +354,16 @@ class AptidoesDB {
      * Dados baseados em APTIDOES_LISTA.txt
      */
     getCatalogoCompleto() {
-        return [
+        const catalogo = [
             {
                 id: 'acrobacia',
                 nome: 'Acrobacia',
                 descricao: 'Movimentos ágeis e equilibrados',
                 imagem: 'https://i.imgur.com/TAnNSDg.png',
                 vantagens: [
-                    { nivel: 1, efeito: '+5 Agilidade', narrativa: 'Movimentos ágeis' },
-                    { nivel: 3, efeito: '+1 Reação', narrativa: 'Reflexos apurados' },
-                    { nivel: 5, efeito: '+1 Evasão', narrativa: 'Esquivas ágeis' }
+                    { nivel: 1, efeito: 'Nunca sofre penalidades por superfícies estreitas ou instáveis comuns.', narrativa: 'Equilíbrio Natural' },
+                    { nivel: 3, efeito: 'Pode atravessar obstáculos, grades, janelas e espaços reduzidos sem precisar reduzir o movimento.', narrativa: 'Corpo Adaptável' },
+                    { nivel: 5, efeito: 'Uma vez por cena, realiza uma manobra física considerada impossível para uma pessoa comum, desde que não desafie as leis do mundo.', narrativa: 'Movimento Impossível' }
                 ]
             },
             {
@@ -372,9 +372,9 @@ class AptidoesDB {
                 descricao: 'Manipulação de elementos alquímicos',
                 imagem: 'https://i.imgur.com/PMB9pIt.png',
                 vantagens: [
-                    { nivel: 1, efeito: '-3 dificuldade ao fabricar itens', narrativa: 'Criações mais fáceis' },
-                    { nivel: 3, efeito: '+5 Inteligência', narrativa: 'Conhecimento alquímico' },
-                    { nivel: 5, efeito: '-3 teste descontrole alquímico', narrativa: 'Domínio total' }
+                    { nivel: 1, efeito: 'Identifica ingredientes alquímicos apenas observando-os.', narrativa: 'Conhecimento de Reagentes' },
+                    { nivel: 3, efeito: 'Pode substituir um ingrediente comum por outro semelhante sem comprometer completamente a receita.', narrativa: 'Improvisação' },
+                    { nivel: 5, efeito: 'Uma vez por descanso, uma criação alquímica que falharia produz um resultado imperfeito em vez de falhar totalmente.', narrativa: 'Mestre Alquimista' }
                 ]
             },
             {
@@ -383,75 +383,75 @@ class AptidoesDB {
                 descricao: 'Destreza com ambas as mãos',
                 imagem: 'https://i.imgur.com/qJbTuXg.png',
                 vantagens: [
-                    { nivel: 1, efeito: '+1 Precisão', narrativa: 'Ambas as mãos afiadas' },
-                    { nivel: 3, efeito: 'Atacar com ambas as mãos', narrativa: 'Duplo ataque permitido' },
-                    { nivel: 5, efeito: 'Segunda mão = ação comum', narrativa: 'Segundo ataque é gratuito' }
+                    { nivel: 1, efeito: 'Coordenação Total — Utiliza ambas as mãos com a mesma habilidade, sem qualquer perda de precisão ou controle.', narrativa: 'Coordenação Total' },
+                    { nivel: 3, efeito: 'Combate Simétrico — Consegue alternar armas, ferramentas e movimentos entre as duas mãos de forma completamente natural, confundindo adversários.', narrativa: 'Combate Simétrico' },
+                    { nivel: 5, efeito: 'Mestre das Duas Mãos — Uma vez por combate, pode executar uma sequência perfeitamente coordenada utilizando ambas as mãos simultaneamente, realizando duas ações compatíveis em perfeita sincronia.', narrativa: 'Mestre das Duas Mãos' }
                 ]
             },
             {
                 id: 'arcanismo',
                 nome: 'Arcanismo',
-                descricao: 'Maestria em magia arcana',
+                descricao: 'Maestria na magia arcana',
                 imagem: 'https://i.imgur.com/Ryug5hL.png',
                 vantagens: [
-                    { nivel: 1, efeito: '-3 dificuldade casting', narrativa: 'Magias mais fáceis' },
-                    { nivel: 3, efeito: '+1 Precisão', narrativa: 'Magia mais precisa' },
-                    { nivel: 5, efeito: '-3 descontrole mágico', narrativa: 'Domínio absoluto' }
+                    { nivel: 1, efeito: 'Conhecimento Arcano — Reconhece escolas mágicas, encantamentos e fenômenos arcanos com facilidade.', narrativa: 'Conhecimento Arcano' },
+                    { nivel: 3, efeito: 'Manipulação Arcana — Consegue moldar a energia mágica com extrema precisão, reduzindo falhas durante conjurações complexas.', narrativa: 'Manipulação Arcana' },
+                    { nivel: 5, efeito: 'Arquimago — Uma vez por cena, pode compreender instantaneamente o funcionamento básico de uma magia ou artefato arcano desconhecido.', narrativa: 'Arquimago' }
                 ]
             },
             {
                 id: 'atletismo',
                 nome: 'Atletismo',
-                descricao: 'Força e resistência física',
+                descricao: 'Força, condicionamento e preparo físico',
                 imagem: 'https://i.imgur.com/AQS5yO6.png',
                 vantagens: [
-                    { nivel: 1, efeito: '+5 Vitalidade', narrativa: 'Corpo resiliente' },
-                    { nivel: 3, efeito: '+50 Saúde', narrativa: 'Energia vital aumentada' },
-                    { nivel: 5, efeito: '+5 Força', narrativa: 'Força bruta' }
+                    { nivel: 1, efeito: 'Condicionamento Físico — Escala, nada, corre e realiza esforços físicos intensos com muito mais eficiência.', narrativa: 'Condicionamento Físico' },
+                    { nivel: 3, efeito: 'Corpo Treinado — Consegue executar acrobacias, saltos e feitos físicos difíceis com naturalidade.', narrativa: 'Corpo Treinado' },
+                    { nivel: 5, efeito: 'Limite Humano — Uma vez por cena, pode superar temporariamente seus próprios limites físicos para realizar um feito extraordinário.', narrativa: 'Limite Humano' }
                 ]
             },
             {
                 id: 'atuacao',
                 nome: 'Atuação',
-                descricao: 'Interpretação e enganação',
+                descricao: 'Interpretação e representação',
                 imagem: 'https://i.imgur.com/5g11BQc.png',
                 vantagens: [
-                    { nivel: 1, efeito: '+5 Inteligência', narrativa: 'Criatividade aguçada' },
-                    { nivel: 3, efeito: '-3 obstáculo enganação', narrativa: 'Ilusionista magistral' },
-                    { nivel: 5, efeito: 'Imitar vozes/gestos', narrativa: 'Imitação perfeita' }
+                    { nivel: 1, efeito: 'Ator Nato — Consegue interpretar emoções e personalidades de maneira extremamente convincente.', narrativa: 'Ator Nato' },
+                    { nivel: 3, efeito: 'Mestre dos Papéis — Imita sotaques, trejeitos, postura e comportamento de outras pessoas após observá-las.', narrativa: 'Mestre dos Papéis' },
+                    { nivel: 5, efeito: 'Transformação Completa — Uma vez por cena, assume um personagem de forma tão perfeita que até conhecidos podem ser enganados.', narrativa: 'Transformação Completa' }
                 ]
             },
             {
                 id: 'beleza',
                 nome: 'Beleza',
-                descricao: 'Atratividade e aparência',
+                descricao: 'Atratividade e presença marcante',
                 imagem: 'https://i.imgur.com/smmjNh2.png',
                 vantagens: [
-                    { nivel: 1, efeito: '+1 em testes sociais', narrativa: 'Magnetismo natural' },
-                    { nivel: 3, efeito: '+5 Sorte', narrativa: 'Fortuna na beleza' },
-                    { nivel: 5, efeito: '-1 Precisão inimigos', narrativa: 'Distração perfeita' }
+                    { nivel: 1, efeito: 'Boa Impressão — Sua aparência chama atenção e costuma causar uma primeira impressão positiva.', narrativa: 'Boa Impressão' },
+                    { nivel: 3, efeito: 'Presença Encantadora — Sua postura, elegância e carisma tornam difícil ignorar sua presença.', narrativa: 'Presença Encantadora' },
+                    { nivel: 5, efeito: 'Figura Memorável — Uma vez por cena, pode atrair naturalmente a atenção de todos ao redor por alguns instantes, tornando-se o centro das atenções.', narrativa: 'Figura Memorável' }
                 ]
             },
             {
                 id: 'camuflagem',
                 nome: 'Camuflagem',
-                descricao: 'Encobrimento e disfarce',
+                descricao: 'A arte de se misturar ao ambiente',
                 imagem: 'https://i.imgur.com/mdHhKHO.png',
                 vantagens: [
-                    { nivel: 1, efeito: '+20% Prontidão', narrativa: 'Colagem perfeita' },
-                    { nivel: 3, efeito: '+5 Agilidade', narrativa: 'Movimento imperceptível' },
-                    { nivel: 5, efeito: '+1 Reação', narrativa: 'Instinto de sobrevivência' }
+                    { nivel: 1, efeito: 'Mistura Natural — Consegue utilizar o ambiente para ocultar sua presença com grande eficiência.', narrativa: 'Mistura Natural' },
+                    { nivel: 3, efeito: 'Disfarce Ambiental — Adapta rapidamente sua postura e movimentação para combinar com qualquer terreno ou cenário.', narrativa: 'Disfarce Ambiental' },
+                    { nivel: 5, efeito: 'Invisibilidade Natural — Uma vez por cena, consegue permanecer praticamente imperceptível enquanto permanecer imóvel ou utilizar perfeitamente a cobertura do ambiente.', narrativa: 'Invisibilidade Natural' }
                 ]
             },
             {
                 id: 'canto',
                 nome: 'Canto',
-                descricao: 'Poder da voz e música',
+                descricao: 'O poder da voz e da música',
                 imagem: 'https://i.imgur.com/eK4HDSv.png',
                 vantagens: [
-                    { nivel: 1, efeito: '+1 em testes de encantar/inspirar', narrativa: 'Voz hipnotizante' },
-                    { nivel: 3, efeito: '+5 Inteligência', narrativa: 'Educação musical' },
-                    { nivel: 5, efeito: '+1 Reação ou Precisão aliados', narrativa: 'Inspiração épica' }
+                    { nivel: 1, efeito: 'Voz Harmoniosa — Sua voz é agradável, firme e capaz de prender facilmente a atenção de quem escuta.', narrativa: 'Voz Harmoniosa' },
+                    { nivel: 3, efeito: 'Melodia Inspiradora — Seu canto desperta emoções profundas, podendo acalmar, inspirar ou confortar aqueles que o ouvem.', narrativa: 'Melodia Inspiradora' },
+                    { nivel: 5, efeito: 'Canção Lendária — Uma vez por cena, pode executar uma apresentação memorável capaz de alterar significativamente o clima emocional de um grupo, desde que possam ouvi-lo.', narrativa: 'Canção Lendária' }
                 ]
             },
             {
@@ -460,9 +460,9 @@ class AptidoesDB {
                 descricao: 'Entendimento profundo',
                 imagem: 'https://i.imgur.com/pAlsgmZ.png',
                 vantagens: [
-                    { nivel: 1, efeito: '+5 Inteligência', narrativa: 'Mente aguçada' },
-                    { nivel: 3, efeito: '+1d4+2 técnicas extras', narrativa: 'Aprendizado rápido' },
-                    { nivel: 5, efeito: 'Compreensão de elementos', narrativa: 'Conhecimento supremo' }
+                    { nivel: 1, efeito: 'Após alguns minutos analisando algo, compreende seu funcionamento básico.', narrativa: 'Observador' },
+                    { nivel: 3, efeito: 'Consegue identificar fraquezas, padrões ou inconsistências em técnicas, objetos e comportamentos.', narrativa: 'Entendimento Profundo' },
+                    { nivel: 5, efeito: 'Uma vez por cena, pode fazer uma pergunta ao mestre sobre uma situação, habilidade ou fenômeno e receber uma resposta verdadeira dentro do conhecimento que seu personagem seria capaz de alcançar.', narrativa: 'Iluminação' }
                 ]
             },
             {
@@ -471,9 +471,9 @@ class AptidoesDB {
                 descricao: 'Manipulação de energia vital',
                 imagem: 'https://i.imgur.com/bJqRQKW.png',
                 vantagens: [
-                    { nivel: 1, efeito: '+5 Percepção OU Inteligência', narrativa: 'Sensibilidade energética' },
-                    { nivel: 3, efeito: '+1 Reação', narrativa: 'Resposta instantânea' },
-                    { nivel: 5, efeito: 'Interromper Qi inimigos', narrativa: 'Bloqueio energético' }
+                    { nivel: 1, efeito: 'Consegue perceber naturalmente a circulação de Qi em si mesmo e em outros seres vivos.', narrativa: 'Fluxo Energético' },
+                    { nivel: 3, efeito: 'Pode controlar seu próprio fluxo de Qi com extrema precisão, evitando desperdícios durante técnicas e meditação.', narrativa: 'Circulação Perfeita' },
+                    { nivel: 5, efeito: 'Uma vez por combate, pode interromper temporariamente o fluxo de Qi de um alvo, dificultando a utilização de técnicas espirituais por um turno.', narrativa: 'Supressão Energética' }
                 ]
             },
             {
@@ -482,9 +482,9 @@ class AptidoesDB {
                 descricao: 'Saber acadêmico vasto',
                 imagem: 'https://i.imgur.com/isBYQoe.png',
                 vantagens: [
-                    { nivel: 1, efeito: '+5 Inteligência', narrativa: 'Erudição profunda' },
-                    { nivel: 3, efeito: '+1d6 decifração/investigação', narrativa: 'Descoberta rápida' },
-                    { nivel: 5, efeito: 'Relembrar fatos úteis', narrativa: 'Memória perfeita' }
+                    { nivel: 1, efeito: 'Reconhece facilmente livros, símbolos, artefatos e conhecimentos comuns de diversas áreas.', narrativa: 'Estudioso' },
+                    { nivel: 3, efeito: 'Consegue relacionar informações aparentemente desconexas e formular conclusões rapidamente.', narrativa: 'Biblioteca Viva' },
+                    { nivel: 5, efeito: 'Nunca esquece algo que tenha estudado ou presenciado conscientemente e pode recordar essas informações sempre que necessário.', narrativa: 'Memória Absoluta' }
                 ]
             },
             {
@@ -493,9 +493,9 @@ class AptidoesDB {
                 descricao: 'Aperfeiçoamento pessoal',
                 imagem: 'https://i.imgur.com/hvCwFfY.png',
                 vantagens: [
-                    { nivel: 1, efeito: 'Recuperação dobrada em descansos', narrativa: 'Meditação efetiva' },
-                    { nivel: 3, efeito: '+5 Inteligência', narrativa: 'Transcendência' },
-                    { nivel: 5, efeito: 'Atravessar barreiras inferiores', narrativa: 'Poder supremo' }
+                    { nivel: 1, efeito: 'Obtém muito mais proveito de períodos de meditação e treinamento espiritual.', narrativa: 'Meditação Profunda' },
+                    { nivel: 3, efeito: 'Seu cultivo torna-se extremamente estável, reduzindo significativamente o risco de desvios energéticos.', narrativa: 'Harmonia Interior' },
+                    { nivel: 5, efeito: 'Uma vez por descanso, pode alcançar um estado de profunda compreensão sobre seu próprio cultivo, identificando falhas, gargalos ou o próximo passo para evoluir.', narrativa: 'Iluminação' }
                 ]
             },
             {
@@ -504,9 +504,9 @@ class AptidoesDB {
                 descricao: 'Movimento rítmico e graça',
                 imagem: 'https://i.imgur.com/tjUQLVF.png',
                 vantagens: [
-                    { nivel: 1, efeito: '+1 Evasão', narrativa: 'Movimentos fluidos' },
-                    { nivel: 3, efeito: '+5 Agilidade', narrativa: 'Agilidade de bailarino' },
-                    { nivel: 5, efeito: '+1 Reação', narrativa: 'Sincronismo perfeito' }
+                    { nivel: 1, efeito: 'Consegue mover-se com extrema leveza e naturalidade, mesmo em ambientes difíceis.', narrativa: 'Passos Elegantes' },
+                    { nivel: 3, efeito: 'Adapta seus movimentos ao ritmo de qualquer combate, música ou situação sem perder a fluidez.', narrativa: 'Ritmo Perfeito' },
+                    { nivel: 5, efeito: 'Uma vez por cena, pode executar uma sequência de movimentos tão perfeita que confunde momentaneamente todos os observadores.', narrativa: 'Dança Celestial' }
                 ]
             },
             {
@@ -515,9 +515,9 @@ class AptidoesDB {
                 descricao: 'Negociação e persuasão',
                 imagem: 'https://i.imgur.com/HUld1Fs.png',
                 vantagens: [
-                    { nivel: 1, efeito: 'Reduzir hostilidade NPCs', narrativa: 'Mediação hábil' },
-                    { nivel: 3, efeito: '+5 Inteligência', narrativa: 'Retórica poderosa' },
-                    { nivel: 5, efeito: 'Mediar conflitos', narrativa: 'Paz garantida' }
+                    { nivel: 1, efeito: 'Consegue manter conversas respeitosas mesmo entre pessoas com opiniões completamente opostas.', narrativa: 'Mediador' },
+                    { nivel: 3, efeito: 'Identifica rapidamente os interesses e motivações de ambas as partes durante uma negociação.', narrativa: 'Negociador Experiente' },
+                    { nivel: 5, efeito: 'Uma vez por cena, pode interromper temporariamente um conflito para abrir espaço para diálogo, desde que exista disposição mínima para conversar.', narrativa: 'Pacificador' }
                 ]
             },
             {
@@ -526,9 +526,9 @@ class AptidoesDB {
                 descricao: 'Combate com poder energético',
                 imagem: 'https://i.imgur.com/fnPvHMQ.png',
                 vantagens: [
-                    { nivel: 1, efeito: '+1d6 dano energético', narrativa: 'Poder imbuído' },
-                    { nivel: 3, efeito: '+5 Força OU Inteligência', narrativa: 'Maestria energética' },
-                    { nivel: 5, efeito: 'Ignora 30% armadura', narrativa: 'Perfuração energética' }
+                    { nivel: 1, efeito: 'Consegue revestir naturalmente ataques e armas com Qi.', narrativa: 'Canalização Espiritual' },
+                    { nivel: 3, efeito: 'Pode moldar o fluxo do Qi durante o combate para adaptar suas técnicas conforme a situação.', narrativa: 'Manipulação Refinada' },
+                    { nivel: 5, efeito: 'Seu Qi consegue atravessar barreiras espirituais simples e atingir diretamente a energia do alvo.', narrativa: 'Perfuração Espiritual' }
                 ]
             },
             {
@@ -537,9 +537,9 @@ class AptidoesDB {
                 descricao: 'Tática e planejamento',
                 imagem: 'https://i.imgur.com/kPf9qxU.png',
                 vantagens: [
-                    { nivel: 1, efeito: '+5 Inteligência', narrativa: 'Mente estratégica' },
-                    { nivel: 3, efeito: '+1d6 eficiência plano', narrativa: 'Planejamento perfeito' },
-                    { nivel: 5, efeito: 'Vantagem 3x aliados/combate', narrativa: 'Comandante lendário' }
+                    { nivel: 1, efeito: 'Consegue analisar rapidamente um campo de batalha e identificar posições vantajosas.', narrativa: 'Pensamento Estratégico' },
+                    { nivel: 3, efeito: 'Antes de uma missão, pode declarar pequenas preparações plausíveis realizadas previamente.', narrativa: 'Plano de Contingência' },
+                    { nivel: 5, efeito: 'Uma vez por combate, pode reorganizar completamente o plano de ação do grupo, coordenando aliados de forma quase perfeita.', narrativa: 'Mestre Estrategista' }
                 ]
             },
             {
@@ -548,9 +548,9 @@ class AptidoesDB {
                 descricao: 'Forja e fabricação de armas',
                 imagem: 'https://i.imgur.com/osVYotW.png',
                 vantagens: [
-                    { nivel: 1, efeito: '+5 Força', narrativa: 'Músculos de ferreiro' },
-                    { nivel: 3, efeito: 'Metal pode despertar', narrativa: 'Armas vivas' },
-                    { nivel: 5, efeito: '+5 Sorte', narrativa: 'Bênção do ferro' }
+                    { nivel: 1, efeito: 'Reconhece facilmente metais, ligas e materiais de qualidade.', narrativa: 'Conhecimento Metalúrgico' },
+                    { nivel: 3, efeito: 'Produz equipamentos com acabamento superior e maior resistência ao desgaste.', narrativa: 'Ferreiro Experiente' },
+                    { nivel: 5, efeito: 'Uma vez por descanso, pode criar um equipamento excepcional capaz de desenvolver uma característica única, definida durante sua criação.', narrativa: 'Obra-Prima' }
                 ]
             },
             {
@@ -559,9 +559,9 @@ class AptidoesDB {
                 descricao: 'Resistência à fadiga',
                 imagem: 'https://i.imgur.com/2A4Bqsg.png',
                 vantagens: [
-                    { nivel: 1, efeito: '+5 Vitalidade', narrativa: 'Pulmões de ferro' },
-                    { nivel: 3, efeito: '-30% fadiga em arts', narrativa: 'Economia de energia' },
-                    { nivel: 5, efeito: '+50% fadiga descanso curto', narrativa: 'Recuperação rápida' }
+                    { nivel: 1, efeito: 'Mantém a respiração estável mesmo durante esforços prolongados.', narrativa: 'Respiração Controlada' },
+                    { nivel: 3, efeito: 'Consegue prolongar atividades físicas intensas por muito mais tempo que uma pessoa comum.', narrativa: 'Ritmo Constante' },
+                    { nivel: 5, efeito: 'Uma vez por cena, pode continuar agindo normalmente mesmo após atingir seu limite físico, até que a situação termine.', narrativa: 'Incansável' }
                 ]
             },
             {
@@ -570,9 +570,9 @@ class AptidoesDB {
                 descricao: 'Sigilo e dissimulação',
                 imagem: 'https://i.imgur.com/7g5y3kK.png',
                 vantagens: [
-                    { nivel: 1, efeito: '-3 obstáculo avistamento', narrativa: 'Sombra perfeita' },
-                    { nivel: 3, efeito: '+5 Agilidade', narrativa: 'Movimento silencioso' },
-                    { nivel: 5, efeito: '+1 Precisão', narrativa: 'Ataque das sombras' }
+                    { nivel: 1, efeito: 'Move-se produzindo o mínimo possível de ruído.', narrativa: 'Passos Silenciosos' },
+                    { nivel: 3, efeito: 'Sabe aproveitar sombras, obstáculos e distrações para permanecer despercebido.', narrativa: 'Presença Oculta' },
+                    { nivel: 5, efeito: 'Uma vez por cena, desaparece momentaneamente da percepção dos inimigos ao utilizar perfeitamente o ambiente ao seu redor, reaparecendo em uma posição vantajosa.', narrativa: 'Fantasma' }
                 ]
             },
             {
@@ -581,9 +581,9 @@ class AptidoesDB {
                 descricao: 'Fluência linguística',
                 imagem: 'https://i.imgur.com/ue4snwM.png',
                 vantagens: [
-                    { nivel: 1, efeito: '+1 nova língua/nível', narrativa: 'Poliglota' },
-                    { nivel: 3, efeito: '+5 Inteligência', narrativa: 'Domínio linguístico' },
-                    { nivel: 5, efeito: '-3 testes sociais estrangeiros', narrativa: 'Comunicação perfeita' }
+                    { nivel: 1, efeito: 'Aprende novos idiomas com muito mais facilidade e compreende expressões básicas de línguas aparentadas.', narrativa: 'Poliglota' },
+                    { nivel: 3, efeito: 'Consegue identificar a origem, a época e até aspectos culturais de uma língua ou escrita desconhecida após analisá-la.', narrativa: 'Linguista' },
+                    { nivel: 5, efeito: 'Após alguns minutos de interação, consegue estabelecer comunicação básica com qualquer criatura inteligente, mesmo sem compartilhar um idioma.', narrativa: 'Comunicação Universal' }
                 ]
             },
             {
@@ -592,9 +592,9 @@ class AptidoesDB {
                 descricao: 'Imposição de vontade',
                 imagem: 'https://i.imgur.com/lTMTeMJ.png',
                 vantagens: [
-                    { nivel: 1, efeito: '+5 Inteligência', narrativa: 'Presença aterradora' },
-                    { nivel: 3, efeito: '+1 vs fracos', narrativa: 'Dominação fácil' },
-                    { nivel: 5, efeito: 'Inimigos fracos hesitam 1 rodada', narrativa: 'Medo paralisante' }
+                    { nivel: 1, efeito: 'Sua simples postura é suficiente para desencorajar indivíduos inseguros ou inexperientes.', narrativa: 'Presença Ameaçadora' },
+                    { nivel: 3, efeito: 'Consegue identificar rapidamente quem possui medo, insegurança ou hesitação e explorar essas fraquezas durante uma conversa.', narrativa: 'Domínio Psicológico' },
+                    { nivel: 5, efeito: 'Uma vez por cena, pode intimidar um alvo apenas com sua presença, obrigando-o a hesitar antes de agir caso sua determinação seja inferior à sua.', narrativa: 'Olhar do Predador' }
                 ]
             },
             {
@@ -603,9 +603,9 @@ class AptidoesDB {
                 descricao: 'Instinto aguçado',
                 imagem: 'https://i.imgur.com/9DIiVwI.png',
                 vantagens: [
-                    { nivel: 1, efeito: 'Detectar surpresa', narrativa: 'Sexto sentido' },
-                    { nivel: 3, efeito: '+5 Percepção', narrativa: 'Intuição sobrenatural' },
-                    { nivel: 5, efeito: '+1d4 faltam informações', narrativa: 'Adivinhação perfeita' }
+                    { nivel: 1, efeito: 'Percebe quando algo está errado mesmo sem conseguir explicar o motivo.', narrativa: 'Sexto Sentido' },
+                    { nivel: 3, efeito: 'Consegue perceber mentiras, intenções ocultas ou mudanças de comportamento através de pequenos detalhes.', narrativa: 'Leitura Instintiva' },
+                    { nivel: 5, efeito: 'Uma vez por cena, pode perguntar ao mestre se determinada decisão representa um grande risco ou uma oportunidade favorável.', narrativa: 'Presságio' }
                 ]
             },
             {
@@ -614,9 +614,9 @@ class AptidoesDB {
                 descricao: 'Persuasão e retórica',
                 imagem: 'https://i.imgur.com/61lChtN.png',
                 vantagens: [
-                    { nivel: 1, efeito: '+5 Inteligência', narrativa: 'Orador nato' },
-                    { nivel: 3, efeito: 'Culpar outro sucesso', narrativa: 'Manipulação perfeita' },
-                    { nivel: 5, efeito: '-3 com autoridades', narrativa: 'Língua de ouro' }
+                    { nivel: 1, efeito: 'Consegue conduzir naturalmente uma conversa para o assunto que desejar.', narrativa: 'Conversador Nato' },
+                    { nivel: 3, efeito: 'É capaz de plantar dúvidas, sugestões ou falsas conclusões sem que a outra pessoa perceba imediatamente.', narrativa: 'Manipulador' },
+                    { nivel: 5, efeito: 'Uma vez por cena, pode transformar uma conversa extremamente desfavorável em uma negociação justa, desde que o alvo esteja disposto a ouvir.', narrativa: 'Língua de Ouro' }
                 ]
             },
             {
@@ -625,9 +625,9 @@ class AptidoesDB {
                 descricao: 'Comando de grupo',
                 imagem: 'https://i.imgur.com/v6L8GZn.png',
                 vantagens: [
-                    { nivel: 1, efeito: '+1 aliados em plano', narrativa: 'Inspiração natural' },
-                    { nivel: 3, efeito: '-3 Sanidade/Vontade', narrativa: 'Protetor confiável' },
-                    { nivel: 5, efeito: 'Reorganizar iniciativa 1x', narrativa: 'Comando supremo' }
+                    { nivel: 1, efeito: 'Aliados tendem a confiar em suas decisões durante situações difíceis.', narrativa: 'Inspiração Natural' },
+                    { nivel: 3, efeito: 'Consegue distribuir tarefas e organizar grupos grandes com extrema eficiência, evitando confusão e desperdício de tempo.', narrativa: 'Coordenação' },
+                    { nivel: 5, efeito: 'Uma vez por cena, coordena perfeitamente todos os aliados próximos, permitindo que executem um plano previamente elaborado sem falhas de comunicação.', narrativa: 'Comandante Supremo' }
                 ]
             },
             {
@@ -636,9 +636,9 @@ class AptidoesDB {
                 descricao: 'Perfeição em uma área',
                 imagem: 'https://i.imgur.com/fsjkVJb.png',
                 vantagens: [
-                    { nivel: 1, efeito: '+1 testes área', narrativa: 'Especialista' },
-                    { nivel: 3, efeito: '-3 obstáculo área', narrativa: 'Domínio absoluto' },
-                    { nivel: 5, efeito: '+5 atributo relacionado', narrativa: 'Mestria lendária' }
+                    { nivel: 1, efeito: 'Escolha uma profissão, técnica ou conhecimento específico. Você aprende e evolui nessa área muito mais rapidamente.', narrativa: 'Especialista' },
+                    { nivel: 3, efeito: 'Erros simples relacionados à sua especialidade tornam-se extremamente raros.', narrativa: 'Domínio Absoluto' },
+                    { nivel: 5, efeito: 'Sua habilidade é tão refinada que outros especialistas conseguem reconhecer sua maestria apenas observando seu trabalho.', narrativa: 'Mestre Lendário' }
                 ]
             },
             {
@@ -647,9 +647,9 @@ class AptidoesDB {
                 descricao: 'Símbolos mágicos',
                 imagem: 'https://i.imgur.com/ws3E0SX.png',
                 vantagens: [
-                    { nivel: 1, efeito: '+5 Inteligência', narrativa: 'Símbolos dominados' },
-                    { nivel: 3, efeito: '+20% Prontidão', narrativa: 'Ativação rápida' },
-                    { nivel: 5, efeito: 'Ativar matriz como ação bônus', narrativa: 'Maestria runar' }
+                    { nivel: 1, efeito: 'Consegue compreender e reproduzir matrizes simples.', narrativa: 'Conhecimento Rúnico' },
+                    { nivel: 3, efeito: 'Pode criar matrizes condicionais que são ativadas apenas quando uma condição específica for atendida.', narrativa: 'Programação Arcana' },
+                    { nivel: 5, efeito: 'É capaz de combinar diversas matrizes em uma única formação complexa, produzindo efeitos inéditos.', narrativa: 'Mestre das Matrizes' }
                 ]
             },
             {
@@ -658,9 +658,9 @@ class AptidoesDB {
                 descricao: 'Exploração de fraquezas',
                 imagem: 'https://i.imgur.com/0zLdIyX.png',
                 vantagens: [
-                    { nivel: 1, efeito: '+1 Precisão', narrativa: 'Ponto fraco visto' },
-                    { nivel: 3, efeito: '+5 Percepção', narrativa: 'Visão penetrante' },
-                    { nivel: 5, efeito: 'Reduzir defesa críticos', narrativa: 'Vulnerabilidade exposta' }
+                    { nivel: 1, efeito: 'Identifica pequenos defeitos em objetos, estruturas e equipamentos.', narrativa: 'Observador' },
+                    { nivel: 3, efeito: 'Após observar um alvo por algum tempo, consegue descobrir hábitos, padrões de combate ou possíveis fraquezas.', narrativa: 'Leitura de Vulnerabilidades' },
+                    { nivel: 5, efeito: 'Uma vez por cena, pode descobrir o ponto fraco mais evidente de uma criatura, objeto ou construção.', narrativa: 'Análise Perfeita' }
                 ]
             },
             {
@@ -669,9 +669,9 @@ class AptidoesDB {
                 descricao: 'Observação aguçada',
                 imagem: 'https://i.imgur.com/lgzwmFo.png',
                 vantagens: [
-                    { nivel: 1, efeito: 'Detectar armadilhas/pistas', narrativa: 'Visão perfeita' },
-                    { nivel: 3, efeito: '+5 Percepção', narrativa: 'Verdade revelada' },
-                    { nivel: 5, efeito: '+1 Reação', narrativa: 'Reflexos instintivos' }
+                    { nivel: 1, efeito: 'Percebe sons, odores e movimentos discretos com facilidade.', narrativa: 'Sentidos Aguçados' },
+                    { nivel: 3, efeito: 'Consegue reconstruir parcialmente acontecimentos através de pegadas, marcas, vestígios e detalhes do ambiente.', narrativa: 'Investigador' },
+                    { nivel: 5, efeito: 'É extremamente difícil ser surpreendido quando estiver atento ao ambiente.', narrativa: 'Olhos que Tudo Veem' }
                 ]
             },
             {
@@ -680,9 +680,9 @@ class AptidoesDB {
                 descricao: 'Habilidade manual',
                 imagem: 'https://i.imgur.com/xWFrmoB.png',
                 vantagens: [
-                    { nivel: 1, efeito: '+1 Precisão', narrativa: 'Mãos ágeis' },
-                    { nivel: 3, efeito: '+5 Agilidade', narrativa: 'Destreza perfeita' },
-                    { nivel: 5, efeito: 'Re-rolear falha fora combate', narrativa: 'Sorte manual' }
+                    { nivel: 1, efeito: 'Executa movimentos delicados com extrema precisão.', narrativa: 'Dedos Ágeis' },
+                    { nivel: 3, efeito: 'Consegue esconder, trocar ou retirar pequenos objetos sem chamar atenção.', narrativa: 'Manipulação Imperceptível' },
+                    { nivel: 5, efeito: 'Uma vez por cena, pode realizar um truque manual praticamente impossível aos olhos de quem estiver observando.', narrativa: 'Mãos Fantasma' }
                 ]
             },
             {
@@ -691,9 +691,9 @@ class AptidoesDB {
                 descricao: 'Antecipação de perigos',
                 imagem: 'https://i.imgur.com/uGsb5mG.png',
                 vantagens: [
-                    { nivel: 1, efeito: '+3 reação pós-evasão falha', narrativa: 'Reflexo defensivo' },
-                    { nivel: 3, efeito: '+5 Sorte', narrativa: 'Fortuna natural' },
-                    { nivel: 5, efeito: 'Re-rolear falha percepção 1x', narrativa: 'Presságio divino' }
+                    { nivel: 1, efeito: 'Pouco antes de um perigo iminente, sente uma estranha sensação de alerta.', narrativa: 'Mau Presságio' },
+                    { nivel: 3, efeito: 'Recebe breves intuições sobre acontecimentos que podem ocorrer nos próximos instantes.', narrativa: 'Vislumbre' },
+                    { nivel: 5, efeito: 'Uma vez por cena, pode pedir ao mestre um aviso sobre um perigo imediato antes que ele aconteça.', narrativa: 'Premonição' }
                 ]
             },
             {
@@ -702,9 +702,9 @@ class AptidoesDB {
                 descricao: 'Conhecimento espiritual',
                 imagem: 'https://i.imgur.com/xwebh3u.png',
                 vantagens: [
-                    { nivel: 1, efeito: 'Identificar símbolos/maldições', narrativa: 'Erudição sagrada' },
-                    { nivel: 3, efeito: '-2 obstáculos relacionados', narrativa: 'Conexão divina' },
-                    { nivel: 5, efeito: '+5 Inteligência', narrativa: 'Revelação divina' }
+                    { nivel: 1, efeito: 'Reconhece divindades, símbolos religiosos, rituais e maldições comuns.', narrativa: 'Erudição Sagrada' },
+                    { nivel: 3, efeito: 'Compreende os costumes, doutrinas e práticas das principais religiões.', narrativa: 'Devoto Experiente' },
+                    { nivel: 5, efeito: 'Durante uma oração ou ritual, pode receber um pequeno presságio ou orientação da divindade que segue, caso existam condições para isso.', narrativa: 'Revelação Divina' }
                 ]
             },
             {
@@ -713,9 +713,9 @@ class AptidoesDB {
                 descricao: 'Resistência mental',
                 imagem: 'https://i.imgur.com/UVtrRca.png',
                 vantagens: [
-                    { nivel: 1, efeito: '-3 testes sanidade', narrativa: 'Mente forte' },
-                    { nivel: 3, efeito: '+5 Vitalidade', narrativa: 'Psique resiliente' },
-                    { nivel: 5, efeito: 'Vantagem medo 2x/sessão', narrativa: 'Imune ao terror' }
+                    { nivel: 1, efeito: 'Mantém a calma diante de situações perturbadoras.', narrativa: 'Mente Estável' },
+                    { nivel: 3, efeito: 'Recupera-se muito mais rapidamente de traumas emocionais e choques psicológicos.', narrativa: 'Psique Resiliente' },
+                    { nivel: 5, efeito: 'Uma vez por cena, pode ignorar completamente um efeito de medo, desespero ou terror.', narrativa: 'Mente Inabalável' }
                 ]
             },
             {
@@ -724,9 +724,9 @@ class AptidoesDB {
                 descricao: 'Atração e charme',
                 imagem: 'https://i.imgur.com/Nfdtuqp.png',
                 vantagens: [
-                    { nivel: 1, efeito: '-3 ações contra vontade', narrativa: 'Magnetismo irresistível' },
-                    { nivel: 3, efeito: '+5 Sorte', narrativa: 'Fortuna no amor' },
-                    { nivel: 5, efeito: 'Inverter hostilidade', narrativa: 'Conquista perfeita' }
+                    { nivel: 1, efeito: 'Sua presença desperta simpatia e curiosidade com facilidade.', narrativa: 'Charme Natural' },
+                    { nivel: 3, efeito: 'Consegue criar rapidamente uma conexão emocional durante uma conversa.', narrativa: 'Encanto' },
+                    { nivel: 5, efeito: 'Uma vez por cena, pode transformar uma interação hostil em uma oportunidade de diálogo ou aproximação, desde que o alvo seja emocionalmente influenciável.', narrativa: 'Conquista Perfeita' }
                 ]
             },
             {
@@ -735,9 +735,9 @@ class AptidoesDB {
                 descricao: 'Armazenamento mágico',
                 imagem: 'https://i.imgur.com/RsrKi1t.png',
                 vantagens: [
-                    { nivel: 1, efeito: 'Armazenar magias em selos', narrativa: 'Reserva mágica' },
-                    { nivel: 3, efeito: '+5 Inteligência', narrativa: 'Selagem perfeita' },
-                    { nivel: 5, efeito: '+1 Precisão', narrativa: 'Selos infalíveis' }
+                    { nivel: 1, efeito: 'Consegue armazenar pequenos objetos ou energias em selos.', narrativa: 'Selagem Básica' },
+                    { nivel: 3, efeito: 'Pode criar selos mais resistentes e duradouros.', narrativa: 'Selagem Avançada' },
+                    { nivel: 5, efeito: 'É capaz de desenvolver selos complexos para armazenar técnicas, criaturas, artefatos ou grandes quantidades de energia.', narrativa: 'Mestre Selador' }
                 ]
             },
             {
@@ -746,9 +746,9 @@ class AptidoesDB {
                 descricao: 'Adaptação ao ambiente',
                 imagem: 'https://i.imgur.com/Bu4HLf5.png',
                 vantagens: [
-                    { nivel: 1, efeito: '-dificuldade área conhecimento', narrativa: 'Adaptação natural' },
-                    { nivel: 3, efeito: '+5 Percepção OU Inteligência', narrativa: 'Instinto de sobrevivência' },
-                    { nivel: 5, efeito: '+1d6 trilhas', narrativa: 'Rastreador lendário' }
+                    { nivel: 1, efeito: 'Encontra facilmente abrigo, água e recursos básicos na natureza.', narrativa: 'Adaptabilidade' },
+                    { nivel: 3, efeito: 'Consegue seguir rastros, identificar animais e prever mudanças ambientais.', narrativa: 'Rastreador' },
+                    { nivel: 5, efeito: 'Mesmo em ambientes extremamente hostis, encontra maneiras de permanecer vivo utilizando apenas os recursos disponíveis.', narrativa: 'Sobrevivente Lendário' }
                 ]
             },
             {
@@ -757,9 +757,9 @@ class AptidoesDB {
                 descricao: 'Resistência a adversidades',
                 imagem: 'https://i.imgur.com/18Ju21y.png',
                 vantagens: [
-                    { nivel: 1, efeito: '-3 obstáculos', narrativa: 'Resistência aumentada' },
-                    { nivel: 3, efeito: '-1 turno venenos/doenças', narrativa: 'Imunidade parcial' },
-                    { nivel: 5, efeito: 'Permanecer de pé 1x/sessão', narrativa: 'Vontade inabalável' }
+                    { nivel: 1, efeito: 'Suporta melhor temperaturas extremas, fome, sede e desconforto.', narrativa: 'Corpo Adaptável' },
+                    { nivel: 3, efeito: 'Seu organismo combate com maior eficiência venenos, doenças e condições adversas.', narrativa: 'Resistência Natural' },
+                    { nivel: 5, efeito: 'Uma vez por cena, permanece consciente e capaz de agir mesmo quando seu corpo deveria ceder ao esgotamento.', narrativa: 'Vontade Inquebrável' }
                 ]
             },
             {
@@ -768,9 +768,9 @@ class AptidoesDB {
                 descricao: 'Habilidade única especial',
                 imagem: 'https://i.imgur.com/RATyykD.png',
                 vantagens: [
-                    { nivel: 1, efeito: 'Núcleo habilidade extra', narrativa: 'Poder único' },
-                    { nivel: 3, efeito: '+1 ativação e controle', narrativa: 'Domínio do poder' },
-                    { nivel: 5, efeito: '+5 atributo primário', narrativa: 'Poder absoluto' }
+                    { nivel: 1, efeito: 'Desenvolve uma habilidade exclusiva ligada ao seu Núcleo.', narrativa: 'Despertar' },
+                    { nivel: 3, efeito: 'Descobre novas formas de utilizar sua habilidade única, ampliando sua versatilidade.', narrativa: 'Evolução' },
+                    { nivel: 5, efeito: 'Sua habilidade desperta uma característica exclusiva que nenhum outro usuário consegue reproduzir exatamente.', narrativa: 'Singularidade' }
                 ]
             },
             {
@@ -779,9 +779,9 @@ class AptidoesDB {
                 descricao: 'Força de caráter',
                 imagem: 'https://i.imgur.com/4Lldsnw.png',
                 vantagens: [
-                    { nivel: 1, efeito: '+5 Vitalidade', narrativa: 'Espírito indomável' },
-                    { nivel: 3, efeito: '+2 resistências mentais', narrativa: 'Proteção psíquica' },
-                    { nivel: 5, efeito: 'Negar efeito mental 1x/dia', narrativa: 'Liberdade absoluta' }
+                    { nivel: 1, efeito: 'Mantém suas convicções mesmo sob grande pressão.', narrativa: 'Espírito Indomável' },
+                    { nivel: 3, efeito: 'É extremamente difícil fazê-lo desistir de um objetivo importante.', narrativa: 'Determinação Absoluta' },
+                    { nivel: 5, efeito: 'Uma vez por cena, rompe ou resiste a um efeito de manipulação mental, ilusão ou controle da mente.', narrativa: 'Liberdade da Mente' }
                 ]
             },
             {
@@ -790,9 +790,9 @@ class AptidoesDB {
                 descricao: 'Maestria em lâminas',
                 imagem: 'https://i.imgur.com/YvcLwaG.png',
                 vantagens: [
-                    { nivel: 1, efeito: '+1 Precisão', narrativa: 'Técnica apurada' },
-                    { nivel: 3, efeito: '+5 Força', narrativa: 'Lâminas devastadoras' },
-                    { nivel: 5, efeito: 'Aparo como Reação (reduz 30% dano)', narrativa: 'Defesa perfeita' }
+                    { nivel: 1, efeito: 'Domina corretamente a postura, empunhadura e fundamentos das espadas.', narrativa: 'Técnica Refinada' },
+                    { nivel: 3, efeito: 'Consegue adaptar seu estilo rapidamente ao tipo de arma branca utilizada.', narrativa: 'Espadachim Experiente' },
+                    { nivel: 5, efeito: 'Uma vez por combate, realiza um aparo perfeito capaz de neutralizar completamente um ataque corpo a corpo executado contra você, desde que seja possível bloqueá-lo.', narrativa: 'Defesa Perfeita' }
                 ]
             },
             {
@@ -801,9 +801,9 @@ class AptidoesDB {
                 descricao: 'Arte da velocidade',
                 imagem: 'https://i.imgur.com/6y28jyw.png',
                 vantagens: [
-                    { nivel: 1, efeito: '+5 Agilidade', narrativa: 'Velocidade sobrenatural' },
-                    { nivel: 3, efeito: '+1 Evasão', narrativa: 'Movimento fulminante' },
-                    { nivel: 5, efeito: 'Shunpo: mover-se ao campo de visão 1x/combate', narrativa: 'Teletransporte' }
+                    { nivel: 1, efeito: 'Domina os fundamentos do Hohō, movimentando-se com extrema leveza e rapidez.', narrativa: 'Passos Instantâneos' },
+                    { nivel: 3, efeito: 'Consegue realizar deslocamentos tão rápidos que deixa pós-imagens ou desaparece momentaneamente da percepção de quem observa.', narrativa: 'Movimento Fantasma' },
+                    { nivel: 5, efeito: 'Uma vez por combate, pode realizar um Shunpo para qualquer ponto dentro do seu campo de visão, desde que o local seja acessível.', narrativa: 'Shunpo' }
                 ]
             },
             {
@@ -812,9 +812,9 @@ class AptidoesDB {
                 descricao: 'Magia espiritual',
                 imagem: 'https://i.imgur.com/NpohIcR.png',
                 vantagens: [
-                    { nivel: 1, efeito: '+5 Inteligência', narrativa: 'Controle espiritual' },
-                    { nivel: 3, efeito: 'Kidōs nível 30 -3 dificuldade', narrativa: 'Domínio mágico' },
-                    { nivel: 5, efeito: 'Eishohaki: conjura como ação bônus 50%', narrativa: 'Magia absoluta' }
+                    { nivel: 1, efeito: 'Consegue moldar o Reiryoku com precisão para executar Kidōs com maior estabilidade.', narrativa: 'Canalização Espiritual' },
+                    { nivel: 3, efeito: 'É capaz de conjurar Kidōs com menos gestos e palavras, mantendo sua eficiência.', narrativa: 'Domínio do Kidō' },
+                    { nivel: 5, efeito: 'Uma vez por combate, pode conjurar um Kidō sem recitar seu encantamento completo, preservando praticamente todo o seu poder.', narrativa: 'Eishōhaki' }
                 ]
             },
             {
@@ -823,9 +823,9 @@ class AptidoesDB {
                 descricao: 'Combate desarmado',
                 imagem: 'https://i.imgur.com/pfttrFQ.png',
                 vantagens: [
-                    { nivel: 1, efeito: '+5 Força', narrativa: 'Punhos de ferro' },
-                    { nivel: 3, efeito: '+1 Precisão, ignora 10% armadura', narrativa: 'Técnica devastadora' },
-                    { nivel: 5, efeito: '+1 Reação', narrativa: 'Reflexos aprimorados' }
+                    { nivel: 1, efeito: 'Domina os fundamentos do combate corpo a corpo utilizando apenas o próprio corpo.', narrativa: 'Artes Marciais' },
+                    { nivel: 3, efeito: 'Consegue alternar golpes, projeções, imobilizações e contra-ataques com extrema naturalidade.', narrativa: 'Combate Adaptável' },
+                    { nivel: 5, efeito: 'Uma vez por combate, pode executar uma técnica perfeita de combate desarmado capaz de interromper completamente a ação de um inimigo.', narrativa: 'Mestre do Hakuda' }
                 ]
             },
             {
@@ -834,9 +834,9 @@ class AptidoesDB {
                 descricao: 'Pressão espiritual',
                 imagem: 'https://i.imgur.com/7WVnHiU.png',
                 vantagens: [
-                    { nivel: 1, efeito: '+5 Vitalidade', narrativa: 'Poder espiritual avassalador' },
-                    { nivel: 3, efeito: 'Inimigos -1 Precisão próximos', narrativa: 'Opressão do poder' },
-                    { nivel: 5, efeito: 'Libera pressão: inimigos Vontade ou Abalados 1x/combate', narrativa: 'Pressão absoluta' }
+                    { nivel: 1, efeito: 'Sua Reiatsu pode ser sentida claramente por outros usuários espirituais.', narrativa: 'Presença Espiritual' },
+                    { nivel: 3, efeito: 'Aprende a controlar sua Reiatsu, ocultando-a ou liberando-a conforme desejar.', narrativa: 'Domínio da Pressão' },
+                    { nivel: 5, efeito: 'Uma vez por combate, libera sua Reiatsu de forma avassaladora, obrigando todos os inimigos próximos a enfrentarem um teste de Vontade ou ficarem abalados diante da diferença de poder.', narrativa: 'Pressão Absoluta' }
                 ]
             },
             {
@@ -845,9 +845,9 @@ class AptidoesDB {
                 descricao: 'Detecção espiritual',
                 imagem: 'https://i.imgur.com/GJcmYLr.png',
                 vantagens: [
-                    { nivel: 1, efeito: '+5 Percepção', narrativa: 'Visão espiritual' },
-                    { nivel: 3, efeito: 'Detecta seres espirituais até 1km', narrativa: 'Rastreamento sobrenatural' },
-                    { nivel: 5, efeito: '+1 Reação contra invisíveis', narrativa: 'Sentido perfeito' }
+                    { nivel: 1, efeito: 'Percebe naturalmente a presença de seres espirituais próximos.', narrativa: 'Sentido Espiritual' },
+                    { nivel: 3, efeito: 'É capaz de seguir rastros espirituais e localizar indivíduos através da assinatura do seu Reiryoku.', narrativa: 'Rastreamento Espiritual' },
+                    { nivel: 5, efeito: 'Consegue perceber seres ocultos, invisíveis, disfarçados espiritualmente ou utilizando técnicas de ocultação espiritual.', narrativa: 'Visão da Alma' }
                 ]
             },
             {
@@ -856,9 +856,9 @@ class AptidoesDB {
                 descricao: 'Sintonia com arma espiritual',
                 imagem: 'https://i.imgur.com/9qzMWbH.png',
                 vantagens: [
-                    { nivel: 1, efeito: '+5 Sorte', narrativa: 'Conexão natural' },
-                    { nivel: 3, efeito: 'Shikai -30% custo ativação', narrativa: 'Sincronização perfeita' },
-                    { nivel: 5, efeito: 'Re-role ataque/habilidade Zanpakutō 1x/dia', narrativa: 'Harmonia absoluta' }
+                    { nivel: 1, efeito: 'Consegue ouvir e compreender melhor a vontade da sua Zanpakutō durante a meditação.', narrativa: 'Voz Interior' },
+                    { nivel: 3, efeito: 'A comunicação com sua Zanpakutō torna-se natural, permitindo compreender seus sentimentos e intenções com facilidade.', narrativa: 'Sincronia Espiritual' },
+                    { nivel: 5, efeito: 'Uma vez por descanso, pode pedir orientação diretamente à sua Zanpakutō, recebendo uma resposta sincera dentro do conhecimento que ela possui.', narrativa: 'Harmonia Absoluta' }
                 ]
             },
             {
@@ -867,9 +867,9 @@ class AptidoesDB {
                 descricao: 'Erudição das 13 Divisões',
                 imagem: 'https://i.imgur.com/ibJsQZU.png',
                 vantagens: [
-                    { nivel: 1, efeito: '+5 Inteligência', narrativa: 'Conhecimento profundo' },
-                    { nivel: 3, efeito: '+1d6 testes Soul Society', narrativa: 'Pericia absoluta' },
-                    { nivel: 5, efeito: 'Identifica fraquezas Hollows automaticamente', narrativa: 'Verdade revelada' }
+                    { nivel: 1, efeito: 'Conhece a estrutura, história e funcionamento da Soul Society.', narrativa: 'Estudioso da Soul Society' },
+                    { nivel: 3, efeito: 'Reconhece técnicas, tradições, famílias nobres, divisões e figuras importantes apenas observando detalhes.', narrativa: 'Especialista' },
+                    { nivel: 5, efeito: 'Consegue identificar rapidamente características, hábitos e possíveis habilidades de Hollows, Arrancars, Quincy e Shinigamis conhecidos.', narrativa: 'Enciclopédia Viva' }
                 ]
             },
             {
@@ -878,9 +878,9 @@ class AptidoesDB {
                 descricao: 'Defesa contra poder espiritual',
                 imagem: 'https://i.imgur.com/tbdPa8t.png',
                 vantagens: [
-                    { nivel: 1, efeito: '+5 Vitalidade', narrativa: 'Fortitude espiritual' },
-                    { nivel: 3, efeito: '+10% defesa', narrativa: 'Escudo energético' },
-                    { nivel: 5, efeito: 'Reduz dano espiritual em 2 dados', narrativa: 'Imunidade parcial' }
+                    { nivel: 1, efeito: 'Mantém a estabilidade espiritual mesmo diante de grandes pressões.', narrativa: 'Espírito Resiliente' },
+                    { nivel: 3, efeito: 'Seu espírito suporta técnicas espirituais intensas sem perder facilmente o controle.', narrativa: 'Alma Inabalável' },
+                    { nivel: 5, efeito: 'Uma vez por combate, pode suportar completamente uma técnica espiritual que normalmente o incapacitaria, permanecendo consciente.', narrativa: 'Barreira Espiritual' }
                 ]
             },
             {
@@ -889,9 +889,9 @@ class AptidoesDB {
                 descricao: 'Envio de almas',
                 imagem: 'https://i.imgur.com/jWJBDse.png',
                 vantagens: [
-                    { nivel: 1, efeito: '+1 testes sociais com almas', narrativa: 'Afinidade com espíritos' },
-                    { nivel: 3, efeito: '+5 Inteligência', narrativa: 'Canalização espiritual' },
-                    { nivel: 5, efeito: 'Purifica almas menores fora combate', narrativa: 'Poder divino' }
+                    { nivel: 1, efeito: 'Consegue realizar corretamente o ritual de envio das almas para a Soul Society.', narrativa: 'Guia Espiritual' },
+                    { nivel: 3, efeito: 'Reconhece almas corrompidas e compreende o estado espiritual em que se encontram.', narrativa: 'Purificação' },
+                    { nivel: 5, efeito: 'Uma vez por cena, pode purificar uma alma menor ou espírito corrompido sem necessidade de combate, caso sua corrupção ainda seja reversível.', narrativa: 'Purificação Suprema' }
                 ]
             },
             {
@@ -900,12 +900,24 @@ class AptidoesDB {
                 descricao: 'Comunhão espiritual profunda',
                 imagem: 'https://i.imgur.com/nrO3my9.png',
                 vantagens: [
-                    { nivel: 1, efeito: 'Recuperação Reiryoku dobrada descansos', narrativa: 'Meditação profunda' },
-                    { nivel: 3, efeito: '+5 Inteligência', narrativa: 'Harmonia espiritual' },
-                    { nivel: 5, efeito: 'Transe: recupera 100% fadiga em 10 min', narrativa: 'Êxtase espiritual' }
+                    { nivel: 1, efeito: 'Entra em estado meditativo com extrema facilidade, alcançando rapidamente a paz interior.', narrativa: 'Meditação Profunda' },
+                    { nivel: 3, efeito: 'Consegue acessar conscientemente seu mundo interior para compreender melhor sua Zanpakutō e seu próprio espírito.', narrativa: 'Mundo Interior' },
+                    { nivel: 5, efeito: 'Uma vez por descanso, pode entrar em um profundo estado de Jinzen, fortalecendo temporariamente sua conexão espiritual e recebendo uma revelação, ensinamento ou orientação de sua Zanpakutō.', narrativa: 'Êxtase Espiritual' }
+                ]
+            },
+            {
+                id: 'investigacao',
+                nome: 'Investigação',
+                descricao: 'A arte de descobrir a verdade através da análise',
+                imagem: 'https://i.imgur.com/dEz4fE6.png',
+                vantagens: [
+                    { nivel: 1, efeito: 'Consegue encontrar e preservar pistas, evidências e detalhes que a maioria das pessoas ignoraria durante uma investigação.', narrativa: 'Coleta de Evidências' },
+                    { nivel: 3, efeito: 'Após analisar uma cena, consegue reconstruir parcialmente a sequência dos acontecimentos com base nos vestígios encontrados.', narrativa: 'Reconstrução dos Fatos' },
+                    { nivel: 5, efeito: 'Uma vez por cena, pode formular uma hipótese sobre um mistério, crime ou acontecimento. O mestre deve informar se essa hipótese está correta, parcialmente correta ou incorreta, sem revelar detalhes adicionais.', narrativa: 'Detetive Exímio' }
                 ]
             },
         ];
+        return catalogo.sort((a, b) => a.nome.localeCompare(b.nome, 'pt', { sensitivity: 'base' }));
     }
 }
 

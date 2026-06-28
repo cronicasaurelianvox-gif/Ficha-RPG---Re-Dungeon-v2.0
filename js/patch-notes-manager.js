@@ -10,7 +10,7 @@ class PatchNotesManager {
         this.btnClose = document.getElementById('btn-fechar-patch-notes');
         this.btnConfirm = document.getElementById('btn-fechar-patch-notes-confirm');
         this.checkbox = document.getElementById('chk-nao-mostrar-patch-notes');
-        this.currentVersion = 'V2.3 Pre-Release'; // Versão atual dos patch notes
+        this.currentVersion = 'V2.3'; // Versão atual dos patch notes
         this.storageKey = 'ultima-versao-patch-notes-vista';
         
         this.init();
@@ -75,7 +75,7 @@ class PatchNotesManager {
         const html = `
             <div style="color: #d4af37; margin-bottom: 20px;">
                 <h3 style="margin-top: 0; color: #d4af37;">✨ Versão ${this.currentVersion}</h3>
-                <p style="font-size: 0.9em; color: #888; margin: 0;">14 de Junho de 2026</p>
+                <p style="font-size: 0.9em; color: #888; margin: 0;">27 de Junho de 2026</p>
             </div>
 
             <!-- SEÇÃO: CORREÇÕES -->
@@ -84,11 +84,10 @@ class PatchNotesManager {
                     ✅ Correções
                 </h4>
                 <ul style="margin: 0; padding-left: 20px; line-height: 1.8; color: #e0e0e0;">
-                    <li>🔧 <strong>Sistema de Habilidades (Arts):</strong> Corrigido bug onde campos de Custo (PM) e Recarga não eram salvos corretamente</li>
-                    <li>🎯 <strong>Campos de Entrada:</strong> Agora aceitam valores textuais como "1d6+5", "3 FaD" e expressões personalizadas</li>
-                    <li>📊 <strong>Exibição de Cards:</strong> Removidos sufixos " MP" e " turnos" para melhor flexibilidade de valores</li>
-                    <li>🛡️ <strong>Validação:</strong> Sistema agora suporta valores numéricos E textuais sem rejeitar</li>
-                    <li>🚪 <strong>Modais de Habilidades:</strong> Agora só fecham via botão X, Cancelar ou ESC (clique fora não fecha mais)</li>
+                    <li>🔧 <strong>Sistema de Habilidades (Arts):</strong> Correções de salvamento em campos de Custo (PM) e Recarga</li>
+                    <li>🎯 <strong>Validação de Entradas:</strong> Melhor suporte para valores textuais e numéricos, incluindo expressões personalizadas</li>
+                    <li>📊 <strong>Exibição de Cards:</strong> Ajustes visuais e de formatação para mostrar valores de forma mais limpa</li>
+                    <li>🛡️ <strong>Estabilidade:</strong> Correções gerais de interface e comportamento de modais</li>
                 </ul>
             </div>
 
@@ -98,10 +97,15 @@ class PatchNotesManager {
                     🆕 Novidades
                 </h4>
                 <ul style="margin: 0; padding-left: 20px; line-height: 1.8; color: #e0e0e0;">
-                    <li>💡 <strong>Notificação de Veias Astrais:</strong> Sistema de dica ao abrir Veias Astrais (em desenvolvimento)</li>
-                    <li>📝 <strong>Patch Notes:</strong> Este modal que você está vendo! Receba atualizações importantes</li>
-                    <li>♻️ <strong>Preferências do Usuário:</strong> Opção de não mostrar patch notes novamente (até nova versão)</li>
-                    <li>📚 <strong>Novas Raças e Classes:</strong> Adicionada a coleção <em>A Crônica dos Varkhan</em> com novas classes: Varokh, Thyrkan, Veyrath, Drahkhan e Verakhan</li>
+                    <li>💫 <strong>Lançamento das Veias Astrais:</strong> novo sistema localizado no centro da aba de Atributos</li>
+                    <li>🧬 <strong>Aptidões mais narrativas e adaptativas:</strong> agora estão alinhadas com o sistema de emparelhamento, tornando a progressão mais imersiva</li>
+                    <li>📊 <strong>Balanceamento de atributos secundários:</strong> ajustes para melhorar coesão e equilíbrio</li>
+                    <li>⚙️ <strong>Otimização da ficha:</strong> melhorias gerais de performance, cálculo e interface</li>
+                    <li>📚 <strong>Novas Raças e Classes:</strong> adição das raças e classes de <em>A Crônica dos Varkhan</em></li>
+                    <li>🌀 <strong>Atualizações de Raças:</strong> melhorias no conteúdo de <em>The Chaotical Gate</em> e <em>A Crônica dos Varkhan</em></li>
+                    <li>📝 <strong>Patch Notes:</strong> este modal exibe as novidades da versão</li>
+                    <li>♻️ <strong>Preferências do Usuário:</strong> opção de não exibir novamente até nova versão</li>
+                    <li>🎛️ <strong>Melhorias de UI:</strong> ajustes em diversos pontos da interface para melhor usabilidade e organização</li>
                     <li>🧭 <strong>Atualizações de Raças (A Crônica dos Varkhan):</strong>
                         <ul style="margin-top:6px; padding-left:18px; margin-bottom:6px;">
                             <li>🖼️ Atualizadas as imagens das sub-raças (Refugiado, Estudante, Periferia, Atleta, Criminoso, Professor, Sobrevivente, Filho do Herói, Gênio, Herdeiro de Clã, Escolhido, Humano Perfeito).</li>
@@ -129,13 +133,6 @@ class PatchNotesManager {
                 </ul>
             </div>
 
-            <!-- SEÇÃO: PRÓXIMOS PASSOS -->
-            <div style="background: rgba(216, 180, 254, 0.1); padding: 16px; border-left: 3px solid #d8b4fe; border-radius: 4px;">
-                <h4 style="color: #d8b4fe; margin-top: 0;">🚀 Próximos Passos</h4>
-                <p style="margin: 0; color: #b0b8c1; font-size: 0.95em;">
-                    Estamos trabalhando em melhorias para o sistema de <strong>Veias Astrais</strong>, novas <strong>integrações de companheiros</strong> e muito mais!
-                </p>
-            </div>
         `;
 
         if (this.content) {

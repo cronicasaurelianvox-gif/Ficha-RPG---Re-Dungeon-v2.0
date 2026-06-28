@@ -480,7 +480,7 @@ class ClassesUI {
         icon: '⚔️',
         image: 'https://i.imgur.com/dDoawMK.jpeg',
         color: '#ef4444',
-        aberta: true,
+        aberta: false,
         classes: [],
         mostrarRaridade: true
       },
@@ -529,13 +529,6 @@ class ClassesUI {
         classes: [],
         mostrarRaridade: false
       },
-      {
-        nome: 'A Crônica dos Varkhan',
-        icon: '📜',
-        aberta: false,
-        classes: [],
-        mostrarRaridade: false
-      }
     ];
 
     // Alocar classes nas pastas corretas usando o campo `colecao` (se existir)

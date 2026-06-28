@@ -2575,22 +2575,22 @@ class CompanheirosModalController {
         // Objeto com configuração de secundários
         const secundarios = {
             prontidao: {
-                calcular: () => Math.ceil(((AGI * 0.6) + (PER * 0.3) + (SOR * 0.1)) / 150 * 315)
+                calcular: () => Math.ceil(((AGI * 0.6) + (PER * 0.3) + (SOR * 0.1)) / 250 * 315)
             },
             ataque: {
-                calcular: () => Math.ceil(((FOR * 0.7) + (INT * 0.3)) / 150 * 21)
+                calcular: () => Math.ceil(((FOR * 0.7) + (INT * 0.3)) / 250 * 21)
             },
             defesa: {
-                calcular: () => Math.ceil(((VIT * 0.6) + (AGI * 0.3) + (SOR * 0.1)) / 150 * 16)
+                calcular: () => Math.ceil(((VIT * 0.6) + (AGI * 0.3) + (SOR * 0.1)) / 250 * 16)
             },
             reacao: {
-                calcular: () => Math.ceil(((AGI * 0.5) + (PER * 0.3) + (SOR * 0.2)) / 150 * (12 - 6)) + 6
+                calcular: () => Math.ceil(((AGI * 0.5) + (PER * 0.3) + (SOR * 0.2)) / 250 * (12 - 6)) + 6
             },
             precisao: {
-                calcular: () => Math.ceil(((AGI * 0.3) + (PER * 0.6) + (SOR * 0.1)) / 150 * 12)
+                calcular: () => Math.ceil(((AGI * 0.3) + (PER * 0.6) + (SOR * 0.1)) / 250 * 12)
             },
             evasao: {
-                calcular: () => Math.ceil(((AGI * 0.5) + (PER * 0.4) + (SOR * 0.1)) / 150 * 12)
+                calcular: () => Math.ceil(((AGI * 0.5) + (PER * 0.4) + (SOR * 0.1)) / 250 * 12)
             }
         };
 
