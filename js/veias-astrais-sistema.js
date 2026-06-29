@@ -1803,8 +1803,15 @@ class VeiasAstraisSystem {
   resetConstellation(treeId) {
     const targets = this.nodes.filter((n) => n.treeId === treeId);
     let changed = 0;
+    let pcRecuperado = 0;
     targets.forEach((n) => {
       if (n.state !== 'locked') {
+        const antes = this.powerCombat;
+        this.powerCombat = Math.min(
+          this.maxPowerCombat,
+          this.powerCombat + n.cost,
+        );
+        pcRecuperado += this.powerCombat - antes;
         if (n.bonus) this.deactivateBonus(n.bonus.id);
         n.state = 'locked';
         changed++;
@@ -1818,7 +1825,8 @@ class VeiasAstraisSystem {
     this.renderNodes();
     this.renderConnections();
     this.renderSidebar();
-    this.showNotification(`♻️ ${changed} nó(s) resetado(s) em ${treeId}`,'info',3000);
+    this.updateUI();
+    this.showNotification(`♻️ ${changed} nó(s) resetado(s) em ${treeId}. +${pcRecuperado} PC`,`info`,3000);
   }
 
   /**
@@ -1826,8 +1834,15 @@ class VeiasAstraisSystem {
    */
   resetAllNodes() {
     let changed = 0;
+    let pcRecuperado = 0;
     this.nodes.forEach((n) => {
       if (n.state !== 'locked') {
+        const antes = this.powerCombat;
+        this.powerCombat = Math.min(
+          this.maxPowerCombat,
+          this.powerCombat + n.cost,
+        );
+        pcRecuperado += this.powerCombat - antes;
         if (n.bonus) this.deactivateBonus(n.bonus.id);
         n.state = 'locked';
         changed++;
@@ -1841,6 +1856,7 @@ class VeiasAstraisSystem {
     this.renderNodes();
     this.renderConnections();
     this.renderSidebar();
+    this.updateUI();
     this.showNotification(`♻️ Reset completo: ${changed} nó(s) bloqueado(s)`,'warning',4000);
   }
 

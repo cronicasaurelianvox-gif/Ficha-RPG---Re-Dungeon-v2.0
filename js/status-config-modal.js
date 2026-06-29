@@ -1052,18 +1052,94 @@ const StatusConfigModal = {
         
         const current = currentInput ? (parseInt(currentInput.value) || 0) : 0;
         const extra = extraInput ? (parseInt(extraInput.value) || 0) : 0;
-        const base = values.base || 0;
-        
+        // Determinar base/extra/bonus com múltiplos fallbacks
+        let base = values.base || 0;
+        let extraVal = values.extra || 0;
+
+        // Tentar obter do StatusBarsManager se disponível (fonte de verdade das barras)
+        try {
+            if (window.statusBarsManager && window.statusBarsManager.state) {
+                const sbKey = statusType === 'hp' ? 'hp' : statusType === 'energy' ? 'energy' : 'fatigue';
+                const sbm = window.statusBarsManager.state[sbKey] || {};
+                base = (typeof values.base !== 'number' || values.base === 0) ? (sbm.base || base) : base;
+                extraVal = (typeof values.extra !== 'number' || values.extra === 0) ? (sbm.extra || extraVal) : extraVal;
+                console.log(`  ✓ Valores lidos do StatusBarsManager (${sbKey}): base=${sbm.base||0}, extra=${sbm.extra||0}, bonus=${sbm.bonus||0}`);
+            }
+        } catch (e) {
+            console.warn('  ⚠️ Erro ao ler StatusBarsManager:', e.message);
+        }
+
+        // Preparar fallback de localStorage para base/extra/bonus se tempValues estiver vazio
+        let persistedStatusFields = {};
+        try {
+            const savedFieldsJson = localStorage.getItem('redungeon_status_fields_extra_bonus');
+            if (savedFieldsJson) {
+                persistedStatusFields = JSON.parse(savedFieldsJson);
+                console.log('  ✓ Fallback de localStorage carregado para status fields');
+            }
+        } catch (e) {
+            console.warn('  ⚠️ Erro ao ler redungeon_status_fields_extra_bonus:', e.message);
+        }
+
+        // Também tentar ler do AppState.status como fallback final
+        try {
+            const state = window.appState?.getState();
+            const stateKey = statusType === 'hp' ? 'hp' : statusType === 'energy' ? 'energia' : 'fadiga';
+            if (state && state.status && state.status[stateKey]) {
+                const st = state.status[stateKey];
+                base = base || st.base || 0;
+                extraVal = extraVal || st.extra || 0;
+                console.log(`  ✓ Valores lidos do AppState.status (${stateKey}): base=${st.base||0}, extra=${st.extra||0}, atual=${st.atual||0}`);
+            }
+            if (!base || !extraVal) {
+                const storageKey = statusType === 'hp' ? 'hp' : statusType === 'energy' ? 'energia' : 'fadiga';
+                if (persistedStatusFields[storageKey]) {
+                    base = base || parseInt(persistedStatusFields[storageKey].base) || 0;
+                    extraVal = extraVal || parseInt(persistedStatusFields[storageKey].extra) || 0;
+                    console.log(`  ✓ Valores lidos do localStorage (${storageKey}): base=${base}, extra=${extraVal}`);
+                }
+            }
+        } catch (e) {
+            console.warn('  ⚠️ Erro ao ler AppState:', e.message);
+        }
+
         // ⭐ IMPORTANTE: Bonus SEMPRE vem do INPUT do usuário em tempo real!
         // Primeiro tenta ler do input que o usuário está editando
-        // Se não houver input, usa o valor armazenado em tempValues
+        // Se não houver input, tenta tempValues -> StatusBarsManager -> BonusCalculator -> 0
         let bonus = 0;
-        if (bonusInput && bonusInput.value) {
+        if (bonusInput && bonusInput.value !== undefined && bonusInput.value !== null && bonusInput.value !== '') {
             bonus = parseInt(bonusInput.value) || 0;
             console.log(`  ✓ Bonus lido do INPUT: ${bonus}`);
+        } else if (typeof values.bonus === 'number' && values.bonus) {
+            bonus = values.bonus;
+            console.log(`  ✓ Bonus lido de tempValues: ${bonus}`);
         } else {
-            bonus = values.bonus || 0; // Fallback para valor armazenado
-            console.log(`  ✓ Bonus lido de tempValues (fallback): ${bonus}`);
+            // fallback: StatusBarsManager
+            try {
+                if (window.statusBarsManager && window.statusBarsManager.state) {
+                    const sbKey = statusType === 'hp' ? 'hp' : statusType === 'energy' ? 'energy' : 'fatigue';
+                    bonus = window.statusBarsManager.state[sbKey]?.bonus || bonus;
+                    if (bonus) console.log(`  ✓ Bonus lido do StatusBarsManager: ${bonus}`);
+                }
+            } catch (e) {
+                console.warn('  ⚠️ Erro ao ler bonus do StatusBarsManager:', e.message);
+            }
+
+            // fallback: localStorage se chance de bônus persistido existir
+            if (!bonus && persistedStatusFields) {
+                const storageKey = statusType === 'hp' ? 'hp' : statusType === 'energy' ? 'energia' : 'fadiga';
+                if (persistedStatusFields[storageKey]) {
+                    bonus = parseInt(persistedStatusFields[storageKey].bonus) || bonus;
+                    if (bonus) console.log(`  ✓ Bonus lido do localStorage: ${bonus}`);
+                }
+            }
+
+            // fallback: BonusCalculator
+            if (!bonus && window.bonusCalculator && typeof window.bonusCalculator.getBonus === 'function') {
+                const bonusKey = statusType === 'hp' ? 'saude' : statusType === 'energy' ? 'energia' : 'fadiga';
+                bonus = window.bonusCalculator.getBonus(bonusKey) || bonus;
+                if (bonus) console.log(`  ✓ Bonus lido do BonusCalculator: ${bonus}`);
+            }
         }
 
         console.log(`  ✓ Valores dos inputs: current=${current}, base=${base}, extra=${extra}, bonus=${bonus}`);
