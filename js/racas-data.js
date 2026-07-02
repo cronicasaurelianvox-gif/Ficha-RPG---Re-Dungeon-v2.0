@@ -2393,15 +2393,15 @@ const RACAS_DATABASE = [
     tipo: "A Crônica dos Varkhan",
     raridade: "comum",
     descricao: "O Refugiado é o retrato vivo da sobrevivência diante da adversidade. Forçado a abandonar seu lar devido a guerras devastadoras, catástrofes naturais ou perseguições políticas, ele carrega em sua bagagem não apenas pertences materiais escassos, mas o peso da perda e a cicatriz de um passado abruptamente interrompido. Essa vivência traumática molda uma personalidade cautelosa, observadora e extremamente pragmática. Eles não buscam a glória ou o heroísmo cego; seu objetivo principal é garantir que eles e aqueles sob sua responsabilidade vejam o amanhecer do dia seguinte. No grupo de aventureiros, o Refugiado costuma atuar como a voz da razão e da prudência, sendo excelente em prever riscos e encontrar soluções engenhosas com recursos mínimos.",
-    imagem: "https://i.imgur.com/Dw1dXYE.png",
+    imagem: " https://imgur.com/Dw1dXYE.png",
     limiteAtributo: 150,
     atributos: {
-      forca: "3d6+8",
-      vitalidade: "3d6+8",
-      agilidade: "4d6+10",
-      inteligencia: "3d6+6",
-      percepcao: "3d6+6",
-      sorte: "5d20"
+      forca: "2d6+2",
+      vitalidade: "2d6+6",
+      agilidade: "2d6+2",
+      inteligencia: "2d6+4",
+      percepcao: "2d8+4",
+      sorte: "5d10+20"
     },
     habilidadesBasicas: [
       {
@@ -2438,12 +2438,12 @@ const RACAS_DATABASE = [
     imagem: "https://i.imgur.com/mYwq4Ql.png",
     limiteAtributo: 150,
     atributos: {
-      forca: "2d6+6",
+      forca: "2d6+2",
       vitalidade: "2d6+6",
-      agilidade: "3d6+8",
-      inteligencia: "4d6+10",
-      percepcao: "3d6+6",
-      sorte: "5d20"
+      agilidade: "2d6+2",
+      inteligencia: "2d6+4",
+      percepcao: "2d4+2",
+      sorte: "5d10+20"
     },
     habilidadesBasicas: [
       {
@@ -2477,15 +2477,15 @@ const RACAS_DATABASE = [
     tipo: "A Crônica dos Varkhan",
     raridade: "comum",
     descricao: "O Estudante compartilha a faixa etária e a sede de conhecimento do Aprendiz, mas seu foco é formal, acadêmico e institucional. Criado em grandes bibliotecas, universidades ou academias de prestígio, ele é treinado em metodologias científicas, análise lógica, dedução e catalogação de dados. Costumam ser indivíduos metódicos, organizados e extremamente intelectuais, embora às vezes sofram com uma certa desconexão do mundo prático ou das nuances das ruas. Para o grupo, o Estudante é o decifrador de enigmas, o tradutor de línguas mortas e o estrategista que analisa os padrões de comportamento dos inimigos através de registros históricos.",
-    imagem: "https://i.imgur.com/8psHGk3.png",
+    imagem: "https://imgur.com/8psHGk3.png",
     limiteAtributo: 150,
     atributos: {
-      forca: "2d6+6",
-      vitalidade: "2d6+6",
-      agilidade: "3d6+8",
-      inteligencia: "4d6+10",
-      percepcao: "3d6+6",
-      sorte: "5d20"
+      forca: "2d4+2",
+      vitalidade: "2d6+2",
+      agilidade: "2d6+2",
+      inteligencia: "2d10+4",
+      percepcao: "2d6+6",
+      sorte: "5d10+20"
     },
     habilidadesBasicas: [
       {
@@ -2519,15 +2519,15 @@ const RACAS_DATABASE = [
     tipo: "A Crônica dos Varkhan",
     raridade: "comum",
     descricao: "O arquétipo da Periferia representa aqueles que cresceram nas margens da sociedade — nos becos escuros das metrópoles, nos distritos industriais esquecidos ou nas favelas onde a lei do Estado raramente chega. Criados sob a égide da escassez, eles aprenderam desde cedo que as regras formais da sociedade muitas vezes servem apenas para proteger os privilegiados. Consequentemente, desenvolveram uma astúcia prática invejável, uma profunda desconfiança em relação a figuras de autoridade e uma lealdade inabalável para com o seu próprio grupo.",
-    imagem: "https://i.imgur.com/eEEpZaY.png",
+    imagem: "https://imgur.com/eEEpZaY.png",
     limiteAtributo: 150,
     atributos: {
-      forca: "3d6+8",
-      vitalidade: "3d6+8",
-      agilidade: "4d6+10",
-      inteligencia: "3d6+6",
-      percepcao: "4d6+10",
-      sorte: "5d20"
+      forca: "2d6+2",
+      vitalidade: "2d6+4",
+      agilidade: "2d6+6",
+      inteligencia: "2d6+2",
+      percepcao: "2d8+4",
+      sorte: "5d10+20"
     },
     habilidadesBasicas: [
       {
@@ -2564,12 +2564,12 @@ const RACAS_DATABASE = [
     imagem: "https://i.imgur.com/9gLD8aP.jpeg",
     limiteAtributo: 150,
     atributos: {
-      forca: "5d6+14",
-      vitalidade: "5d6+14",
-      agilidade: "3d6+8",
-      inteligencia: "2d6+6",
-      percepcao: "4d6+10",
-      sorte: "5d20"
+      forca: "2d8+4",
+      vitalidade: "2d6+6",
+      agilidade: "2d6+4",
+      inteligencia: "2d6+4",
+      percepcao: "2d6+2",
+      sorte: "5d10+20"
     },
     habilidadesBasicas: [
       {
@@ -2603,15 +2603,15 @@ const RACAS_DATABASE = [
     tipo: "A Crônica dos Varkhan",
     raridade: "raro",
     descricao: "O Atleta dedicou sua vida à busca da perfeição física, à superação de limites biológicos e à glória da competição. Sejam corredores velocistas, lutadores de arena, ginastas acrobáticos ou nadadores de resistência, eles possuem uma coordenação motora impecável, reflexos rápidos e uma musculatura perfeitamente condicionada. Além do vigor físico, o Atleta carrega uma mentalidade competitiva inabalável; ele vê cada obstáculo, monstro ou desafio como um oponente a ser superado. No grupo de aventureiros, ele se destaca pela mobilidade extraordinária no campo de batalha, sendo capaz de alcançar posições estratégicas e realizar manobras acrobáticas impossíveis para outros personagens.",
-    imagem: "https://i.imgur.com/PfIoCWF.png",
+    imagem: "https://imgur.com/PfIoCWF.png",
     limiteAtributo: 150,
     atributos: {
-      forca: "5d6+12",
-      vitalidade: "5d6+14",
-      agilidade: "5d6+14",
-      inteligencia: "2d6+6",
-      percepcao: "3d6+8",
-      sorte: "5d20"
+      forca: "2d8+4",
+      vitalidade: "2d6+6",
+      agilidade: "2d10+4",
+      inteligencia: "2d6+2",
+      percepcao: "2d4+2",
+      sorte: "5d10+20"
     },
     habilidadesBasicas: [
       {
@@ -2648,15 +2648,15 @@ const RACAS_DATABASE = [
     tipo: "A Crônica dos Varkhan",
     raridade: "raro",
     descricao: "O Criminoso opera nas sombras da sociedade, dominando as artes da infiltração, do silêncio e da oportunidade. Seja um ladrão de colarinho branco que frauda contratos, um batedor de carteiras ágil nos mercados ou um contrabandista que conhece todas as rotas secretas, ele compreende as fraquezas do sistema legal e sabe como explorá-las em seu benefício. São indivíduos pragmáticos, perspicazes e extremamente discretos, que preferem resolver problemas com inteligência e sutileza antes que as lâminas precisem ser sacadas. Sua rede de contatos no submundo é uma ferramenta inestimável para obter informações que o dinheiro legal não pode comprar.",
-    imagem: "https://i.imgur.com/9TNgBB4.png",
+    imagem: "https://imgur.com/9TNgBB4.png",
     limiteAtributo: 150,
     atributos: {
-      forca: "3d6+8",
-      vitalidade: "3d6+8",
-      agilidade: "6d6+14",
-      inteligencia: "4d6+10",
-      percepcao: "5d6+12",
-      sorte: "5d20"
+      forca: "2d4+2",
+      vitalidade: "2d6+2",
+      agilidade: "2d8+4",
+      inteligencia: "2d6+6",
+      percepcao: "2d8+4",
+      sorte: "5d10+20"
     },
     habilidadesBasicas: [
       {
@@ -2692,15 +2692,15 @@ const RACAS_DATABASE = [
     tipo: "A Crônica dos Varkhan",
     raridade: "raro",
     descricao: "O Professor representa o ápice do conhecimento acadêmico e da erudição formal. Tendo dedicado décadas de sua vida à pesquisa científica, ao ensino em grandes universidades e à catalogação de saberes esquecidos, ele possui uma mente analítica extraordinária. Embora possa não ter o vigor físico de um guerreiro, o Professor compensa essa fraqueza com uma capacidade incomparável de decifrar línguas antigas, compreender fenômenos físicos e misticismo complexo, e identificar os pontos fracos de qualquer criatura ou estrutura. No grupo, ele atua como o cérebro das operações, o decifrador de mistérios e o conselheiro estratégico.",
-    imagem: "https://i.imgur.com/70AjdXi.png",
+    imagem: "https://imgur.com/70AjdXi.png",
     limiteAtributo: 150,
     atributos: {
-      forca: "2d6+6",
-      vitalidade: "2d6+6",
-      agilidade: "2d6+6",
-      inteligencia: "6d6+14",
-      percepcao: "5d6+12",
-      sorte: "4d20+20"
+      forca: "2d4+2",
+      vitalidade: "2d4+2",
+      agilidade: "2d6+2",
+      inteligencia: "2d12+6",
+      percepcao: "2d6+6",
+      sorte: "5d10+20"
     },
     habilidadesBasicas: [
       {
@@ -2734,15 +2734,15 @@ const RACAS_DATABASE = [
     tipo: "A Crônica dos Varkhan",
     raridade: "raro",
     descricao: "O Sobrevivente é aquele que encarou os cenários mais hostis do mundo — desertos inclementes, florestas tropicais repletas de predadores, invernos polares ou o isolamento total após um desastre — e conseguiu retornar para contar a história. Ele é pragmático, durão e possui uma \"casca grossa\" moldada por privações severas. Não se importa com luxos, etiquetas sociais ou formalidades; seu único foco é a sobrevivência biológica e a manutenção da integridade da seu grupo. No grupo, ele é o especialista em acampamentos, navegação em terrenos selvagens, primeiros socorros e gerenciamento de recursos escassos.",
-    imagem: "https://i.imgur.com/Lkakiqb.png",
+    imagem: "https://imgur.com/Lkakiqb.png",
     limiteAtributo: 150,
     atributos: {
-      forca: "4d6+10",
-      vitalidade: "6d6+14",
-      agilidade: "4d6+10",
-      inteligencia: "3d6+8",
-      percepcao: "5d6+12",
-      sorte: "5d20"
+      forca: "2d6+4",
+      vitalidade: "2d8+4",
+      agilidade: "2d6+2",
+      inteligencia: "2d4+2",
+      percepcao: "2d6+6",
+      sorte: "5d10+20"
     },
     habilidadesBasicas: [
       {
@@ -2776,15 +2776,15 @@ const RACAS_DATABASE = [
     tipo: "A Crônica dos Varkhan",
     raridade: "epico",
     descricao: "O Filho de Herói cresceu sob a sombra de feitos lendários e de expectativas sociais esmagadoras. Ele carrega em suas veias o sangue de um herói do passado e, em seus ombros, a pressão constante de provar que é digno desse legado. Essa herança traz tanto uma determinação de aço quanto um conflito interno constante. Eles são líderes natos, cujos nomes e linhagens podem abrir portas em castelos reais ou, inversamente, atrair a fúria de inimigos jurados de seus pais. No campo de batalha, o Filho de Herói luta com uma bravura contagiante, servindo como o escudo e a espada do grupo, inspirando todos ao seu redor a superarem seus próprios limites.",
-    imagem: "https://i.imgur.com/gDWcTrb.png",
+    imagem: "https://imgur.com/gDWcTrb.png",
     limiteAtributo: 150,
     atributos: {
-      forca: "4d8+14",
-      vitalidade: "5d8+14",
-      agilidade: "5d8+14",
-      inteligencia: "4d6+12",
-      percepcao: "4d6+12",
-      sorte: "4d20+20"
+      forca: "2d8+4",
+      vitalidade: "2d8+4",
+      agilidade: "2d6+4",
+      inteligencia: "2d6+2",
+      percepcao: "2d6+4",
+      sorte: "5d10+20"
     },
     habilidadesBasicas: [
       {
@@ -2818,15 +2818,15 @@ const RACAS_DATABASE = [
     tipo: "A Crônica dos Varkhan",
     raridade: "epico",
     descricao: "O Gênio possui uma mente que opera em um nível cognitivo e de processamento de dados incompreensível para os mortais comuns. Desde a infância, ele desvenda equações matemáticas impossíveis, cria tecnologias revolucionárias ou decifra fórmulas mágicas ancestrais com a mesma facilidade com que uma criança brinca. Embora possam parecer arrogantes, excêntricos ou emocionalmente distantes devido à velocidade de seus pensamentos, sua capacidade de antecipar cenários e calcular variáveis em tempo real é uma vantagem tática insuperável. No grupo, o Gênio é o arquiteto dos planos mais complexos e o solucionador definitivo de qualquer barreira intelectual ou tecnológica.",
-    imagem: "https://i.imgur.com/W64WhR2.png",
+    imagem: "https://imgur.com/W64WhR2.png",
     limiteAtributo: 150,
     atributos: {
-      forca: "2d6+6",
-      vitalidade: "3d6+8",
-      agilidade: "4d6+10",
-      inteligencia: "6d8+14",
-      percepcao: "5d8+14",
-      sorte: "4d20+20"
+      forca: "2d4+2",
+      vitalidade: "2d6+2",
+      agilidade: "2d6+4",
+      inteligencia: "2d12+6",
+      percepcao: "2d8+4",
+      sorte: "5d10+20"
     },
     habilidadesBasicas: [
       {
@@ -2860,15 +2860,15 @@ const RACAS_DATABASE = [
     tipo: "A Crônica dos Varkhan",
     raridade: "epico",
     descricao: "O Herdeiro de Clã pertence à alta nobreza, a dinastias mercantis de imensa riqueza ou a clãs de guerreiros tradicionais de prestígio histórico. Criado desde o berço sob a tutela dos melhores mentores, ele foi treinado nas artes da diplomacia, da etiqueta, da estratégia política e em técnicas refinadas de combate. Ele possui uma postura impecável e uma autoridade natural que exige respeito. O Herdeiro de Clã sabe como navegar pelas cortes reais, negociar tratados comerciais e usar o peso de seu nome familiar para obter vantagens que a força bruta jamais conseguiria. No grupo, ele é o diplomata refinado, o financiador de expedições e um combatente de técnica cirúrgica.",
-    imagem: "https://i.imgur.com/MSJTiuz.png",
+    imagem: "https://imgur.com/MSJTiuz.png",
     limiteAtributo: 150,
     atributos: {
-      forca: "4d6+10",
-      vitalidade: "5d6+12",
-      agilidade: "4d8+14",
-      inteligencia: "4d6+12",
-      percepcao: "5d6+14",
-      sorte: "5d20"
+      forca: "2d6+4",
+      vitalidade: "2d6+2",
+      agilidade: "2d8+4",
+      inteligencia: "2d6+6",
+      percepcao: "2d6+4",
+      sorte: "5d10+20"
     },
     habilidadesBasicas: [
       {
@@ -2905,12 +2905,12 @@ const RACAS_DATABASE = [
     imagem: "https://i.imgur.com/kmyh2vh.png",
     limiteAtributo: 150,
     atributos: {
-      forca: "4d8+14",
-      vitalidade: "4d8+14",
-      agilidade: "5d8+16",
-      inteligencia: "6d8+16",
-      percepcao: "5d8+16",
-      sorte: "3d20+40"
+      forca: "2d4+2",
+      vitalidade: "2d6+6",
+      agilidade: "2d6+2",
+      inteligencia: "2d10+4",
+      percepcao: "2d12+6",
+      sorte: "5d10+20"
     },
     habilidadesBasicas: [
       {
@@ -2944,15 +2944,15 @@ const RACAS_DATABASE = [
     tipo: "A Crônica dos Varkhan",
     raridade: "lendario",
     descricao: "O Escolhido é o protagonista das lendas e profecias antigas. Marcado pelas divindades, pelo destino ou pelas forças fundamentais do universo para cumprir um propósito monumental que alterará o curso da história humana. Ele carrega uma aura inconfundível de autoridade, destino e poder latente. Cada passo que dá parece ser sutilmente guiado por uma força maior, e o próprio tecido da realidade parece se curvar para garantir que ele cumpra sua missão profética. São líderes natos, guerreiros formidáveis e símbolos vivos de mudança, capazes de realizar feitos considerados impossíveis para qualquer outro ser mortal.",
-    imagem: "https://i.imgur.com/wzZEXlA.png",
+    imagem: "https://imgur.com/wzZEXlA.png",
     limiteAtributo: 150,
     atributos: {
-      forca: "5d8+16",
-      vitalidade: "5d8+16",
-      agilidade: "6d8+16",
-      inteligencia: "5d8+16",
-      percepcao: "5d8+16",
-      sorte: "3d20+40"
+      forca: "2d8+4",
+      vitalidade: "2d10+4",
+      agilidade: "2d6+4",
+      inteligencia: "2d6+4",
+      percepcao: "2d8+4",
+      sorte: "5d10+20"
     },
     habilidadesBasicas: [
       {
@@ -2986,15 +2986,15 @@ const RACAS_DATABASE = [
     tipo: "A Crônica dos Varkhan",
     raridade: "lendario",
     descricao: "O Humano Perfeito representa o ápice absoluto da evolução física, mental e espiritual de sua espécie. Ele é a harmonia perfeita encarnada: livre de qualquer falha genética, fraqueza moral ou limitação corporal. Exibe uma simetria física deslumbrante, uma capacidade cognitiva incomparável e atributos físicos que beiram o divino. Ele não é apenas bom em uma área; ele é perfeito em todas. Age com uma calma imperturbável e uma precisão cirúrgica em qualquer situação, seja decifrando uma fórmula científica complexa, negociando a paz entre impérios ou derrotando exércitos inteiros em combate corpo a corpo.",
-    imagem: "https://i.imgur.com/k0mPVED.png",
+    imagem: "https://imgur.com/k0mPVED.png",
     limiteAtributo: 150,
     atributos: {
-      forca: "6d8+16",
-      vitalidade: "6d8+16",
-      agilidade: "6d8+16",
-      inteligencia: "6d8+16",
-      percepcao: "6d8+16",
-      sorte: "4d20+20"
+      forca: "2d8+4",
+      vitalidade: "2d8+4",
+      agilidade: "2d8+4",
+      inteligencia: "2d8+4",
+      percepcao: "2d8+4",
+      sorte: "5d10+20"
     },
     habilidadesBasicas: [
       {
@@ -3031,12 +3031,12 @@ const RACAS_DATABASE = [
     imagem: "https://i.imgur.com/ADVh9kV.png",
     limiteAtributo: 150,
     atributos: {
-      forca: "5d8+16",
-      vitalidade: "5d8+16",
-      agilidade: "5d8+16",
-      inteligencia: "6d8+16",
-      percepcao: "6d8+16",
-      sorte: "3d20+40"
+      forca: "2d6+2",
+      vitalidade: "2d6+2",
+      agilidade: "2d6+6",
+      inteligencia: "2d10+4",
+      percepcao: "2d6+6",
+      sorte: "5d10+20"
     },
     habilidadesBasicas: [
       {

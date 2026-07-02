@@ -7932,7 +7932,7 @@ const CLASSES_DATABASE = [
     descricao: "Varokh, ou vanguardas, fazem a linha de frente de uma batalha. Eles são os primeiros a ficar cara a cara com um inimigo. Devido a natureza perigosa dessa função, caçadores que fazem parte dela, têm que ter um corpo muito saudável para que efetuem corretamente seu trabalho. Varokh têm a função também de policiamento dentro de Vareth, pois eles são pessoas difíceis de se parar quando precisam conter problemas dentro do mesmo. Varokh são conhecidos por portar armas pessadas e grandes armaduras, trocando movimentação por defesa. Por conta de serem aqueles que protegem seus aliados fisicamente, não é incomum ver Varokh com membros faltando em seus corpos.",
     colecao: "A Crônica dos Varkhan",
     limiteAtributo: 110,
-    imagem: "https://i.imgur.com/mrqCJL5.png",
+    imagem: "https://imgur.com/CRkSW5N.png",
     atributos: {
       forca: "2d10+6",
       vitalidade: "2d12+4",
@@ -8048,13 +8048,13 @@ const CLASSES_DATABASE = [
     descricao: "Thyrkan, também chamados de Punhos de Ferro são os pugilistas de Vareth. São caçadores que preferiram se focar e se adaptar para conseguirem lutar usando sua arcana e seus prórpios punhos contra os inimigos Infernais. Devido a constante treinamento que esses indivíduos tem que se submeter, Thyrkan geralmente crescem de forma muito constante suas habilidades de combate, causando grandes quantidades de dano ao longo do tempo. Em Vareth eles geralmente tem a função de treinar outros caçadores em combate, além de muitas vezes auxiliarem em todo tipo de trabalho a ser realizado. Não é incomum Caçadores que realizam modificaçãoes em seu corpo para poderem atingir seus inimigos com mais potência e precisão.",
     colecao: "A Crônica dos Varkhan",
     limiteAtributo: 110,
-    imagem: "https://i.imgur.com/DKNmNBt.png",
+    imagem: "https://imgur.com/pBPilTp.png",
     atributos: {
-      forca: "2d10+6",
-      vitalidade: "2d8+4",
-      agilidade: "2d10+6",
-      inteligencia: "2d4+2",
-      percepcao: "2d6+4",
+      forca: "2d10+4",
+      vitalidade: "2d6+6",
+      agilidade: "2d8+4",
+      inteligencia: "2d6+4",
+      percepcao: "2d6+2",
       sorte: "0"
     },
     habilidadesBasicas: [
@@ -8164,13 +8164,13 @@ const CLASSES_DATABASE = [
     descricao: "Veyrath, ou duelistas, são especialistas em duelos de um contra um. Quando o assunto é lutar contra apenas um de cada vez, os Veyrath são implacáveis. Geralmente são reconhecidos por portarem armas rápidas e afiadas, além de geralmente serem pessoas que prezam bastante pelo o individualismo e o foco no intrapessoal mais do que no desenvolvimento em grupo. Veyrath treinam por bastante tempo para que consigam enfrentar uma grande ameaça sozinhos. Eles têm a tendência de serem caçadores mais egoístas e preferirem trabalhar sozinhos, tendo sua efetividade diminuída quando precisam trabalhar em conjunto ou contra múltiplas ameaças.",
     colecao: "A Crônica dos Varkhan",
     limiteAtributo: 110,
-    imagem: "https://i.imgur.com/Ieb8ahb.png",
+    imagem: "https://imgur.com/afF8e5M.png",
     atributos: {
-      forca: "2d4+4",
-      vitalidade: "2d4+6",
-      agilidade: "2d6+10",
-      inteligencia: "2d4+4",
-      percepcao: "3d6+8",
+      forca: "2d6+4",
+      vitalidade: "2d6+2",
+      agilidade: "2d12+6",
+      inteligencia: "2d6+2",
+      percepcao: "2d10+4",
       sorte: "0"
     },
     habilidadesBasicas: [
@@ -8280,13 +8280,13 @@ const CLASSES_DATABASE = [
     descricao: "Drahkhan , ou cavaleiros negros, são a função mais popular da Varkhan. Os Drahkhans tem o dever de eliminar qualquer traço sobrenatural do mundo. Eles sempre marcham em conjunto ocultando os vestígios de tudo de sobrenatural que marchou na Terra. Eliminando ameaças, escondendo provas e levando as pessoas que testemunharam para Vareth, para que assim elas possam ou viver uma vida normal lá dentro, ou se juntar aos Varkhan. Os Drahkhans são bem diversizados entre si, no entanto, quando o assunto é brutalidade e superioridade sobre seu inimigo, eles são os especialistas nisso.",
     colecao: "A Crônica dos Varkhan",
     limiteAtributo: 110,
-    imagem: "https://i.imgur.com/w7ewZ3s.png",
+    imagem: "https://imgur.com/VPJFdFt.png",
     atributos: {
-      forca: "3d6+8",
-      vitalidade: "4d8+10",
-      agilidade: "2d6+8",
-      inteligencia: "2d4+7",
-      percepcao: "2d4+4",
+      forca: "2d10+4",
+      vitalidade: "2d8+4",
+      agilidade: "2d6+4",
+      inteligencia: "2d6+2",
+      percepcao: "2d6+4",
       sorte: "0"
     },
     habilidadesBasicas: [
@@ -8396,13 +8396,13 @@ const CLASSES_DATABASE = [
     descricao: "Verakhan ou guardiões das palavras são a classe especializadas em uso de magia. Muitas vezes são caçadores estrategistas, visto que eles têm que ter um domínio de todos os feitiços além de ter um ampla visão do que está acontecendo dentro de um campo de batalha. Os Verakhan treinaram diversos anos o uso e aprimoramento de magias, isso leva eles a ter uma facilidade maior com o uso das mesmas em períodos críticos. Dominar as artes da magia, significa ser extremamente versátil em combate, no entanto, devido ao foco na mente, os caçadores dessa função tendem a ser menos resilientes que outros caçadores. Verakhan utilizam a magia de forma bruta, focando-se mais em disparos elementais e poderosos de pura Arcana. Eles são o que assemelham mais a imagem de um mago.",
     colecao: "A Crônica dos Varkhan",
     limiteAtributo: 110,
-    imagem: "https://i.imgur.com/I0LQ6tE.png",
+    imagem: "https://imgur.com/gPqunAJ.png",
     atributos: {
-      forca: "2d8+4",
+      forca: "2d4+2",
       vitalidade: "2d4+2",
-      agilidade: "2d6+6",
-      inteligencia: "3d10+6",
-      percepcao: "3d8+8",
+      agilidade: "2d6+2",
+      inteligencia: "2d12+6",
+      percepcao: "2d10+4",
       sorte: "0"
     },
     habilidadesBasicas: [
@@ -8512,13 +8512,13 @@ const CLASSES_DATABASE = [
     descricao: "Aurekhan ou simplesmente Guerreiro Santo são a classe especializada em magias divinas. Diferente do que são os Varakhan, os Aurekhan buscam moldar a Arcana para utilizar o melhor dela as mesclando com uma característica sagrada que nem todos conseguem realmente utiliza-la por completo. Normalmente são caçadores extremamente benevolentes que pensam muito mais no bem maior do que em seus objetivos e ou estar em destaque. Aurekhan muitas vezes são procurados para fazer parte de esquadrões por fornecerem o auxílio que o grupo possa precisar. São os principais dominadores da Arte de Caça da Vida, onde não existem melhores do que eles nesse papel.",
     colecao: "A Crônica dos Varkhan",
     limiteAtributo: 110,
-    imagem: "https://i.imgur.com/ToqJnFa.png",
+    imagem: "https://imgur.com/anfKTBl.png",
     atributos: {
-      forca: "2d4+4",
-      vitalidade: "2d6+4",
-      agilidade: "2d8+6",
-      inteligencia: "3d10+6",
-      percepcao: "3d8+8",
+      forca: "2d6+4",
+      vitalidade: "2d6+6",
+      agilidade: "2d6+2",
+      inteligencia: "2d10+4",
+      percepcao: "2d8+4",
       sorte: "0"
     },
     habilidadesBasicas: [
@@ -8612,13 +8612,13 @@ const CLASSES_DATABASE = [
     descricao: "Nekrath ou os santos caídos, são a última classe mágica de Vareth. Enquanto os Aurekhan se focaram em utilizar a Arcana como algo bom e puro, os Nekrath se focaram em utilizar a Arcana em sua verdadeira essência, uma essência demoníaca e ruim. Os Nekrath tem em posse de si um artefato amaldiçoado que lhes fornece uma ligação demoníaca, um pacto que lhes dê vantagem. Caçadores que escolheram seguir esse caminho, ficam em contato com o que há de pior constantemente. Muitas vezes os Nekrath são atormentados durante a noite por conta desse contato demoníaco, e não é incomum os ver sucumbindo a sua própria Arcana ou ao seu pacto. Mas quando bem treinados, Nekrath são uma verdadeira força de caçada.",
     colecao: "A Crônica dos Varkhan",
     limiteAtributo: 110,
-    imagem: "https://i.imgur.com/FSfJ2I0.png",
+    imagem: "https://imgur.com/1VQyh3r.png",
     atributos: {
-      forca: "3d6+4",
-      vitalidade: "2d4+8",
-      agilidade: "3d8+10",
-      inteligencia: "3d10+6",
-      percepcao: "3d10+6",
+      forca: "2d6+2",
+      vitalidade: "2d6+2",
+      agilidade: "2d6+4",
+      inteligencia: "2d12+6",
+      percepcao: "2d10+4",
       sorte: "0"
     },
     habilidadesBasicas: [
