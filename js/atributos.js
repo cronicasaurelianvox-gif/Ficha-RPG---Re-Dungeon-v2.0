@@ -631,14 +631,29 @@ class AtributosManager {
             const soma = (FOR * 0.3) + (VIT * 0.6) + (SOR * 0.1);
             const maximo = Math.ceil(soma * 2);
 
-            // Obter bonus
+            // Obter base/extra/bonus para cálculo completo
+            const base = window.statusBarsManager?.state?.hp?.base || 0;
+            const extra = window.statusBarsManager?.state?.hp?.extra || 0;
             const bonus = window.bonusCalculator?.getBonus('saude') || 0;
-            const maximoFinal = maximo + bonus;
+            const maximoFinal = maximo + base + extra + bonus;
+            
+            // 🔍 DEBUG: Verificar valores intermediários
+            console.log(`[DEBUG atualizarSaudeMaxima] Atributos: FOR=${FOR}, VIT=${VIT}, SOR=${SOR}`);
+            console.log(`[DEBUG atualizarSaudeMaxima] Soma: ${soma.toFixed(2)}, Maximo base: ${maximo}`);
+            console.log(`[DEBUG atualizarSaudeMaxima] Base: ${base}, Extra: ${extra}, Bonus: ${bonus}`);
+            console.log(`[DEBUG atualizarSaudeMaxima] StatusBarsManager disponível: ${!!window.statusBarsManager}`);
+            console.log(`[DEBUG atualizarSaudeMaxima] BonusCalculator disponível: ${!!window.bonusCalculator}`);
 
             // Atualizar StatusBarsManager
             if (window.statusBarsManager.state?.hp) {
                 window.statusBarsManager.state.hp.max = maximoFinal;
-                console.log(`✅ Saúde Máxima: ${maximo} + ${bonus}(bonus) = ${maximoFinal}`);
+                console.log(`✅ Saúde Máxima DETALHADO:`);
+                console.log(`   - Fórmula base: ceil(((${FOR}×0.3)+(${VIT}×0.6)+(${SOR}×0.1))×2) = ${maximo}`);
+                console.log(`   - Base: +${base}`);
+                console.log(`   - Extra: +${extra}`);
+                console.log(`   - Bônus: +${bonus}`);
+                console.log(`   - TOTAL: ${maximo} + ${base} + ${extra} + ${bonus} = ${maximoFinal}`);
+                console.log(`   - Valor salvo em hp.max: ${window.statusBarsManager.state.hp.max}`);
             }
         } catch (error) {
             console.error('❌ Erro ao calcular saúde máxima:', error);
@@ -670,14 +685,22 @@ class AtributosManager {
             const soma = (INT * 0.6) + (PER * 0.3) + (SOR * 0.1);
             const maximo = Math.ceil(soma * (200 / 150));
 
-            // Obter bonus
+            // Obter base/extra/bonus para cálculo completo
+            const base = window.statusBarsManager?.state?.energy?.base || 0;
+            const extra = window.statusBarsManager?.state?.energy?.extra || 0;
             const bonus = window.bonusCalculator?.getBonus('energia') || 0;
-            const maximoFinal = maximo + bonus;
+            const maximoFinal = maximo + base + extra + bonus;
 
             // Atualizar StatusBarsManager
             if (window.statusBarsManager.state?.energy) {
                 window.statusBarsManager.state.energy.max = maximoFinal;
-                console.log(`✅ Energia Máxima: ${maximo} + ${bonus}(bonus) = ${maximoFinal}`);
+                console.log(`✅ Energia Máxima DETALHADO:`);
+                console.log(`   - Fórmula base: ceil(((${INT}×0.6)+(${PER}×0.3)+(${SOR}×0.1))×1.333333) = ${maximo}`);
+                console.log(`   - Base: +${base}`);
+                console.log(`   - Extra: +${extra}`);
+                console.log(`   - Bônus: +${bonus}`);
+                console.log(`   - TOTAL: ${maximo} + ${base} + ${extra} + ${bonus} = ${maximoFinal}`);
+                console.log(`   - Valor salvo em energy.max: ${window.statusBarsManager.state.energy.max}`);
             }
         } catch (error) {
             console.error('❌ Erro ao calcular energia máxima:', error);
@@ -709,14 +732,22 @@ class AtributosManager {
             const soma = (FOR * 0.3) + (VIT * 0.5) + (SOR * 0.2);
             const maximo = Math.ceil(soma);
 
-            // Obter bonus
+            // Obter base/extra/bonus para cálculo completo
+            const base = window.statusBarsManager?.state?.fatigue?.base || 0;
+            const extra = window.statusBarsManager?.state?.fatigue?.extra || 0;
             const bonus = window.bonusCalculator?.getBonus('fadiga') || 0;
-            const maximoFinal = maximo + bonus;
+            const maximoFinal = maximo + base + extra + bonus;
 
             // Atualizar StatusBarsManager
             if (window.statusBarsManager.state?.fatigue) {
                 window.statusBarsManager.state.fatigue.max = maximoFinal;
-                console.log(`✅ Fadiga Máxima: ${maximo} + ${bonus}(bonus) = ${maximoFinal}`);
+                console.log(`✅ Fadiga Máxima DETALHADO:`);
+                console.log(`   - Fórmula base: ceil((${FOR}×0.3)+(${VIT}×0.5)+(${SOR}×0.2)) = ${maximo}`);
+                console.log(`   - Base: +${base}`);
+                console.log(`   - Extra: +${extra}`);
+                console.log(`   - Bônus: +${bonus}`);
+                console.log(`   - TOTAL: ${maximo} + ${base} + ${extra} + ${bonus} = ${maximoFinal}`);
+                console.log(`   - Valor salvo em fatigue.max: ${window.statusBarsManager.state.fatigue.max}`);
             }
         } catch (error) {
             console.error('❌ Erro ao calcular fadiga máxima:', error);

@@ -249,12 +249,18 @@ const AtualizarFichaCompleta = (() => {
 
         // ✅ NOVO: Sincronizar bonus do BonusCalculator
         const bonusKey = statusType.stateKey === 'hp' ? 'saude' : statusType.stateKey === 'energia' ? 'energia' : 'fadiga';
+        console.log(`    [DIAGNÓSTICO] ${statusType.name}: bonusKey="${bonusKey}", BonusCalculator disponível: ${!!window.bonusCalculator}`);
         if (window.bonusCalculator && typeof window.bonusCalculator.getBonus === 'function') {
           const bonusAtualizado = window.bonusCalculator.getBonus(bonusKey) || 0;
+          console.log(`    [DIAGNÓSTICO] ${statusType.name}: getBonus("${bonusKey}") retornou: ${bonusAtualizado}`);
           if (bonusAtualizado !== bonus) {
             console.log(`    ${statusType.name}: bonus atualizado de ${bonus} para ${bonusAtualizado} (via BonusCalculator)`);
             bonus = bonusAtualizado;
+          } else {
+            console.log(`    ${statusType.name}: bonus mantido em ${bonus} (sem mudanças)`);
           }
+        } else {
+          console.warn(`    [DIAGNÓSTICO] ${statusType.name}: BonusCalculator.getBonus não disponível!`);
         }
 
         let maximoCalculado = 0;
@@ -284,8 +290,11 @@ const AtualizarFichaCompleta = (() => {
         statusData.maximo = maximoFinal;
         statusData.atual = maximoFinal; // ✅ Atual = Máximo
 
-        console.log(`      Máximo final: ${maximoCalculado} + (${base} + ${extra} + ${bonus}) = ${maximoFinal}`);
-        console.log(`      ✅ Atual também definido como: ${maximoFinal}`);
+        console.log(`      Máximo final DETALHADO:`);
+        console.log(`        Fórmula: ${maximoCalculado} + (base:${base} + extra:${extra} + bonus:${bonus})`);
+        console.log(`        Cálculo: ${maximoCalculado} + ${base} + ${extra} + ${bonus} = ${maximoFinal}`);
+        console.log(`        ✅ Valor SALVO em state.status[${statusType.stateKey}].maximo = ${statusData.maximo}`);
+        console.log(`        ✅ Valor SALVO em state.status[${statusType.stateKey}].atual = ${statusData.atual}`);
 
         // ✅ Atualizar StatusBarsManager também
         if (window.statusBarsManager && window.statusBarsManager.state && window.statusBarsManager.state[statusType.managerKey]) {
@@ -312,6 +321,7 @@ const AtualizarFichaCompleta = (() => {
       // ⭐ NOVO: Sincronizar os 3 status diretamente (sem chamar saveChanges que fecha o modal)
       // Isso garante que os máximos do modal são persistidos no StatusBarsManager e AppState
       const statusTypesModal = ['hp', 'energy', 'fatigue'];
+      const appStateStatusMap = { hp: 'hp', energy: 'energia', fatigue: 'fadiga' };
       const statusTypesLabels = { hp: 'Saúde', energy: 'Energia', fatigue: 'Fadiga' };
 
       statusTypesModal.forEach(statusType => {
@@ -331,19 +341,17 @@ const AtualizarFichaCompleta = (() => {
             console.log(`    ✅ StatusBarsManager.${statusType} sincronizado`);
           }
 
-          // Persistir no AppState
+          // Persistir no AppState usando as chaves corretas de status
           const stateManager = window.appState;
           if (stateManager) {
             const state = stateManager.getState();
             if (!state.status) state.status = {};
-            if (!state.status[statusType]) state.status[statusType] = {};
-            state.status[statusType].current = values.current || 0;
-            state.status[statusType].base = values.base || 0;
-            state.status[statusType].extra = values.extra || 0;
-            state.status[statusType].bonus = values.bonus || 0;
-            state.status[statusType].max = values.maximum || 0;
+            const appStateKey = appStateStatusMap[statusType] || statusType;
+            if (!state.status[appStateKey]) state.status[appStateKey] = {};
+            state.status[appStateKey].atual = values.current || 0;
+            state.status[appStateKey].maximo = values.maximum || 0;
             stateManager.setState(state);
-            console.log(`    ✅ AppState.${statusType} sincronizado`);
+            console.log(`    ✅ AppState.${appStateKey} sincronizado`);
           }
         } catch (e) {
           console.warn(`  ⚠️ Erro ao sincronizar ${statusTypesLabels[statusType]}:`, e.message);

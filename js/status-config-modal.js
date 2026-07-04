@@ -726,6 +726,10 @@ const StatusConfigModal = {
         const maximoFinal = maximoCalculado + (base + extra + bonus);
         console.log(`  ✓ Máximo final: ${maximoCalculado} + (${base} + ${extra} + ${bonus}) = ${maximoFinal}`);
 
+        // ⭐ Quando o modal de configuração abrir, iniciar o campo Atual com o valor Máximo
+        current = maximoFinal;
+        console.log(`  ✓ Campo atual definido para o máximo: ${current}`);
+
         // Armazenar valores temporários
         this.state.tempValues[statusType] = {
             current: current,

@@ -663,6 +663,9 @@ class LocalStorageManager {
                 payload.maxResonance = Number.isFinite(nodes.maxResonance)
                     ? nodes.maxResonance
                     : 100;
+                if (Array.isArray(nodes.activatedLines)) {
+                    payload.activatedLines = nodes.activatedLines;
+                }
             } else {
                 console.warn('⚠️ saveVeiasAstrais recebeu payload inválido');
                 payload.nodes = [];

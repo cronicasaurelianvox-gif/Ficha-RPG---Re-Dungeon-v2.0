@@ -2100,13 +2100,19 @@ class VeiasAstraisSystem {
   saveState() {
     try {
       if (window.localStorageManager) {
-        window.localStorageManager.saveVeiasAstrais({
+        const payload = {
           nodes: this.nodes,
           powerCombat: this.powerCombat,
           maxPowerCombat: this.maxPowerCombat,
           resonance: this.resonance,
           maxResonance: this.maxResonance,
-        });
+        };
+
+        if (this.lineActivation && typeof this.lineActivation.getActivatedLinesToSave === 'function') {
+          payload.activatedLines = this.lineActivation.getActivatedLinesToSave();
+        }
+
+        window.localStorageManager.saveVeiasAstrais(payload);
         console.log("💾 Estado das Veias Astrais salvo");
       }
     } catch (error) {

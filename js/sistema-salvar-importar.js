@@ -30,7 +30,6 @@ class SistemaFicha {
             'cultivo',
             'corpoImortal',
             'loja',
-            'sorte',
             'condicoes', // ✨ NOVO: Condições ativas
             'classe',
             'raca',
@@ -40,13 +39,15 @@ class SistemaFicha {
     }
 
     /**
-     * Inicializa o sistema
+     * Inicializa o sistema de salvamento/importação.
      */
     init() {
-        console.log(`✅ Sistema de Ficha v${this.versao} inicializado`);
-        this.vincularBotoes();
+        try {
+            this.vincularBotoes();
+        } catch (erro) {
+            console.error('Erro ao inicializar SistemaFicha:', erro);
+        }
     }
-
     /**
      * Vincula os botões aos listeners
      */
@@ -1646,9 +1647,68 @@ class SistemaFicha {
             condicoes: this.coletarCondicoes(), // ✨ NOVO
             classe: this.coletarClasse(),
             raca: this.coletarRaca(),
+            veiasAstrais: this.coletarVeiasAstrais(),
             // ✨ NOVO: Adicionar dados do popup-info
             popupInfo: this.coletarPopupInfo()
         };
+    }
+
+    /**
+     * Coleta o estado atual das Veias Astrais para exportar no JSON.
+     */
+    coletarVeiasAstrais() {
+        try {
+            if (!window.veiasAstraisSystem) {
+                console.warn('⚠️ Veias Astrais não disponível para coleta');
+                return null;
+            }
+
+            const system = window.veiasAstraisSystem;
+            const lineActivation = window.veiasAstraisLineActivation;
+
+            const nodes = Array.isArray(system.nodes)
+                ? system.nodes.map((node) => ({
+                      id: node.id,
+                      treeId: node.treeId,
+                      state: node.state,
+                      level: node.level,
+                  }))
+                : [];
+
+            const activatedLines =
+                lineActivation && typeof lineActivation.getActivatedLinesToSave === 'function'
+                    ? lineActivation.getActivatedLinesToSave()
+                    : [];
+
+            const trees = Object.values(system.trees).map((tree) => ({
+                id: tree.id,
+                name: tree.name,
+                unlockedNodes: tree.unlockedNodes,
+                totalNodes: tree.totalNodes,
+                color: tree.color,
+            }));
+
+            return {
+                powerCombat: Number.isFinite(system.powerCombat)
+                    ? system.powerCombat
+                    : 0,
+                maxPowerCombat: Number.isFinite(system.maxPowerCombat)
+                    ? system.maxPowerCombat
+                    : 0,
+                resonance: Number.isFinite(system.resonance)
+                    ? system.resonance
+                    : 45,
+                maxResonance: Number.isFinite(system.maxResonance)
+                    ? system.maxResonance
+                    : 100,
+                nodes,
+                trees,
+                activatedLines,
+            };
+        } catch (erro) {
+            console.warn('⚠️ Erro ao coletar estado das Veias Astrais:', erro);
+            return null;
+        }
     }
 
     /**
@@ -1810,8 +1870,7 @@ class SistemaFicha {
                     }
                 }
                 
-                this.mostrarMensagem('✅ Ficha importada com sucesso! Recarregando...', 'sucesso');
-                
+                this.mostrarMensagem('✅ Ficha importada com sucesso! Interface atualizada.', 'sucesso');
                 // 🎨 Atualizar card de status IMEDIATAMENTE após importação
                 console.log('🎨 Renderizando card de status com valores importados...');
                 if (window.statusBarsManager && typeof window.statusBarsManager.render === 'function') {
@@ -1821,13 +1880,7 @@ class SistemaFicha {
                     console.warn('⚠️ StatusBarsManager não disponível para renderizar card');
                 }
                 
-                // ⟳ RECARREGAR PÁGINA APÓS RESTAURAÇÃO E SALVAMENTO
-                // Todos os dados já estão salvos no localStorage
-                // Aumentar timeout para garantir que imagens são salvas em IndexedDB
-                setTimeout(() => {
-                    console.log('⟳ Recarregando página para atualizar interface...');
-                    location.reload();
-                }, 1500);
+                // 🎨 O fluxo de importação terminou. A interface foi atualizada diretamente.
                 
             } catch (erro) {
                 console.error('❌ Erro ao importar ficha:', erro);
@@ -2166,6 +2219,127 @@ class SistemaFicha {
             console.error('❌ Erro ao restaurar atributos:', erro);
             this.mostrarMensagem('❌ Erro ao restaurar atributos!', 'erro');
         }
+    }
+
+    /**
+     * Restaura o estado das Veias Astrais importado do JSON.
+     */
+    async restaurarVeiasAstrais(dados) {
+        if (!dados) {
+            console.log('ℹ️ Nenhum estado de Veias Astrais no arquivo. Mantendo estado atual.');
+            return;
+        }
+
+        console.log('✨ Restaurando estado das Veias Astrais...', dados);
+
+        let tentativas = 0;
+        while (!window.veiasAstraisSystem && tentativas < 30) {
+            await new Promise((resolve) => setTimeout(resolve, 100));
+            tentativas++;
+        }
+
+        if (!window.veiasAstraisSystem) {
+            console.error('❌ Veias Astrais não disponível para restauração');
+            return;
+        }
+
+        const system = window.veiasAstraisSystem;
+
+        // Garantir que o sistema esteja totalmente inicializado antes de aplicar estado
+        tentativas = 0;
+        while (!system.initialized && tentativas < 40) {
+            await new Promise((resolve) => setTimeout(resolve, 100));
+            tentativas++;
+        }
+
+        if (!system.initialized) {
+            console.warn('⚠️ VeiasAstraisSystem não finalizou inicialização; tentando aplicar estado mesmo assim');
+        }
+
+        if (Number.isFinite(dados.powerCombat)) {
+            system.powerCombat = dados.powerCombat;
+            console.log(`✅ Power Combat restaurado: ${dados.powerCombat}`);
+        }
+        if (Number.isFinite(dados.maxPowerCombat)) {
+            system.maxPowerCombat = dados.maxPowerCombat;
+            console.log(`✅ Max Power Combat restaurado: ${dados.maxPowerCombat}`);
+        }
+        if (Number.isFinite(dados.resonance)) {
+            system.resonance = dados.resonance;
+            console.log(`✅ Ressonância restaurada: ${dados.resonance}`);
+        }
+        if (Number.isFinite(dados.maxResonance)) {
+            system.maxResonance = dados.maxResonance;
+            console.log(`✅ Max Ressonância restaurado: ${dados.maxResonance}`);
+        }
+
+        if (Array.isArray(dados.nodes) && dados.nodes.length > 0) {
+            dados.nodes.forEach((savedNode) => {
+                const node = system.nodes.find((n) => String(n.id) === String(savedNode.id));
+                if (node) {
+                    node.state = savedNode.state || node.state;
+                    node.level = savedNode.level != null ? savedNode.level : node.level;
+                }
+            });
+            console.log(`✅ ${dados.nodes.length} nós astral restaurados (comparação de ids flexível)`);
+        }
+
+        // Reativar bônus baseados nos nós desbloqueados
+        system.activeBonuses = [];
+        system.nodes.forEach((node) => {
+            if ((node.state === 'unlocked' || node.state === 'maxed') && node.bonus) {
+                system.activateBonus(node.bonus);
+            }
+        });
+
+        // Atualizar contagem de nós por constelação
+        Object.values(system.trees).forEach((tree) => {
+            tree.unlockedNodes = system.nodes.filter(
+                (n) => n.treeId === tree.id && n.state !== 'locked',
+            ).length;
+        });
+
+        // Tentar renderizar/atualizar via API do sistema
+        try {
+            if (typeof system.renderUI === 'function') system.renderUI();
+            if (typeof system.updateUI === 'function') system.updateUI();
+        } catch (e) {
+            console.warn('⚠️ Falha ao chamar render/update do sistema (continuando):', e);
+        }
+
+        // Fallback direto no DOM caso os elementos não tenham sido atualizados pela API
+        try {
+            const pcCounter = document.getElementById('power-combat-counter');
+            const pcMax = document.getElementById('power-combat-max');
+            const pcFill = document.getElementById('power-combat-fill');
+            if (pcCounter) pcCounter.textContent = String(system.powerCombat ?? '0');
+            if (pcMax) pcMax.textContent = `/ ${String(system.maxPowerCombat ?? '0')}`;
+            if (pcFill) {
+                const max = Number(system.maxPowerCombat) || 0;
+                const pc = Number(system.powerCombat) || 0;
+                pcFill.style.width = max > 0 ? `${(pc / max) * 100}%` : '0%';
+            }
+        } catch (e) {
+            console.warn('⚠️ Falha no fallback DOM para Power Combat:', e);
+        }
+        if (system.selectedNode && typeof system.renderNodeDetails === 'function') {
+            system.renderNodeDetails();
+        }
+
+        // Restaurar conexões especiais ativadas, se houver
+        if (
+            window.veiasAstraisLineActivation &&
+            typeof window.veiasAstraisLineActivation.restoreActivatedLines === 'function' &&
+            Array.isArray(dados.activatedLines)
+        ) {
+            window.veiasAstraisLineActivation.restoreActivatedLines(dados.activatedLines);
+        }
+
+        if (typeof system.saveState === 'function') {
+            system.saveState();
+        }
+
+        console.log('✅ Estado das Veias Astrais restaurado com sucesso');
     }
 
     /**
