@@ -14,6 +14,19 @@ class AptidoesManager {
 
         // Listeners para notificações
         this.listeners = [];
+
+        // Atualizar o painel quando os atributos mudarem
+        if (typeof window !== 'undefined') {
+            window.addEventListener('atributosChanged', () => {
+                console.log('🔁 [AptidoesManager] Atributos mudaram, recalculando máximo...');
+                this.recalcularEAtualizar();
+            });
+
+            window.addEventListener('atributosAtualizados', () => {
+                console.log('🔁 [AptidoesManager] Evento atributosAtualizados recebido, recalculando máximo...');
+                this.recalcularEAtualizar();
+            });
+        }
         
         // ✅ NOVO: Handler para event delegation dos botões de ação
         this._aptidoesActionClickHandler = null;

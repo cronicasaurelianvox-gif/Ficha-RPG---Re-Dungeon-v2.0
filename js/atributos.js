@@ -154,6 +154,11 @@ class AtributosManager {
         // ✅ CARREGAR DADOS DO LOCALSTORAGE SE DISPONÍVEL
         this.loadFromLocalStorage();
 
+        // ✅ SINCRONIZAR COM O ESTADO GLOBAL (F5 SAFE)
+        // Isso garante que os atributos carregados pelo StateManager
+        // sejam refletidos corretamente após recarregar a página.
+        this.syncWithState();
+
         // Renderizar com dados carregados
         this.renderizarAtributos();
         this.renderizarPersonagem();

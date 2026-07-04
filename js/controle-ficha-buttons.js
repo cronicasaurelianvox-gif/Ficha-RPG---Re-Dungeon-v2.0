@@ -32,7 +32,7 @@ class ControleFichaButtons {
             this.btnLimparFicha = document.getElementById('btn-limpar-ficha');
 
             if (!this.btnAtualizar) {
-                console.error('❌ [ControleFichaButtons] Botão "Atualizar" não encontrado no DOM');
+                console.log('ℹ️ [ControleFichaButtons] Botão "Atualizar" não encontrado no DOM. Módulo de atualização ficará inativo.');
                 return;
             }
 
@@ -57,27 +57,15 @@ class ControleFichaButtons {
      * Aguarda o DOM estar pronto
      * @param {Function} callback - Função a executar
      */
-    waitForDOM(callback, maxRetries = 30, retryDelay = 100) {
-        let retries = 0;
-        
-        const check = () => {
-            const btnAtualizar = document.getElementById('btn-atualizar-ficha');
-            const btnLimparFicha = document.getElementById('btn-limpar-ficha');
+    waitForDOM(callback) {
+        if (document.readyState !== 'loading') {
+            callback();
+            return;
+        }
 
-            if (btnAtualizar && btnLimparFicha) {
-                callback();
-                return;
-            }
-
-            retries++;
-            if (retries < maxRetries) {
-                setTimeout(check, retryDelay);
-            } else {
-                console.error('❌ [ControleFichaButtons] Timeout esperando botões no DOM');
-            }
-        };
-
-        check();
+        document.addEventListener('DOMContentLoaded', () => {
+            callback();
+        }, { once: true });
     }
 
     /**
