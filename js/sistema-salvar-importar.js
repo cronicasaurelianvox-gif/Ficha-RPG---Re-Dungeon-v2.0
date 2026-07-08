@@ -30,9 +30,12 @@ class SistemaFicha {
             'cultivo',
             'corpoImortal',
             'loja',
+            'sorte', // Campo de sorte
+            'sorteHistorico', // ✨ NOVO: Histórico de Sorte
             'condicoes', // ✨ NOVO: Condições ativas
             'classe',
             'raca',
+            'veiasAstrais', // ✨ NOVO: Estado das Veias Astrais
             'popupInfo' // ✨ NOVO: Dados do popup-info
         ];
         this.init();
@@ -848,7 +851,10 @@ class SistemaFicha {
                                 ganhas: 0,
                                 maximo: 3,
                                 atributoPróxima: 'FOR'
-                            }
+                            },
+                            
+                            // ✨ NOVO: Status de vida
+                            morto: companheiro.morto || false
                         };
                     }
                 } catch (parseError) {
@@ -898,7 +904,10 @@ class SistemaFicha {
                         ganhas: 0,
                         maximo: 3,
                         atributoPróxima: 'FOR'
-                    }
+                    },
+                    
+                    // ✨ NOVO: Status de vida
+                    morto: companheiro.morto || false
                 };
             }
             
@@ -1383,6 +1392,45 @@ class SistemaFicha {
     }
 
     /**
+     * 🎲 COLETA HISTÓRICO DE SORTE
+     * ════════════════════════════════════════════════
+     * Coleta o histórico completo de ações de sorte
+     */
+    coletarHistoricoSorte() {
+        try {
+            // Se o sistema de histórico não está disponível, retornar vazio
+            if (!window.sorteHistorico) {
+                console.warn('⚠️ Sistema de Histórico de Sorte não disponível');
+                return [];
+            }
+
+            // Obter histórico do sistema
+            const historico = window.sorteHistorico.obterHistorico();
+            
+            if (!historico || !Array.isArray(historico)) {
+                console.warn('⚠️ Histórico de Sorte vazio ou inválido');
+                return [];
+            }
+
+            // Converter para formato serializável (timestamps como strings)
+            const historicoSerializavel = historico.map(item => ({
+                id: item.id,
+                tipo: item.tipo,
+                timestamp: item.timestamp ? item.timestamp.toISOString() : new Date().toISOString(),
+                descricao: item.descricao,
+                iconEmoji: item.iconEmoji,
+                dados: item.dados || {}
+            }));
+
+            console.log(`✅ Histórico de Sorte coletado: ${historicoSerializavel.length} itens`);
+            return historicoSerializavel;
+        } catch (erro) {
+            console.error('❌ Erro ao coletar Histórico de Sorte:', erro);
+            return [];
+        }
+    }
+
+    /**
      * 📋 COLETA DADOS DE CONDIÇÕES ATIVAS (NOVO!)
      * ═══════════════════════════════════════════════════
      * Coleta todas as condições ativas do sistema
@@ -1644,6 +1692,7 @@ class SistemaFicha {
             corpoImortal: this.coletarCorpoImortal(),
             loja: this.coletarLoja(),
             sorte: this.coletarSorte(),
+            sorteHistorico: this.coletarHistoricoSorte(), // ✨ NOVO: Histórico de Sorte
             condicoes: this.coletarCondicoes(), // ✨ NOVO
             classe: this.coletarClasse(),
             raca: this.coletarRaca(),
@@ -1666,6 +1715,17 @@ class SistemaFicha {
             const system = window.veiasAstraisSystem;
             const lineActivation = window.veiasAstraisLineActivation;
 
+            // Se o sistema existir mas ainda não foi inicializado, tentar inicializar
+            if (system && !system.initialized && typeof system.init === 'function') {
+                try {
+                    console.log('ℹ️ VeiasAstraisSystem não inicializado — inicializando antes da coleta...');
+                    system.init();
+                } catch (e) {
+                    console.warn('⚠️ Falha ao inicializar VeiasAstraisSystem automaticamente:', e);
+                }
+            }
+
+            // Nó básico (formato legado)
             const nodes = Array.isArray(system.nodes)
                 ? system.nodes.map((node) => ({
                       id: node.id,
@@ -1680,7 +1740,8 @@ class SistemaFicha {
                     ? lineActivation.getActivatedLinesToSave()
                     : [];
 
-            const trees = Object.values(system.trees).map((tree) => ({
+            // Constelações (objeto e array)
+            const treesArray = Object.values(system.trees).map((tree) => ({
                 id: tree.id,
                 name: tree.name,
                 unlockedNodes: tree.unlockedNodes,
@@ -1688,23 +1749,83 @@ class SistemaFicha {
                 color: tree.color,
             }));
 
-            return {
-                powerCombat: Number.isFinite(system.powerCombat)
-                    ? system.powerCombat
-                    : 0,
-                maxPowerCombat: Number.isFinite(system.maxPowerCombat)
-                    ? system.maxPowerCombat
-                    : 0,
-                resonance: Number.isFinite(system.resonance)
-                    ? system.resonance
-                    : 45,
-                maxResonance: Number.isFinite(system.maxResonance)
-                    ? system.maxResonance
-                    : 100,
+            const constelacoes = {};
+            Object.values(system.trees).forEach((tree) => {
+                constelacoes[tree.id] = {
+                    id: tree.id,
+                    name: tree.name,
+                    unlockedNodes: tree.unlockedNodes || 0,
+                    totalNodes: tree.totalNodes || 0,
+                    color: tree.color,
+                };
+            });
+
+            // Nós detalhados (para reconstruir o mapa)
+            const nos = (Array.isArray(system.nodes) ? system.nodes : []).map((node) => {
+                // Caminho (lista de IDs dos pais até o core)
+                const caminho = [];
+                let parentId = node.parentId;
+                while (parentId && parentId !== 'core') {
+                    const parentNode = system.nodes.find((n) => n.id === parentId);
+                    if (!parentNode) break;
+                    caminho.unshift(parentNode.id);
+                    parentId = parentNode.parentId;
+                }
+
+                return {
+                    id: node.id,
+                    nome: node.name || null,
+                    constelacao: node.treeId,
+                    caminho: caminho, // array de ids dos pais (vazio se for ligado ao core)
+                    nivel: node.level,
+                    desbloqueado: node.state && node.state !== 'locked',
+                    custo: node.cost || 0,
+                    estado: node.state || 'locked',
+                    bonus: node.bonus ? { id: node.bonus.id || null, nome: node.bonus.name || null } : null,
+                    criadoEm: node.createdAt || null,
+                };
+            });
+
+            // Progresso por constelação
+            const progresso = {};
+            Object.keys(system.trees).forEach((tid) => {
+                progresso[tid] = system.nodes.filter((n) => n.treeId === tid && n.state && n.state !== 'locked').length;
+            });
+
+            // Power Combat e Ressonância (mantendo os campos legados e também objetos explícitos)
+            const pcValor = Number.isFinite(system.powerCombat) ? system.powerCombat : 0;
+            const pcMax = Number.isFinite(system.maxPowerCombat) ? system.maxPowerCombat : 0;
+
+            const resValor = Number.isFinite(system.resonance) ? system.resonance : 45;
+            const resMax = Number.isFinite(system.maxResonance) ? system.maxResonance : 100;
+
+            // Montar retorno sem remover estrutura existente (compatibilidade)
+            const resultado = {
+                // Campos legados (não alterar)
+                powerCombat: pcValor,
+                maxPowerCombat: pcMax,
+                resonance: resValor,
+                maxResonance: resMax,
                 nodes,
-                trees,
+                trees: treesArray,
                 activatedLines,
+
+                // Campos adicionais solicitados (compatíveis e opcionais)
+                constelacoes: constelacoes,
+                nos: nos,
+                progresso: progresso,
+                powerCombatStatus: { atual: pcValor, maximo: pcMax },
+                resonanceStatus: { atual: resValor, maximo: resMax },
             };
+
+            // Log para ajudar debugging quando o usuário disser "não funcionou"
+            try {
+                console.log('📤 coletarVeiasAstrais -> payload:', resultado);
+            } catch (e) {
+                // falhar silenciosamente no log
+            }
+
+            return resultado;
         } catch (erro) {
             console.warn('⚠️ Erro ao coletar estado das Veias Astrais:', erro);
             return null;
@@ -1808,16 +1929,35 @@ class SistemaFicha {
                 this.restaurarHabilidades(dados.habilidades);
                 this.restaurarInventario(dados.inventario);
                 this.restaurarTreinamento(dados.treinamento);
-                await this.restaurarCompanheiro(dados.companheiro);
+                // ✨ CORRIGIDO: Validar se companheiro não está vazio antes de restaurar
+                const temCompanheiroValido = dados.companheiro && 
+                                            dados.companheiro.nome && 
+                                            dados.companheiro.nome.trim() !== '';
+                if (temCompanheiroValido) {
+                    await this.restaurarCompanheiro(dados.companheiro);
+                } else {
+                    console.log('ℹ️ Nenhum companheiro válido para restaurar (ficha salva sem companheiro)');
+                    // Limpar companheiros existentes se o arquivo foi salvo sem nenhum
+                    if (window.companheirosManager) {
+                        window.companheirosManager.companheiros = [];
+                        await window.companheirosManager.salvarNoStorage();
+                        console.log('🗑️ Companheiros anteriores removidos');
+                    } else {
+                        localStorage.removeItem('redungeon_companheiros');
+                        console.log('🗑️ Dados de companheiros removidos do localStorage');
+                    }
+                }
                 // ✨ NOVO: Restaurar array de TODOS os companheiros
                 if (dados.companheiros && Array.isArray(dados.companheiros) && dados.companheiros.length > 0) {
                     console.log(`📦 Restaurando ${dados.companheiros.length} companheiros...`);
                     await this.restaurarCompanheiros(dados.companheiros);
                 }
+                this.restaurarVeiasAstrais(dados.veiasAstrais);
                 this.restaurarCultivo(dados.cultivo);
                 this.restaurarCorpoImortal(dados.corpoImortal);
                 this.restaurarLoja(dados.loja);
                 this.restaurarSorte(dados.sorte);
+                this.restaurarHistoricoSorte(dados.sorteHistorico); // ✨ Restaurar histórico de sorte
                 this.restaurarCondicoes(dados.condicoes); // ✨ NOVO
                 this.restaurarClasse(dados.classe);
                 this.restaurarRaca(dados.raca);
@@ -1928,7 +2068,28 @@ class SistemaFicha {
             'personagem-classe': dados.classe,
             'personagem-descricao': dados.descricao
         };
+        if (dados.titulo !== undefined) {
+            campos['info-titulo-personagem'] = dados.titulo;
+        }
         this.preencherCampos(campos);
+
+        // Atualizar também o manager de atributos global para evitar que
+        // um render posterior apague os valores importados.
+        if (window.atributosManager && typeof window.atributosManager.atualizarPersonagem === 'function') {
+            window.atributosManager.atualizarPersonagem({
+                nome: dados.nome,
+                titulo: dados.titulo,
+                classe: dados.classe,
+                raca: dados.raca
+            });
+            console.log('✅ AtributosManager atualizado com os dados do personagem importado');
+        }
+
+        // Garantir que o título também esteja visível imediatamente
+        const tituloEl = document.getElementById('personagem-titulo');
+        if (tituloEl && dados.titulo !== undefined) {
+            tituloEl.textContent = dados.titulo;
+        }
     }
 
     /**
@@ -1998,6 +2159,31 @@ class SistemaFicha {
                     window.statusConfigModal.state.originalValues.fatigue = JSON.parse(JSON.stringify(dados.barras.fadiga));
                     console.log('✅ Fadiga restaurada (incluindo extra):', dados.barras.fadiga);
                 }
+
+                // Atualizar o StatusBarsManager com os valores importados
+                if (window.statusBarsManager) {
+                    const mapStatus = (source, key) => {
+                        if (!source) return;
+                        const maxValue = source.maximum != null ? source.maximum : (source.max != null ? source.max : 0);
+                        window.statusBarsManager.state[key] = {
+                            current: Math.min(source.current || 0, maxValue),
+                            max: maxValue,
+                            base: source.base || 0,
+                            extra: source.extra || 0,
+                            bonus: source.bonus || 0
+                        };
+                    };
+
+                    mapStatus(dados.barras.hp, 'hp');
+                    mapStatus(dados.barras.energia, 'energy');
+                    mapStatus(dados.barras.fadiga, 'fatigue');
+                    console.log('✅ StatusBarsManager.state sincronizado com os valores importados');
+
+                    if (typeof window.statusBarsManager.render === 'function') {
+                        window.statusBarsManager.render();
+                        console.log('✅ StatusBarsManager renderizado após importação dos status');
+                    }
+                }
                 
                 // 💾 ⭐ FIX CRÍTICO: SALVAR extra/bonus EM localStorage PARA PERSISTÊNCIA
                 // Este é o bridge entre importação e carregamento após reload
@@ -2028,13 +2214,10 @@ class SistemaFicha {
                 
                 // ✨ SINCRONIZAR com StatusBarsManager se disponível
                 // Isso garante que os valores visuais das barras também sejam atualizados
-                if (window.statusBarsManager && typeof window.statusBarsManager.recalcularMaximos === 'function') {
-                    try {
-                        window.statusBarsManager.recalcularMaximos();
-                        console.log('✅ StatusBarsManager sincronizado');
-                    } catch (erro) {
-                        console.warn('⚠️ Erro ao sincronizar StatusBarsManager:', erro);
-                    }
+                // Não recalcular máximos imediatamente após importação,
+                // pois devemos preservar os valores importados exatos.
+                if (window.statusBarsManager) {
+                    console.log('✅ StatusBarsManager mantido com valores importados (sem recálculo de máximos)');
                 }
                 
                 console.log('✅ Status restaurados completamente (com campos extra e persistência)');
@@ -3050,7 +3233,10 @@ class SistemaFicha {
                         ganhas: 0,
                         maximo: 3,
                         atributoPróxima: 'FOR'
-                    }
+                    },
+                    
+                    // ✨ NOVO: Status de vida
+                    morto: dados.morto || false
                 };
                 
                 // Adicionar ao manager e salvar
@@ -3107,7 +3293,8 @@ class SistemaFicha {
                     aptidoes: dados.aptidoes || [],
                     vantagens: dados.vantagens || [],
                     habilidades: dados.habilidades || [],
-                    aptitudesStats: dados.aptitudesStats || {}
+                    aptitudesStats: dados.aptitudesStats || {},
+                    morto: dados.morto || false
                 };
                 localStorage.setItem('redungeon_companheiros', JSON.stringify([companheiroFallback]));
                 console.log('✅ Companheiro salvo em localStorage');
@@ -3181,7 +3368,10 @@ class SistemaFicha {
                     arts: dados.arts || [],
                     variantes: dados.variantes || [],
                     limiteArts: dados.limiteArts || 18,
-                    inventario: dados.inventario || { itens: [], armazenamentos: [] }
+                    inventario: dados.inventario || { itens: [], armazenamentos: [] },
+                    
+                    // ✨ NOVO: Status de vida
+                    morto: dados.morto || false
                 };
                 
                 // Salvar imagem em IndexedDB se houver
@@ -3676,6 +3866,63 @@ class SistemaFicha {
     }
 
     /**
+     * 🎲 RESTAURA HISTÓRICO DE SORTE
+     * ════════════════════════════════════════════════
+     * Restaura o histórico completo de ações de sorte
+     */
+    restaurarHistoricoSorte(dados) {
+        if (!dados || !Array.isArray(dados)) {
+            console.warn('⚠️ Histórico de Sorte vazio ou inválido');
+            return;
+        }
+
+        try {
+            // Se o sistema de histórico não está disponível, não restaurar
+            if (!window.sorteHistorico) {
+                console.warn('⚠️ Sistema de Histórico de Sorte não disponível para restauração');
+                return;
+            }
+
+            // Limpar histórico existente
+            window.sorteHistorico.limparHistorico();
+
+            // Restaurar cada item
+            dados.forEach(item => {
+                // Converter timestamp string de volta para Date
+                const timestampDate = new Date(item.timestamp);
+                
+                // Recriar objeto de ação
+                const acao = {
+                    id: item.id,
+                    tipo: item.tipo,
+                    timestamp: timestampDate,
+                    descricao: item.descricao,
+                    iconEmoji: item.iconEmoji,
+                    dados: item.dados || {}
+                };
+
+                // Adicionar diretamente ao histórico
+                window.sorteHistorico.historico.unshift(acao);
+            });
+
+            // Manter limite de 10 itens
+            if (window.sorteHistorico.historico.length > window.sorteHistorico.maxItens) {
+                window.sorteHistorico.historico = window.sorteHistorico.historico.slice(0, window.sorteHistorico.maxItens);
+            }
+
+            // Salvar no localStorage
+            window.sorteHistorico.salvarHistorico();
+
+            // Renderizar
+            window.sorteHistorico.renderHistorico();
+
+            console.log(`✅ [Importação] Histórico de Sorte restaurado: ${dados.length} itens`);
+        } catch (erro) {
+            console.error('❌ Erro ao restaurar Histórico de Sorte:', erro);
+        }
+    }
+
+    /**
      * 🏥 RESTAURA CONDIÇÕES ATIVAS (NOVO!)
      * ═══════════════════════════════════════════════════
      * Restaura todas as condições ativas do sistema
@@ -3731,12 +3978,53 @@ class SistemaFicha {
                 localStorage.setItem('redungeon_classes_selecionadas', JSON.stringify(dados.classesSelecionadasIds));
                 console.log(`✅ ${dados.classesSelecionadasIds.length} classe(s) restaurada(s):`, dados.classesSelecionadasIds);
 
-                // Se o ClassesUI está disponível, aplicar seleção
-                if (window.classesUI && typeof window.classesUI.escolherClasse === 'function') {
-                    dados.classesSelecionadasIds.forEach(classeId => {
-                        window.classesUI.escolherClasse(classeId);
-                    });
-                    console.log('✅ ClassesUI atualizado com classes restauradas');
+                // Se o ClassesUI está disponível, aplicar seleção de forma determinística
+                // (não usar o método de toggle `escolherClasse`, que pode remover se já estiver selecionada)
+                if (window.classesUI) {
+                    try {
+                        // Filtrar IDs válidos (existem nas DB)
+                        const validIds = (dados.classesSelecionadasIds || []).filter(id => {
+                            try { return !!(typeof obterClassePorId === 'function' ? obterClassePorId(id) : null); } catch { return false; }
+                        });
+
+                        // Forçar estado interno
+                        window.classesUI.classesSelecionadas = [...validIds];
+                        window.classesUI.bloqueioAtivo = validIds.length > 0;
+
+                        // Garantir consistência de tipos
+                        window.classesUI.classesSelecionadas = window.classesUI.classesSelecionadas.map(id => String(id));
+
+                        // Persistir via API do próprio sistema
+                        if (typeof window.classesUI.salvarClassesSelecionadas === 'function') {
+                            window.classesUI.salvarClassesSelecionadas(validIds);
+                        } else {
+                            localStorage.setItem('redungeon_classes_selecionadas', JSON.stringify(validIds));
+                        }
+
+                        // Atualizar UI do modal/menus
+                        if (typeof window.classesUI.aplicarBloqueioVisual === 'function') window.classesUI.aplicarBloqueioVisual();
+                        if (typeof window.classesUI.atualizarBotoesSelecionados === 'function') window.classesUI.atualizarBotoesSelecionados();
+                        if (typeof window.classesUI.atualizarCampoFicha === 'function') window.classesUI.atualizarCampoFicha();
+
+                        // Forçar re-render do painel de detalhes para atualizar o botão do header
+                        try {
+                            const active = window.classesUI.classeAtiva || (window.classesUI.classesSelecionadas[0] || null);
+                            if (active && typeof window.classesUI.selecionarClasse === 'function') {
+                                window.classesUI.selecionarClasse(String(active));
+                            }
+                        } catch (errRender) {
+                            console.warn('⚠️ Erro ao re-renderizar painel de classes:', errRender);
+                        }
+
+                        // Sincronizar popup-info-jogador se existir
+                        if (window.popupInfoJogador && typeof window.popupInfoJogador.loadValuesFromState === 'function') {
+                            window.popupInfoJogador.loadValuesFromState();
+                        }
+
+                        console.log('✅ ClassesUI atualizado com classes restauradas (aplicação direta)');
+                    } catch (errInner) {
+                        console.warn('⚠️ Erro ao aplicar seleção diretamente no ClassesUI:', errInner);
+                    }
                 }
             } catch (erro) {
                 console.warn('⚠️ Erro ao restaurar classes:', erro);
@@ -3762,10 +4050,35 @@ class SistemaFicha {
                 localStorage.setItem('redungeon_raca_selecionada', dados.racaSelecionadaId);
                 console.log(`✅ Raça restaurada: ${dados.racaSelecionadaId}`);
 
-                // Se o RacasUI está disponível, aplicar seleção
-                if (window.racasUI && typeof window.racasUI.escolherRaca === 'function') {
-                    window.racasUI.escolherRaca(dados.racaSelecionadaId);
-                    console.log('✅ RacasUI atualizado com raça restaurada');
+                // Se o RacasUI está disponível, aplicar seleção diretamente
+                if (window.racasUI) {
+                    try {
+                        // Verificar validade
+                        const valid = typeof obterRacaPorId === 'function' ? !!obterRacaPorId(dados.racaSelecionadaId) : true;
+                        if (valid) {
+                            window.racasUI.racaSelecionadaId = dados.racaSelecionadaId;
+                            window.racasUI.bloqueioAtivo = true;
+
+                            if (typeof window.racasUI.salvarRacaSelecionada === 'function') {
+                                window.racasUI.salvarRacaSelecionada(dados.racaSelecionadaId);
+                            } else {
+                                localStorage.setItem('redungeon_raca_selecionada', dados.racaSelecionadaId);
+                            }
+
+                            if (typeof window.racasUI.aplicarBloqueioVisual === 'function') window.racasUI.aplicarBloqueioVisual();
+                            if (typeof window.racasUI.atualizarBotaoSelecionada === 'function') window.racasUI.atualizarBotaoSelecionada(dados.racaSelecionadaId);
+                            if (typeof window.racasUI.atualizarCampoFicha === 'function') window.racasUI.atualizarCampoFicha(obterRacaPorId(dados.racaSelecionadaId)?.nome || 'Raça');
+
+                            // Sincronizar popup-info-jogador se existir
+                            if (window.popupInfoJogador && typeof window.popupInfoJogador.loadValuesFromState === 'function') {
+                                window.popupInfoJogador.loadValuesFromState();
+                            }
+
+                            console.log('✅ RacasUI atualizado com raça restaurada (aplicação direta)');
+                        }
+                    } catch (errInner) {
+                        console.warn('⚠️ Erro ao aplicar seleção diretamente no RacasUI:', errInner);
+                    }
                 }
             } catch (erro) {
                 console.warn('⚠️ Erro ao restaurar raça:', erro);
@@ -3876,10 +4189,47 @@ class SistemaFicha {
                     window.popupInfoJogador.updateFormInputs();
                     console.log('✅ PopupInfo atualizado em tempo real');
                 }
+
+                if (typeof window.popupInfoJogador.loadValuesFromState === 'function') {
+                    window.popupInfoJogador.loadValuesFromState();
+                    console.log('✅ PopupInfo sincronizado com o estado carregado após importação');
+                }
             }
 
         } catch (erro) {
             console.error('❌ Erro ao restaurar popup-info:', erro);
+        }
+    }
+
+    /**
+     * 🔄 RESTAURA DADOS DAS VEIAS ASTRAIS
+     * Salva o payload diretamente no LocalStorageManager e, se o sistema já estiver
+     * inicializado, força o carregamento imediato do estado astral.
+     */
+    restaurarVeiasAstrais(dados) {
+        if (!dados) {
+            console.warn('⚠️ Dados das Veias Astrais vazios ou ausentes');
+            return;
+        }
+
+        try {
+            console.log('🔄 Restaurando Veias Astrais...', dados);
+
+            if (window.localStorageManager && typeof window.localStorageManager.saveVeiasAstrais === 'function') {
+                window.localStorageManager.saveVeiasAstrais(dados);
+                console.log('✅ Veias Astrais salvas em localStorage');
+            } else {
+                const chave = 'redungeon_ficha_veias_astrais';
+                localStorage.setItem(chave, JSON.stringify(dados));
+                console.log('✅ Veias Astrais salvas diretamente no localStorage (fallback)');
+            }
+
+            if (window.veiasAstraisSystem && typeof window.veiasAstraisSystem.loadSavedStates === 'function') {
+                window.veiasAstraisSystem.loadSavedStates();
+                console.log('✅ Veias Astrais recarregadas no sistema existente');
+            }
+        } catch (erro) {
+            console.error('❌ Erro ao restaurar Veias Astrais:', erro);
         }
     }
 

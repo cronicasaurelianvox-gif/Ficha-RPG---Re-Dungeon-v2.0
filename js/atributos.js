@@ -463,8 +463,8 @@ class AtributosManager {
             // Verificar se há seleção de classe no modal
             const classesSelecionadas = localStorage.getItem('redungeon_classes_selecionadas');
             if (!classesSelecionadas || classesSelecionadas === '[]') {
-                classeEl.textContent = 'Classe';
-                console.log(`  ✅ Nenhuma classe selecionada, exibindo padrão: "Classe"`);
+                classeEl.textContent = classe || 'Classe';
+                console.log(`  ✅ Classe atualizada: "${classe || 'Classe'}"`);
             } else {
                 // Se há classes salvas, deixar que classes-ui.js mantenha a sincronização
                 console.log(`  ℹ️ Classes foram selecionadas, mantendo valor sincronizado`);
@@ -479,8 +479,8 @@ class AtributosManager {
             // Verificar se há seleção de raça no modal
             const racaSelecionada = localStorage.getItem('redungeon_raca_selecionada');
             if (!racaSelecionada) {
-                racaEl.textContent = 'Raça';
-                console.log(`  ✅ Nenhuma raça selecionada, exibindo padrão: "Raça"`);
+                racaEl.textContent = raca || 'Raça';
+                console.log(`  ✅ Raça atualizada: "${raca || 'Raça'}"`);
             }
         } else {
             console.warn('⚠️ Elemento #personagem-raca não encontrado');

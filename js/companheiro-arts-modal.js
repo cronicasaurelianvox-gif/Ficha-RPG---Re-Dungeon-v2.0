@@ -1190,7 +1190,7 @@ class CompanheiroArtsModalManager {
                         </div>
                         <div>
                             <label style="color: #d8b4fe; font-weight: bold;">💎 Custo (PM)</label>
-                            <input type="number" id="form-comp-art-cost" min="0" value="10" style="width: 100%; padding: 8px; background: rgba(26, 26, 46, 0.6); border: 1px solid #d8b4fe; border-radius: 4px; color: #e0e0e0; box-sizing: border-box; margin-top: 4px;">
+                            <input type="text" id="form-comp-art-cost" value="10" style="width: 100%; padding: 8px; background: rgba(26, 26, 46, 0.6); border: 1px solid #d8b4fe; border-radius: 4px; color: #e0e0e0; box-sizing: border-box; margin-top: 4px;">
                         </div>
                     </div>
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px;">
@@ -1200,7 +1200,7 @@ class CompanheiroArtsModalManager {
                         </div>
                         <div>
                             <label style="color: #d8b4fe; font-weight: bold;">🔄 Recarga (turnos)</label>
-                            <input type="number" id="form-comp-art-reload" min="0" value="0" style="width: 100%; padding: 8px; background: rgba(26, 26, 46, 0.6); border: 1px solid #d8b4fe; border-radius: 4px; color: #e0e0e0; box-sizing: border-box; margin-top: 4px;">
+                            <input type="text" id="form-comp-art-reload" value="0" style="width: 100%; padding: 8px; background: rgba(26, 26, 46, 0.6); border: 1px solid #d8b4fe; border-radius: 4px; color: #e0e0e0; box-sizing: border-box; margin-top: 4px;">
                         </div>
                     </div>
                 </div>
@@ -1297,8 +1297,8 @@ class CompanheiroArtsModalManager {
             const type = document.getElementById('form-comp-art-type').value;
             const action = document.getElementById('form-comp-art-action').value;
             const domain = parseInt(document.getElementById('form-comp-art-domain').value);
-            const cost = parseInt(document.getElementById('form-comp-art-cost').value) || 0;
-            const reload = parseInt(document.getElementById('form-comp-art-reload').value) || 0;
+            const cost = document.getElementById('form-comp-art-cost').value.trim() || '';
+            const reload = document.getElementById('form-comp-art-reload').value.trim() || '';
             const damage = document.getElementById('form-comp-art-damage').value.trim();
             const duration = document.getElementById('form-comp-art-duration').value.trim();
             const range = document.getElementById('form-comp-art-range').value.trim();
@@ -1593,7 +1593,7 @@ class CompanheiroArtsModalManager {
                         </div>
                         <div>
                             <label style="color: #d8b4fe; font-weight: bold;">💎 Custo (PM) *</label>
-                            <input type="number" id="form-comp-art-edit-cost" min="0" value="${art.cost || 0}" style="width: 100%; padding: 8px; background: rgba(26, 26, 46, 0.6); border: 1px solid #d8b4fe; border-radius: 4px; color: #e0e0e0; box-sizing: border-box; margin-top: 4px;">
+                            <input type="text" id="form-comp-art-edit-cost" value="${art.cost || ''}" style="width: 100%; padding: 8px; background: rgba(26, 26, 46, 0.6); border: 1px solid #d8b4fe; border-radius: 4px; color: #e0e0e0; box-sizing: border-box; margin-top: 4px;">
                         </div>
                     </div>
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px;">
@@ -1603,7 +1603,7 @@ class CompanheiroArtsModalManager {
                         </div>
                         <div>
                             <label style="color: #d8b4fe; font-weight: bold;">🔄 Recarga (turnos)</label>
-                            <input type="number" id="form-comp-art-edit-reload" min="0" value="${art.reload || 0}" style="width: 100%; padding: 8px; background: rgba(26, 26, 46, 0.6); border: 1px solid #d8b4fe; border-radius: 4px; color: #e0e0e0; box-sizing: border-box; margin-top: 4px;">
+                            <input type="text" id="form-comp-art-edit-reload" value="${art.reload || ''}" style="width: 100%; padding: 8px; background: rgba(26, 26, 46, 0.6); border: 1px solid #d8b4fe; border-radius: 4px; color: #e0e0e0; box-sizing: border-box; margin-top: 4px;">
                         </div>
                     </div>
                 </div>
@@ -1698,8 +1698,8 @@ class CompanheiroArtsModalManager {
             const type = document.getElementById('form-comp-art-edit-type').value;
             const action = document.getElementById('form-comp-art-edit-action').value;
             const domain = parseInt(document.getElementById('form-comp-art-edit-domain').value);
-            const cost = parseInt(document.getElementById('form-comp-art-edit-cost').value) || 0;
-            const reload = parseInt(document.getElementById('form-comp-art-edit-reload').value) || 0;
+            const cost = document.getElementById('form-comp-art-edit-cost').value.trim() || '';
+            const reload = document.getElementById('form-comp-art-edit-reload').value.trim() || '';
             const damage = document.getElementById('form-comp-art-edit-damage').value.trim();
             const duration = document.getElementById('form-comp-art-edit-duration').value.trim();
             const range = document.getElementById('form-comp-art-edit-range').value.trim();
@@ -2243,7 +2243,7 @@ class CompanheiroArtsModalManager {
                         </div>
                         <div>
                             <label style="color: #d8b4fe; font-weight: bold;">💎 Custo</label>
-                            <input type="number" id="form-comp-var-new-cost" min="0" value="0" style="width: 100%; padding: 8px; background: rgba(26, 26, 46, 0.6); border: 1px solid #d8b4fe; border-radius: 4px; color: #e0e0e0; margin-top: 4px;">
+                            <input type="text" id="form-comp-var-new-cost" value="0" style="width: 100%; padding: 8px; background: rgba(26, 26, 46, 0.6); border: 1px solid #d8b4fe; border-radius: 4px; color: #e0e0e0; margin-top: 4px;">
                         </div>
                         <div>
                             <label style="color: #d8b4fe; font-weight: bold;">⚔️ Dano</label>
@@ -2251,7 +2251,7 @@ class CompanheiroArtsModalManager {
                         </div>
                         <div>
                             <label style="color: #d8b4fe; font-weight: bold;">🔄 Recarga</label>
-                            <input type="number" id="form-comp-var-new-reload" min="0" value="0" style="width: 100%; padding: 8px; background: rgba(26, 26, 46, 0.6); border: 1px solid #d8b4fe; border-radius: 4px; color: #e0e0e0; margin-top: 4px;">
+                            <input type="text" id="form-comp-var-new-reload" value="0" style="width: 100%; padding: 8px; background: rgba(26, 26, 46, 0.6); border: 1px solid #d8b4fe; border-radius: 4px; color: #e0e0e0; margin-top: 4px;">
                         </div>
                     </div>
                 </div>
@@ -2429,8 +2429,8 @@ class CompanheiroArtsModalManager {
             const type = document.getElementById('form-comp-var-new-type').value;
             const action = document.getElementById('form-comp-var-new-action').value;
             const domain = parseInt(document.getElementById('form-comp-var-new-domain').value) || 1;
-            const cost = parseInt(document.getElementById('form-comp-var-new-cost').value) || 0;
-            const reload = parseInt(document.getElementById('form-comp-var-new-reload').value) || 0;
+            const cost = document.getElementById('form-comp-var-new-cost').value.trim() || '';
+            const reload = document.getElementById('form-comp-var-new-reload').value.trim() || '';
             const damage = document.getElementById('form-comp-var-new-damage').value.trim();
             const duration = document.getElementById('form-comp-var-new-duration').value.trim() || 'instantâneo';
             const range = document.getElementById('form-comp-var-new-range').value.trim() || 'contato';
@@ -2728,7 +2728,7 @@ class CompanheiroArtsModalManager {
                         </div>
                         <div>
                             <label style="color: #d8b4fe; font-weight: bold;">💎 Custo</label>
-                            <input type="number" id="form-comp-var-edit-cost" min="0" value="${variante.cost || 0}" style="width: 100%; padding: 8px; background: rgba(26, 26, 46, 0.6); border: 1px solid #d8b4fe; border-radius: 4px; color: #e0e0e0; margin-top: 4px;">
+                            <input type="text" id="form-comp-var-edit-cost" value="${variante.cost || ''}" style="width: 100%; padding: 8px; background: rgba(26, 26, 46, 0.6); border: 1px solid #d8b4fe; border-radius: 4px; color: #e0e0e0; margin-top: 4px;">
                         </div>
                         <div>
                             <label style="color: #d8b4fe; font-weight: bold;">⚔️ Dano</label>
@@ -2736,7 +2736,7 @@ class CompanheiroArtsModalManager {
                         </div>
                         <div>
                             <label style="color: #d8b4fe; font-weight: bold;">🔄 Recarga</label>
-                            <input type="number" id="form-comp-var-edit-reload" min="0" value="${variante.reload || 0}" style="width: 100%; padding: 8px; background: rgba(26, 26, 46, 0.6); border: 1px solid #d8b4fe; border-radius: 4px; color: #e0e0e0; margin-top: 4px;">
+                            <input type="text" id="form-comp-var-edit-reload" value="${variante.reload || ''}" style="width: 100%; padding: 8px; background: rgba(26, 26, 46, 0.6); border: 1px solid #d8b4fe; border-radius: 4px; color: #e0e0e0; margin-top: 4px;">
                         </div>
                     </div>
                 </div>
@@ -2831,8 +2831,8 @@ class CompanheiroArtsModalManager {
             const type = document.getElementById('form-comp-var-edit-type').value;
             const action = document.getElementById('form-comp-var-edit-action').value;
             const domain = parseInt(document.getElementById('form-comp-var-edit-domain').value) || 1;
-            const cost = parseInt(document.getElementById('form-comp-var-edit-cost').value) || 0;
-            const reload = parseInt(document.getElementById('form-comp-var-edit-reload').value) || 0;
+            const cost = document.getElementById('form-comp-var-edit-cost').value.trim() || '';
+            const reload = document.getElementById('form-comp-var-edit-reload').value.trim() || '';
             const damage = document.getElementById('form-comp-var-edit-damage').value.trim();
             const duration = document.getElementById('form-comp-var-edit-duration').value.trim();
             const range = document.getElementById('form-comp-var-edit-range').value.trim();

@@ -243,7 +243,7 @@ class RacasUI {
         icon: '📁',
         image: 'https://i.imgur.com/dDoawMK.jpeg',
         color: '#ef4444',
-        aberta: true,
+        aberta: false,
         tipo: "Re'Geron"
       },
       {

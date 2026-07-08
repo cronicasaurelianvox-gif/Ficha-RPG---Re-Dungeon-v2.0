@@ -2167,6 +2167,13 @@ class VeiasAstraisSystem {
         }
       });
 
+      // Atualizar contagem de nós desbloqueados por constelação
+      Object.values(this.trees).forEach((tree) => {
+        tree.unlockedNodes = this.nodes.filter(
+          (n) => n.treeId === tree.id && n.state !== 'locked'
+        ).length;
+      });
+
       this.updateUI();
 
       console.log("✅ Estados restaurados com sucesso");

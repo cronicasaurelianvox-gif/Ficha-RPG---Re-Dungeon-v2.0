@@ -1321,10 +1321,7 @@ class ClassesUI {
       detalhes.classList.remove('classe-selecionada');
     }
 
-    // Re-renderizar lista
-    this.renderLista();
-
-    // ✨ Atualizar botões APÓS renderizar a lista
+    // Atualizar botões sem re-renderizar a lista para preservar o estado das pastas abertas
     this.atualizarBotoesSelecionados();
 
     // Aplicar visual nas classes da lista

@@ -287,6 +287,19 @@
                     ✓ Disponível para rolar hoje
                 </div>
 
+                <!-- SEÇÃO 4: HISTÓRICO DE AÇÕES -->
+                <div class="sorte-historico-section">
+                    <div class="sorte-historico-header">
+                        <h3 class="sorte-historico-title">📜 Histórico de Ações</h3>
+                        <span class="sorte-historico-info">(Últimas 10 ações)</span>
+                    </div>
+                    <div class="sorte-historico-list" id="sorte-historico-list">
+                        <div class="sorte-historico-empty">
+                            Nenhuma ação registrada ainda...
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -493,7 +506,7 @@
                                     <div class="credits-section-icon">📦</div>
                                     <div class="credits-section-content">
                                         <h3 class="credits-section-title">Versão</h3>
-                                        <a href="em-desenvolvimento.html" class="credits-version-link">Re:Dungeon RPG V2.3 </a>
+                                        <a href="em-desenvolvimento.html" class="credits-version-link">Re:Dungeon RPG V2.4 </a>
                                         <p class="credits-version-date">© 2026 - Todos os direitos reservados</p>
                                     </div>
                                 </div>
@@ -2851,7 +2864,10 @@
 
     <!-- 🎲 SISTEMA DE SORTE - MODAL ELEGANTE -->
     <script src="js/sorte-modal.js"></script>
+    <script src="js/sorte-historico.js"></script>
     <script src="js/sorte-modal-test.js"></script>
+    <!-- 🧪 TESTE: Descomente a linha abaixo para testar o sistema de histórico automaticamente -->
+    <!-- <script src="js/sorte-historico-teste.js"></script> -->
     <script src="js/verificacao-sorte-modal.js"></script>
 
     <!-- 🏪 LOJA DA TRAPAÇA - SISTEMA ECONÔMICO -->
@@ -2952,27 +2968,30 @@
         </div>
     </div>
 
-    <!-- ✨ MODAL: PATCH NOTES -->
+    <!-- ✨ MODAL: PATCH NOTES (PREMIUM) -->
     <div id="modalPatchNotes" class="modal-overlay" style="display: none;">
         <div class="modal-overlay__backdrop"></div>
-        <div class="modal-content modal-content--medium" style="max-width: 600px; max-height: 80vh; overflow-y: auto;">
-            <div class="modal-header">
-                <h2 class="modal-title">📝 Patch Notes - Atualizações</h2>
-                <button class="modal-close-btn" id="btn-fechar-patch-notes">✕</button>
+        <div class="modal-content modal-content--medium" style="max-width: 750px; max-height: 85vh; overflow-y: auto; background: linear-gradient(135deg, #1a1a1a 0%, #242424 100%); box-shadow: 0 20px 60px rgba(212, 175, 55, 0.2), 0 0 40px rgba(212, 175, 55, 0.1);">
+            <div class="modal-header" style="background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%); border-bottom: 2px solid #d4af37;">
+                <h2 class="modal-title" style="color: #d4af37; font-size: 1.6em; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">📝 Patch Notes - Atualizações</h2>
+                <button class="modal-close-btn" id="btn-fechar-patch-notes" style="color: #d4af37; font-size: 1.4em;">✕</button>
             </div>
-            <div class="modal-body" style="padding: 24px;">
+            <div class="modal-body" style="padding: 28px; background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, transparent 100%);">
                 <!-- Conteúdo dos Patch Notes será inserido aqui dinamicamente -->
                 <div id="patch-notes-content">
                     <!-- Placeholder enquanto carrega -->
-                    <div style="text-align: center; color: #888;">Carregando patch notes...</div>
+                    <div style="text-align: center; color: #888; padding: 40px 20px;">
+                        <div style="font-size: 2em; margin-bottom: 12px;">⏳</div>
+                        <p>Carregando patch notes...</p>
+                    </div>
                 </div>
             </div>
-            <div class="modal-footer" style="padding: 16px 24px; display: flex; gap: 8px; justify-content: space-between; align-items: center;">
-                <div style="display: flex; align-items: center; gap: 8px;">
-                    <input type="checkbox" id="chk-nao-mostrar-patch-notes" style="cursor: pointer; width: 18px; height: 18px;">
-                    <label for="chk-nao-mostrar-patch-notes" style="cursor: pointer; margin: 0; font-size: 0.95em;">Não mostrar novamente</label>
+            <div class="modal-footer" style="padding: 20px 28px; display: flex; gap: 12px; justify-content: space-between; align-items: center; background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.3) 100%); border-top: 1px solid rgba(212, 175, 55, 0.2);">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <input type="checkbox" id="chk-nao-mostrar-patch-notes" style="cursor: pointer; width: 18px; height: 18px; accent-color: #d4af37;">
+                    <label for="chk-nao-mostrar-patch-notes" style="cursor: pointer; margin: 0; font-size: 0.95em; color: #ccc; user-select: none;">Não mostrar novamente</label>
                 </div>
-                <button id="btn-fechar-patch-notes-confirm" class="btn-acao btn-primario" style="background: #d4af37; color: #000; padding: 10px 24px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">
+                <button id="btn-fechar-patch-notes-confirm" class="btn-acao btn-primario" style="background: linear-gradient(135deg, #d4af37 0%, #c9a327 100%); color: #000; padding: 12px 28px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.95em; transition: all 0.3s; box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);">
                     Fechar
                 </button>
             </div>

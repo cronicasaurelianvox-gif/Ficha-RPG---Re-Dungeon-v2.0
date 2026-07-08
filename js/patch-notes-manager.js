@@ -10,7 +10,7 @@ class PatchNotesManager {
         this.btnClose = document.getElementById('btn-fechar-patch-notes');
         this.btnConfirm = document.getElementById('btn-fechar-patch-notes-confirm');
         this.checkbox = document.getElementById('chk-nao-mostrar-patch-notes');
-        this.currentVersion = 'V2.3'; // Versão atual dos patch notes
+        this.currentVersion = 'V2.4'; // Versão atual dos patch notes
         this.storageKey = 'ultima-versao-patch-notes-vista';
         
         this.init();
@@ -73,66 +73,121 @@ class PatchNotesManager {
      */
     carregarConteudo() {
         const html = `
-            <div style="color: #d4af37; margin-bottom: 20px;">
-                <h3 style="margin-top: 0; color: #d4af37;">✨ Versão ${this.currentVersion}</h3>
-                <p style="font-size: 0.9em; color: #888; margin: 0;">27 de Junho de 2026</p>
+            <!-- HEADER PREMIUM -->
+            <div style="background: linear-gradient(135deg, #1e1e1e 0%, #2d2d2d 100%); padding: 20px; border-radius: 8px; margin-bottom: 24px; border-left: 4px solid #d4af37;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <h2 style="margin: 0; color: #d4af37; font-size: 1.8em;">✨ Versão ${this.currentVersion}</h2>
+                        <p style="margin: 8px 0 0 0; color: #888; font-size: 0.95em;">7 de Julho de 2026 • Atualização Completa do Sistema</p>
+                    </div>
+                    <div style="text-align: right; color: #d4af37; font-size: 2em;">🔮</div>
+                </div>
             </div>
 
-            <!-- SEÇÃO: CORREÇÕES -->
-            <div style="margin-bottom: 20px;">
-                <h4 style="color: #4ade80; margin-top: 0; display: flex; align-items: center; gap: 8px;">
-                    ✅ Correções
-                </h4>
-                <ul style="margin: 0; padding-left: 20px; line-height: 1.8; color: #e0e0e0;">
-                    <li>🔧 <strong>Sistema de Habilidades (Arts):</strong> Correções de salvamento em campos de Custo (PM) e Recarga</li>
-                    <li>🎯 <strong>Validação de Entradas:</strong> Melhor suporte para valores textuais e numéricos, incluindo expressões personalizadas</li>
-                    <li>📊 <strong>Exibição de Cards:</strong> Ajustes visuais e de formatação para mostrar valores de forma mais limpa</li>
-                    <li>🛡️ <strong>Estabilidade:</strong> Correções gerais de interface e comportamento de modais</li>
+            <!-- SEÇÃO: SISTEMAS ATUALIZADOS -->
+            <div style="margin-bottom: 24px; padding: 16px; background: rgba(212, 175, 55, 0.05); border-radius: 6px; border-left: 3px solid #d4af37;">
+                <h3 style="margin-top: 0; color: #d4af37; display: flex; align-items: center; gap: 8px; font-size: 1.2em;">
+                    🎯 Sistemas Atualizados e Otimizados
+                </h3>
+                <ul style="margin: 0; padding-left: 20px; line-height: 2; color: #e0e0e0; font-size: 0.95em;">
+                    <li><strong>🌌 Veias Astrais:</strong> Sistema completo integrado ao salvamento e importação de fichas</li>
+                    <li><strong>💾 Importação Aprimorada:</strong> Barras de status (Saúde, Energia, Fadiga) agora aplicam corretamente na importação</li>
+                    <li><strong>👤 Personagem:</strong> Nome, Título, Raça e Classe agora são aplicados de forma correta após importação</li>
+                    <li><strong>🐾 Companheiros:</strong> Status de vida (Vivo/Morto) agora é preservado entre salvamentos</li>
+                    <li><strong>🎨 Interface de Companheiros:</strong> Redesign completo com campos otimizados para Arts e Variantes</li>
                 </ul>
             </div>
 
-            <!-- SEÇÃO: NOVIDADES -->
-            <div style="margin-bottom: 20px;">
-                <h4 style="color: #60a5fa; margin-top: 0; display: flex; align-items: center; gap: 8px;">
-                    🆕 Novidades
+            <!-- SEÇÃO: SISTEMA DE CLASSES -->
+            <div style="margin-bottom: 24px; padding: 16px; background: rgba(96, 165, 250, 0.05); border-radius: 6px; border-left: 3px solid #60a5fa;">
+                <h4 style="margin-top: 0; color: #60a5fa; display: flex; align-items: center; gap: 8px;">
+                    🆕 Sistema de Classes - Desbloqueio por Power Combat
                 </h4>
-                <ul style="margin: 0; padding-left: 20px; line-height: 1.8; color: #e0e0e0;">
-                    <li>💫 <strong>Lançamento das Veias Astrais:</strong> novo sistema localizado no centro da aba de Atributos</li>
-                    <li>🧬 <strong>Aptidões mais narrativas e adaptativas:</strong> agora estão alinhadas com o sistema de emparelhamento, tornando a progressão mais imersiva</li>
-                    <li>📊 <strong>Balanceamento de atributos secundários:</strong> ajustes para melhorar coesão e equilíbrio</li>
-                    <li>⚙️ <strong>Otimização da ficha:</strong> melhorias gerais de performance, cálculo e interface</li>
-                    <li>📚 <strong>Novas Raças e Classes:</strong> adição das raças e classes de <em>A Crônica dos Varkhan</em></li>
-                    <li>🌀 <strong>Atualizações de Raças:</strong> melhorias no conteúdo de <em>The Chaotical Gate</em> e <em>A Crônica dos Varkhan</em></li>
-                    <li>📝 <strong>Patch Notes:</strong> este modal exibe as novidades da versão</li>
-                    <li>♻️ <strong>Preferências do Usuário:</strong> opção de não exibir novamente até nova versão</li>
-                    <li>🎛️ <strong>Melhorias de UI:</strong> ajustes em diversos pontos da interface para melhor usabilidade e organização</li>
-                    <li>🧭 <strong>Atualizações de Raças (A Crônica dos Varkhan):</strong>
-                        <ul style="margin-top:6px; padding-left:18px; margin-bottom:6px;">
-                            <li>🖼️ Atualizadas as imagens das sub-raças (Refugiado, Estudante, Periferia, Atleta, Criminoso, Professor, Sobrevivente, Filho do Herói, Gênio, Herdeiro de Clã, Escolhido, Humano Perfeito).</li>
-                            <li>🆕 Novas raças adicionadas: <em>Psicoplásmica</em>, <em>Anaplásmata</em> e <em>Akónis</em>.</li>
-                            <li>🛠️ Alterações e reworks nas habilidades básicas: Refugiado (Adaptação → Engenhosidade), Aprendiz (Treinável reworked: Aptidão +3 no início), Estudante (Adaptável → Teoria Aplicada), Filho do Herói (Marca do Legado rework), Gênio (Aptidão Inata & Eureka), Criança Milagrosa (Domínio de Fluxo), Humano Perfeito (Potencial Máximo rework).</li>
-                            <li>🔁 Substituição: habilidade <strong>Reserva Anômala</strong> foi trocada por <strong>Catalisador Genético</strong> no Akónis.</li>
-                            <li>🔧 Correção: erros de sintaxe em <code>js/racas-data.js</code> corrigidos para garantir carregamento seguro das funções de raça.</li>
-                            <li>🎛️ UI: Modal de Raças — itens bloqueados permanecem clicáveis (removido bloqueio por pointer-events) e cards de habilidades básicas agora exibidos 2 por linha em telas grandes.</li>
-                        </ul>
-                    </li>
+                <p style="margin: 0 0 12px 0; color: #e0e0e0; font-size: 0.95em;">As classes agora possuem um progresso de desbloqueio visível com metas de Power Combat para liberar novas classes.</p>
+                <ul style="margin: 0; padding-left: 20px; line-height: 2; color: #e0e0e0; font-size: 0.95em;">
+                    <li>🎯 Barra de progresso exibindo thresholds de desbloqueio</li>
+                    <li>⭐ Próxima classe liberada ao alcançar o Power Combat necessário</li>
+                    <li>🔄 Preparado para expansão com classes extras no futuro</li>
                 </ul>
             </div>
 
-            <!-- SEÇÃO: MELHORIAS -->
-            <div style="margin-bottom: 20px;">
-                <h4 style="color: #fbbf24; margin-top: 0; display: flex; align-items: center; gap: 8px;">
-                    ⚡ Melhorias
+            <!-- SEÇÃO: CORREÇÕES CRÍTICAS -->
+            <div style="margin-bottom: 24px; padding: 16px; background: rgba(76, 174, 76, 0.05); border-radius: 6px; border-left: 3px solid #4ade80;">
+                <h4 style="margin-top: 0; color: #4ade80; display: flex; align-items: center; gap: 8px;">
+                    ✅ Correções Críticas
                 </h4>
-                <ul style="margin: 0; padding-left: 20px; line-height: 1.8; color: #e0e0e0;">
-                    <li>⌨️ <strong>Atributos primarios, secundarios e status</strong> agora salvam com Enter</li>
-                    <li>🎨 Interface mais consistente com validação aprimorada</li>
-                    <li>📱 Melhor suporte para diferentes tipos de entrada de dados</li>
-                    <li>🔔 Sistema de notificações para novidades da ficha</li>
-                    <li>✨ <strong>Ajuste Visual:</strong> Atualização no visual dos cards de classes/habilidades para maior simetria e legibilidade</li>
+                <ul style="margin: 0; padding-left: 20px; line-height: 2; color: #e0e0e0; font-size: 0.95em;">
+                    <li>🔧 Campo de <strong>Custo</strong> convertido de number para text em ficha de companheiro (suporta expressões customizadas)</li>
+                    <li>⏱️ Campo de <strong>Turnos</strong> convertido de number para text (melhor flexibilidade)</li>
+                    <li>📊 Salvamento vazio de companheiros não cria mais "fichas pré-criadas" na importação</li>
+                    <li>💀 Status de vida dos companheiros agora é restaurado corretamente</li>
+                    <li>📥 Importação agora valida corretamente dados vazios vs. dados inválidos</li>
                 </ul>
             </div>
 
+            <!-- SEÇÃO: MUNDO XIANXIA/WUXIA - CULTIVO -->
+            <div style="margin-bottom: 24px; padding: 16px; background: rgba(251, 146, 60, 0.05); border-radius: 6px; border-left: 3px solid #fb923c;">
+                <h4 style="margin-top: 0; color: #fb923c; display: flex; align-items: center; gap: 8px;">
+                    🏯 Tema Xianxia/Wuxia - Tema do Cultivo
+                </h4>
+                <div style="margin-left: 0; line-height: 2; color: #e0e0e0; font-size: 0.95em;">
+                    <p style="margin: 0 0 12px 0;"><strong>Atualizações Futuras Planejadas:</strong></p>
+                    <ul style="margin: 0; padding-left: 20px;">
+                        <li>🎨 Redesign dos botões <strong>Cultivo</strong> e <strong>Corpo Imortal</strong></li>
+                        <li>🗡️ Racas de Cultivo serão completamente refeitas com temas únicos</li>
+                        <li>⚔️ Classes de Cultivo receberão identidade temática própria</li>
+                        <li>🌟 Novas mecânicas alinhadas ao universo de cultivo oriental</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- SEÇÃO: REMOÇÃO E ADIÇÃO DE MUNDOS -->
+            <div style="margin-bottom: 24px; padding: 16px; background: rgba(168, 85, 247, 0.05); border-radius: 6px; border-left: 3px solid #a855f7;">
+                <h4 style="margin-top: 0; color: #a855f7; display: flex; align-items: center; gap: 8px;">
+                    🌍 Atualização de Mundos e Temas
+                </h4>
+                <ul style="margin: 0; padding-left: 20px; line-height: 2; color: #e0e0e0; font-size: 0.95em;">
+                    <li>❌ <strong>Classes de Re'Geron</strong> serão removidas e substituídas por classes temáticas próprias do mundo</li>
+                    <li>✨ Novas classes de Re'Geron com identidade única em desenvolvimento</li>
+                    <li>🌀 <strong>The Chaotical Gate</strong> receberá novas classes exclusivas</li>
+                    <li>👥 <strong>Raças de Re'Geron</strong> foram atualizadas com novas raças básicas e avançadas</li>
+                    <li>🎭 Cada mundo agora terá sua própria identidade temática definida</li>
+                </ul>
+            </div>
+
+            <!-- SEÇÃO: FICHA DE COMPANHEIROS -->
+            <div style="margin-bottom: 24px; padding: 16px; background: rgba(34, 197, 94, 0.05); border-radius: 6px; border-left: 3px solid #22c55e;">
+                <h4 style="margin-top: 0; color: #22c55e; display: flex; align-items: center; gap: 8px;">
+                    🐾 Ficha de Companheiros - Redesign Completo
+                </h4>
+                <ul style="margin: 0; padding-left: 20px; line-height: 2; color: #e0e0e0; font-size: 0.95em;">
+                    <li>🎨 Interface modernizada com melhor organização visual</li>
+                    <li>📋 Aba de <strong>Arts</strong> e <strong>Variantes</strong> reformuladas para melhor usabilidade</li>
+                    <li>✨ Campos de entrada agora com validação aprimorada</li>
+                    <li>📱 Responsividade melhorada para diferentes resoluções</li>
+                    <li>🔐 Salvamento mais robusto para dados de companheiros</li>
+                </ul>
+            </div>
+
+            <!-- SEÇÃO: MELHORIAS GERAIS -->
+            <div style="margin-bottom: 24px; padding: 16px; background: rgba(251, 191, 36, 0.05); border-radius: 6px; border-left: 3px solid #fbbf24;">
+                <h4 style="margin-top: 0; color: #fbbf24; display: flex; align-items: center; gap: 8px;">
+                    ⚡ Melhorias Gerais e Performance
+                </h4>
+                <ul style="margin: 0; padding-left: 20px; line-height: 2; color: #e0e0e0; font-size: 0.95em;">
+                    <li>🚀 Performance otimizada no salvamento e importação de fichas</li>
+                    <li>💫 Melhor feedback visual ao completar operações</li>
+                    <li>🔄 Sistema de validação aprimorado em todos os módulos</li>
+                    <li>📊 Histórico de Sorte agora integrado completamente ao sistema de export/import</li>
+                    <li>🎯 Interface mais consistente e profissional em toda ficha</li>
+                </ul>
+            </div>
+
+            <!-- FOOTER PREMIUM -->
+            <div style="margin-top: 32px; padding-top: 16px; border-top: 1px solid rgba(212, 175, 55, 0.3); text-align: center;">
+                <p style="margin: 0; color: #888; font-size: 0.9em;">Obrigado por jogar com <strong>Re'Dungeon</strong>! Novidades vêm por aí! 🎮✨</p>
+                <p style="margin: 8px 0 0 0; color: #666; font-size: 0.85em;">Desenvolvido com ❤️ para a comunidade RPG</p>
+            </div>
         `;
 
         if (this.content) {
