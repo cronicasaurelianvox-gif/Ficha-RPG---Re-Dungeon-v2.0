@@ -21,8 +21,45 @@ class VeiasAstraisSystem {
     this.selectedNode = null;
 
     // Recursos - Agora usando Power Combat em vez de Mana Points
-    this.powerCombat = 0;
-    this.maxPowerCombat = 0;
+    // Usamos propriedades internas com accessors para garantir atualização em tempo real
+    this._powerCombat = 0;
+    this._maxPowerCombat = 0;
+
+    Object.defineProperty(this, 'powerCombat', {
+      configurable: true,
+      enumerable: true,
+      get: function () {
+        return this._powerCombat;
+      },
+      set: function (v) {
+        const num = Number(v) || 0;
+        // Se max definido (>0), respeitar limite. Caso contrário permitir valor >=0.
+        if (this._maxPowerCombat > 0) {
+          this._powerCombat = Math.max(0, Math.min(this._maxPowerCombat, num));
+        } else {
+          this._powerCombat = Math.max(0, num);
+        }
+        if (typeof this.updateUI === 'function') this.updateUI();
+      },
+    });
+
+    Object.defineProperty(this, 'maxPowerCombat', {
+      configurable: true,
+      enumerable: true,
+      get: function () {
+        return this._maxPowerCombat;
+      },
+      set: function (v) {
+        const num = Number(v) || 0;
+        const antigo = this._maxPowerCombat;
+        this._maxPowerCombat = Math.max(0, num);
+        // Se novo máximo é menor que o atual, ajustar current para o máximo
+        if (this._maxPowerCombat > 0 && this._powerCombat > this._maxPowerCombat) {
+          this._powerCombat = this._maxPowerCombat;
+        }
+        if (typeof this.updateUI === 'function') this.updateUI();
+      },
+    });
     this.resonance = 45;
     this.maxResonance = 100;
 
@@ -187,56 +224,100 @@ class VeiasAstraisSystem {
     }
 
     try {
-      // Obter o Power Combat calculado
-      const novoMaxPowerCombat = window.powerCombatCalculator.valorPC || 0;
+      // Obter o Power Combat calculado (valor exposto pelo calculador)
+      const novoValor = window.powerCombatCalculator.valorPC || 0;
 
-      // SEMPRE atualizar o máximo - pode ter aumentado!
-      const maxMudou = this.maxPowerCombat !== novoMaxPowerCombat;
+      // Se não houve alteração em nada, mantemos quietos
+      const maxMudou = this.maxPowerCombat !== novoValor;
+      const valorAtualMudou = this.powerCombat !== novoValor;
 
-      if (maxMudou) {
+      // Atualizar comportamento:
+      // - Tratar o valor do calculador como o novo "maxPowerCombat" do sistema
+      // - Ajustar o current PC para não exceder o máximo
+      // - Em caso de primeira sincronização, definir current = max
+      if (maxMudou || valorAtualMudou) {
         const antigoMaxPowerCombat = this.maxPowerCombat;
-        console.log(
-          `📈 Máximo Power Combat atualizado: ${this.maxPowerCombat} → ${novoMaxPowerCombat}`,
-        );
 
-        // 🔥 NOVO: Se o máximo aumentou, adicionar o incremento ao valor atual
-        if (novoMaxPowerCombat > antigoMaxPowerCombat) {
-          const incremento = novoMaxPowerCombat - antigoMaxPowerCombat;
-          const novoPC = this.powerCombat + incremento;
+        if (maxMudou) {
           console.log(
-            `⬆️ Máximo aumentou! Adicionando incremento de ${incremento} ao PC atual`,
+            `📈 Máximo Power Combat atualizado: ${this.maxPowerCombat} → ${novoValor}`,
           );
-          console.log(
-            `   PC anterior: ${this.powerCombat} → PC novo: ${novoPC}`,
-          );
-          this.powerCombat = novoPC;
-        }
-        // Se o máximo diminuiu e PC ficaria acima do limite, reduzir
-        else if (this.powerCombat > novoMaxPowerCombat) {
-          console.log(
-            `📉 PC atual reduzido de ${this.powerCombat} para ${novoMaxPowerCombat} (excedia o máximo)`,
-          );
-          this.powerCombat = novoMaxPowerCombat;
         }
 
-        this.maxPowerCombat = novoMaxPowerCombat;
+        // Atualizar máximo sempre
+        this.maxPowerCombat = novoValor;
 
-        // Se é a primeira sincronização (PC = 0), usar o máximo como atual
-        if (this.powerCombat === 0 && this.maxPowerCombat > 0) {
+        // Se for primeira sincronização (antigo máximo era 0 e current == 0), igualar ao máximo
+        if (antigoMaxPowerCombat === 0 && this.powerCombat === 0 && this.maxPowerCombat > 0) {
           this.powerCombat = this.maxPowerCombat;
           console.log(
             `✨ Primeira sincronização: Power Combat definido como ${this.powerCombat}`,
           );
         }
 
-        console.log(
-          `⚔️ Power Combat: ${this.powerCombat} / ${this.maxPowerCombat}`,
-        );
+        // Se o máximo aumentou, acrescentar a diferença ao current
+        if (novoValor > antigoMaxPowerCombat) {
+          const incremento = novoValor - antigoMaxPowerCombat;
+          // Conceder os pontos adicionais quando o máximo sobe (com limite no novo máximo)
+          this.powerCombat = Math.min(this.powerCombat + incremento, this.maxPowerCombat);
+          console.log(`⬆️ Máximo aumentou, adicionados ${incremento} ao PC atual: ${this.powerCombat}`);
+        }
+
+        // Se o máximo diminuiu, reduzir o current pela diferença (corrigindo erros de entrada)
+        if (novoValor < antigoMaxPowerCombat) {
+          const decremento = antigoMaxPowerCombat - novoValor;
+          this.powerCombat = Math.max(0, this.powerCombat - decremento);
+          console.log(`⬇️ Máximo diminuiu, reduzido ${decremento} do PC atual: ${this.powerCombat}`);
+        }
+
+        // Garantir que current não exceda o novo máximo
+        if (this.powerCombat > this.maxPowerCombat) {
+          console.log(
+            `📉 PC atual reduzido de ${this.powerCombat} para ${this.maxPowerCombat} (excedia o máximo)`,
+          );
+          this.powerCombat = this.maxPowerCombat;
+        }
+
+        console.log(`⚔️ Power Combat: ${this.powerCombat} / ${this.maxPowerCombat}`);
         this.updateUI();
         this.saveState();
       }
     } catch (error) {
       console.error("❌ Erro ao sincronizar Power Combat:", error);
+    }
+  }
+
+  /**
+   * Tratamento imediato quando o calculador externo notifica com um novo valor
+   */
+  handleExternalPowerCombatChange(novoValor) {
+    try {
+      novoValor = Number(novoValor) || 0;
+      const antigoMax = this.maxPowerCombat;
+      this.maxPowerCombat = novoValor;
+
+      if (antigoMax === 0 && this.powerCombat === 0 && this.maxPowerCombat > 0) {
+        this.powerCombat = this.maxPowerCombat;
+      }
+
+      // Se o máximo aumentou, acrescentar diferença ao current
+      if (novoValor > antigoMax) {
+        const incremento = novoValor - antigoMax;
+        this.powerCombat = Math.min(this.powerCombat + incremento, novoValor);
+      }
+
+      // Se o máximo diminuiu, reduzir o current pela diferença
+      if (novoValor < antigoMax) {
+        const decremento = antigoMax - novoValor;
+        this.powerCombat = Math.max(0, this.powerCombat - decremento);
+      }
+
+      if (this.powerCombat > this.maxPowerCombat) this.powerCombat = this.maxPowerCombat;
+
+      this.updateUI();
+      this.saveState();
+    } catch (e) {
+      console.error('❌ Erro em handleExternalPowerCombatChange:', e);
     }
   }
 
@@ -259,7 +340,12 @@ class VeiasAstraisSystem {
         console.log(
           `🔥 Power Combat mudou para ${novoValor}! Sincronizando imediatamente...`,
         );
-        this.syncPowerCombatFromAppState();
+        // Atualizar imediatamente com o valor recebido
+        if (typeof this.handleExternalPowerCombatChange === 'function') {
+          this.handleExternalPowerCombatChange(novoValor);
+        } else {
+          this.syncPowerCombatFromAppState();
+        }
       });
       console.log(
         "✅ Callback de Power Combat registrado para atualização imediata",
@@ -1681,7 +1767,15 @@ class VeiasAstraisSystem {
     if (powerCombatCounter) powerCombatCounter.textContent = this.powerCombat;
     if (powerCombatMax) powerCombatMax.textContent = `/ ${this.maxPowerCombat}`;
     if (powerCombatFill)
-      powerCombatFill.style.width = `${(this.powerCombat / this.maxPowerCombat) * 100}%`;
+      powerCombatFill.style.width = `${Math.min(
+        Math.max(
+          this.maxPowerCombat > 0
+            ? (this.powerCombat / this.maxPowerCombat) * 100
+            : 0,
+          0,
+        ),
+        100,
+      )}%`;
 
     // Ressonância
     const resonanceCounter = document.getElementById("resonance-counter");

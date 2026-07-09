@@ -7934,10 +7934,10 @@ const CLASSES_DATABASE = [
     limiteAtributo: 110,
     imagem: "https://imgur.com/CRkSW5N.png",
     atributos: {
-      forca: "2d10+6",
-      vitalidade: "2d12+4",
-      agilidade: "2d8+6",
-      inteligencia: "1d4+6",
+      forca: "2d8+4",
+      vitalidade: "2d12+6",
+      agilidade: "2d4+2",
+      inteligencia: "2d6+2",
       percepcao: "2d6+4",
       sorte: "0"
     },
@@ -8053,7 +8053,7 @@ const CLASSES_DATABASE = [
       forca: "2d10+4",
       vitalidade: "2d6+6",
       agilidade: "2d8+4",
-      inteligencia: "2d6+4",
+      inteligencia: "2d8+4",
       percepcao: "2d6+2",
       sorte: "0"
     },
