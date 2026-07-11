@@ -29,7 +29,6 @@ class StateManager {
             activeVerticalRoute: 'info',
             verticalRoutes: [
                 'info',
-                'dicas',
                 'aptidoes',
                 'itens',
                 'classes',
@@ -158,24 +157,28 @@ class StateManager {
 
         // Se o estado mudou, salvar em localStorage
         if (stateAnterior !== stateNovo) {
-            // Salvar automaticamente cada tipo de dado
-            if (updates.atributos && window.localStorageManager) {
-                window.localStorageManager.saveAtributos(this.state.atributos);
-            }
-            if (updates.status && window.localStorageManager) {
-                window.localStorageManager.saveStatus(this.state.status);
-            }
-            if (updates.aptidoes && window.localStorageManager) {
-                window.localStorageManager.saveAptidoes(this.state.aptidoes);
-            }
-            if (updates.jogadorInfo && window.localStorageManager) {
-                window.localStorageManager.saveJogadorInfo(this.state.jogadorInfo);
-            }
-            if (updates.reputation && window.localStorageManager) {
-                window.localStorageManager.saveReputacao(this.state.reputation);
-            }
-            if (updates.activeVerticalRoute && window.localStorageManager) {
-                window.localStorageManager.saveRotaVertical(this.state.activeVerticalRoute);
+            if (window.isLimpandoFicha) {
+                console.log('💾 Salvamento em localStorage ignorado durante limpeza da ficha');
+            } else {
+                // Salvar automaticamente cada tipo de dado
+                if (updates.atributos && window.localStorageManager) {
+                    window.localStorageManager.saveAtributos(this.state.atributos);
+                }
+                if (updates.status && window.localStorageManager) {
+                    window.localStorageManager.saveStatus(this.state.status);
+                }
+                if (updates.aptidoes && window.localStorageManager) {
+                    window.localStorageManager.saveAptidoes(this.state.aptidoes);
+                }
+                if (updates.jogadorInfo && window.localStorageManager) {
+                    window.localStorageManager.saveJogadorInfo(this.state.jogadorInfo);
+                }
+                if (updates.reputation && window.localStorageManager) {
+                    window.localStorageManager.saveReputacao(this.state.reputation);
+                }
+                if (updates.activeVerticalRoute && window.localStorageManager) {
+                    window.localStorageManager.saveRotaVertical(this.state.activeVerticalRoute);
+                }
             }
         }
 

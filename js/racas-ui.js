@@ -74,7 +74,7 @@ class RacasUI {
    */
   capturarElementos() {
     this.modal = document.getElementById('modal-racas');
-    this.btnAbrir = document.getElementById('menu-btn-racas');
+    this.btnAbrir = document.getElementById('route-racas');
     this.btnFechar = document.querySelector('.btn-fechar-racas');
     this.btnVoltar = document.querySelector('.btn-voltar-racas');
     this.listaRacas = document.querySelector('.racas-lista');
@@ -102,14 +102,26 @@ class RacasUI {
    * @private
    */
   vincularEventos() {
+    // Proteção: validar se elementos existem antes de adicionar listeners
+    if (!this.btnAbrir || !this.modal) {
+      console.warn('⚠️ RacasUI: Elementos críticos não encontrados, sistema parcialmente funcional');
+      return;
+    }
+
     // Eventos do botão abrir
-    this.btnAbrir.addEventListener('click', () => this.abrirModal());
+    if (this.btnAbrir) {
+      this.btnAbrir.addEventListener('click', () => this.abrirModal());
+    }
 
     // Eventos do botão fechar
-    this.btnFechar.addEventListener('click', () => this.fecharModal());
+    if (this.btnFechar) {
+      this.btnFechar.addEventListener('click', () => this.fecharModal());
+    }
 
     // Eventos do botão voltar
-    this.btnVoltar.addEventListener('click', () => this.voltarMenu());
+    if (this.btnVoltar) {
+      this.btnVoltar.addEventListener('click', () => this.voltarMenu());
+    }
 
     // Fechar ao clicar fora do modal
     this.modal.addEventListener('click', (e) => {
@@ -126,13 +138,15 @@ class RacasUI {
     });
 
     // Delegação de eventos para itens da lista
-    this.listaRacas.addEventListener('click', (e) => {
-      const item = e.target.closest('.raca-item');
-      if (item) {
-        const racaId = item.dataset.racaId;
-        this.selecionarRaca(racaId);
-      }
-    });
+    if (this.listaRacas) {
+      this.listaRacas.addEventListener('click', (e) => {
+        const item = e.target.closest('.raca-item');
+        if (item) {
+          const racaId = item.dataset.racaId;
+          this.selecionarRaca(racaId);
+        }
+      });
+    }
 
     // Delegação de eventos para abas de habilidades
     this.modal.addEventListener('click', (e) => {
@@ -1175,14 +1189,27 @@ class RacasUI {
  */
 function inicializarRacasUI() {
   if (!window.racasUI) {
-    window.racasUI = new RacasUI();
-    window.racasUI.init();
-    console.log('✅ Sistema de raças inicializado globalmente');
-    
-    // 🎯 Inicializar sistema de habilidades básicas
-    if (habilidadesBasicasSelector) {
-      habilidadesBasicasSelector.init(window.racasUI);
-      console.log('✅ Sistema de seleção de habilidades básicas inicializado');
+    try {
+      window.racasUI = new RacasUI();
+      window.racasUI.init();
+      console.log('✅ Sistema de raças inicializado globalmente');
+      
+      // 🎯 Inicializar sistema de habilidades básicas
+      if (typeof habilidadesBasicasSelector !== 'undefined' && habilidadesBasicasSelector) {
+        try {
+          habilidadesBasicasSelector.init(window.racasUI);
+          console.log('✅ Sistema de seleção de habilidades básicas inicializado');
+        } catch (error) {
+          console.warn('⚠️ Erro ao inicializar habilidades básicas:', error.message);
+        }
+      }
+    } catch (error) {
+      console.error('❌ Erro ao inicializar RacasUI:', error.message);
+      // Criar uma instância vazia para evitar erros posteriores
+      window.racasUI = {
+        abrirModal: () => console.warn('⚠️ RacasUI não inicializado corretamente'),
+        init: () => {}
+      };
     }
   }
   return window.racasUI;
@@ -1193,6 +1220,6 @@ if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', inicializarRacasUI);
 } else {
   // DOM já está pronto
-  inicializarRacasUI();
+  setTimeout(inicializarRacasUI, 50);
 }
 

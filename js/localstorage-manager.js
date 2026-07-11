@@ -672,7 +672,7 @@ class LocalStorageManager {
             }
 
             localStorage.setItem(chave, JSON.stringify(payload));
-            console.log('💾 ✅ Veias Astrais salvas:', payload.nodes.length, 'nós');
+            window.debugLog && window.debugLog('💾 ✅ Veias Astrais salvas:', payload.nodes.length, 'nós');
         } catch (e) {
             console.warn('⚠️ Erro ao salvar Veias Astrais:', e.message);
         }
@@ -694,11 +694,11 @@ class LocalStorageManager {
             
             const parsed = JSON.parse(jsonData);
             if (Array.isArray(parsed)) {
-                console.log('📥 ✅ Veias Astrais carregadas (formato antigo):', parsed.length, 'nós');
+                window.debugLog && window.debugLog('📥 ✅ Veias Astrais carregadas (formato antigo):', parsed.length, 'nós');
                 return parsed;
             }
             if (parsed && Array.isArray(parsed.nodes)) {
-                console.log('📥 ✅ Veias Astrais carregadas:', parsed.nodes.length, 'nós');
+                window.debugLog && window.debugLog('📥 ✅ Veias Astrais carregadas:', parsed.nodes.length, 'nós');
                 return parsed;
             }
             console.warn('⚠️ Dados de Veias Astrais com formato desconhecido');

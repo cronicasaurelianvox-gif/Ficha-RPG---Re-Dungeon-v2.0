@@ -58,6 +58,8 @@ class LimparFichaIsolado {
 
         console.log('🔥 INICIANDO LIMPEZA TOTAL...');
 
+        window.isLimpandoFicha = true;
+
         try {
             // 1. Limpar localStorage COMPLETAMENTE
             console.log('📦 Etapa 1: Limpando localStorage...');
@@ -69,6 +71,7 @@ class LimparFichaIsolado {
             if (Object.keys(localStorage).length > 0) {
                 console.error('❌ ERRO: localStorage ainda tem dados!');
                 console.error('Chaves restantes:', Object.keys(localStorage));
+                window.isLimpandoFicha = false;
                 return;
             }
 
@@ -82,6 +85,7 @@ class LimparFichaIsolado {
             if (Object.keys(sessionStorage).length > 0) {
                 console.error('❌ ERRO: sessionStorage ainda tem dados!');
                 console.error('Chaves restantes:', Object.keys(sessionStorage));
+                window.isLimpandoFicha = false;
                 return;
             }
 
@@ -122,7 +126,8 @@ class LimparFichaIsolado {
             delete window.isImportandoFicha;
             delete window.isLimpandoFicha;
             delete window.isAtualizandoFicha;
-            delete window.appState;
+            // Não deletar window.appState antes da verificação final.
+            // A página será recarregada se a limpeza for bem-sucedida.
             
             // Limpar todos os objetos globais de módulos
             console.log('   - Limpando módulos globais...');
@@ -283,6 +288,25 @@ class LimparFichaIsolado {
             const ssFinal = Object.keys(sessionStorage).length;
             console.log(`   localStorage: ${lsFinal} chaves (esperado 0)`);
             console.log(`   sessionStorage: ${ssFinal} chaves (esperado 0)`);
+
+            if (lsFinal > 0 || ssFinal > 0) {
+                console.log('⚠️ Dados reapareceram no storage; tentando limpar novamente...');
+                localStorage.clear();
+                sessionStorage.clear();
+                const lsRetry = Object.keys(localStorage).length;
+                const ssRetry = Object.keys(sessionStorage).length;
+                console.log(`   Retry localStorage: ${lsRetry}, sessionStorage: ${ssRetry}`);
+                if (lsRetry > 0 || ssRetry > 0) {
+                    console.error('❌ ERRO: Storage ainda não ficou vazio após retry');
+                    console.error('Chaves restantes localStorage:', Object.keys(localStorage));
+                    console.error('Chaves restantes sessionStorage:', Object.keys(sessionStorage));
+                    this.isRunning = false;
+                    window.isLimpandoFicha = false;
+                    return;
+                }
+                lsFinal = lsRetry;
+                ssFinal = ssRetry;
+            }
 
             if (lsFinal === 0 && ssFinal === 0) {
                 console.log('✅ LIMPEZA CONFIRMADA - Storage vazio!');

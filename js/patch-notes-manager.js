@@ -10,7 +10,7 @@ class PatchNotesManager {
         this.btnClose = document.getElementById('btn-fechar-patch-notes');
         this.btnConfirm = document.getElementById('btn-fechar-patch-notes-confirm');
         this.checkbox = document.getElementById('chk-nao-mostrar-patch-notes');
-        this.currentVersion = 'V2.4'; // Versão atual dos patch notes
+        this.currentVersion = 'V2.4.1'; // Versão atual dos patch notes
         this.storageKey = 'ultima-versao-patch-notes-vista';
         
         this.init();

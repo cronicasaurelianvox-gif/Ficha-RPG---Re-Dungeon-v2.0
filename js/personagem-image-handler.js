@@ -194,7 +194,7 @@ class PersonagemImageHandler {
      * Handler de erro
      */
     handleImageError(event) {
-        console.error('❌ Erro ao carregar imagem no elemento');
+        console.warn('⚠️ Erro ao carregar imagem no elemento');
         this.aplicarFallback();
     }
 

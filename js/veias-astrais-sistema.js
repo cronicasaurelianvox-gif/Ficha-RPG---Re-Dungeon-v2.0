@@ -277,8 +277,7 @@ class VeiasAstraisSystem {
           );
           this.powerCombat = this.maxPowerCombat;
         }
-
-        console.log(`⚔️ Power Combat: ${this.powerCombat} / ${this.maxPowerCombat}`);
+        window.debugLog && window.debugLog(`⚔️ Power Combat: ${this.powerCombat} / ${this.maxPowerCombat}`);
         this.updateUI();
         this.saveState();
       }
@@ -2207,7 +2206,7 @@ class VeiasAstraisSystem {
         }
 
         window.localStorageManager.saveVeiasAstrais(payload);
-        console.log("💾 Estado das Veias Astrais salvo");
+        window.debugLog && window.debugLog("💾 Estado das Veias Astrais salvo");
       }
     } catch (error) {
       console.warn("⚠️ Erro ao salvar estado:", error);

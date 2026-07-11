@@ -1,372 +1,156 @@
 /* ============================================ */
 /* MENU-PRINCIPAL.JS - Controller do Menu      */
-/* Gerencia popup flutuante com botões         */
+/* Controla Sidebar Retrátil (Menu Principal)  */
+/* Compatível com sistema existente            */
 /* ============================================ */
 
 class MenuPrincipal {
     constructor() {
+        // Dados do menu organizados por seção
         this.menuData = [
-            // Primeira linha
-            { id: 'info', label: 'Info', icon: 'https://i.imgur.com/HW92olm.png', route: 'info' },
-            { id: 'aptidao', label: 'Aptidão', icon: 'https://i.imgur.com/DiJ5DOO.png', route: 'aptidao' },
-            { id: 'racas', label: 'Raças', icon: 'https://i.imgur.com/jZENyy3.png', route: 'racas' },
-            { id: 'classes', label: 'Classes', icon: 'https://i.imgur.com/YH0sMiU.png', route: 'classes' },
+            // Seção: PERSONAGEM
+            { id: 'info', label: 'Info', icon: 'https://i.imgur.com/HW92olm.png', route: 'info', section: 'personagem' },
+            { id: 'aptidao', label: 'Aptidão', icon: 'https://i.imgur.com/DiJ5DOO.png', route: 'aptidao', section: 'personagem' },
+            { id: 'racas', label: 'Raças', icon: 'https://i.imgur.com/jZENyy3.png', route: 'racas', section: 'personagem' },
+            { id: 'classes', label: 'Classes', icon: 'https://i.imgur.com/YH0sMiU.png', route: 'classes', section: 'personagem' },
             
-            // Segunda linha
-            { id: 'sorte', label: 'Sorte', icon: 'https://i.imgur.com/Zix5j38.png', route: 'sorte' },
-            { id: 'dicas', label: 'Dicas', icon: 'https://i.imgur.com/syNTDSq.png', route: 'dicas' },
-            { id: 'itens', label: 'Loja', icon: 'https://i.imgur.com/znIA8hP.png', route: 'itens' },
-            { id: 'condicoes', label: 'Condições', icon: 'https://i.imgur.com/KKlDkAJ.png', route: 'condicoes' },
+            // Seção: SISTEMA
+            { id: 'sorte', label: 'Sorte', icon: 'https://i.imgur.com/Zix5j38.png', route: 'sorte', section: 'sistema' },
+            { id: 'sobre', label: 'Sobre', icon: 'https://i.imgur.com/Bxze1jj.png', route: 'footer-info', section: 'sistema' },
+            { id: 'itens', label: 'Loja', icon: 'https://i.imgur.com/znIA8hP.png', route: 'itens', section: 'sistema' },
+            { id: 'condicoes', label: 'Condições', icon: 'https://i.imgur.com/KKlDkAJ.png', route: 'condicoes', section: 'sistema' },
             
-            // Terceira linha
-            { id: 'cultivacao', label: 'Cultivação', icon: 'https://i.imgur.com/E6LUTRF.png', route: 'cultivacao' },
-            { id: 'corpo-imortal', label: 'Corpo Imortal', icon: 'https://i.imgur.com/fvcUAAE.png', route: 'corpo-imortal' },
-            { id: 'salvar', label: 'Salvar', icon: 'https://i.imgur.com/dblnoAI.png', route: 'salvar' },
-            { id: 'importar', label: 'Importar', icon: 'https://i.imgur.com/Lr4KpQY.png', route: 'importar' }
+            // Seção: PROGRESSÃO
+            { id: 'cultivacao', label: 'Cultivação', icon: 'https://i.imgur.com/E6LUTRF.png', route: 'cultivacao', section: 'progressao' },
+            { id: 'corpo-imortal', label: 'Corpo Imortal', icon: 'https://i.imgur.com/fvcUAAE.png', route: 'corpo-imortal', section: 'progressao' },
+            
+            // Seção: DADOS
+            { id: 'salvar', label: 'Salvar', icon: 'https://i.imgur.com/dblnoAI.png', route: 'salvar', section: 'dados' },
+            { id: 'importar', label: 'Importar', icon: 'https://i.imgur.com/Lr4KpQY.png', route: 'importar', section: 'dados' }
         ];
 
         this.isOpen = false;
+        this.sidebarCollapsed = false;
         this.quickShortcutItems = this.menuData.map(item => ({ ...item }));
         this.init();
     }
 
     /**
-     * Inicializa o menu
+     * Inicializa o menu e a sidebar
      */
     init() {
-        this.createMenuHTML();
-        this.createContextMenuHTML();
         this.attachEventListeners();
-        this.attachContextMenuListeners();
-        console.log('✅ MenuPrincipal inicializado');
+        this.restoreCollapsedState();
+        console.log('✅ MenuPrincipal inicializado como Sidebar Retrátil');
     }
 
     /**
-     * Cria a estrutura HTML do menu
+     * Restaura o estado de colapso do localStorage
      */
-    createMenuHTML() {
-        // Verificar se já existe
-        if (document.getElementById('menu-principal-overlay')) {
-            return;
+    restoreCollapsedState() {
+        const saved = localStorage.getItem('menu-principal-collapsed');
+        if (saved === 'true') {
+            // Recolher
+            this.sidebarCollapsed = false; // Reset para permitir collapse
+            this.collapse();
+        } else {
+            // Expandir (padrão)
+            this.sidebarCollapsed = true; // Reset para permitir expand
+            this.expand();
         }
-
-        // HTML do overlay
-        const overlay = document.createElement('div');
-        overlay.id = 'menu-principal-overlay';
-        overlay.className = 'menu-principal-overlay';
-        document.body.appendChild(overlay);
-
-        // HTML do popup
-        const popup = document.createElement('div');
-        popup.id = 'menu-principal-popup';
-        popup.className = 'menu-principal-popup';
-        popup.setAttribute('role', 'dialog');
-        popup.setAttribute('aria-labelledby', 'menu-principal-title');
-        popup.setAttribute('aria-modal', 'true');
-
-        // Header
-        const header = document.createElement('div');
-        header.className = 'menu-principal-header';
-        header.innerHTML = `
-            <h2 id="menu-principal-title" class="menu-principal-title">⚔️ MENU PRINCIPAL</h2>
-            <button class="menu-principal-close-btn" id="menu-principal-close-btn" aria-label="Fechar menu">✕</button>
-        `;
-        popup.appendChild(header);
-
-        // Grid de botões
-        const grid = document.createElement('div');
-        grid.className = 'menu-principal-grid';
-
-        this.menuData.forEach(item => {
-            const button = document.createElement('button');
-            button.className = 'menu-principal-button';
-            button.id = `menu-btn-${item.id}`;
-            button.setAttribute('data-route-vertical', item.route);
-            button.setAttribute('title', item.label);
-
-            button.innerHTML = `
-                <img src="${item.icon}" alt="${item.label}" class="menu-principal-button-icon">
-                <span class="menu-principal-button-label">${item.label}</span>
-            `;
-
-            button.addEventListener('click', () => this.handleButtonClick(item));
-
-            grid.appendChild(button);
-        });
-
-        popup.appendChild(grid);
-
-        // Footer
-        const footer = document.createElement('div');
-        footer.className = 'menu-principal-footer';
-        footer.innerHTML = `
-            <span>🎮 Pressione ESC para fechar</span>
-        `;
-        popup.appendChild(footer);
-
-        document.body.appendChild(popup);
-    }
-
-    /**
-     * Cria a estrutura HTML do menu de contexto rápido
-     */
-    createContextMenuHTML() {
-        if (document.getElementById('menu-principal-context-overlay')) {
-            return;
-        }
-
-        const overlay = document.createElement('div');
-        overlay.id = 'menu-principal-context-overlay';
-        overlay.className = 'menu-principal-overlay menu-principal-context-overlay';
-        overlay.style.backgroundColor = 'transparent';
-        overlay.style.display = 'none';
-        document.body.appendChild(overlay);
-
-        const popup = document.createElement('div');
-        popup.id = 'menu-principal-context-popup';
-        popup.className = 'menu-principal-popup menu-principal-context-popup';
-        popup.setAttribute('role', 'dialog');
-        popup.setAttribute('aria-labelledby', 'menu-principal-context-title');
-        popup.setAttribute('aria-modal', 'true');
-        popup.style.position = 'fixed';
-        popup.style.zIndex = '10001';
-
-        const header = document.createElement('div');
-        header.className = 'menu-principal-header';
-        header.innerHTML = `
-            <h2 id="menu-principal-context-title" class="menu-principal-title">Opções do Menu</h2>
-        `;
-        popup.appendChild(header);
-
-        const list = document.createElement('div');
-        list.className = 'menu-principal-context-list';
-
-        this.quickShortcutItems.forEach(item => {
-            const entry = document.createElement('button');
-            entry.className = 'menu-principal-context-entry';
-            entry.id = `menu-principal-context-entry-${item.id}`;
-            entry.setAttribute('data-route-vertical', item.route);
-            entry.setAttribute('title', item.label);
-            entry.type = 'button';
-
-            const iconMarkup = item.icon && item.icon.startsWith('http')
-                ? `<img src="${item.icon}" alt="${item.label}" class="menu-principal-context-entry-img">`
-                : `<span class="menu-principal-context-entry-icon-text">${item.icon || '•'}</span>`;
-
-            entry.innerHTML = `
-                <span class="menu-principal-context-entry-icon">${iconMarkup}</span>
-                <span class="menu-principal-context-entry-label">${item.label}</span>
-            `;
-
-            entry.addEventListener('click', () => {
-                this.handleButtonClick(item);
-                this.closeContextMenu();
-            });
-
-            list.appendChild(entry);
-        });
-
-        popup.appendChild(list);
-        document.body.appendChild(popup);
     }
 
     /**
      * Anexa event listeners
      */
     attachEventListeners() {
-        // Botão para abrir menu na barra horizontal
+        // Botão para abrir/fechar menu na barra horizontal
         const btnMenuPrincipal = document.getElementById('btn-menu-principal');
         if (btnMenuPrincipal) {
             btnMenuPrincipal.addEventListener('click', (e) => {
                 e.stopPropagation();
-                this.open(e);
+                this.toggle();
             });
         }
 
-        // Fechar com botão X
-        const closeBtn = document.getElementById('menu-principal-close-btn');
-        if (closeBtn) {
-            closeBtn.addEventListener('click', () => this.close());
-        }
-
-        // Fechar clicando no overlay
-        const overlay = document.getElementById('menu-principal-overlay');
-        if (overlay) {
-            overlay.addEventListener('click', () => this.close());
-        }
-
-        document.addEventListener('click', (e) => {
-            if (!this.isContextMenuOpen()) return;
-            const popup = document.getElementById('menu-principal-context-popup');
-            const overlay = document.getElementById('menu-principal-context-overlay');
-            if (!popup || !overlay) return;
-            if (!popup.contains(e.target)) {
-                this.closeContextMenu();
-            }
-        });
-
+        // Fechar com ESC em mobile
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && this.isContextMenuOpen()) {
-                this.closeContextMenu();
+            if (e.key === 'Escape' && !this.sidebarCollapsed && window.innerWidth < 768) {
+                this.collapse();
             }
         });
 
-        // Fechar com ESC
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && this.isOpen) {
-                this.close();
-            }
-        });
-
-        console.log('✅ MenuPrincipal event listeners anexados');
+        console.log('✅ Sidebar event listeners anexados');
     }
 
     /**
-     * Abre o menu na posição do clique
-     * @param {MouseEvent} event - Evento de clique
+     * Expande a sidebar
      */
-    open(event) {
-        const overlay = document.getElementById('menu-principal-overlay');
-        const popup = document.getElementById('menu-principal-popup');
+    expand() {
+        const sidebar = document.getElementById('rpg-vertical-bar-left');
+        const toggleBtn = document.querySelector('.sidebar-toggle-btn');
 
-        if (overlay && popup) {
-            // Se houver evento de clique, usar a posição
-            if (event && event.clientX !== undefined && event.clientY !== undefined) {
-                const button = event.currentTarget;
-                const rect = button.getBoundingClientRect();
-                
-                // Posicionar abaixo do botão, alinhado à esquerda
-                let top = rect.bottom + 10;
-                let left = rect.left;
-                
-                // Garantir que o menu não saia da tela
-                const popupWidth = 500; // Largura aproximada do popup
-                const popupHeight = 400; // Altura aproximada do popup
-                
-                if (left + popupWidth > window.innerWidth) {
-                    left = window.innerWidth - popupWidth - 20;
-                }
-                
-                if (top + popupHeight > window.innerHeight) {
-                    top = rect.top - popupHeight - 10;
-                }
-                
-                // Aplicar posição
-                popup.style.position = 'fixed';
-                popup.style.top = top + 'px';
-                popup.style.left = left + 'px';
-                popup.style.transform = 'none';
-                
-                console.log(`📍 Menu posicionado em: top=${top}px, left=${left}px`);
-            } else {
-                // Fallback: centralizar se não houver evento
-                popup.style.position = 'fixed';
-                popup.style.top = '50%';
-                popup.style.left = '50%';
-                popup.style.transform = 'translate(-50%, -50%)';
-            }
-            
-            overlay.classList.add('active');
-            popup.classList.add('active');
-            this.isOpen = true;
-            document.body.style.overflow = 'hidden';
+        if (!sidebar) {
+            console.warn('⚠️ Sidebar não encontrada');
+            return;
+        }
 
-            console.log('✅ Menu Principal aberto');
+        // Se já está expandido, pular
+        if (!this.sidebarCollapsed) return;
+
+        sidebar.classList.remove('collapsed');
+        this.sidebarCollapsed = false;
+
+        if (toggleBtn) {
+            toggleBtn.setAttribute('aria-expanded', 'true');
+        }
+
+        localStorage.setItem('menu-principal-collapsed', 'false');
+        console.log('✅ Sidebar expandida');
+    }
+
+    /**
+     * Recolhe a sidebar
+     */
+    collapse() {
+        const sidebar = document.getElementById('rpg-vertical-bar-left');
+        const toggleBtn = document.querySelector('.sidebar-toggle-btn');
+
+        if (!sidebar) {
+            console.warn('⚠️ Sidebar não encontrada');
+            return;
+        }
+
+        // Se já está recolhido, pular
+        if (this.sidebarCollapsed) return;
+
+        sidebar.classList.add('collapsed');
+        this.sidebarCollapsed = true;
+
+        if (toggleBtn) {
+            toggleBtn.setAttribute('aria-expanded', 'false');
+        }
+
+        localStorage.setItem('menu-principal-collapsed', 'true');
+        console.log('✅ Sidebar recolhida');
+    }
+
+    /**
+     * Alterna entre expandir e recolher
+     */
+    toggle() {
+        if (this.sidebarCollapsed) {
+            this.expand();
+        } else {
+            this.collapse();
         }
     }
 
     /**
-     * Retorna se o menu de contexto rápido está aberto
-     * @returns {boolean}
+     * Verifica se a sidebar está visível
      */
-    isContextMenuOpen() {
-        const popup = document.getElementById('menu-principal-context-popup');
-        return Boolean(popup && popup.classList.contains('active'));
-    }
-
-    /**
-     * Abre o menu de contexto rápido em uma posição de clique
-     * @param {number} x
-     * @param {number} y
-     */
-    openContextMenu(x, y) {
-        const overlay = document.getElementById('menu-principal-context-overlay');
-        const popup = document.getElementById('menu-principal-context-popup');
-        if (!overlay || !popup) return;
-
-        overlay.style.display = 'block';
-        overlay.classList.add('active');
-        popup.classList.add('active');
-        popup.style.left = `${Math.min(x, window.innerWidth - popup.offsetWidth - 12)}px`;
-        popup.style.top = `${Math.min(y, window.innerHeight - popup.offsetHeight - 12)}px`;
-    }
-
-    /**
-     * Fecha o menu de contexto rápido
-     */
-    closeContextMenu() {
-        const overlay = document.getElementById('menu-principal-context-overlay');
-        const popup = document.getElementById('menu-principal-context-popup');
-        if (!overlay || !popup) return;
-        overlay.style.display = 'none';
-        overlay.classList.remove('active');
-        popup.classList.remove('active');
-    }
-
-    /**
-     * Verifica se o evento de clique direito ocorreu sobre um elemento interativo
-     * @param {MouseEvent} event
-     * @returns {boolean}
-     */
-    isInteractiveContextTarget(event) {
-        return Boolean(event.target.closest('button, a, input, textarea, select, [contenteditable], [role="button"], .menu-principal-button, .btn-acao, .btn-principal, .companheiros-btn-acao'));
-    }
-
-    /**
-     * Anexa listeners de clique direito aos conteúdos das abas suportadas
-     */
-    attachContextMenuListeners() {
-        const sections = [
-            'rpg-content-atributos',
-            'rpg-content-aptidoes',
-            'rpg-content-habilidades',
-            'rpg-content-inventario',
-            'rpg-content-treinamento',
-            'rpg-content-companheiros'
-        ];
-
-        sections.forEach(id => {
-            const section = document.getElementById(id);
-            if (!section) return;
-
-            section.addEventListener('contextmenu', (e) => {
-                if (this.isInteractiveContextTarget(e)) {
-                    return;
-                }
-
-                e.preventDefault();
-                this.close();
-                this.closeContextMenu();
-                this.openContextMenu(e.clientX + 4, e.clientY + 4);
-            });
-        });
-    }
-
-    /**
-     * Fecha o menu
-     */
-    close() {
-        const overlay = document.getElementById('menu-principal-overlay');
-        const popup = document.getElementById('menu-principal-popup');
-
-        if (overlay && popup) {
-            overlay.classList.remove('active');
-            popup.classList.remove('active');
-            this.isOpen = false;
-            document.body.style.overflow = '';
-
-            console.log('✅ Menu Principal fechado');
-        }
+    isVisible() {
+        return !this.sidebarCollapsed;
     }
 
     /**
@@ -376,25 +160,45 @@ class MenuPrincipal {
     handleButtonClick(item) {
         console.log(`🔘 Botão do menu clicado: ${item.label}`);
 
-        // Fechar o menu
-        this.close();
-
-        // Handler especial para raças
+        // Handler especial para raças - com retry
         if (item.route === 'racas') {
-            if (window.racasUI && window.racasUI.abrirModal) {
+            if (window.racasUI && typeof window.racasUI.abrirModal === 'function') {
                 window.racasUI.abrirModal();
             } else {
-                console.warn('⚠️ Sistema de raças não inicializado');
+                // Se não estiver pronto, tenta via botão de rota
+                const button = document.getElementById('route-racas');
+                if (button) {
+                    button.click();
+                } else {
+                    console.warn('⚠️ Sistema de raças não inicializado');
+                }
             }
             return;
         }
 
-        // Handler especial para classes
+        // Handler especial para classes - com retry
         if (item.route === 'classes') {
-            if (window.classesUI && window.classesUI.abrirModal) {
+            if (window.classesUI && typeof window.classesUI.abrirModal === 'function') {
                 window.classesUI.abrirModal();
             } else {
-                console.warn('⚠️ Sistema de classes não inicializado');
+                // Se não estiver pronto, tenta via botão de rota
+                const button = document.getElementById('route-classes');
+                if (button) {
+                    button.click();
+                } else {
+                    console.warn('⚠️ Sistema de classes não inicializado');
+                }
+            }
+            return;
+        }
+
+        // Handler especial para sorte
+        if (item.route === 'sorte') {
+            if (window.sorteModal && typeof window.sorteModal.open === 'function') {
+                window.sorteModal.open();
+            } else {
+                const button = document.getElementById('route-sorte');
+                if (button) button.click();
             }
             return;
         }
@@ -404,7 +208,8 @@ class MenuPrincipal {
             if (window.sistemaCondicoes && typeof window.sistemaCondicoes.abrirPopup === 'function') {
                 window.sistemaCondicoes.abrirPopup();
             } else {
-                console.warn('⚠️ Sistema de condições não inicializado');
+                const button = document.getElementById('route-condicoes');
+                if (button) button.click();
             }
             return;
         }
@@ -414,28 +219,35 @@ class MenuPrincipal {
             if (window.corpoImortalUI && typeof window.corpoImortalUI.abrir === 'function') {
                 window.corpoImortalUI.abrir();
             } else {
-                console.warn('⚠️ Sistema de Corpo Imortal não inicializado');
+                const button = document.getElementById('route-corpo-imortal');
+                if (button) button.click();
             }
             return;
         }
 
         // Handler especial para cultivação
         if (item.route === 'cultivacao') {
-            if (window.cultivacao && typeof window.cultivacao.ui.abrir === 'function') {
+            if (window.cultivacao && typeof window.cultivacao.ui?.abrir === 'function') {
                 window.cultivacao.ui.abrir();
             } else {
-                console.warn('⚠️ Sistema de Cultivação não inicializado');
+                const button = document.getElementById('route-cultivacao');
+                if (button) {
+                    button.click();
+                } else {
+                    console.warn('⚠️ Sistema de Cultivação não inicializado');
+                }
             }
             return;
         }
 
-        // ✅ NOVO: Handler especial para aptidão
+        // Handler especial para aptidão
         if (item.route === 'aptidao') {
             if (window.aptidoesVisualPopup && typeof window.aptidoesVisualPopup.open === 'function') {
                 window.aptidoesVisualPopup.open();
                 console.log('📖 [MenuPrincipal] Enciclopédia de Aptidões aberta por clique');
             } else {
-                console.warn('⚠️ AptidoesVisualPopup não disponível');
+                const button = document.getElementById('route-aptidao');
+                if (button) button.click();
             }
             return;
         }
@@ -449,17 +261,6 @@ class MenuPrincipal {
             button.focus();
         } else {
             console.warn(`⚠️ Botão original não encontrado: route-${item.route}`);
-        }
-    }
-
-    /**
-     * Abre o menu se ele existir
-     */
-    toggle() {
-        if (this.isOpen) {
-            this.close();
-        } else {
-            this.open();
         }
     }
 }

@@ -522,6 +522,10 @@ class TreinamentoManager {
      * Obtém valores atuais dos atributos primários (campo base)
      */
     obterValoresAtuaisAtributos() {
+        if (!window.appState || typeof window.appState.getState !== 'function') {
+            console.warn('⚠️ StateManager não disponível ao obter valores de atributos de treinamento');
+            return {};
+        }
         const state = window.appState.getState();
         const valores = {};
         
@@ -537,6 +541,10 @@ class TreinamentoManager {
      * Garante que xpNecessaria está correto de acordo com a tabela
      */
     sincronizarDadosTreinamento() {
+        if (!window.appState || typeof window.appState.getState !== 'function') {
+            console.warn('⚠️ StateManager não disponível ao sincronizar dados de treinamento');
+            return;
+        }
         const state = window.appState.getState();
         
         ATRIBUTOS_TREINAVEIS.forEach(atributo => {

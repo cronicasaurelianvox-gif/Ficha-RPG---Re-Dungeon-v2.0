@@ -155,7 +155,7 @@ class ClassesUI {
    */
   capturarElementos() {
     this.modal = document.getElementById('modal-classes');
-    this.btnAbrir = document.getElementById('menu-btn-classes');
+    this.btnAbrir = document.getElementById('route-classes');
     this.btnFechar = document.querySelector('.btn-fechar-classes');
     this.btnVoltar = document.querySelector('.btn-voltar-classes');
     this.listaClasses = document.querySelector('.classes-lista');
@@ -199,8 +199,16 @@ class ClassesUI {
    * @private
    */
   vincularEventos() {
+    // Proteção: validar se elementos críticos existem antes de adicionar listeners
+    if (!this.btnAbrir || !this.modal) {
+      console.warn('⚠️ ClassesUI: Elementos críticos não encontrados, sistema parcialmente funcional');
+      return;
+    }
+
     // Eventos do botão abrir
-    this.btnAbrir.addEventListener('click', () => this.abrirModal());
+    if (this.btnAbrir) {
+      this.btnAbrir.addEventListener('click', () => this.abrirModal());
+    }
 
     // Se o botão não foi encontrado ainda, tentar novamente após delay
     if (!this.btnAbrir) {
@@ -214,10 +222,14 @@ class ClassesUI {
     }
 
     // Eventos do botão fechar
-    this.btnFechar.addEventListener('click', () => this.fecharModal());
+    if (this.btnFechar) {
+      this.btnFechar.addEventListener('click', () => this.fecharModal());
+    }
 
     // Eventos do botão voltar
-    this.btnVoltar.addEventListener('click', () => this.voltarMenu());
+    if (this.btnVoltar) {
+      this.btnVoltar.addEventListener('click', () => this.voltarMenu());
+    }
 
     // Fechar ao clicar fora do modal
     this.modal.addEventListener('click', (e) => {
@@ -234,13 +246,15 @@ class ClassesUI {
     });
 
     // Delegação de eventos para itens da lista
-    this.listaClasses.addEventListener('click', (e) => {
-      const item = e.target.closest('.classe-item');
-      if (item) {
-        const classeId = item.dataset.classeId;
-        this.selecionarClasse(classeId);
-      }
-    });
+    if (this.listaClasses) {
+      this.listaClasses.addEventListener('click', (e) => {
+        const item = e.target.closest('.classe-item');
+        if (item) {
+          const classeId = item.dataset.classeId;
+          this.selecionarClasse(classeId);
+        }
+      });
+    }
 
     // Delegação de eventos para abas de habilidades
     this.modal.addEventListener('click', (e) => {
@@ -2092,21 +2106,41 @@ function inicializarClassesUI() {
       
       // Aguardar menu principal estar pronto (para garantir que botão existe)
       if (document.getElementById('menu-btn-classes')) {
-        window.classesUI.init();
-        console.log('✅ Sistema de classes inicializado globalmente');
+        try {
+          window.classesUI.init();
+          console.log('✅ Sistema de classes inicializado globalmente');
+        } catch (error) {
+          console.warn('⚠️ Erro ao chamar init():', error.message);
+          // Tentar novamente após um pouco
+          setTimeout(() => {
+            try {
+              window.classesUI.init();
+              console.log('✅ Sistema de classes inicializado globalmente (após delay)');
+            } catch (e) {
+              console.error('❌ Erro ao inicializar classes após delay:', e.message);
+            }
+          }, 200);
+        }
       } else {
         // Se botão ainda não existe, aguardar um pouco mais
         setTimeout(() => {
           try {
-            window.classesUI.init();
-            console.log('✅ Sistema de classes inicializado globalmente (após delay)');
+            if (window.classesUI && typeof window.classesUI.init === 'function') {
+              window.classesUI.init();
+              console.log('✅ Sistema de classes inicializado globalmente (após delay)');
+            }
           } catch (error) {
-            console.error('❌ Erro ao inicializar classes após delay:', error);
+            console.warn('⚠️ Erro ao inicializar classes após delay:', error.message);
           }
-        }, 100);
+        }, 300);
       }
     } catch (error) {
-      console.error('❌ Erro ao criar ClassesUI:', error);
+      console.error('❌ Erro ao criar ClassesUI:', error.message);
+      // Criar uma instância vazia para evitar erros posteriores
+      window.classesUI = {
+        abrirModal: () => console.warn('⚠️ ClassesUI não inicializado corretamente'),
+        init: () => {}
+      };
     }
   }
   return window.classesUI;
@@ -2116,6 +2150,6 @@ function inicializarClassesUI() {
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', inicializarClassesUI);
 } else {
-  // DOM já está pronto
-  inicializarClassesUI();
+  // DOM já está pronto - aguardar um pouco para garantir que tudo está pronto
+  setTimeout(inicializarClassesUI, 50);
 }

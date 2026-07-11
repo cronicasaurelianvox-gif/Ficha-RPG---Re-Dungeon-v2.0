@@ -58,6 +58,9 @@
     <!-- 🎮 Menu Principal (Novo) -->
     <link rel="stylesheet" href="css/menu-principal.css">
 
+    <!-- 📌 SIDEBAR RETRÁTIL - Menu Principal como Sidebar -->
+    <link rel="stylesheet" href="css/sidebar-retratil.css">
+
     <!-- ⚔️ SISTEMA DE RAÇAS - MODAL PROFISSIONAL -->
     <link rel="stylesheet" href="css/racas-modal.css?v=2.1">
 
@@ -308,10 +311,6 @@
         <!-- Barra Horizontal (Topo) -->
         <nav id="rpg-horizontal-bar" class="horizontal-bar">
             <div class="horizontal-bar__wrapper">
-                <button id="btn-menu-principal" class="horizontal-bar__menu-btn" title="Abrir Menu Principal">
-                    <img src="https://i.imgur.com/Bxze1jj.png" alt="Menu">
-                </button>
-
                 <button id="route-atributos" class="horizontal-bar__tab" data-route-horizontal="atributos">
                     📊 Atributos
                 </button>
@@ -344,10 +343,7 @@
                         <span class="vertical-bar__label">Info</span>
                     </button>
                     
-                    <button id="route-dicas" class="vertical-bar__button" data-route-vertical="dicas">
-                        <img src="https://i.imgur.com/syNTDSq.png" alt="Dicas" class="vertical-bar__icon">
-                        <span class="vertical-bar__label">Dicas</span>
-                    </button>
+                    <!-- Botão 'Dicas' removido por solicitação do usuário -->
                     
                     <button id="route-aptidao" class="vertical-bar__button" data-route-vertical="aptidao">
                         <img src="https://i.imgur.com/DiJ5DOO.png" alt="Aptidão" class="vertical-bar__icon">
@@ -357,6 +353,11 @@
                     <button id="route-itens" class="vertical-bar__button" data-route-vertical="itens">
                         <img src="https://i.imgur.com/znIA8hP.png" alt="Loja" class="vertical-bar__icon">
                         <span class="vertical-bar__label">Loja</span>
+                    </button>
+
+                    <button id="route-cultivacao" class="vertical-bar__button" data-route-vertical="cultivacao">
+                        <img src="https://i.imgur.com/E6LUTRF.png" alt="Cultivação" class="vertical-bar__icon">
+                        <span class="vertical-bar__label">Cultivação</span>
                     </button>
 
                     <button id="route-corpo-imortal" class="vertical-bar__button" data-route-vertical="corpo-imortal">
@@ -369,9 +370,13 @@
                         <span class="vertical-bar__label">Salvar</span>
                     </button>
 
+                    <button id="route-footer-info" class="vertical-bar__button" data-route-vertical="footer-info" title="Abrir sobre o sistema">
+                        <img src="https://i.imgur.com/PQX5Jbs.png" alt="Sobre" class="vertical-bar__icon">
+                        <span class="vertical-bar__label">Sobre</span>
+                    </button>
+
                     <div class="vertical-bar__button vertical-bar__button--ghost" aria-hidden="true"></div>
                 </div>
-            </aside>
             </aside>
 
             <!-- Box Central Dinâmico -->
@@ -484,55 +489,7 @@
                         </button>
                     </section>
 
-                    <!-- Créditos e Versão - Premium Footer -->
-                    <footer id="game-credits" class="game-credits">
-                        <div class="credits-container">
-                            <!-- Divisor Superior -->
-                            <div class="credits-divider"></div>
-
-                            <!-- Grid de Conteúdo -->
-                            <div class="credits-grid">
-                                <!-- Seção: Desenvolvedor -->
-                                <div class="credits-section credits-developer">
-                                    <div class="credits-section-icon">👨‍💻</div>
-                                    <div class="credits-section-content">
-                                        <h3 class="credits-section-title">Criador & Desenvolvedor</h3>
-                                        <p class="credits-author">Wellington Danilo dos Santos</p>
-                                    </div>
-                                </div>
-
-                                <!-- Seção: Versão -->
-                                <div class="credits-section credits-version">
-                                    <div class="credits-section-icon">📦</div>
-                                    <div class="credits-section-content">
-                                        <h3 class="credits-section-title">Versão</h3>
-                                        <a href="em-desenvolvimento.html" class="credits-version-link">Re:Dungeon RPG V2.4 </a>
-                                        <p class="credits-version-date">© 2026 - Todos os direitos reservados</p>
-                                    </div>
-                                </div>
-
-                                <!-- Seção: Comunidade -->
-                                <div class="credits-section credits-community">
-                                    <div class="credits-section-icon">🎮</div>
-                                    <div class="credits-section-content">
-                                        <h3 class="credits-section-title">Comunidade</h3>
-                                        <a href="https://discord.gg/jS8sfaJf2j" target="_blank" rel="noopener noreferrer" class="discord-link">
-                                            <img src="https://i.imgur.com/MfObQBa.gif" alt="Discord" class="discord-icon">
-                                            Junte-se ao Discord
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Divisor Inferior -->
-                            <div class="credits-divider"></div>
-
-                            <!-- Texto de Rodapé -->
-                            <div class="credits-footer-text">
-                                <p>Sistema de Ficha RPG desenvolvido com paixão por jogadores, para jogadores</p>
-                            </div>
-                        </div>
-                    </footer>
+                    <!-- Créditos e Versão removidos da página (movidos para o modal 'Sobre') -->
                 </section>
 
                 <!-- Habilidades - Sistema Completo -->
@@ -2850,6 +2807,9 @@
     <!-- 🎮 MENU PRINCIPAL - NOVO -->
     <script src="js/menu-principal.js"></script>
 
+    <!-- 📌 SIDEBAR RETRÁTIL - Integração -->
+    <script src="js/sidebar-retratil-integration.js"></script>
+
     <!-- ⚔️ SISTEMA DE RAÇAS - MODAL PROFISSIONAL -->
     <script src="js/racas-data.js"></script>
     <script src="js/racas-imagens.js"></script>
@@ -2884,9 +2844,47 @@
     <script src="js/menu-itens-inventario-integration.js"></script>
     <script src="js/menu-itens-test.js"></script>
 
-    <!-- 📚 CÓDEX MÁGICO - SISTEMA DE DICAS -->
-    <script src="js/codex-magico.js"></script>
-    <script src="js/codex-magico-test.js"></script>
+    <!-- Modal: Sobre (contém informações de créditos, versão e comunidade) -->
+    <div id="modal-sobre" class="modal-overlay">
+        <div class="modal-overlay__backdrop"></div>
+        <div class="modal-content modal-content--large">
+            <div class="modal-header">
+                <h2 class="modal-title">Sobre Re:Dungeon Ficha</h2>
+                <button class="modal-close-btn">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="about-grid" style="display:flex;gap:1rem;flex-wrap:wrap;align-items:stretch;">
+                    <div class="about-card" style="flex:1 1 240px;padding:18px;border-radius:12px;background:rgba(10,14,20,0.6);border:1px solid rgba(212,175,85,0.06);">
+                        <div style="font-size:28px">👨‍💻</div>
+                        <h3 style="margin:8px 0;color:#d4af37;font-weight:700">Criador & Desenvolvedor</h3>
+                        <p style="margin:6px 0 0 0;font-weight:600;color:#ffd84d">Wellington Danilo dos Santos</p>
+                    </div>
+
+                    <div class="about-card" style="flex:1 1 240px;padding:18px;border-radius:12px;background:rgba(10,14,20,0.6);border:1px solid rgba(212,175,85,0.06);text-align:center;">
+                        <div style="font-size:28px">📦</div>
+                        <h3 style="margin:8px 0;color:#d4af37;font-weight:700">Versão</h3>
+                        <p style="margin:6px 0;font-weight:600">Re:Dungeon RPG V2.4.1</p>
+                        <p style="margin:4px 0 0 0;color:#8b8b8b;font-size:0.85em">© 2026 - Todos os direitos reservados</p>
+                    </div>
+
+                    <div class="about-card" style="flex:1 1 240px;padding:18px;border-radius:12px;background:rgba(10,14,20,0.6);border:1px solid rgba(212,175,85,0.06);">
+                        <div style="font-size:28px">🎮</div>
+                        <h3 style="margin:8px 0;color:#d4af37;font-weight:700">Comunidade</h3>
+                        <a href="https://discord.gg/jS8sfaJf2j" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px;padding:10px;border-radius:8px;border:1px solid rgba(120,120,200,0.18);background:rgba(50,40,80,0.06);text-decoration:none;color:#cfd7ff;">
+                            <img src="https://i.imgur.com/MfObQBa.gif" alt="Discord" style="width:36px;height:36px;object-fit:cover;border-radius:6px">Junte-se ao Discord
+                        </a>
+                    </div>
+                </div>
+
+                <div style="margin-top:16px;padding-top:12px;border-top:1px solid rgba(212,175,85,0.04);color:#d1c29a;text-align:center;font-style:italic;">
+                    Sistema de Ficha RPG desenvolvido com paixão por jogadores, para jogadores
+                </div>
+            </div>
+            <div class="modal-footer" style="display:flex;justify-content:center;padding:16px 20px;">
+                <button class="btn-acao btn-principal modal-close-btn">Fechar</button>
+            </div>
+        </div>
+    </div>
 
     <!-- 🧿 SISTEMA DE CONDIÇÕES - SISTEMA PROFISSIONAL -->
     <script src="js/rd-cond-sistema.js"></script>

@@ -163,16 +163,20 @@ class RoutesVertical {
             case 'info':
                 this.showInfo();
                 break;
-            case 'dicas':
-                this.showTips();
+            case 'footer-info':
+                this.showFooterInfo();
                 break;
             case 'aptidao':
-                // ✅ BLOQUEADO: Não abrir popup automaticamente
-                // O popup deve ser aberto apenas por clique direto do usuário, não por rota
-                console.log('📂 Rota "aptidao" acionada, mas popup NÃO será aberto automaticamente');
+                this.showAptidoes();
                 break;
             case 'itens':
                 this.showItens();
+                break;
+            case 'cultivacao':
+                this.showCultivacao();
+                break;
+            case 'corpo-imortal':
+                this.showCorpoImortal();
                 break;
             case 'classes':
                 this.showClasses();
@@ -195,24 +199,79 @@ class RoutesVertical {
     }
 
     /**
+     * Mostrar cultivação
+     */
+    showCultivacao() {
+        if (window.cultivacao && window.cultivacao.ui && typeof window.cultivacao.ui.abrir === 'function') {
+            window.cultivacao.ui.abrir();
+            console.log('🌿 Cultivação aberta via RoutesVertical.showCultivacao');
+            return;
+        }
+
+        console.warn('⚠️ Cultivação não disponível para abrir');
+    }
+
+    /**
+     * Mostrar corpo imortal
+     */
+    showCorpoImortal() {
+        if (window.corpoImortalUI && typeof window.corpoImortalUI.abrir === 'function') {
+            window.corpoImortalUI.abrir();
+            console.log('✨ Corpo Imortal aberto via RoutesVertical.showCorpoImortal');
+            return;
+        }
+
+        console.warn('⚠️ Corpo Imortal não disponível para abrir');
+    }
+
+    /**
      * Lógica futura: Mostrar informações
      */
     showInfo() {
-        // TODO: Implementar lógica de exibição de informações
+        if (window.popupInfoJogador && typeof window.popupInfoJogador.open === 'function') {
+            window.popupInfoJogador.open();
+            console.log('📋 Popup Info aberto via RoutesVertical.showInfo');
+            return;
+        }
+
         console.log('📋 Info clicado');
     }
 
     /**
      * Lógica futura: Mostrar dicas
      */
-    showTips() {
-        // Abrir Códex Mágico
-        if (window.codexMagico && typeof window.codexMagico.open === 'function') {
-            window.codexMagico.open();
-            console.log('📖 Códex Mágico aberto');
-        } else {
-            console.warn('⚠️ CodexMagico não disponível');
+    showFooterInfo() {
+        const modal = document.getElementById('modal-sobre');
+        if (!modal) {
+            console.warn('⚠️ Modal "Sobre" não encontrado');
+            return;
         }
+
+        const openModal = () => {
+            modal.classList.add('active');
+            document.body.classList.add('modal-open');
+        };
+
+        const closeModal = () => {
+            modal.classList.remove('active');
+            document.body.classList.remove('modal-open');
+            // remover listeners opcionais
+            modal.querySelectorAll('.modal-close-btn').forEach(btn => btn.removeEventListener('click', closeModal));
+            modal.querySelector('.modal-overlay__backdrop')?.removeEventListener('click', closeModal);
+            document.removeEventListener('keydown', escHandler);
+        };
+
+        const escHandler = (e) => {
+            if (e.key === 'Escape') closeModal();
+        };
+
+        // Anexar handlers
+        modal.querySelectorAll('.modal-close-btn').forEach(btn => btn.addEventListener('click', closeModal));
+        modal.querySelector('.modal-overlay__backdrop')?.addEventListener('click', closeModal);
+        document.addEventListener('keydown', escHandler);
+
+        openModal();
+        console.log('ℹ️ Modal Sobre aberto');
     }
 
     /**

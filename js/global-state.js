@@ -540,5 +540,15 @@ class GlobalState {
  */
 if (typeof window !== 'undefined') {
     window.globalState = new GlobalState();
+    window.__APP_DEBUG__ = false;
+    window.debugLog = function(...args) {
+        if (window.__APP_DEBUG__) {
+            console.log(...args);
+        }
+    };
+    window.setAppDebug = function(enabled) {
+        window.__APP_DEBUG__ = Boolean(enabled);
+        console.info(`🔧 App debug mode ${window.__APP_DEBUG__ ? 'ON' : 'OFF'}`);
+    };
     console.log('✅ GlobalState inicializado (v3.0.0)');
 }
