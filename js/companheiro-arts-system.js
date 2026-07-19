@@ -405,23 +405,23 @@ class CompanheiroArtsSystem {
     renderTiposBadges(tipos) {
         // Mapeamento de tipos para emojis e cores (customizar conforme necessário)
         const tiposMap = {
-            'ofensiva': { icon: '⚔️', color: '#e74c3c' },
-            'defensiva': { icon: '🛡️', color: '#3498db' },
-            'estrategica': { icon: '🧠', color: '#f39c12' },
-            'suporte': { icon: '✨', color: '#2ecc71' },
-            'controle': { icon: '🎮', color: '#9b59b6' },
-            'invocacao': { icon: '👥', color: '#1abc9c' },
-            'transformacao': { icon: '🔄', color: '#e91e63' },
-            'passiva': { icon: '⭐', color: '#95a5a6' },
-            'racial': { icon: '🏰', color: '#d8b4fe' }
+            'ofensiva': { icon: '⚔️', color: '#e74c3c', label: 'Ofensiva' },
+            'defensiva': { icon: '🛡️', color: '#3498db', label: 'Defensiva' },
+            'estrategica': { icon: '🧠', color: '#f39c12', label: 'Estratégica' },
+            'suporte': { icon: '✨', color: '#2ecc71', label: 'Suporte' },
+            'controle': { icon: '🎮', color: '#9b59b6', label: 'Controle' },
+            'invocacao': { icon: '👥', color: '#1abc9c', label: 'Invocação' },
+            'transformacao': { icon: '🔄', color: '#e91e63', label: 'Transformação' },
+            'passiva': { icon: '⭐', color: '#95a5a6', label: 'Passiva' },
+            'racial': { icon: '🏰', color: '#d8b4fe', label: 'Racial' }
         };
 
-        // Mostrar TODOS os tipos, exceto "indefinido"
+        // Mostrar TODOS os tipos com rótulos (label) definidos no mapa
         return Object.entries(tiposMap)
             .map(([tipo, info]) => {
                 const count = tipos[tipo] || 0;
                 return `<span class="companheiro-arts-type-badge" style="background: ${info.color}; color: white; padding: 6px 12px; border-radius: 4px; font-size: 0.9em; font-weight: 500; white-space: nowrap; display: inline-block;">
-                    ${info.icon} ${tipo}: ${count}
+                    ${info.icon} ${info.label}: ${count}
                 </span>`;
             })
             .join('');

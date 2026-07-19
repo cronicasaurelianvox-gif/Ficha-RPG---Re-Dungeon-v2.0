@@ -15,15 +15,15 @@ class RulesEngine {
   };
 
   static ART_TYPES = {
-    ofensiva: { name: 'Ofensiva', description: 'Causa dano direto', color: '#FF6B6B', icon: 'ÔÜö´©Å' },
-    defensiva: { name: 'Defensiva', description: 'Prote├º├úo, escudo, redu├º├úo de dano', color: '#4ECDC4', icon: '­ƒøí´©Å' },
-    estrategica: { name: 'Estrat├®gica', description: 'Controle de campo, debuffs, manipula├º├úo t├ítica', color: '#FFD93D', icon: '­ƒÄ»' },
-    suporte: { name: 'Suporte', description: 'Buffs, cura, fortalecimento aliado', color: '#95E1D3', icon: '­ƒÆÜ' },
-    controle: { name: 'Controle', description: 'Imobilizar, paralisar, puxar, empurrar, selar', color: '#A78BFA', icon: '­ƒîÇ' },
-    invocacao: { name: 'Invoca├º├úo', description: 'Criar entidades, armas, esp├¡ritos', color: '#8B5CF6', icon: '­ƒö«' },
-    transformacao: { name: 'Transforma├º├úo', description: 'Mudar forma, estado ou modo de combate', color: '#EC4899', icon: '­ƒº¼' },
-    passiva: { name: 'Passiva', description: 'Sempre ativa ou ativa├º├úo autom├ítica', color: '#6B7280', icon: '­ƒòÂ´©Å' },
-    racial: { name: 'Racial', description: 'Habilidade ├║nica da ra├ºa do personagem', color: '#D4AF37', icon: '­ƒææ' }
+    ofensiva: { name: 'Ofensiva', description: 'Causa dano direto', color: '#FF6B6B', icon: '⚔️' },
+    defensiva: { name: 'Defensiva', description: 'Proteção, escudo, redução de dano', color: '#4ECDC4', icon: '🛡️' },
+    estrategica: { name: 'Estratégica', description: 'Controle de campo, debuffs, manipulação tática', color: '#FFD93D', icon: '🧠' },
+    suporte: { name: 'Suporte', description: 'Buffs, cura, fortalecimento aliado', color: '#95E1D3', icon: '✨' },
+    controle: { name: 'Controle', description: 'Imobilizar, paralisar, puxar, empurrar, selar', color: '#A78BFA', icon: '🎮' },
+    invocacao: { name: 'Invocação', description: 'Criar entidades, armas, espíritos', color: '#8B5CF6', icon: '👥' },
+    transformacao: { name: 'Transformação', description: 'Mudar forma, estado ou modo de combate', color: '#EC4899', icon: '🔄' },
+    passiva: { name: 'Passiva', description: 'Sempre ativa ou ativação automática', color: '#6B7280', icon: '⭐' },
+    racial: { name: 'Racial', description: 'Habilidade única da raça do personagem', color: '#D4AF37', icon: '🏰' }
   };
 
   // ============ VALIDA├ç├âO DE DOM├ìNIO ============

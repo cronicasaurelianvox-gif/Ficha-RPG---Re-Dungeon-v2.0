@@ -116,6 +116,36 @@ class LimparFichaIsolado {
                 console.warn('⚠️ Erro ao limpar IndexedDB:', e.message);
             }
 
+            // 3.5 Resetar estado de atributos em memória
+            // Isso garante que o StateManager não mantenha valores antigos
+            if (window.appState) {
+                try {
+                    console.log('🧠 Etapa 3.5: Resetando appState.atributos...');
+                    const atributosZerados = {
+                        primarios: {
+                            forca: { base: 0, extra: 0, bonus: 0, total: 0 },
+                            vitalidade: { base: 0, extra: 0, bonus: 0, total: 0 },
+                            agilidade: { base: 0, extra: 0, bonus: 0, total: 0 },
+                            inteligencia: { base: 0, extra: 0, bonus: 0, total: 0 },
+                            percepcao: { base: 0, extra: 0, bonus: 0, total: 0 },
+                            sorte: { base: 0, extra: 0, bonus: 0, total: 0 }
+                        },
+                        secundarios: {
+                            prontidao: { base: 0, extra: 0, bonus: 0, total: 0 },
+                            ataque: { base: 0, extra: 0, bonus: 0, total: 0 },
+                            defesa: { base: 0, extra: 0, bonus: 0, total: 0 },
+                            reacao: { base: 0, extra: 0, bonus: 0, total: 0 },
+                            precisao: { base: 0, extra: 0, bonus: 0, total: 0 },
+                            evasao: { base: 0, extra: 0, bonus: 0, total: 0 }
+                        }
+                    };
+                    window.appState.setState({ atributos: atributosZerados });
+                    console.log('✅ appState.atributos resetado');
+                } catch (e) {
+                    console.warn('⚠️ Erro ao resetar appState.atributos:', e.message);
+                }
+            }
+
             // 4. Limpar DOM
             console.log('🎨 Etapa 4: Limpando DOM...');
             this.limparDOM();
